@@ -10,7 +10,7 @@ class KeyValueStorage {
     }
 
     // inverse function for _getKey
-    _getOriginalKey(keyWithPrefix) { 
+    _getOriginalKey(keyWithPrefix) {
         return keyWithPrefix.slice(this.prefix.length);
     }
 
@@ -47,7 +47,6 @@ class KeyValueStorage {
         return this.getAllKeys().then(keys => Promise.map(keys, key => this.removeValue(key)));
     }
 }
-
 
 
 export default KeyValueStorage;
