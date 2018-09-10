@@ -7,15 +7,21 @@ import SafeComponent from '../shared/safe-component';
 import ReadReceipt from './read-receipt';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
+import Text from '../controls/custom-text';
 
 const receiptRow = {
-    backgroundColor: 'red',
+    backgroundColor: vars.black25,
     alignSelf: 'flex-end',
     flexDirection: 'row',
     justifyContent: 'center',
-    borderWidth: 0,
-    marginRight: vars.spacing.small.mini2x,
-    width: 48
+    width: 40,
+    borderRadius: 16,
+    paddingHorizontal: 1
+};
+
+const textStyle = {
+    fontSize: vars.readReceiptFontSize,
+    color: vars.darkBlue
 };
 
 @observer
@@ -30,6 +36,16 @@ export default class ViewReceipts extends SafeComponent {
         this._observer();
     }
 
+    receiptLabel(receipts) {
+        if (receipts.length === 1) {
+            return <ReadReceipt username={receipts[0].username} />;
+        }
+        if (receipts.length < 10) {
+            return <Text style={textStyle}>{receipts.length}</Text>;
+        }
+        return <Text style={textStyle}>9+</Text>;
+    }
+
     renderThrow() {
         const { receipts } = this.props;
         if (!receipts || !receipts.length) return null;
@@ -37,7 +53,7 @@ export default class ViewReceipts extends SafeComponent {
         return (
             <View style={receiptRow}>
                 {icons.plain('remove_red_eye', vars.iconSizeSmall, vars.darkBlue)}
-                <ReadReceipt username={receipts[0].username} />
+                {this.receiptLabel(receipts)}
             </View>
         );
     }
