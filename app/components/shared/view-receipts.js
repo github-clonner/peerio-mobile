@@ -36,8 +36,8 @@ export default class ViewReceipts extends SafeComponent {
         this._observer();
     }
 
-    receiptLabel(receipts) {
-        if (receipts.length === 1) {
+    receiptLabel(receipts, keepAvatar) {
+        if (receipts.length === 1 || keepAvatar) {
             return <ReadReceipt username={receipts[0].username} />;
         }
         if (receipts.length < 10) {
@@ -47,13 +47,13 @@ export default class ViewReceipts extends SafeComponent {
     }
 
     renderThrow() {
-        const { receipts } = this.props;
+        const { receipts, keepAvatar } = this.props;
         if (!receipts || !receipts.length) return null;
 
         return (
             <View style={receiptRow}>
                 {icons.plain('remove_red_eye', vars.iconSizeSmall, vars.darkBlue)}
-                {this.receiptLabel(receipts)}
+                {this.receiptLabel(receipts, keepAvatar)}
             </View>
         );
     }
