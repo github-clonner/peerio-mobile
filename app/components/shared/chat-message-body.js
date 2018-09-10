@@ -16,7 +16,7 @@ export default class ChatMessageBody extends SafeComponent {
         const { messageObject, chat, onFileAction, onLegacyFileAction, onInlineImageAction } = this.props;
 
         return (
-            <View>
+            <View style={{ flexGrow: 1 }}>
                 <ChatMessageFolders
                     folders={messageObject.folders}
                     chat={chat} />
