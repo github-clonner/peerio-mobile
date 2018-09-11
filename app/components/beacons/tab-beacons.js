@@ -15,8 +15,22 @@ class TabBeacons {
             <Beacon
                 id={id}
                 beaconPosition={() => this.positionMap.get(id)}
-                textHeader={tx('title_contacts')}
-                textLine1={tx('title_findContacts')}
+                textHeader={tx('title_chat_beacon')}
+                textLine1={tx('description_chat_beacon')}
+            />
+        );
+        return { id, component, condition };
+    }
+
+    get fileBeacon() {
+        const id = 'mobile-contact-icon';
+        const condition = () => routerMain.route.toLowerCase().includes('file') && !uiState.isFirstLogin;
+        const component = (
+            <Beacon
+                id={id}
+                beaconPosition={() => this.positionMap.get(id)}
+                textHeader={tx('title_files_beacon')}
+                textLine1={tx('description_files_beacon')}
             />
         );
         return { id, component, condition };
@@ -29,8 +43,8 @@ class TabBeacons {
             <Beacon
                 id={id}
                 beaconPosition={() => this.positionMap.get(id)}
-                textHeader={tx('title_contacts')}
-                textLine1={tx('title_findContacts')}
+                textHeader={tx('title_contact_beacon')}
+                textLine1={tx('description_contact_beacon')}
             />
         );
         return { id, component, condition };
