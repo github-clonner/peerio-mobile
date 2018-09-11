@@ -14,7 +14,7 @@ import { vars } from '../../styles/styles';
 import mockContactStore from './mock-contact-store';
 import mockFileStore from './mock-file-store';
 import TabContainer from '../layout/tab-container';
-import Beacon from '../shared/beacon';
+import Beacon from '../beacons/beacon';
 
 @observer
 export default class MockBeacon extends Component {

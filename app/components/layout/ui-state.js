@@ -9,8 +9,6 @@ import RoutedState from '../routes/routed-state';
 const { height } = Dimensions.get('window');
 
 class UIState extends RoutedState {
-    @observable beaconContent = null;
-
     EVENTS = {
         HOME: 'home'
     };

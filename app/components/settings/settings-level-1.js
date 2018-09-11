@@ -127,6 +127,10 @@ export default class SettingsLevel1 extends SafeComponent {
         console.log('User props are:', User.current.props);
     };
 
+    showBeaconsState = () => {
+        console.log('Beacons are:', User.current.beacons.toJSON());
+    };
+
     /**
      * Scroll helper is used to provide scrolling capability
      * to the test script. Note that it overrides ref and onScroll
@@ -262,6 +266,7 @@ export default class SettingsLevel1 extends SafeComponent {
                     {__DEV__ && <BasicSettingsItem title="test warning" onPress={() => warnings.addSevere('warning')} />}
                     {__DEV__ && <BasicSettingsItem title="reset external setting" onPress={this.resetExternalSetting} />}
                     {__DEV__ && <BasicSettingsItem title="log MC props" onPress={this.showProps} />}
+                    {__DEV__ && <BasicSettingsItem title="show beacons state" onPress={this.showBeaconsState} />}
                     {/* <BasicSettingsItem title={t('payments')} onPress={() => settingsState.transition('payments')} /> */}
                     {/* <BasicSettingsItem title={t('quotas')} onPress={() => settingsState.transition('quotas')} /> */}
                 </View>

@@ -23,6 +23,7 @@ import Text from './controls/custom-text';
 import fileState from './files/file-state';
 import { promiseWhen } from './helpers/sugar';
 import routes from './routes/routes';
+import BeaconLayout from './beacons/beacon-layout';
 
 const { height, width } = Dimensions.get('window');
 @observer
@@ -142,6 +143,7 @@ export default class App extends SafeComponent {
         return (
             <View style={(height < 500) ? tabletHack : { flex: 1, flexGrow: 1 }}>
                 <RouteNavigator key="navigator" routes={routerApp} />
+                <BeaconLayout />
                 <ModalLayout key="modals" />
                 <PopupLayout key="popups" />
                 <ActionSheetLayout key="actionSheets" />

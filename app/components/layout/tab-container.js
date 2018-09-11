@@ -12,6 +12,7 @@ import routerMain from '../routes/router-main';
 import uiState from './ui-state';
 import { invitationState } from '../states';
 import TabItem from './tab-item';
+import tabBeacons from '../beacons/tab-beacons';
 
 const bottomRowStyle = {
     flex: 0,
@@ -37,7 +38,8 @@ export default class TabContainer extends SafeComponent {
                     route="chats"
                     icon="forum"
                     highlightList={['space']}
-                    bubble={chatStore.unreadMessages + chatInviteStore.received.length} />
+                    bubble={chatStore.unreadMessages + chatInviteStore.received.length}
+                    beacon={tabBeacons.chatBeacon} />
                 <TabItem
                     text={t('title_files')}
                     route="files"
@@ -47,7 +49,8 @@ export default class TabContainer extends SafeComponent {
                     text={t('title_contacts')}
                     route={contactState.empty ? 'contactAdd' : 'contacts'}
                     icon="people"
-                    highlightList={['contactAdd', 'contactInvite']} />
+                    highlightList={['contactAdd', 'contactInvite']}
+                    beacon={tabBeacons.contactBeacon} />
                 <TabItem
                     text={t('title_settings')}
                     route="settings"

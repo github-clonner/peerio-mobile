@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-// import { observable } from 'mobx';
+import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { View, Dimensions } from 'react-native';
+import { View, Dimensions, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
-import uiState from '../layout/ui-state';
 import { vars } from '../../styles/styles';
 import Text from '../controls/custom-text';
+import { User } from '../../lib/icebear';
+import beaconState from './beacon-state';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -31,8 +32,7 @@ export default class Beacon extends SafeComponent {
     beaconPositionY;
 
     get beaconHeight() {
-        const { beaconContent } = uiState;
-        const { textHeader, textLine1, textLine2, textLine3 } = beaconContent;
+        const { textHeader, textLine1, textLine2, textLine3 } = this.props;
         let numLines = 0;
 
         // count number of lines to determine beacon height
@@ -42,10 +42,21 @@ export default class Beacon extends SafeComponent {
         return (numLines * vars.beaconLineHeight) + (2 * vars.beaconPadding) + (this.bubbleRadius / 2);
     }
 
+    @action.bound
+    async onPress() {
+        const { id } = this.props;
+        User.current.beacons.set(id, true);
+        await User.current.saveBeacons();
+        beaconState.removeBeacon(id);
+    }
+
     renderThrow() {
-        const { beaconContent } = uiState;
-        if (!beaconContent) return null;
-        const { x, y, width, height, positionX, textHeader, textLine1, textLine2, textLine3 } = beaconContent;
+        const { beaconPosition, textHeader, textLine1, textLine2, textLine3 } = this.props;
+
+        if (!beaconPosition || !textHeader || !textLine1) return null;
+
+        const { pageX: x, pageY: y, frameWidth: width, frameHeight: height } = beaconPosition();
+        const positionX = 2; // TODO
 
         // set beacon position Y based on whether content is in the upper or lower half of the screen
         this.beaconPositionY = (windowHeight / 2 >= y) ? 0 : -this.beaconHeight;
@@ -98,7 +109,10 @@ export default class Beacon extends SafeComponent {
         };
         // TODO have only 1 component for header and 1 component for Text
         return (
-            <View style={container}>
+            <TouchableOpacity
+                onPress={this.onPress}
+                pressRetentionOffset={vars.pressRetentionOffset}
+                style={container}>
                 <View style={rectangle}>
                     {textHeader && <Text bold style={[textStyle, { paddingBottom: vars.beaconPadding }]}>{textHeader}</Text>}
                     {textLine1 && <Text semibold={!textLine3 || !textHeader} style={textStyle}>{textLine1}</Text>}
@@ -108,7 +122,7 @@ export default class Beacon extends SafeComponent {
                 <View style={outerCircle}>
                     <View style={innerCircle} />{/* Replace with mock content */}
                 </View>
-            </View>
+            </TouchableOpacity>
         );
     }
 }

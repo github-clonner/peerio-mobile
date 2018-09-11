@@ -11,6 +11,8 @@ import routerMain from '../routes/router-main';
 import icons from '../helpers/icons';
 import testLabel from '../helpers/test-label';
 import uiState from './ui-state';
+import beaconState from '../beacons/beacon-state';
+import tabBeacons from '../beacons/tab-beacons';
 
 const actionCellStyle = {
     flex: 1,
@@ -43,21 +45,16 @@ export default class TabItem extends SafeComponent {
     // ---------------------
     async componentDidMount() {
         when(() => this.layoutLoaded, () => {
-            const { route } = this.props;
-            if (route === 'contacts') {
-                uiState.beaconContent = {
-                    x: this.viewRef.pageX,
-                    y: this.viewRef.pageY,
-                    width: this.viewRef.frameWidth,
-                    height: this.viewRef.frameHeight,
-                    positionX: 2,
-                    // textHeader: 'Header',
-                    textLine1: 'Line 1'
-                    // textLine2="Line 2",
-                    // textLine3="Line 3"
-                };
+            if (this.props.beacon) {
+                beaconState.requestBeacons(this.props.beacon);
             }
         });
+    }
+
+    componentWillUnmount() {
+        if (this.props.beacon) {
+            beaconState.removeBeacon(this.props.beacon.id);
+        }
     }
 
     setRef = ref => {
@@ -65,15 +62,14 @@ export default class TabItem extends SafeComponent {
     };
 
     layout = () => {
-        this.viewRef.measure(
-            (frameX, frameY, frameWidth, frameHeight, pageX, pageY) => {
-                console.log(`frameWidth: ${frameWidth}, frameHeight: ${frameHeight}, pageX: ${pageX}, pageY: ${pageY}`);
-                this.viewRef.frameWidth = frameWidth;
-                this.viewRef.frameHeight = frameHeight;
-                this.viewRef.pageX = pageX;
-                this.viewRef.pageY = pageY;
-                this.layoutLoaded = true;
-            });
+        if (this.props.beacon) {
+            this.viewRef.measure(
+                (frameX, frameY, frameWidth, frameHeight, pageX, pageY) => {
+                    console.log(`frameWidth: ${frameWidth}, frameHeight: ${frameHeight}, pageX: ${pageX}, pageY: ${pageY}`);
+                    tabBeacons.positionMap.set(this.props.beacon.id, { frameWidth, frameHeight, pageX, pageY });
+                    this.layoutLoaded = true;
+                });
+        }
     };
     // ---------------------
 
