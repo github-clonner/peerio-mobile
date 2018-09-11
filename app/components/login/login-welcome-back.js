@@ -82,6 +82,7 @@ export default class LoginWelcomeBack extends SafeComponent {
                     </View>
                     <LoginInputs hideUsernameInput />
                 </View>
+                <ActivityOverlay large visible={loginState.isInProgress} />
                 <StatusBar hidden />
             </View>
         );

@@ -37,8 +37,8 @@ export default class LoginInputs extends SafeComponent {
         }
         if (__DEV__ && process.env.PEERIO_USERNAME && process.env.PEERIO_PASSPHRASE) {
             when(() => loginState.isConnected, () => {
-                this.usernameInput.onChangeText(process.env.PEERIO_USERNAME);
-                this.passwordInput.onChangeText(process.env.PEERIO_PASSPHRASE);
+                this.usernameInput && this.usernameInput.onChangeText(process.env.PEERIO_USERNAME);
+                this.passwordInput && this.passwordInput.onChangeText(process.env.PEERIO_PASSPHRASE);
                 process.env.PEERIO_AUTOLOGIN && this.submit();
             });
         }
