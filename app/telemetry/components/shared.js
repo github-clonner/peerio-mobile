@@ -29,7 +29,7 @@ const shared = setup({
             {
                 item: label,
                 sublocation: TmHelper.currentRoute,
-                state: S.ERROR,
+                state: S.ERROR_TYPE,
                 error: errorMessage(errorMsg)
             }
         ];
@@ -42,7 +42,7 @@ const shared = setup({
             {
                 item: label,
                 sublocation: TmHelper.currentRoute,
-                state: S.ERROR,
+                state: S.ERROR_TYPE,
                 error: errorMessage(errorMsg)
             }
         ];

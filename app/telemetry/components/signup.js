@@ -94,11 +94,11 @@ const signup = setup(
             ];
         },
 
-        readMoreAccordion: (option) => {
+        readMoreAccordion: (item) => {
             return [
                 S.READ_MORE,
                 {
-                    option,
+                    item,
                     location: S.ONBOARDING
                 }
             ];

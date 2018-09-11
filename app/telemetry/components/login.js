@@ -48,7 +48,7 @@ const login = setup(
                 {
                     item: label,
                     location: TmHelper.currentRoute,
-                    state: S.ERROR,
+                    state: S.ERROR_TYPE,
                     error: errorMessage(errorMsg)
                 }
             ];
