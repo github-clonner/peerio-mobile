@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { when, action, observable } from 'mobx';
+import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { View, TouchableOpacity } from 'react-native';
 import Text from '../controls/custom-text';
@@ -12,7 +12,6 @@ import icons from '../helpers/icons';
 import testLabel from '../helpers/test-label';
 import uiState from './ui-state';
 import beaconState from '../beacons/beacon-state';
-import tabBeacons from '../beacons/tab-beacons';
 
 const actionCellStyle = {
     flex: 1,
@@ -28,9 +27,46 @@ const actionTextStyle = {
 };
 
 @observer
-export default class TabItem extends SafeComponent {
-    @observable layoutLoaded = false;
+class MeasureableIcon extends SafeComponent {
+    layout = () => {
+        const { beacon } = this.props;
+        if (beacon) {
+            this.ref.measure(
+                (frameX, frameY, frameWidth, frameHeight, pageX, pageY) => {
+                    console.log(
+                        `frameWidth: ${frameWidth},
+                        frameHeight: ${frameHeight},
+                        pageX: ${pageX},
+                        pageY: ${pageY}`);
+                    beacon.position = { frameWidth, frameHeight, pageX, pageY };
+                    beaconState.requestBeacon(beacon);
+                });
+        }
+    };
 
+    // TODO clean up mock beacons
+    // ---------------------
+    componentWillUnmount() {
+        // removeBeacon is NOP for undefined
+        beaconState.removeBeacon(this.props.beacon);
+    }
+
+    setRef = ref => { this.ref = ref; };
+
+    renderThrow() {
+        return (
+            <View
+                onLayout={this.layout}
+                ref={this.setRef} // TODO clean up mock beacons
+                style={{ borderWidth: 1, borderColor: 'yellow' }}>
+                {icons.plain(this.props.icon, undefined, this.props.color)}
+            </View>
+        );
+    }
+}
+
+@observer
+export default class TabItem extends SafeComponent {
     @action.bound onPressTabItem() {
         const { route } = this.props;
         if (routerMain.route === route && uiState.currentScrollView) {
@@ -40,38 +76,6 @@ export default class TabItem extends SafeComponent {
             routerMain[route]();
         }
     }
-
-    // TODO clean up mock beacons
-    // ---------------------
-    async componentDidMount() {
-        when(() => this.layoutLoaded, () => {
-            if (this.props.beacon) {
-                beaconState.requestBeacons(this.props.beacon);
-            }
-        });
-    }
-
-    componentWillUnmount() {
-        if (this.props.beacon) {
-            beaconState.removeBeacon(this.props.beacon.id);
-        }
-    }
-
-    setRef = ref => {
-        this.viewRef = ref;
-    };
-
-    layout = () => {
-        if (this.props.beacon) {
-            this.viewRef.measure(
-                (frameX, frameY, frameWidth, frameHeight, pageX, pageY) => {
-                    console.log(`frameWidth: ${frameWidth}, frameHeight: ${frameHeight}, pageX: ${pageX}, pageY: ${pageY}`);
-                    tabBeacons.positionMap.set(this.props.beacon.id, { frameWidth, frameHeight, pageX, pageY });
-                    this.layoutLoaded = true;
-                });
-        }
-    };
-    // ---------------------
 
     renderThrow() {
         const { text, route, icon, bubble, highlightList } = this.props;
@@ -91,13 +95,8 @@ export default class TabItem extends SafeComponent {
                 pressRetentionOffset={vars.retentionOffset}
                 style={actionCellStyle}>
                 <View
-                    onLayout={this.layout} // TODO clean up mock beacons
                     pointerEvents="none" style={{ alignItems: 'center' }}>
-                    <View
-                        ref={this.setRef} // TODO clean up mock beacons
-                        style={{ borderWidth: 1, borderColor: 'yellow' }}>
-                        {icons.plain(icon, undefined, color)}
-                    </View>
+                    <MeasureableIcon {...this.props} color={color} />
                     <Text style={[actionTextStyle, { color }]}>{text}</Text>
                     {indicator}
                 </View>

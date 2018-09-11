@@ -7,20 +7,26 @@ class BeaconState {
     @observable.shallow beacons = [];
 
     @computed get activeBeacon() {
-        const beaconToShow = this.beacons.find(x => x.condition() && notSeen(x.id));
-        return beaconToShow && beaconToShow.component;
+        // uncomment not seen later on
+        const beaconToShow = this.beacons.find(x => x.condition() /* && notSeen(x.id) */);
+        return beaconToShow || null;
     }
 
-    requestBeacons(beacon) {
+    requestBeacon(beacon) {
+        if (!beacon) return;
         this.beacons.unshift(beacon);
     }
 
     @action.bound
-    removeBeacon(id) {
-        this.beacons = this.beacons.filter(beacon => beacon.id !== id);
+    removeBeacon(beacon) {
+        if (!beacon) return;
+        this.beacons = this.beacons.filter(b => beacon.id !== b.id);
     }
 }
 
 const beaconState = new BeaconState();
+
+// TODO: remove before merging
+global.beaconState = beaconState;
 
 export default beaconState;
