@@ -43,11 +43,11 @@ export default class ChatMessageCollapsed extends SafeComponent {
                                 onLegacyFileAction={onLegacyFileAction}
                                 onInlineImageAction={onInlineImageAction}
                             />
+                            <ViewReceipts receipts={messageObject.receipts} />
                         </View>
                     </View>
                     <MessageSentError message={messageObject} chat={chat} />
                 </View>
-                <ViewReceipts receipts={messageObject.receipts} />
             </View>
         );
     }
