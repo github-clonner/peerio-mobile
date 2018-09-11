@@ -9,7 +9,7 @@ class TabBeacons {
     @observable positionMap = observable.map();
 
     get chatBeacon() {
-        const id = 'mobile-chat-icon';
+        const id = 'mobile-chat-tab';
         const condition = () => routerMain.route === 'chats' && !uiState.isFirstLogin;
         const component = (
             <Beacon
@@ -23,7 +23,7 @@ class TabBeacons {
     }
 
     get fileBeacon() {
-        const id = 'mobile-contact-icon';
+        const id = 'mobile-file-tab';
         const condition = () => routerMain.route.toLowerCase().includes('file') && !uiState.isFirstLogin;
         const component = (
             <Beacon
@@ -37,7 +37,7 @@ class TabBeacons {
     }
 
     get contactBeacon() {
-        const id = 'mobile-contact-icon';
+        const id = 'mobile-contact-tab';
         const condition = () => routerMain.route.toLowerCase().includes('contact') && !uiState.isFirstLogin;
         const component = (
             <Beacon
