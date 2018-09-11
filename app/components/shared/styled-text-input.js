@@ -10,8 +10,10 @@ import { vars, styledTextInput } from '../../styles/styles';
 import icons from '../helpers/icons';
 import testLabel from '../helpers/test-label';
 import { tx } from '../utils/translator';
-import { socket } from '../../lib/icebear';
+import { socket, telemetry } from '../../lib/icebear';
 import tm from '../../telemetry';
+
+const { S } = telemetry;
 
 // Because JS has no enums
 const VALID = true;
@@ -271,10 +273,13 @@ export default class StyledTextInput extends SafeComponent {
     }
 
     get helperText() {
+        const { inputName, helperText } = this.props;
+        // Username valid helper text
+        const text = (inputName === S.USERNAME) && this.isValid ? 'title_hintUsernameValid' : helperText;
         return (
             <View style={styledTextInput.bottomMessageContainer}>
                 <Text style={styledTextInput.helperTextStyle}>
-                    {tx(this.props.helperText)}
+                    {tx(text)}
                 </Text>
             </View>
         );

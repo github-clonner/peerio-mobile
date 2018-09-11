@@ -8,7 +8,7 @@ import { vars, signupStyles } from '../../styles/styles';
 import signupState from './signup-state';
 import { tx } from '../utils/translator';
 import StyledTextInput from '../shared/styled-text-input';
-import { socket, validation, telemetry } from '../../lib/icebear';
+import { socket, validation, telemetry, config } from '../../lib/icebear';
 import SafeComponent from '../shared/safe-component';
 import buttons from '../helpers/buttons';
 import SignupButtonBack from './signup-button-back';
@@ -21,6 +21,10 @@ const { S } = telemetry;
 
 const { validators } = validation;
 const { username } = validators;
+
+// TODO change after icebear fix-input-validation has been merged
+// const MAX_USERNAME_LENGTH = config.user.maxUsernameLength;
+const MAX_USERNAME_LENGTH = 16;
 
 @observer
 export default class SignupStep2 extends SafeComponent {
@@ -134,7 +138,10 @@ export default class SignupStep2 extends SafeComponent {
                         state={this.usernameState}
                         validations={username}
                         inputName={S.USERNAME}
-                        helperText={tx('title_hintUsername')}
+                        helperText={this.usernameState.value.length >= MAX_USERNAME_LENGTH ?
+                            tx('title_characterLimitReached') :
+                            tx('title_hintUsername')}
+                        maxLength={MAX_USERNAME_LENGTH}
                         label={`${tx('title_username')}*`}
                         lowerCase
                         required

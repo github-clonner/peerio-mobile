@@ -8,7 +8,7 @@ import { vars, signupStyles } from '../../styles/styles';
 import signupState from './signup-state';
 import { tx } from '../utils/translator';
 import StyledTextInput from '../shared/styled-text-input';
-import { socket, validation, telemetry } from '../../lib/icebear';
+import { socket, validation, telemetry, config } from '../../lib/icebear';
 import SafeComponent from '../shared/safe-component';
 import buttons from '../helpers/buttons';
 import SignupButtonBack from './signup-button-back';
@@ -21,6 +21,10 @@ const { S } = telemetry;
 
 const { validators } = validation;
 const { firstName, lastName } = validators;
+
+// TODO change after icebear fix-input-validation has been merged
+// const MAX_NAME_LENGTH = config.user.maxNameLength;
+const MAX_NAME_LENGTH = 40;
 
 @observer
 export default class SignupStep1 extends SafeComponent {
@@ -81,8 +85,10 @@ export default class SignupStep1 extends SafeComponent {
                         validations={firstName}
                         inputName={S.FIRST_NAME}
                         label={`${tx('title_firstName')}*`}
-                        helperText={tx('title_hintUsername')}
-                        maxLength={24}
+                        helperText={this.firstnameState.value.length >= MAX_NAME_LENGTH ?
+                            tx('title_characterLimitReached') :
+                            null}
+                        maxLength={MAX_NAME_LENGTH}
                         required
                         clearTextIcon
                         returnKeyType="next"
@@ -95,8 +101,10 @@ export default class SignupStep1 extends SafeComponent {
                         validations={lastName}
                         inputName={S.LAST_NAME}
                         label={`${tx('title_lastName')}*`}
-                        helperText={tx('title_hintUsername')}
-                        maxLength={24}
+                        helperText={this.lastnameState.value.length >= MAX_NAME_LENGTH ?
+                            tx('title_characterLimitReached') :
+                            null}
+                        maxLength={MAX_NAME_LENGTH}
                         required
                         clearTextIcon
                         returnKeyType="next"
