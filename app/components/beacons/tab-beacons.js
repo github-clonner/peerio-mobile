@@ -71,8 +71,8 @@ class TabBeacons {
             <Beacon
                 id={id}
                 beaconPosition={() => this.positionMap.get(id)}
-                textHeader={tx('title_files_beacon')}
-                textLine1={tx('description_files_beacon')}
+                textHeader={tx('title_uploadFiles_beacon')}
+                textLine1={tx('description_uploadFiles_beacon')}
             />
         );
         return { id, component, condition };
