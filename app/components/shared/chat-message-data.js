@@ -7,6 +7,7 @@ import { vars } from '../../styles/styles';
 import Text from '../controls/custom-text';
 
 const containerStyle = {
+    marginRight: 8,
     borderWidth: 0,
     borderColor: 'yellow',
     flexGrow: 1,

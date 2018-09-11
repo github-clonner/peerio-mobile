@@ -15,6 +15,8 @@ const receiptRow = {
     flexDirection: 'row',
     justifyContent: 'center',
     width: 40,
+    marginLeft: 8,
+    marginRight: 8,
     borderRadius: 16,
     paddingHorizontal: 1
 };
@@ -48,7 +50,7 @@ export default class ViewReceipts extends SafeComponent {
 
     renderThrow() {
         const { receipts, keepAvatar } = this.props;
-        if (!receipts || !receipts.length) return null;
+        if (!receipts || !receipts.length) return <View style={receiptRow} />;
 
         return (
             <View style={receiptRow}>
