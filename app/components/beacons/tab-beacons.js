@@ -51,7 +51,7 @@ class TabBeacons {
             condition
         });
     }
- 
+
     get uploadFileBeacon() {
         const condition = () => true;
         return observable({
