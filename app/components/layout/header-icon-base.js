@@ -23,15 +23,14 @@ export default class HeaderIconBase extends SafeComponent {
 
     renderThrow() {
         return (
-            <View style={[{ flex: 0, opacity: this.disabled ? 0.5 : 1 }, this.style]} >
+            <View style={[{ flex: 0, opacity: this.disabled ? 0.5 : 1 }, this.style]}>
                 <TouchableOpacity
                     pressRetentionOffset={vars.retentionOffset}
                     onPress={this.disabled ? null : this.action}
                     activeOpacity={this.disabled ? 0.5 : 1}
-                    {...testLabel(this.props.testID)}>
+                    {...testLabel(this.props.testID)} >
                     <View style={[itemStyle, this.innerStyle]} >
-                        <MeasureableIcon {...this.props} />
-                        {icons.plainWhite(this.icon)}
+                        <MeasureableIcon icon={this.icon} color={vars.white} />
                     </View>
                 </TouchableOpacity>
             </View>
