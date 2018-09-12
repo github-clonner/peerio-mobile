@@ -15,10 +15,34 @@ class TabBeacons {
         });
     }
 
+    get filesBeacon() {
+        const condition = () => routes.main.route === 'files';
+        return observable({
+            id: 'mobile-files-icon',
+            component: Beacon,
+            textHeader: 'title_contacts',
+            textDescription: 'title_findContacts',
+            position: null,
+            condition
+        });
+    }
+
     get contactBeacon() {
         const condition = () => routes.main.route.toLowerCase().includes('contact');
         return observable({
             id: 'mobile-contact-icon',
+            component: Beacon,
+            textHeader: 'title_contacts',
+            textDescription: 'title_findContacts',
+            position: null,
+            condition
+        });
+    }
+
+    get settingsBeacon() {
+        const condition = () => routes.main.route === 'settings';
+        return observable({
+            id: 'mobile-settings-icon',
             component: Beacon,
             textHeader: 'title_contacts',
             textDescription: 'title_findContacts',

@@ -13,26 +13,22 @@ import { tx } from '../utils/translator';
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
+const MINIMUM_BUBBLE_RADIUS = 32;
+
 const textStyle = {
-    lineHeight: vars.beaconLineHeight,
     fontSize: vars.font.size.smaller,
     color: 'white'
 };
 
-/** "position" relies on passing "position" as props
- *  this.props.position = {
- *      x: contentRef.pageX,
- *      y: contentRef.pageY,
- *      width: contentRef.frameWidth,
- *      height: contentRef.frameHeight,
- */
-
 @observer
 export default class Beacon extends SafeComponent {
-    bubbleRadius = 32; // TODO determine Radius based on content ?
-    beaconPositionX;
-    beaconPositionY;
+    bubbleRadius; // outer bubble radius
+    bubblePadding; // padding which depends on bubbleRadius
+    containerPositionY;
+    containerPositionX;
+    circlePositionX;
 
+    // height of the beacon which depends on the text content
     get beaconHeight() {
         const { textHeader, textDescription } = this.props;
 
@@ -42,13 +38,10 @@ export default class Beacon extends SafeComponent {
             (this.bubbleRadius / 2);
     }
 
-    // set beacon position Y based on where content is with regards to the height of the screen
-    get positionY() {
-        const { position } = this.props;
-        if (!position) return null;
-        const { pageY: y } = position;
-
-        return (windowHeight / 2 >= y) ? 0 : -this.beaconHeight;
+    get beaconIsTop() {
+        if (!this.props.position) return null;
+        const { pageY: y } = this.props.position;
+        return y <= windowHeight / 2;
     }
 
     // set beacon position X based on where content is with regards to the width of the screen
@@ -58,10 +51,10 @@ export default class Beacon extends SafeComponent {
 
         const { pageX: x } = position;
 
-        let positionX = -1;
+        let positionX = 0;
         // positionX can be 0, 1, 2, 3 (left to right)
         if (x >= 0) positionX = 0;
-        if (x >= windowWidth * 1 / 4) positionX = 1;
+        if (x >= windowWidth / 4) positionX = 1;
         if (x >= windowWidth / 2) positionX = 2;
         if (x >= windowWidth * 3 / 4) positionX = 3;
 
@@ -77,54 +70,55 @@ export default class Beacon extends SafeComponent {
         await User.current.saveBeacons();
     }
 
+    initMeasurements() {
+        const { pageX: x, pageY: y, frameWidth: width, frameHeight: height } = this.props.position;
+
+        const outerRadius = width + 8 + (2 * vars.beaconBorderWidth);
+        this.bubbleRadius = outerRadius >= MINIMUM_BUBBLE_RADIUS ? outerRadius : MINIMUM_BUBBLE_RADIUS;
+
+        this.bubblePadding = vars.beaconPadding + this.bubbleRadius / 2;
+
+        // containerPositionY
+        this.containerPositionY = { top: y - (this.beaconHeight - height / 2) };
+        // containerPositionX and circlePositionX
+        const contentPositionLeft = x - 2 * vars.beaconBorderWidth;
+        const contentPositionRight = x + 2 * vars.beaconBorderWidth;
+        if (this.positionX === 0) {
+            this.containerPositionX = { left: contentPositionLeft };
+            this.circlePositionX = { left: 0 };
+        } else if (this.positionX === 1) {
+            this.containerPositionX = { left: contentPositionLeft - vars.beaconWidth / 3 };
+            this.circlePositionX = { left: vars.beaconWidth / 3 };
+        } else if (this.positionX === 2) {
+            this.containerPositionX = { right: windowWidth - contentPositionRight - vars.beaconWidth * 2 / 3 };
+            this.circlePositionX = { right: vars.beaconWidth / 3 };
+        } else if (this.positionX === 3) {
+            this.containerPositionX = { right: windowWidth - contentPositionRight - vars.beaconWidth / 3 };
+            this.circlePositionX = { right: 0 };
+        }
+    }
+
     renderThrow() {
         const { position, textHeader, textDescription } = this.props;
 
         if (!position || !textHeader || !textDescription) return null;
 
-        const { pageX: x, pageY: y, frameWidth: width, frameHeight: height } = position;
-
-        // set beacon position Y based on where content is with regards to the height of the screen
-        this.beaconPositionY = this.positionY;
-        this.beaconPositionX = -vars.beaconWidth * this.positionX / 3;
-
+        this.initMeasurements();
         // set padding between bubble and text based on where the bubble is positioned
-        this.bubblePadding = vars.beaconPadding + this.bubbleRadius / 2;
         const paddingLeft = this.positionX === 0 ? this.bubblePadding : vars.beaconPadding;
         const paddingRight = this.positionX === 3 ? this.bubblePadding : vars.beaconPadding;
-        const paddingTop = this.beaconPositionY === 0 ? this.bubblePadding : vars.beaconPadding;
-        const paddingBottom = this.beaconPositionY !== 0 ? this.bubblePadding : vars.beaconPadding;
+        const paddingTop = vars.beaconPadding;
+        const paddingBottom = this.beaconIsTop ? this.bubblePadding : vars.beaconPadding;
 
-        const container = {
-            width,
-            height,
-            // center the container around the content
-            left: x + ((width - this.bubbleRadius) / 2),
-            top: y + ((height - this.bubbleRadius) / 2)
-        };
+        const container = [this.containerPositionX, this.containerPositionY, {
+            width: vars.beaconWidth + (this.bubbleRadius / 2),
+            height: this.beaconHeight + (this.bubbleRadius / 2)
+        }];
 
-        const outerCircle = {
+        const rectanglePositionY = this.beaconIsTop ? { bottom: 0 } : { top: 0 };
+        const rectanglePositionX = this.positionX <= 1 ? { left: this.bubbleRadius / 2 } : { right: this.bubbleRadius / 2 };
+        const rectangle = [rectanglePositionY, rectanglePositionX, {
             position: 'absolute',
-            top: 0,
-            left: 0,
-            width: this.bubbleRadius,
-            height: this.bubbleRadius,
-            borderRadius: this.bubbleRadius / 2,
-            borderColor: vars.beaconBg,
-            borderWidth: vars.beaconBorderWidth
-        };
-
-        const innerCircle = {
-            backgroundColor: 'white',
-            borderRadius: this.bubbleRadius / 2,
-            width: this.bubbleRadius - 2 * vars.beaconBorderWidth,
-            height: this.bubbleRadius - 2 * vars.beaconBorderWidth
-        };
-
-        const rectangle = {
-            position: 'absolute',
-            top: this.beaconPositionY + this.bubbleRadius / 2,
-            left: this.beaconPositionX + this.bubbleRadius / 2,
             width: vars.beaconWidth,
             height: this.beaconHeight,
             backgroundColor: vars.beaconBg,
@@ -133,6 +127,23 @@ export default class Beacon extends SafeComponent {
             paddingRight,
             paddingTop,
             paddingBottom
+        }];
+
+        const circlePositionY = this.beaconIsTop ? { top: 0 } : { bottom: 0 };
+        const outerCircle = [circlePositionY, this.circlePositionX, {
+            position: 'absolute',
+            width: this.bubbleRadius,
+            height: this.bubbleRadius,
+            borderRadius: this.bubbleRadius / 2,
+            borderColor: vars.beaconBg,
+            borderWidth: vars.beaconBorderWidth
+        }];
+
+        const innerCircle = {
+            backgroundColor: 'white',
+            borderRadius: this.bubbleRadius / 2,
+            width: this.bubbleRadius - 2 * vars.beaconBorderWidth,
+            height: this.bubbleRadius - 2 * vars.beaconBorderWidth
         };
         return (
             <TouchableOpacity

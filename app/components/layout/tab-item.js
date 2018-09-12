@@ -33,11 +33,7 @@ class MeasureableIcon extends SafeComponent {
         if (beacon) {
             this.ref.measure(
                 (frameX, frameY, frameWidth, frameHeight, pageX, pageY) => {
-                    console.log(
-                        `frameWidth: ${frameWidth},
-                        frameHeight: ${frameHeight},
-                        pageX: ${pageX},
-                        pageY: ${pageY}`);
+                    console.log(`frameWidth: ${frameWidth}, frameHeight: ${frameHeight}, pageX: ${pageX}, pageY: ${pageY}`);
                     beacon.position = { frameWidth, frameHeight, pageX, pageY };
                     beaconState.requestBeacon(beacon);
                 });
@@ -57,8 +53,7 @@ class MeasureableIcon extends SafeComponent {
         return (
             <View
                 onLayout={this.layout}
-                ref={this.setRef} // TODO clean up mock beacons
-                style={{ borderWidth: 1, borderColor: 'yellow' }}>
+                ref={this.setRef}>{/* TODO clean up mock beacons */}
                 {icons.plain(this.props.icon, undefined, this.props.color)}
             </View>
         );
