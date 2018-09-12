@@ -73,8 +73,8 @@ export default class Beacon extends SafeComponent {
         const paddingBottom = this.beaconPositionY !== 0 ? this.bubblePadding : vars.beaconPadding;
 
         const container = {
-            width: vars.beaconWidth,
-            height: this.beaconHeight,
+            width,
+            height,
             // center the container around the content
             left: x + ((width - this.bubbleRadius) / 2),
             top: y + ((height - this.bubbleRadius) / 2)
