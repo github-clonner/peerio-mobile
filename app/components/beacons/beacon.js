@@ -8,6 +8,7 @@ import { vars } from '../../styles/styles';
 import Text from '../controls/custom-text';
 import { User } from '../../lib/icebear';
 import beaconState from './beacon-state';
+import { tx } from '../utils/translator';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -51,11 +52,13 @@ export default class Beacon extends SafeComponent {
     }
 
     renderThrow() {
-        const { beaconPosition, textHeader, textLine1, textLine2, textLine3 } = this.props;
+        const { position, textHeader, textLine1, textLine2, textLine3 } = this.props;
 
-        if (!beaconPosition || !textHeader || !textLine1) return null;
+        console.log(`beacon: render ${position}`);
 
-        const { pageX: x, pageY: y, frameWidth: width, frameHeight: height } = beaconPosition();
+        if (!position || !textHeader || !textLine1) return null;
+
+        const { pageX: x, pageY: y, frameWidth: width, frameHeight: height } = position;
         const positionX = 2; // TODO
 
         // set beacon position Y based on whether content is in the upper or lower half of the screen
@@ -70,7 +73,8 @@ export default class Beacon extends SafeComponent {
         const paddingBottom = this.beaconPositionY !== 0 ? this.bubblePadding : vars.beaconPadding;
 
         const container = {
-            position: 'absolute',
+            width,
+            height,
             // center the container around the content
             left: x + ((width - this.bubbleRadius) / 2),
             top: y + ((height - this.bubbleRadius) / 2)
@@ -114,9 +118,9 @@ export default class Beacon extends SafeComponent {
                 pressRetentionOffset={vars.pressRetentionOffset}
                 style={container}>
                 <View style={rectangle}>
-                    {textHeader && <Text bold style={[textStyle, { paddingBottom: vars.beaconPadding }]}>{textHeader}</Text>}
-                    {textLine1 && <Text semibold={!textLine3 || !textHeader} style={textStyle}>{textLine1}</Text>}
-                    {textLine2 && <Text semibold={!textLine3 || !textHeader} style={textStyle}>{textLine2}</Text>}
+                    {textHeader && <Text bold style={[textStyle, { paddingBottom: vars.beaconPadding }]}>{tx(textHeader)}</Text>}
+                    {textLine1 && <Text semibold={!textLine3 || !textHeader} style={textStyle}>{tx(textLine1)}</Text>}
+                    {textLine2 && <Text semibold={!textLine3 || !textHeader} style={textStyle}>{tx(textLine2)}</Text>}
                     {textLine3 && <Text style={textStyle}>{textLine3}</Text>}
                 </View>
                 <View style={outerCircle}>
