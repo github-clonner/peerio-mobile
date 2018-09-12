@@ -15,8 +15,6 @@ import beaconState from '../beacons/beacon-state';
 
 const actionCellStyle = {
     flex: 1,
-    borderWidth: 1,
-    borderColor: 'green',
     alignItems: 'center',
     height: vars.tabCellHeight,
     justifyContent: 'center'
