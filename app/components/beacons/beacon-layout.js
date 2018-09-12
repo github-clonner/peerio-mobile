@@ -15,7 +15,8 @@ const style = {
 @observer
 export default class BeaconLayout extends SafeComponent {
     renderThrow() {
-        const { activeBeacon } = beaconState;
+        const { getNextBeacon } = beaconState;
+        const activeBeacon = getNextBeacon();
         if (!activeBeacon) return null;
         console.log(`position: ${activeBeacon.position}`);
         return (

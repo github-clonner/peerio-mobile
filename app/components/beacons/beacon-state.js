@@ -1,14 +1,28 @@
 import { action, observable, computed } from 'mobx';
+import _ from 'lodash';
 import { User } from '../../lib/icebear';
 
 const notSeen = (id) => !User.current.beacons.get(id);
 
 class BeaconState {
+    constructor() {
+        this.setDelay();
+    }
+
+    @observable getNextBeacon;
+    setDelay() {
+        this.getNextBeacon = () => null;
+        setTimeout(() => {
+            this.getNextBeacon = () => this.activeBeacon;
+        }, 3000);
+    }
+
     @observable.shallow beacons = [];
 
     @computed get activeBeacon() {
         // uncomment not seen later on
-        const beaconToShow = this.beacons.find(x => x.condition() /* && notSeen(x.id) */);
+        const beaconToShow = _.sortBy(this.beacons, [c => c.order])
+            .find(x => x.condition() /* && notSeen(x.id) */);
         return beaconToShow || null;
     }
 
@@ -19,6 +33,7 @@ class BeaconState {
 
     @action.bound
     removeBeacon(idToRemove) {
+        this.setDelay();
         if (!idToRemove) return;
         this.beacons = this.beacons.filter(b => b.id !== idToRemove);
     }

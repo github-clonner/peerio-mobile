@@ -5,9 +5,10 @@ import routes from '../routes/routes';
 
 class TabBeacons {
     get chatBeacon() {
-        const condition = () => routes.main.route === 'chats' && !uiState.isFirstLogin;
+        const condition = () => true;
         return observable({
             id: 'mobile-chat-icon',
+            order: 5,
             component: Beacon,
             textHeader: 'title_contacts',
             textLine1: 'title_findContacts',
@@ -17,9 +18,10 @@ class TabBeacons {
     }
 
     get fileBeacon() {
-        const condition = () => routes.main.route.toLowerCase().includes('file') && !uiState.isFirstLogin;
+        const condition = () => true;
         return observable({
             id: 'mobile-file-tab',
+            order: 3,
             component: Beacon,
             textHeader: 'title_files_beacon',
             textLine1: 'description_files_beacon',
@@ -29,9 +31,10 @@ class TabBeacons {
     }
 
     get contactBeacon() {
-        const condition = () => routes.main.route.toLowerCase().includes('contact') && !uiState.isFirstLogin;
+        const condition = () => true;
         return observable({
             id: 'mobile-contact-icon',
+            order: 1,
             component: Beacon,
             textHeader: 'title_contacts',
             textLine1: 'title_findContacts',
