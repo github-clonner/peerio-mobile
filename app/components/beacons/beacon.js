@@ -46,9 +46,10 @@ export default class Beacon extends SafeComponent {
     @action.bound
     async onPress() {
         const { id } = this.props;
+        beaconState.removeBeacon(id);
+
         User.current.beacons.set(id, true);
         await User.current.saveBeacons();
-        beaconState.removeBeacon(id);
     }
 
     renderThrow() {

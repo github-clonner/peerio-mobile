@@ -45,8 +45,8 @@ class TabBeacons {
         return observable({
             id: 'mobile-start-dm',
             component: Beacon,
-            textHeader: 'title_contacts',
-            textLine1: 'title_findContacts',
+            textHeader: 'title_startChat_beacon',
+            textLine1: 'description_startChat_beacon',
             position: null,
             condition
         });
@@ -57,8 +57,8 @@ class TabBeacons {
         return observable({
             id: 'mobile-upload-file',
             component: Beacon,
-            textHeader: 'title_contacts',
-            textLine1: 'title_findContacts',
+            textHeader: 'title_uploadFiles_beacon',
+            textLine1: 'description_uploadFiles_beacon',
             position: null,
             condition
         });
