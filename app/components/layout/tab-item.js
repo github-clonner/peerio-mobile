@@ -11,7 +11,7 @@ import routerMain from '../routes/router-main';
 import icons from '../helpers/icons';
 import testLabel from '../helpers/test-label';
 import uiState from './ui-state';
-import beaconState from '../beacons/beacon-state';
+import MeasureableIcon from './measureable-icon';
 
 const actionCellStyle = {
     flex: 1,
@@ -25,45 +25,6 @@ const actionCellStyle = {
 const actionTextStyle = {
     color: vars.white
 };
-
-@observer
-class MeasureableIcon extends SafeComponent {
-    layout = () => {
-        const { beacon } = this.props;
-        if (beacon) {
-            this.ref.measure(
-                (frameX, frameY, frameWidth, frameHeight, pageX, pageY) => {
-                    console.log(
-                        `frameWidth: ${frameWidth},
-                        frameHeight: ${frameHeight},
-                        pageX: ${pageX},
-                        pageY: ${pageY}`);
-                    beacon.position = { frameWidth, frameHeight, pageX, pageY };
-                    beaconState.requestBeacon(beacon);
-                });
-        }
-    };
-
-    // TODO clean up mock beacons
-    // ---------------------
-    componentWillUnmount() {
-        // removeBeacon is NOP for undefined
-        beaconState.removeBeacon(this.props.beacon);
-    }
-
-    setRef = ref => { this.ref = ref; };
-
-    renderThrow() {
-        return (
-            <View
-                onLayout={this.layout}
-                ref={this.setRef} // TODO clean up mock beacons
-                style={{ borderWidth: 1, borderColor: 'yellow' }}>
-                {icons.plain(this.props.icon, undefined, this.props.color)}
-            </View>
-        );
-    }
-}
 
 @observer
 export default class TabItem extends SafeComponent {
