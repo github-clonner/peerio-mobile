@@ -18,9 +18,9 @@ class BeaconState {
     }
 
     @action.bound
-    removeBeacon(beacon) {
-        if (!beacon) return;
-        this.beacons = this.beacons.filter(b => beacon.id !== b.id);
+    removeBeacon(idToRemove) {
+        if (!idToRemove) return;
+        this.beacons = this.beacons.filter(b => b.id !== idToRemove);
     }
 }
 
