@@ -7,6 +7,14 @@ import { vars } from '../../styles/styles';
 import testLabel from '../helpers/test-label';
 import MeasureableIcon from './measureable-icon';
 
+const itemStyle = {
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    margin: vars.headerIconMargin
+};
+
 @observer
 export default class HeaderIconBase extends SafeComponent {
     icon = '';
@@ -15,21 +23,14 @@ export default class HeaderIconBase extends SafeComponent {
 
     renderThrow() {
         return (
-            <View
-                style={[{ flex: 0, opacity: this.disabled ? 0.5 : 1 }, this.style]}
-                onLayout={this.layout}>
+            <View style={[{ flex: 0, opacity: this.disabled ? 0.5 : 1 }, this.style]} >
                 <TouchableOpacity
+                    pressRetentionOffset={vars.retentionOffset}
                     onPress={this.disabled ? null : this.action}
                     activeOpacity={this.disabled ? 0.5 : 1}
                     {...testLabel(this.props.testID)}>
-                    <MeasureableIcon {...this.props} />
-                    <View style={[{
-                        alignItems: 'center',
-                        backgroundColor: 'transparent',
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        margin: vars.headerIconMargin
-                    }, this.innerStyle]} >
+                    <View style={[itemStyle, this.innerStyle]} >
+                        <MeasureableIcon {...this.props} />
                         {icons.plainWhite(this.icon)}
                     </View>
                 </TouchableOpacity>
