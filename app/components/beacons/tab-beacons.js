@@ -1,11 +1,10 @@
 import { observable } from 'mobx';
 import Beacon from './beacon';
-import uiState from '../layout/ui-state';
 import routerMain from '../routes/router-main';
 
 class TabBeacons {
     get chatBeacon() {
-        const condition = () => routerMain.route === 'chats' && !uiState.isFirstLogin;
+        const condition = () => routerMain.route === 'chats';
         return observable({
             id: 'mobile-chat-icon',
             component: Beacon,
@@ -17,7 +16,7 @@ class TabBeacons {
     }
 
     get contactBeacon() {
-        const condition = () => routerMain.route.toLowerCase().includes('contact') && !uiState.isFirstLogin;
+        const condition = () => routerMain.route.toLowerCase().includes('contact');
         return observable({
             id: 'mobile-contact-icon',
             component: Beacon,
