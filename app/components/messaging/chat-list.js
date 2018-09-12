@@ -21,7 +21,7 @@ import UnreadMessageIndicator from './unread-message-indicator';
 import { vars } from '../../styles/styles';
 import ChatZeroStatePlaceholder from './chat-zero-state-placeholder';
 import SectionListWithDrawer from '../shared/section-list-with-drawer';
-import tabBeacons from '../beacons/tab-beacons';
+import headerBeacons from '../beacons/header-beacons';
 
 const INITIAL_LIST_SIZE = 10;
 
@@ -42,7 +42,7 @@ export default class ChatList extends SafeComponent {
         return (
             <PlusBorderIcon
                 action={CreateActionSheet.show}
-                beacon={tabBeacons.startChatBeacon}
+                beacon={headerBeacons.startChatBeacon}
                 testID="buttonCreateNewChat" />
         );
     }

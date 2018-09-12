@@ -23,7 +23,7 @@ import SharedFolderRemovalNotif from './shared-folder-removal-notif';
 import { fileStore } from '../../lib/icebear';
 import SearchBar from '../controls/search-bar';
 import FlatListWithDrawer from '../shared/flat-list-with-drawer';
-import tabBeacons from '../beacons/tab-beacons';
+import headerBeacons from '../beacons/header-beacons';
 
 const iconClear = require('../../assets/file_icons/ic_close.png');
 
@@ -48,7 +48,7 @@ export default class Files extends SafeComponent {
         return !fileState.isFileSelectionMode &&
             <PlusBorderIcon
                 action={() => FileUploadActionSheet.show(false, true)}
-                beacon={tabBeacons.uploadFileBeacon}
+                beacon={headerBeacons.uploadFileBeacon}
                 testID="buttonUploadFileToFiles" />;
     }
 

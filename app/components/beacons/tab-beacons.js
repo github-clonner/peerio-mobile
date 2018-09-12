@@ -39,30 +39,6 @@ class TabBeacons {
             condition
         });
     }
-
-    get startChatBeacon() {
-        const condition = () => true;
-        return observable({
-            id: 'mobile-start-dm',
-            component: Beacon,
-            textHeader: 'title_startChat_beacon',
-            textLine1: 'description_startChat_beacon',
-            position: null,
-            condition
-        });
-    }
-
-    get uploadFileBeacon() {
-        const condition = () => true;
-        return observable({
-            id: 'mobile-upload-file',
-            component: Beacon,
-            textHeader: 'title_uploadFiles_beacon',
-            textLine1: 'description_uploadFiles_beacon',
-            position: null,
-            condition
-        });
-    }
 }
 
 const tabBeacons = new TabBeacons();
