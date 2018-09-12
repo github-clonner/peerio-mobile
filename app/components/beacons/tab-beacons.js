@@ -1,27 +1,27 @@
 import { observable } from 'mobx';
 import Beacon from './beacon';
-import routerMain from '../routes/router-main';
+import routes from '../routes/routes';
 
 class TabBeacons {
     get chatBeacon() {
-        const condition = () => routerMain.route === 'chats';
+        const condition = () => routes.main.route === 'chats';
         return observable({
             id: 'mobile-chat-icon',
             component: Beacon,
             textHeader: 'title_contacts',
-            textLine1: 'title_findContacts',
+            textDescription: 'title_findContacts',
             condition,
             position: null
         });
     }
 
     get contactBeacon() {
-        const condition = () => routerMain.route.toLowerCase().includes('contact');
+        const condition = () => routes.main.route.toLowerCase().includes('contact');
         return observable({
             id: 'mobile-contact-icon',
             component: Beacon,
             textHeader: 'title_contacts',
-            textLine1: 'title_findContacts',
+            textDescription: 'title_findContacts',
             position: null,
             condition
         });

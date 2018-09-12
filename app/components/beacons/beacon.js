@@ -11,19 +11,20 @@ import beaconState from './beacon-state';
 import { tx } from '../utils/translator';
 
 const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get('window').width;
 
 const textStyle = {
+    lineHeight: vars.beaconLineHeight,
     fontSize: vars.font.size.smaller,
     color: 'white'
 };
 
-/** Beacon position relies on setting uiState.beaconContent
- *  uiState.beaconContent = {
+/** "position" relies on passing "position" as props
+ *  this.props.position = {
  *      x: contentRef.pageX,
  *      y: contentRef.pageY,
  *      width: contentRef.frameWidth,
  *      height: contentRef.frameHeight,
- *      positionX: (0-3) // TODO determine positionX based on content ? automate?
  */
 
 @observer
@@ -33,42 +34,64 @@ export default class Beacon extends SafeComponent {
     beaconPositionY;
 
     get beaconHeight() {
-        const { textHeader, textLine1, textLine2, textLine3 } = this.props;
-        let numLines = 0;
+        const { textHeader, textDescription } = this.props;
 
-        // count number of lines to determine beacon height
-        const contentArr = [textHeader, textLine1, textLine2, textLine3];
-        contentArr.forEach((line) => { if (line) numLines++; });
+        return (textHeader ? vars.beaconLineHeight : 0) +
+            (textDescription ? vars.beaconLineHeight : 0) +
+            (2 * vars.beaconPadding) +
+            (this.bubbleRadius / 2);
+    }
 
-        return (numLines * vars.beaconLineHeight) + (2 * vars.beaconPadding) + (this.bubbleRadius / 2);
+    // set beacon position Y based on where content is with regards to the height of the screen
+    get positionY() {
+        const { position } = this.props;
+        if (!position) return null;
+        const { pageY: y } = position;
+
+        return (windowHeight / 2 >= y) ? 0 : -this.beaconHeight;
+    }
+
+    // set beacon position X based on where content is with regards to the width of the screen
+    get positionX() {
+        const { position } = this.props;
+        if (!position) return null;
+
+        const { pageX: x } = position;
+
+        let positionX = -1;
+        // positionX can be 0, 1, 2, 3 (left to right)
+        if (x >= 0) positionX = 0;
+        if (x >= windowWidth * 1 / 4) positionX = 1;
+        if (x >= windowWidth / 2) positionX = 2;
+        if (x >= windowWidth * 3 / 4) positionX = 3;
+
+        return positionX;
     }
 
     @action.bound
     async onPress() {
         const { id } = this.props;
+        beaconState.removeBeacon(id);
+
         User.current.beacons.set(id, true);
         await User.current.saveBeacons();
-        beaconState.removeBeacon(id);
     }
 
     renderThrow() {
-        const { position, textHeader, textLine1, textLine2, textLine3 } = this.props;
+        const { position, textHeader, textDescription } = this.props;
 
-        console.log(`beacon: render ${position}`);
-
-        if (!position || !textHeader || !textLine1) return null;
+        if (!position || !textHeader || !textDescription) return null;
 
         const { pageX: x, pageY: y, frameWidth: width, frameHeight: height } = position;
-        const positionX = 2; // TODO
 
-        // set beacon position Y based on whether content is in the upper or lower half of the screen
-        this.beaconPositionY = (windowHeight / 2 >= y) ? 0 : -this.beaconHeight;
-        this.beaconPositionX = -vars.beaconWidth * positionX / 3;
+        // set beacon position Y based on where content is with regards to the height of the screen
+        this.beaconPositionY = this.positionY;
+        this.beaconPositionX = -vars.beaconWidth * this.positionX / 3;
 
         // set padding between bubble and text based on where the bubble is positioned
         this.bubblePadding = vars.beaconPadding + this.bubbleRadius / 2;
-        const paddingLeft = positionX === 0 ? this.bubblePadding : vars.beaconPadding;
-        const paddingRight = positionX === 3 ? this.bubblePadding : vars.beaconPadding;
+        const paddingLeft = this.positionX === 0 ? this.bubblePadding : vars.beaconPadding;
+        const paddingRight = this.positionX === 3 ? this.bubblePadding : vars.beaconPadding;
         const paddingTop = this.beaconPositionY === 0 ? this.bubblePadding : vars.beaconPadding;
         const paddingBottom = this.beaconPositionY !== 0 ? this.bubblePadding : vars.beaconPadding;
 
@@ -111,20 +134,17 @@ export default class Beacon extends SafeComponent {
             paddingTop,
             paddingBottom
         };
-        // TODO have only 1 component for header and 1 component for Text
         return (
             <TouchableOpacity
                 onPress={this.onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
                 style={container}>
                 <View style={rectangle}>
-                    {textHeader && <Text bold style={[textStyle, { paddingBottom: vars.beaconPadding }]}>{tx(textHeader)}</Text>}
-                    {textLine1 && <Text semibold={!textLine3 || !textHeader} style={textStyle}>{tx(textLine1)}</Text>}
-                    {textLine2 && <Text semibold={!textLine3 || !textHeader} style={textStyle}>{tx(textLine2)}</Text>}
-                    {textLine3 && <Text style={textStyle}>{textLine3}</Text>}
+                    {textHeader && <Text bold style={[textStyle, { paddingBottom: vars.beaconPadding }]}>{textHeader}</Text>}
+                    {textDescription && <Text semibold={!textHeader} style={textStyle}>{textDescription}</Text>}
                 </View>
                 <View style={outerCircle}>
-                    <View style={innerCircle} />{/* Replace with mock content */}
+                    <View style={innerCircle} />{/* TODO Replace with mock content */}
                 </View>
             </TouchableOpacity>
         );
