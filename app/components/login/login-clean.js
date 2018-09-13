@@ -5,7 +5,7 @@ import ActivityOverlay from '../controls/activity-overlay';
 import loginState from './login-state';
 import { signupStyles } from '../../styles/styles';
 import SafeComponent from '../shared/safe-component';
-import SignupButtonBack from '../signup/signup-button-back';
+import LoginButtonBack from './login-button-back';
 import SignupHeading from '../signup/signup-heading';
 import IntroStepIndicator from '../shared/intro-step-indicator';
 import LoginInputs from './login-inputs';
@@ -17,7 +17,7 @@ export default class LoginClean extends SafeComponent {
             <View style={signupStyles.page}>
                 <IntroStepIndicator max={1} current={1} />
                 <View style={[signupStyles.container, { paddingHorizontal: signupStyles.pagePaddingLarge }]}>
-                    <SignupButtonBack clearLastUser />
+                    <LoginButtonBack />
                     <SignupHeading title="title_welcomeBack" />
                     <LoginInputs />
                 </View>

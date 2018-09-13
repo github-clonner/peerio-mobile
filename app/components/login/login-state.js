@@ -43,14 +43,16 @@ class LoginState extends RoutedState {
         this.routes.app.loginWelcome();
     }
 
-    @action useMasterPassword() {
-        this.current = 2;
-        this.routes.app.loginWelcome();
+    @action.bound async switchUser() {
+        await User.removeLastAuthenticated();
+        this.clean();
+        this.routes.app.loginClean();
     }
 
-    @action async clearLastUser() {
+    @action.bound async clearLastUser() {
         await User.removeLastAuthenticated();
-        this.routes.app.loginClean();
+        this.clean();
+        this.routes.app.loginWelcome();
     }
 
     @action clean() {

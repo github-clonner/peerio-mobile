@@ -9,7 +9,7 @@ import { vars, signupStyles } from '../../styles/styles';
 import SafeComponent from '../shared/safe-component';
 import Text from '../controls/custom-text';
 import IntroStepIndicator from '../shared/intro-step-indicator';
-import SignupButtonBack from '../signup/signup-button-back';
+import LoginButtonBack from './login-button-back';
 import LoginInputs from './login-inputs';
 import { User } from '../../lib/icebear';
 
@@ -46,7 +46,7 @@ export default class LoginWelcomeBack extends SafeComponent {
 
     @action.bound switchUserLink(text) {
         return (
-            <Text style={{ color: vars.peerioBlue }} onPress={() => { loginState.clearLastUser(); }}>
+            <Text style={{ color: vars.peerioBlue }} onPress={loginState.switchUser}>
                 {text}
             </Text>
         );
@@ -68,7 +68,7 @@ export default class LoginWelcomeBack extends SafeComponent {
             <View style={signupStyles.page}>
                 <IntroStepIndicator max={1} current={1} />
                 <View style={[signupStyles.container, { paddingHorizontal: signupStyles.pagePaddingLarge }]}>
-                    <SignupButtonBack clearLastUser />
+                    <LoginButtonBack />
                     <View style={{ marginTop }}>
                         <Text semibold serif style={titleStyle}>
                             {tx('title_welcomeBackFirstname', { firstName: this.lastUser.firstName })}
