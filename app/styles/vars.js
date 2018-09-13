@@ -114,7 +114,10 @@ const vars = {
     beaconWidth: scaleDim(272),
     beaconBorderWidth: 4,
     beaconBg: '#5461CC',
-    beaconPadding: scaleDim(8),
+    beaconPadding: 8,
+    pointerPadding: 16,
+    pointerHeight: 12,
+    pointerWidth: 28,
     beaconLineHeight: scaleDim(16),
     signupButtonWidth: 82,
     scrollOffset: 500, // arbitrary large offset

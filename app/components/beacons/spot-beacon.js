@@ -130,13 +130,10 @@ export default class SpotBeacon extends SafeComponent {
         return this[measure];
     }
 
-    get verticalMeasures() {
+    get containerPositionY() {
         const { pageY, frameHeight } = this.props.position;
-        const containerPositionY = this.beaconIsTop ?
+        return this.beaconIsTop ?
             { top: pageY - (this.bubbleDiameter - frameHeight) / 2 } : { top: pageY - (this.beaconHeight - frameHeight / 2) };
-        return {
-            containerPositionY
-        };
     }
 
     @action.bound onDescriptionTextLayout(e) {
@@ -158,15 +155,11 @@ export default class SpotBeacon extends SafeComponent {
             rectanglePaddingRight
         } = this.horizontalMeasures;
 
-        const {
-            containerPositionY
-        } = this.verticalMeasures;
-
         // set padding between bubble and text based on where the bubble is positioned
         const paddingTop = this.beaconIsTop ? this.bubblePadding : vars.beaconPadding;
         const paddingBottom = this.beaconIsTop ? vars.beaconPadding : this.bubblePadding;
 
-        const container = [containerPositionX, containerPositionY, {
+        const container = [containerPositionX, this.containerPositionY, {
             width: containerWidth,
             height: this.beaconHeight + (this.bubbleDiameter / 2),
             position: 'absolute'

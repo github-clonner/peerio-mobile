@@ -12,6 +12,7 @@ class TabBeacons {
             headerText: 'title_contacts',
             descriptionText: 'title_findContacts',
             condition,
+            pointerDirection: 'down',
             position: null
         });
     }
@@ -24,6 +25,7 @@ class TabBeacons {
             headerText: 'title_contacts',
             descriptionText: 'title_findContacts',
             position: null,
+            pointerDirection: 'down',
             condition
         });
     }
@@ -36,6 +38,7 @@ class TabBeacons {
             headerText: 'title_contacts',
             descriptionText: 'title_findContacts',
             position: null,
+            pointerDirection: 'down',
             condition
         });
     }
@@ -48,6 +51,7 @@ class TabBeacons {
             headerText: 'title_contacts',
             descriptionText: 'title_findContacts',
             position: null,
+            pointerDirection: 'down',
             condition
         });
     }
