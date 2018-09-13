@@ -35,6 +35,11 @@ export default class Beacon extends SafeComponent {
         User.current.saveBeacons();
     }
 
+    @action.bound onPressIcon() {
+        this.onPress();
+        this.props.onPressIcon();
+    }
+
     // height of the beacon which depends on the text content
     get beaconHeight() {
         const { textHeader, textDescription } = this.props;
@@ -209,7 +214,7 @@ export default class Beacon extends SafeComponent {
                 </TouchableOpacity>
                 <TouchableOpacity
                     activeOpacity={1}
-                    onPress={this.onPress}
+                    onPress={this.onPressIcon}
                     pressRetentionOffset={vars.pressRetentionOffset}
                     style={outerCircle}>
                     {this.props.content}

@@ -55,7 +55,7 @@ export default class TabItem extends SafeComponent {
                 style={actionCellStyle}>
                 <View
                     pointerEvents="none" style={{ alignItems: 'center' }}>
-                    <MeasureableIcon {...this.props} color={color} />
+                    <MeasureableIcon {...this.props} color={color} onPress={this.onPressTabItem} />
                     <Text style={[actionTextStyle, { color }]}>{text}</Text>
                     {indicator}
                 </View>
