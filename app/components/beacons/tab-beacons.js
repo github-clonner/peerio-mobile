@@ -1,43 +1,54 @@
 import { observable } from 'mobx';
 import Beacon from './beacon';
-import uiState from '../layout/ui-state';
 import routes from '../routes/routes';
+
 
 class TabBeacons {
     get chatBeacon() {
-        const condition = () => true;
+        const condition = () => routes.main.route === 'chats';
         return observable({
             id: 'mobile-chat-icon',
             order: 5,
             component: Beacon,
-            textHeader: 'title_contacts',
-            textLine1: 'title_findContacts',
+            textHeader: 'title_chat_beacon',
+            textDescription: 'description_chat_beacon',
             condition,
             position: null
         });
     }
 
-    get fileBeacon() {
-        const condition = () => true;
+    get filesBeacon() {
+        const condition = () => routes.main.route.toLowerCase().includes('file');
         return observable({
-            id: 'mobile-file-tab',
-            order: 3,
+            id: 'mobile-files-icon',
             component: Beacon,
             textHeader: 'title_files_beacon',
-            textLine1: 'description_files_beacon',
+            textDescription: 'description_files_beacon',
             position: null,
             condition
         });
     }
 
     get contactBeacon() {
-        const condition = () => true;
+        const condition = () => routes.main.route.toLowerCase().includes('contact');
         return observable({
             id: 'mobile-contact-icon',
             order: 1,
             component: Beacon,
+            textHeader: 'title_contact_beacon',
+            textDescription: 'description_contact_beacon',
+            position: null,
+            condition
+        });
+    }
+
+    get settingsBeacon() {
+        const condition = () => routes.main.route === 'settings';
+        return observable({
+            id: 'mobile-settings-icon',
+            component: Beacon,
             textHeader: 'title_contacts',
-            textLine1: 'title_findContacts',
+            textDescription: 'title_findContacts',
             position: null,
             condition
         });

@@ -15,8 +15,6 @@ import MeasureableIcon from './measureable-icon';
 
 const actionCellStyle = {
     flex: 1,
-    borderWidth: 1,
-    borderColor: 'green',
     alignItems: 'center',
     height: vars.tabCellHeight,
     justifyContent: 'center'

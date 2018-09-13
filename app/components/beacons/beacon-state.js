@@ -1,21 +1,21 @@
 import { action, observable, computed } from 'mobx';
+// import { User } from '../../lib/icebear';
 import _ from 'lodash';
-import { User } from '../../lib/icebear';
 
-const notSeen = (id) => !User.current.beacons.get(id);
+// const notSeen = (id) => !User.current.beacons.get(id);
 
 class BeaconState {
-    constructor() {
-        this.setDelay();
-    }
+    // constructor() {
+    //     this.setDelay();
+    // }
 
-    @observable getNextBeacon;
-    setDelay() {
-        this.getNextBeacon = () => null;
-        setTimeout(() => {
-            this.getNextBeacon = () => this.activeBeacon;
-        }, 3000);
-    }
+    // @observable getNextBeacon;
+    // setDelay() {
+    //     this.getNextBeacon = () => null;
+    //     setTimeout(() => {
+    //         this.getNextBeacon = () => this.activeBeacon;
+    //     }, 3000);
+    // }
 
     @observable.shallow beacons = [];
 
@@ -33,7 +33,7 @@ class BeaconState {
 
     @action.bound
     removeBeacon(idToRemove) {
-        this.setDelay();
+        // this.setDelay();
         if (!idToRemove) return;
         this.beacons = this.beacons.filter(b => b.id !== idToRemove);
     }

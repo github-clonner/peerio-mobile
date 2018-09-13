@@ -45,7 +45,7 @@ export default class TabContainer extends SafeComponent {
                     route="files"
                     icon="folder"
                     bubble={fileStore.unreadFiles}
-                    beacon={tabBeacons.fileBeacon} />
+                    beacon={tabBeacons.filesBeacon} />
                 <TabItem
                     text={t('title_contacts')}
                     route={contactState.empty ? 'contactAdd' : 'contacts'}
@@ -55,7 +55,8 @@ export default class TabContainer extends SafeComponent {
                 <TabItem
                     text={t('title_settings')}
                     route="settings"
-                    icon="settings" />
+                    icon="settings"
+                    beacon={tabBeacons.settingsBeacon} />
             </View>
         );
     }
