@@ -10,7 +10,7 @@ class HeaderBeacons {
             order: 6,
             component: Beacon,
             textHeader: 'title_startChat_beacon',
-            textLine1: 'description_startChat_beacon',
+            textDescription: 'description_startChat_beacon',
             position: null,
             condition
         });
@@ -23,7 +23,7 @@ class HeaderBeacons {
             order: 4,
             component: Beacon,
             textHeader: 'title_uploadFiles_beacon',
-            textLine1: 'description_uploadFiles_beacon',
+            textDescription: 'description_uploadFiles_beacon',
             position: null,
             condition
         });

@@ -18,7 +18,7 @@ class TabBeacons {
     }
 
     get filesBeacon() {
-        const condition = () => routes.main.route.toLowerCase().includes('file');
+        const condition = () => routes.main.route === 'files';
         return observable({
             id: 'mobile-files-icon',
             component: Beacon,
