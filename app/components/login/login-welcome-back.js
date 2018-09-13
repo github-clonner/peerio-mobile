@@ -4,7 +4,6 @@ import { action, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { T, tx } from '../utils/translator';
 import loginState from './login-state';
-import ActivityOverlay from '../controls/activity-overlay';
 import { vars, signupStyles } from '../../styles/styles';
 import SafeComponent from '../shared/safe-component';
 import Text from '../controls/custom-text';
