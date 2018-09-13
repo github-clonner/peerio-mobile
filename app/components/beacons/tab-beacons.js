@@ -1,11 +1,11 @@
 import { observable } from 'mobx';
 import Beacon from './beacon';
-import routes from '../routes/routes';
+// import routes from '../routes/routes';
 
 
 class TabBeacons {
     get chatBeacon() {
-        const condition = () => routes.main.route === 'chats';
+        const condition = () => true;
         return observable({
             id: 'mobile-chat-icon',
             order: 5,
@@ -18,9 +18,10 @@ class TabBeacons {
     }
 
     get filesBeacon() {
-        const condition = () => routes.main.route === 'files';
+        const condition = () => true;
         return observable({
             id: 'mobile-files-icon',
+            order: 3,
             component: Beacon,
             textHeader: 'title_files_beacon',
             textDescription: 'description_files_beacon',
@@ -30,7 +31,7 @@ class TabBeacons {
     }
 
     get contactBeacon() {
-        const condition = () => routes.main.route.toLowerCase().includes('contact');
+        const condition = () => true;
         return observable({
             id: 'mobile-contact-icon',
             order: 1,
@@ -42,17 +43,17 @@ class TabBeacons {
         });
     }
 
-    get settingsBeacon() {
-        const condition = () => routes.main.route === 'settings';
-        return observable({
-            id: 'mobile-settings-icon',
-            component: Beacon,
-            textHeader: 'title_contacts',
-            textDescription: 'title_findContacts',
-            position: null,
-            condition
-        });
-    }
+    // get settingsBeacon() {
+    //     const condition = () => routes.main.route === 'settings';
+    //     return observable({
+    //         id: 'mobile-settings-icon',
+    //         component: Beacon,
+    //         textHeader: 'title_contacts',
+    //         textDescription: 'title_findContacts',
+    //         position: null,
+    //         condition
+    //     });
+    // }
 }
 
 const tabBeacons = new TabBeacons();
