@@ -13,7 +13,7 @@ import { tx } from '../utils/translator';
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
-const MINIMUM_BUBBLE_RADIUS = 32;
+const MINIMUM_BUBBLE_DIAMETER = 32;
 
 const textStyle = {
     fontSize: vars.font.size.smaller,
@@ -21,7 +21,7 @@ const textStyle = {
 };
 
 @observer
-export default class Beacon extends SafeComponent {
+export default class SpotBeacon extends SafeComponent {
     componentWillMount() {
         LayoutAnimation.easeInEaseOut();
     }
@@ -52,8 +52,8 @@ export default class Beacon extends SafeComponent {
     }
 
     get bubbleDiameter() {
-        const outerRadius = this.props.position.frameWidth + 8 + (2 * vars.beaconBorderWidth);
-        return outerRadius >= MINIMUM_BUBBLE_RADIUS ? outerRadius : MINIMUM_BUBBLE_RADIUS;
+        const outerDiameter = this.props.position.frameWidth + 8 + (2 * vars.beaconBorderWidth);
+        return outerDiameter >= MINIMUM_BUBBLE_DIAMETER ? outerDiameter : MINIMUM_BUBBLE_DIAMETER;
     }
 
     get bubblePadding() {
@@ -125,8 +125,10 @@ export default class Beacon extends SafeComponent {
 
     get verticalMeasures() {
         const { pageY, frameHeight } = this.props.position;
+        const containerPositionY = this.beaconIsTop ?
+            { top: pageY - (this.bubbleDiameter - frameHeight) / 2 } : { top: pageY - (this.beaconHeight - frameHeight / 2) };
         return {
-            containerPositionY: { top: pageY - (this.beaconHeight - frameHeight / 2) }
+            containerPositionY
         };
     }
 
@@ -155,7 +157,9 @@ export default class Beacon extends SafeComponent {
         const container = [containerPositionX, containerPositionY, {
             width: containerWidth,
             height: this.beaconHeight + (this.bubbleDiameter / 2),
-            position: 'absolute'
+            position: 'absolute',
+            borderColor: 'red',
+            borderWidth: 1
         }];
 
         const rectanglePositionY = this.beaconIsTop ? { bottom: 0 } : { top: 0 };
@@ -207,9 +211,11 @@ export default class Beacon extends SafeComponent {
     }
 }
 
-Beacon.propTypes = {
+SpotBeacon.propTypes = {
+    id: PropTypes.any,
+    position: PropTypes.any,
+    spotBgColor: PropTypes.any,
     textHeader: PropTypes.any,
-    textLine1: PropTypes.any,
-    textLine2: PropTypes.any,
-    textLine3: PropTypes.any
+    textDescription: PropTypes.any,
+    content: PropTypes.any
 };

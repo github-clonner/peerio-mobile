@@ -1,5 +1,5 @@
 import { observable } from 'mobx';
-import Beacon from './beacon';
+import SpotBeacon from './spot-beacon';
 import routes from '../routes/routes';
 
 
@@ -8,7 +8,7 @@ class TabBeacons {
         const condition = () => routes.main.route === 'chats';
         return observable({
             id: 'mobile-chat-icon',
-            component: Beacon,
+            component: SpotBeacon,
             textHeader: 'title_contacts',
             textDescription: 'title_findContacts',
             condition,
@@ -20,7 +20,7 @@ class TabBeacons {
         const condition = () => routes.main.route === 'files';
         return observable({
             id: 'mobile-files-icon',
-            component: Beacon,
+            component: SpotBeacon,
             textHeader: 'title_contacts',
             textDescription: 'title_findContacts',
             position: null,
@@ -32,7 +32,7 @@ class TabBeacons {
         const condition = () => routes.main.route.toLowerCase().includes('contact');
         return observable({
             id: 'mobile-contact-icon',
-            component: Beacon,
+            component: SpotBeacon,
             textHeader: 'title_contacts',
             textDescription: 'title_findContacts',
             position: null,
@@ -44,7 +44,7 @@ class TabBeacons {
         const condition = () => routes.main.route === 'settings';
         return observable({
             id: 'mobile-settings-icon',
-            component: Beacon,
+            component: SpotBeacon,
             textHeader: 'title_contacts',
             textDescription: 'title_findContacts',
             position: null,

@@ -14,7 +14,7 @@ import { vars } from '../../styles/styles';
 import mockContactStore from './mock-contact-store';
 import mockFileStore from './mock-file-store';
 import TabContainer from '../layout/tab-container';
-import Beacon from '../beacons/beacon';
+import SpotBeacon from '../beacons/spot-beacon';
 
 @observer
 export default class MockBeacon extends Component {
@@ -47,7 +47,7 @@ export default class MockBeacon extends Component {
                 <TabContainer />
                 {this.list}
                 {/* <TabContainer /> */}
-                <Beacon />
+                <SpotBeacon />
                 <PopupLayout key="popups" />
                 <StatusBar barStyle="default" />
             </View>
