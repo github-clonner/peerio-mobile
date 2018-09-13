@@ -8,13 +8,11 @@ class BeaconState {
     @observable beacons = [];
 
     @computed get activeBeacon() {
-        // uncomment not seen later on
-        const beaconToShow = _.chain(this.beacons)
+        return _.chain(this.beacons)
             .filter(b => notSeen(b.id))
             .sortBy(b => b.priority)
             .first(x => x.condition())
             .value();
-        return beaconToShow || null;
     }
 
     requestBeacon(beacon) {
