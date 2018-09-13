@@ -1,7 +1,7 @@
 import { action, observable, computed } from 'mobx';
-import { User } from '../../lib/icebear';
+// import { User } from '../../lib/icebear';
 
-const notSeen = (id) => !User.current.beacons.get(id);
+// const notSeen = (id) => !User.current.beacons.get(id);
 
 class BeaconState {
     @observable.shallow beacons = [];

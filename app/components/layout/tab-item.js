@@ -27,12 +27,15 @@ const actionTextStyle = {
 @observer
 class MeasureableIcon extends SafeComponent {
     layout = () => {
-        const { beacon } = this.props;
+        const { beacon, icon } = this.props;
         if (beacon) {
             this.ref.measure(
                 (frameX, frameY, frameWidth, frameHeight, pageX, pageY) => {
                     console.log(`frameWidth: ${frameWidth}, frameHeight: ${frameHeight}, pageX: ${pageX}, pageY: ${pageY}`);
                     beacon.position = { frameWidth, frameHeight, pageX, pageY };
+                    beacon.content = icons.plain(icon, undefined, vars.peerioBlue);
+                    // color of tab container
+                    beacon.spotBgColor = vars.darkBlueBackground15;
                     beaconState.requestBeacon(beacon);
                 });
         }
@@ -41,8 +44,7 @@ class MeasureableIcon extends SafeComponent {
     // TODO clean up mock beacons
     // ---------------------
     componentWillUnmount() {
-        // removeBeacon is NOP for undefined
-        beaconState.removeBeacon(this.props.beacon);
+        if (this.props.beacon) beaconState.removeBeacon(this.props.beacon.id);
     }
 
     setRef = ref => { this.ref = ref; };
