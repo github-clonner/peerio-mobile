@@ -20,9 +20,6 @@ import TestHelper from './helpers/test-helper';
 import MockComponent from './mocks';
 import ActionSheetLayout from './layout/action-sheet-layout';
 import Text from './controls/custom-text';
-import fileState from './files/file-state';
-import { promiseWhen } from './helpers/sugar';
-import routes from './routes/routes';
 import loginState from './login/login-state';
 import { uploadFileAndroid, uploadFileiOS, wakeUpAndUploadFileiOS } from './utils/shared-files';
 
