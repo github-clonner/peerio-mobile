@@ -8,12 +8,12 @@ import { vars, signupStyles } from '../../styles/styles';
 import SafeComponent from '../shared/safe-component';
 import Text from '../controls/custom-text';
 import IntroStepIndicator from '../shared/intro-step-indicator';
+import LoginButtonBack from './login-button-back';
 import LoginInputs from './login-inputs';
 import { User, telemetry } from '../../lib/icebear';
 import tm from '../../telemetry';
 import TmHelper from '../../telemetry/helpers';
-import signupState from '../signup/signup-state';
-import icons from '../helpers/icons';
+import ActivityOverlay from '../controls/activity-overlay';
 
 const { S } = telemetry;
 
@@ -57,33 +57,13 @@ export default class LoginWelcomeBack extends SafeComponent {
     @action.bound switchUserLink(text) {
         const onPress = () => {
             tm.login.changeUser();
-            loginState.clearLastUser();
+            loginState.switchUser();
         };
         return (
             <Text style={{ color: vars.peerioBlue }} onPress={onPress}>
                 {text}
             </Text>
         );
-    }
-
-    @action.bound async onBackPressed() {
-        tm.login.navigate(S.BACK);
-        signupState.prev();
-        await User.removeLastAuthenticated();
-    }
-
-    get backButton() {
-        return (
-            <View style={signupStyles.backButtonContainer}>
-                {icons.basic(
-                    'arrow-back',
-                    vars.darkBlue,
-                    this.onBackPressed,
-                    { backgroundColor: 'transparent' },
-                    null,
-                    true,
-                    'back')}
-            </View>);
     }
 
     get placeholder() {
@@ -101,8 +81,8 @@ export default class LoginWelcomeBack extends SafeComponent {
         return (
             <View style={signupStyles.page}>
                 <IntroStepIndicator max={1} current={1} />
-                <View style={signupStyles.container}>
-                    {this.backButton}
+                <View style={[signupStyles.container, { paddingHorizontal: signupStyles.pagePaddingLarge }]}>
+                    <LoginButtonBack />
                     <View style={{ marginTop }}>
                         <Text semibold serif style={titleStyle}>
                             {tx('title_welcomeBackFirstname', { firstName: this.lastUser.firstName })}
@@ -116,6 +96,7 @@ export default class LoginWelcomeBack extends SafeComponent {
                     </View>
                     <LoginInputs hideUsernameInput />
                 </View>
+                <ActivityOverlay large visible={loginState.isInProgress} />
                 <StatusBar hidden />
             </View>
         );

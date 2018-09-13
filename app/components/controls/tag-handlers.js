@@ -5,6 +5,8 @@ import Italic from './italic';
 import Link from './link';
 import routes from '../routes/routes';
 
+let counter = 0;
+
 function a(text, url, style) {
     if (!url) {
         console.error(`tag-handlers.js: bad ${text} link`);
@@ -30,7 +32,7 @@ function i(text) {
 }
 
 function br() {
-    return <Text>{'\n'}</Text>;
+    return <Text key={counter++}>{'\n'}</Text>;
 }
 
 module.exports = {
