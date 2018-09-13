@@ -35,6 +35,12 @@ export default class Beacon extends SafeComponent {
         User.current.saveBeacons();
     }
 
+    @action.bound onPressContainer() {
+        const { flow } = this.props;
+        this.onPress();
+        if (flow) beaconState.skippedFlows.push(flow);
+    }
+
     @action.bound onPressIcon() {
         this.onPress();
         this.props.onPressIcon();
@@ -206,7 +212,7 @@ export default class Beacon extends SafeComponent {
             <View style={container} pointerEvents="box-none">
                 <TouchableOpacity
                     activeOpacity={1}
-                    onPress={this.onPress}
+                    onPress={this.onPressContainer}
                     pressRetentionOffset={vars.pressRetentionOffset}
                     style={rectangle}>
                     {textHeader && <Text bold style={[textStyle, { paddingBottom: vars.beaconPadding }]}>{tx(textHeader)}</Text>}

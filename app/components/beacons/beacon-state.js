@@ -5,12 +5,16 @@ import _ from 'lodash';
 // const notSeen = (id) => !User.current.beacons.get(id);
 
 class BeaconState {
-    @observable.shallow beacons = [];
+    @observable.shallow skippedFlows = [];
+    @observable beacons = [];
 
     @computed get activeBeacon() {
         // uncomment not seen later on
-        const beaconToShow = _.sortBy(this.beacons, [c => c.order])
-            .find(x => x.condition() /* && notSeen(x.id) */);
+        const beaconToShow = _.chain(this.beacons)
+            .filter(b => !this.skippedFlows.includes(b.flow))
+            .sortBy(b => b.priority)
+            .first(x => x.condition() /* && notSeen(x.id) */)
+            .value();
         return beaconToShow || null;
     }
 

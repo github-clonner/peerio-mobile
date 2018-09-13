@@ -7,7 +7,7 @@ class HeaderBeacons {
         const condition = () => routes.main.route === 'chats';
         return observable({
             id: 'mobile-start-dm',
-            order: 6,
+            priority: 4,
             component: Beacon,
             textHeader: 'title_startChat_beacon',
             textDescription: 'description_startChat_beacon',
@@ -20,7 +20,7 @@ class HeaderBeacons {
         const condition = () => routes.main.route.toLowerCase().includes('file');
         return observable({
             id: 'mobile-upload-file',
-            order: 4,
+            priority: 5,
             component: Beacon,
             textHeader: 'title_uploadFiles_beacon',
             textDescription: 'description_uploadFiles_beacon',
@@ -33,7 +33,7 @@ class HeaderBeacons {
         const condition = () => routes.main.route.toLowerCase().includes('contact');
         return observable({
             id: 'mobile-addContact-file',
-            order: 2,
+            priority: 6,
             component: Beacon,
             textHeader: 'title_search_beacon',
             textDescription: 'description_search_beacon',

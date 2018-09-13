@@ -8,7 +8,8 @@ class TabBeacons {
         const condition = () => true;
         return observable({
             id: 'mobile-chat-icon',
-            order: 5,
+            priority: 3,
+            flow: 'onboarding',
             component: Beacon,
             textHeader: 'title_chat_beacon',
             textDescription: 'description_chat_beacon',
@@ -21,7 +22,8 @@ class TabBeacons {
         const condition = () => true;
         return observable({
             id: 'mobile-files-icon',
-            order: 3,
+            priority: 2,
+            flow: 'onboarding',
             component: Beacon,
             textHeader: 'title_files_beacon',
             textDescription: 'description_files_beacon',
@@ -34,7 +36,8 @@ class TabBeacons {
         const condition = () => true;
         return observable({
             id: 'mobile-contact-icon',
-            order: 1,
+            priority: 1,
+            flow: 'onboarding',
             component: Beacon,
             textHeader: 'title_contact_beacon',
             textDescription: 'description_contact_beacon',
