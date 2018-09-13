@@ -1,18 +1,16 @@
 import { action, observable, computed } from 'mobx';
-// import { User } from '../../lib/icebear';
 import _ from 'lodash';
+import { User } from '../../lib/icebear';
 
-// const notSeen = (id) => !User.current.beacons.get(id);
+const notSeen = (id) => !User.current.beacons.get(id);
 
 class BeaconState {
-    @observable.shallow skippedFlows = [];
     @observable beacons = [];
 
     @computed get activeBeacon() {
         // uncomment not seen later on
         const beaconToShow = _.chain(this.beacons)
-            // .filter(b => notSeen(b.id))
-            .filter(b => !this.skippedFlows.includes(b.flow))
+            .filter(b => notSeen(b.id))
             .sortBy(b => b.priority)
             .first(x => x.condition())
             .value();

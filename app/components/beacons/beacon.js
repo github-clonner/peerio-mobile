@@ -26,19 +26,26 @@ export default class Beacon extends SafeComponent {
         LayoutAnimation.easeInEaseOut();
     }
 
-    @action.bound onPress() {
-        const { id } = this.props;
-        beaconState.removeBeacon(id);
-
+    markSeen = (id) => {
         User.current.beacons.set(id, true);
         // we are not waiting for saveBeacons because there's no visual feedback
         User.current.saveBeacons();
+    };
+
+    @action.bound onPress() {
+        const { id } = this.props;
+        beaconState.removeBeacon(id);
+        this.markSeen(id);
     }
 
     @action.bound onPressContainer() {
         const { flow } = this.props;
         this.onPress();
-        if (flow) beaconState.skippedFlows.push(flow);
+        if (flow) {
+            beaconState.beacons
+                .filter(b => b.flow === flow)
+                .forEach(b => this.markSeen(b.id));
+        }
     }
 
     @action.bound onPressIcon() {
