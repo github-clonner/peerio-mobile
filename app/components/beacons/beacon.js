@@ -123,11 +123,24 @@ export default class Beacon extends SafeComponent {
         return this[measure];
     }
 
-    get verticalMeasures() {
+    get verticalLowerHalf() {
         const { pageY, frameHeight } = this.props.position;
         return {
             containerPositionY: { top: pageY - (this.beaconHeight - frameHeight / 2) }
         };
+    }
+
+    get verticalUpperHalf() {
+        const { pageY } = this.props.position;
+        return {
+            containerPositionY: { top: pageY - (this.bubbleDiameter / 4) }
+        };
+    }
+
+    get verticalMeasures() {
+        const { pageY } = this.props.position;
+        if (pageY < windowHeight / 2) return this.verticalUpperHalf;
+        return this.verticalLowerHalf;
     }
 
     renderThrow() {
