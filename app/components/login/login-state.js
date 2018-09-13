@@ -43,8 +43,15 @@ class LoginState extends RoutedState {
         this.routes.app.loginWelcome();
     }
 
-    @action useMasterPassword() {
-        this.current = 2;
+    @action.bound async switchUser() {
+        await User.removeLastAuthenticated();
+        this.clean();
+        this.routes.app.loginClean();
+    }
+
+    @action.bound async clearLastUser() {
+        await User.removeLastAuthenticated();
+        this.clean();
         this.routes.app.loginWelcome();
     }
 
@@ -150,7 +157,6 @@ class LoginState extends RoutedState {
             }
             untrust = popupResult.checked;
         }
-        await User.removeLastAuthenticated();
         const { username } = User.current;
         overrideServer(null);
         await TinyDb.system.removeValue(`apple-review-login`);
@@ -165,6 +171,15 @@ class LoginState extends RoutedState {
         }
         await User.current.signout(untrust);
         await RNRestart.Restart();
+    }
+
+    // Returns true if a we have existing user data AND that user is not currently logged in
+    async haveLoggedOutUser() {
+        const userData = await User.getLastAuthenticated();
+        if (!userData) return false;
+        const { username } = userData;
+        if (await TinyDb.system.getValue(`user::${username}::keychain`)) return false;
+        return true;
     }
 
     async load() {
