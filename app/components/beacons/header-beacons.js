@@ -28,6 +28,19 @@ class HeaderBeacons {
             condition
         });
     }
+
+    get addContactBeacon() {
+        const condition = () => routes.main.route.toLowerCase().includes('contact');
+        return observable({
+            id: 'mobile-addContact-file',
+            order: 2,
+            component: Beacon,
+            textHeader: 'title_search_beacon',
+            textDescription: 'description_search_beacon',
+            position: null,
+            condition
+        });
+    }
 }
 
 const headerBeacons = new HeaderBeacons();
