@@ -32,7 +32,7 @@ class HeaderBeacons {
     get addContactBeacon() {
         const condition = () => routes.main.route.toLowerCase().includes('contact');
         return observable({
-            id: 'mobile-addContact-file',
+            id: 'mobile-addContact',
             priority: 2,
             component: Beacon,
             textHeader: 'title_search_beacon',

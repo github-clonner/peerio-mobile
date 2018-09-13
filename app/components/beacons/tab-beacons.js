@@ -1,7 +1,5 @@
 import { observable } from 'mobx';
 import Beacon from './beacon';
-// import routes from '../routes/routes';
-
 
 class TabBeacons {
     get chatBeacon() {
@@ -45,18 +43,6 @@ class TabBeacons {
             condition
         });
     }
-
-    // get settingsBeacon() {
-    //     const condition = () => routes.main.route === 'settings';
-    //     return observable({
-    //         id: 'mobile-settings-icon',
-    //         component: Beacon,
-    //         textHeader: 'title_contacts',
-    //         textDescription: 'title_findContacts',
-    //         position: null,
-    //         condition
-    //     });
-    // }
 }
 
 const tabBeacons = new TabBeacons();
