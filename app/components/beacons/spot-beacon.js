@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { action } from 'mobx';
+import { action, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { View, Dimensions, TouchableOpacity, LayoutAnimation } from 'react-native';
 import SafeComponent from '../shared/safe-component';
@@ -16,12 +16,15 @@ const windowWidth = Dimensions.get('window').width;
 const MINIMUM_BUBBLE_DIAMETER = 32;
 
 const textStyle = {
+    lineHeight: vars.beaconLineHeight,
     fontSize: vars.font.size.smaller,
     color: 'white'
 };
 
 @observer
 export default class SpotBeacon extends SafeComponent {
+    @observable descriptionTextHeight;
+
     componentWillMount() {
         LayoutAnimation.easeInEaseOut();
     }
@@ -35,14 +38,18 @@ export default class SpotBeacon extends SafeComponent {
         User.current.saveBeacons();
     }
 
-    // height of the beacon which depends on the text content
     get beaconHeight() {
-        const { textHeader, textDescription } = this.props;
+        const { headerText, descriptionText } = this.props;
 
-        return (textHeader ? vars.beaconLineHeight : 0) +
-            (textDescription ? vars.beaconLineHeight : 0) +
-            (2 * vars.beaconPadding) +
-            (this.bubbleDiameter / 2);
+        return (
+            // Header height + its padding
+            (headerText ? vars.beaconLineHeight + vars.beaconPadding : 0) +
+            // Description text height (taken from onLayout); is equivalent to lineHeight * numberOfLines
+            (descriptionText ? this.descriptionTextHeight : 0) +
+            // Container padding
+            (vars.beaconPadding) +
+            // Icon adds height to the container equal to half the size of the icon
+            (this.bubbleDiameter / 2));
     }
 
     get beaconIsTop() {
@@ -57,7 +64,7 @@ export default class SpotBeacon extends SafeComponent {
     }
 
     get bubblePadding() {
-        return vars.beaconPadding + this.bubbleDiameter / 2;
+        return vars.beaconPadding - vars.beaconBorderWidth + this.bubbleDiameter / 2;
     }
 
     get contentPositionLeft() {
@@ -132,10 +139,15 @@ export default class SpotBeacon extends SafeComponent {
         };
     }
 
-    renderThrow() {
-        const { position, textHeader, textDescription } = this.props;
+    @action.bound onDescriptionTextLayout(e) {
+        const { height } = e.nativeEvent.layout;
+        this.descriptionTextHeight = height;
+    }
 
-        if (!position || !textHeader || !textDescription) return null;
+    renderThrow() {
+        const { position, headerText, descriptionText } = this.props;
+
+        if (!position || !headerText && !descriptionText) return null;
 
         const {
             containerWidth,
@@ -151,15 +163,13 @@ export default class SpotBeacon extends SafeComponent {
         } = this.verticalMeasures;
 
         // set padding between bubble and text based on where the bubble is positioned
-        const paddingTop = vars.beaconPadding;
-        const paddingBottom = this.beaconIsTop ? this.bubblePadding : vars.beaconPadding;
+        const paddingTop = this.beaconIsTop ? this.bubblePadding : vars.beaconPadding;
+        const paddingBottom = this.beaconIsTop ? vars.beaconPadding : this.bubblePadding;
 
         const container = [containerPositionX, containerPositionY, {
             width: containerWidth,
             height: this.beaconHeight + (this.bubbleDiameter / 2),
-            position: 'absolute',
-            borderColor: 'red',
-            borderWidth: 1
+            position: 'absolute'
         }];
 
         const rectanglePositionY = this.beaconIsTop ? { bottom: 0 } : { top: 0 };
@@ -196,8 +206,8 @@ export default class SpotBeacon extends SafeComponent {
                     onPress={this.onPress}
                     pressRetentionOffset={vars.pressRetentionOffset}
                     style={rectangle}>
-                    {textHeader && <Text bold style={[textStyle, { paddingBottom: vars.beaconPadding }]}>{tx(textHeader)}</Text>}
-                    {textDescription && <Text semibold={!textHeader} style={textStyle}>{tx(textDescription)}</Text>}
+                    {headerText && <Text bold style={[textStyle, { paddingBottom: vars.beaconPadding }]}>{tx(headerText)}</Text>}
+                    {descriptionText && <Text semibold={!headerText} style={textStyle} onLayout={this.onDescriptionTextLayout} >{tx(descriptionText)}</Text>}
                 </TouchableOpacity>
                 <TouchableOpacity
                     activeOpacity={1}
@@ -215,7 +225,7 @@ SpotBeacon.propTypes = {
     id: PropTypes.any,
     position: PropTypes.any,
     spotBgColor: PropTypes.any,
-    textHeader: PropTypes.any,
-    textDescription: PropTypes.any,
+    headerText: PropTypes.any,
+    descriptionText: PropTypes.any,
     content: PropTypes.any
 };
