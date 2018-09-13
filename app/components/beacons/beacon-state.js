@@ -11,9 +11,10 @@ class BeaconState {
     @computed get activeBeacon() {
         // uncomment not seen later on
         const beaconToShow = _.chain(this.beacons)
+            // .filter(b => notSeen(b.id))
             .filter(b => !this.skippedFlows.includes(b.flow))
             .sortBy(b => b.priority)
-            .first(x => x.condition() /* && notSeen(x.id) */)
+            .first(x => x.condition())
             .value();
         return beaconToShow || null;
     }
