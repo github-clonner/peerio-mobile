@@ -5,18 +5,6 @@ import _ from 'lodash';
 // const notSeen = (id) => !User.current.beacons.get(id);
 
 class BeaconState {
-    // constructor() {
-    //     this.setDelay();
-    // }
-
-    // @observable getNextBeacon;
-    // setDelay() {
-    //     this.getNextBeacon = () => null;
-    //     setTimeout(() => {
-    //         this.getNextBeacon = () => this.activeBeacon;
-    //     }, 3000);
-    // }
-
     @observable.shallow beacons = [];
 
     @computed get activeBeacon() {
@@ -33,7 +21,6 @@ class BeaconState {
 
     @action.bound
     removeBeacon(idToRemove) {
-        // this.setDelay();
         if (!idToRemove) return;
         this.beacons = this.beacons.filter(b => b.id !== idToRemove);
     }
