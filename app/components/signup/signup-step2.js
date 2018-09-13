@@ -22,9 +22,7 @@ const { S } = telemetry;
 const { validators } = validation;
 const { username } = validators;
 
-// TODO change after icebear fix-input-validation has been merged
-// const MAX_USERNAME_LENGTH = config.user.maxUsernameLength;
-const MAX_USERNAME_LENGTH = 16;
+const MAX_USERNAME_LENGTH = config.user.maxUsernameLength;
 
 @observer
 export default class SignupStep2 extends SafeComponent {
