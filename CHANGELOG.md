@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.349.0"></a>
+# [3.349.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.348.0...v3.349.0) (2018-09-13)
+
+
+### Bug Fixes
+
+* adjust to sdk modifications ([3a86d65](https://github.com/PeerioTechnologies/peerio-mobile/commit/3a86d65))
+* deps ([3db8bee](https://github.com/PeerioTechnologies/peerio-mobile/commit/3db8bee))
+* input UI bugs ([7602b5c](https://github.com/PeerioTechnologies/peerio-mobile/commit/7602b5c))
+* key choice logic in key-value-storage.js ([#312](https://github.com/PeerioTechnologies/peerio-mobile/issues/312)) ([ff5af3d](https://github.com/PeerioTechnologies/peerio-mobile/commit/ff5af3d))
+* remove tm init func and fixed keychain error ([d28be35](https://github.com/PeerioTechnologies/peerio-mobile/commit/d28be35))
+* rename FileStreamAbstract to FileStreamBase ([e6a56db](https://github.com/PeerioTechnologies/peerio-mobile/commit/e6a56db))
+* routing logic ([ee72337](https://github.com/PeerioTechnologies/peerio-mobile/commit/ee72337))
+* telemetry parameters ([abf4c2c](https://github.com/PeerioTechnologies/peerio-mobile/commit/abf4c2c))
+* telemetry trackers from design review ([c2c605f](https://github.com/PeerioTechnologies/peerio-mobile/commit/c2c605f))
+* tos accordion terms of use ([626c0ac](https://github.com/PeerioTechnologies/peerio-mobile/commit/626c0ac))
+* tos event ([1302968](https://github.com/PeerioTechnologies/peerio-mobile/commit/1302968))
+
+
+### Features
+
+* Android share extension ([#291](https://github.com/PeerioTechnologies/peerio-mobile/issues/291)) ([d4d0e6d](https://github.com/PeerioTechnologies/peerio-mobile/commit/d4d0e6d))
+
+
+
 <a name="3.348.0"></a>
 # [3.348.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.347.0...v3.348.0) (2018-09-05)
 
