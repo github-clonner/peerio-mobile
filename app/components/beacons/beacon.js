@@ -138,8 +138,7 @@ export default class Beacon extends SafeComponent {
     }
 
     get verticalMeasures() {
-        const { pageY } = this.props.position;
-        if (pageY < windowHeight / 2) return this.verticalUpperHalf;
+        if (this.beaconIsTop) return this.verticalUpperHalf;
         return this.verticalLowerHalf;
     }
 
