@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.350.0"></a>
+# [3.350.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.349.0...v3.350.0) (2018-09-13)
+
+
+### Features
+
+* welcome back screen [branch ch12939] ([#309](https://github.com/PeerioTechnologies/peerio-mobile/issues/309)) ([61c6650](https://github.com/PeerioTechnologies/peerio-mobile/commit/61c6650))
+
+
+
 <a name="3.346.0"></a>
 # [3.346.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.345.0...v3.346.0) (2018-08-31)
 
