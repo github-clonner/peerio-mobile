@@ -43,7 +43,6 @@ export default class AreaBeacon extends SafeComponent {
 
     get beaconHeight() {
         const { headerText, descriptionText } = this.props;
-
         return (
             // Header height + its padding
             (headerText ? vars.beaconLineHeight + vars.beaconPadding : 0) +
@@ -149,15 +148,6 @@ export default class AreaBeacon extends SafeComponent {
         });
     }
 
-    get rectanglePositionY() {
-        return this.isParentTop ? { bottom: 0 } : { top: 0 };
-    }
-
-    get pointerPositionY () {
-        if (!this.props.sidePointer) return this.isParentTop ? { top: 1 } : { bottom: 1 };
-        return { top: this.beaconHeight / 2 - this.pointerHeight / 2 };
-    }
-
     get containerPositionY() {
         const { pageY, frameHeight } = this.props.position;
 
@@ -168,6 +158,15 @@ export default class AreaBeacon extends SafeComponent {
             );
         }
         return { top: pageY - this.beaconHeight / 2 + frameHeight / 2 };
+    }
+
+    get rectanglePositionY() {
+        return this.isParentTop ? { bottom: 0 } : { top: 0 };
+    }
+
+    get pointerPositionY () {
+        if (!this.props.sidePointer) return this.isParentTop ? { top: 1 } : { bottom: 1 };
+        return { top: this.beaconHeight / 2 - this.pointerHeight / 2 };
     }
 
     @action.bound onDescriptionTextLayout(e) {

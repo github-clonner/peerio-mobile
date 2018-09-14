@@ -40,7 +40,6 @@ export default class SpotBeacon extends SafeComponent {
 
     get beaconHeight() {
         const { headerText, descriptionText } = this.props;
-
         return (
             // Header height + its padding
             (headerText ? vars.beaconLineHeight + vars.beaconPadding : 0) +
@@ -58,7 +57,6 @@ export default class SpotBeacon extends SafeComponent {
         const { pageY: y } = this.props.position;
         return y <= windowHeight / 2;
     }
-
     get bubbleDiameter() {
         const outerDiameter = this.props.position.frameWidth + 8 + (2 * vars.beaconBorderWidth);
         return outerDiameter >= MINIMUM_BUBBLE_DIAMETER ? outerDiameter : MINIMUM_BUBBLE_DIAMETER;
@@ -88,7 +86,7 @@ export default class SpotBeacon extends SafeComponent {
             containerWidth: vars.beaconWidth,
             containerPositionX: { left: this.contentPositionLeft - vars.beaconWidth / 3 },
             circlePositionX: { left: vars.beaconWidth / 3 },
-            rectanglePositionX: { left: 0 },
+            rectanglePositionX: { left: this.bubbleDiameter / 2 },
             rectanglePaddingLeft: vars.beaconPadding,
             rectanglePaddingRight: vars.beaconPadding
         };
@@ -99,7 +97,7 @@ export default class SpotBeacon extends SafeComponent {
             containerWidth: vars.beaconWidth,
             containerPositionX: { right: windowWidth - this.contentPositionLeft - vars.beaconWidth / 3 },
             circlePositionX: { right: vars.beaconWidth / 3 - this.bubbleDiameter },
-            rectanglePositionX: { right: 0 },
+            rectanglePositionX: { right: -this.bubbleDiameter / 2 },
             rectanglePaddingLeft: vars.beaconPadding,
             rectanglePaddingRight: vars.beaconPadding
         };
@@ -133,8 +131,18 @@ export default class SpotBeacon extends SafeComponent {
 
     get containerPositionY() {
         const { pageY, frameHeight } = this.props.position;
-        return this.isParentTop ?
-            { top: pageY - (this.bubbleDiameter - frameHeight) / 2 } : { top: pageY - (this.beaconHeight - frameHeight / 2) };
+        return (this.isParentTop ?
+            { top: pageY - (this.bubbleDiameter - frameHeight) / 2 } :
+            { top: pageY - (this.beaconHeight - frameHeight / 2) }
+        );
+    }
+
+    get rectanglePositionY() {
+        return this.isParentTop ? { bottom: 0 } : { top: 0 };
+    }
+
+    get circlePositionY() {
+        return this.isParentTop ? { top: 0 } : { bottom: 0 };
     }
 
     @action.bound onDescriptionTextLayout(e) {
@@ -166,9 +174,7 @@ export default class SpotBeacon extends SafeComponent {
             position: 'absolute'
         }];
 
-        const rectanglePositionY = this.isParentTop ? { bottom: 0 } : { top: 0 };
-
-        const rectangle = [rectanglePositionY, rectanglePositionX, {
+        const rectangle = [rectanglePositionX, this.rectanglePositionY, {
             position: 'absolute',
             width: vars.beaconWidth,
             height: this.beaconHeight,
@@ -180,8 +186,7 @@ export default class SpotBeacon extends SafeComponent {
             paddingBottom
         }];
 
-        const circlePositionY = this.isParentTop ? { top: 0 } : { bottom: 0 };
-        const outerCircle = [circlePositionY, circlePositionX, {
+        const outerCircle = [circlePositionX, this.circlePositionY, {
             position: 'absolute',
             width: this.bubbleDiameter,
             height: this.bubbleDiameter,
