@@ -8,7 +8,13 @@ import contactStore from '../../lib/peerio-icebear/models/contacts/contact-store
 
 class HeaderBeacons {
     get startChatBeacon() {
-        const condition = () => (uiState.isFirstLogin && routes.main.route === 'chats') || chatStore.chats.length === 0;
+        const condition = () => {
+            const { inactive } = routes.main;
+            const firstLoginChat = uiState.isFirstLogin && routes.main.route === 'chats';
+            const noChatsCreated = chatStore.chats.length === 0;
+
+            return inactive && (firstLoginChat || noChatsCreated);
+        };
         return observable({
             id: 'mobile-start-dm',
             priority: 6,
@@ -21,7 +27,12 @@ class HeaderBeacons {
     }
 
     get uploadFileBeacon() {
-        const condition = () => (uiState.isFirstLogin && routes.main.route.toLowerCase().includes('file')) || fileStore.files.length === 0;
+        const condition = () => {
+            const firstLoginFiles = uiState.isFirstLogin && routes.main.route.toLowerCase().includes('file');
+            const noFilesUploaded = fileStore.files.length === 0;
+
+            return firstLoginFiles || noFilesUploaded;
+        };
         return observable({
             id: 'mobile-upload-file',
             priority: 4,
@@ -34,7 +45,12 @@ class HeaderBeacons {
     }
 
     get addContactBeacon() {
-        const condition = () => (uiState.isFirstLogin && routes.main.route.toLowerCase().includes('contact')) || contactStore.contacts.length === 0;
+        const condition = () => {
+            const firstLoginContacts = uiState.isFirstLogin && routes.main.route.toLowerCase().includes('contact');
+            const noAddedContacts = contactStore.contacts.length === 0;
+
+            return firstLoginContacts || noAddedContacts;
+        };
         return observable({
             id: 'mobile-addContact',
             priority: 2,
