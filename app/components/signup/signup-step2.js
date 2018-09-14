@@ -13,7 +13,7 @@ import SafeComponent from '../shared/safe-component';
 import buttons from '../helpers/buttons';
 import SignupButtonBack from './signup-button-back';
 import SignupHeading from './signup-heading';
-import whiteLabelComponents from '../../components/whitelabel/white-label-components';
+import SignupStepIndicator from './signup-step-indicator';
 
 const { validators } = validation;
 const { username } = validators;
@@ -110,7 +110,7 @@ export default class SignupStep2 extends SafeComponent {
     renderThrow() {
         return (
             <View style={signupStyles.page}>
-                <whiteLabelComponents.SignupStepIndicator />
+                <SignupStepIndicator />
                 <View style={signupStyles.container}>
                     <SignupButtonBack />
                     <SignupHeading title="title_createYourAccount" subTitle="title_usernameHeading" />

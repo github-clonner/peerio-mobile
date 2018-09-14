@@ -13,7 +13,7 @@ import medcryptorUiState from './medcryptor-ui-state';
 import SafeComponent from '../../shared/safe-component';
 import SignupButtonBack from '../../signup/signup-button-back';
 import SignupHeading from '../../signup//signup-heading';
-import SignupStepIndicatorMedcryptor from './signup-step-indicator-medcryptor';
+import SignupStepIndicator from '../../signup//signup-step-indicator';
 import buttons from '../../helpers/buttons';
 
 const { validators } = validation;
@@ -108,7 +108,7 @@ export default class SignupCountryMedcryptor extends SafeComponent {
     render() {
         return (
             <View style={signupStyles.page}>
-                <SignupStepIndicatorMedcryptor />
+                <SignupStepIndicator />
                 <View style={signupStyles.container}>
                     <View>
                         <SignupButtonBack />
