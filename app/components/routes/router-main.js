@@ -26,6 +26,7 @@ import { fileStore } from '../../lib/icebear';
 import { popupUpgradeNotification, popupUpgradeProgress } from '../shared/popups';
 import preferenceStore from '../settings/preference-store';
 import whiteLabelComponents from '../../components/whitelabel/white-label-components';
+import { timeoutWithAction } from '../utils/timeouts';
 
 const INACTIVE_DELAY = 5000;
 
@@ -64,14 +65,12 @@ class RouterMain extends Router {
         }, true);
 
         reaction(() => this.current || this.currentIndex, () => {
-            this.inactive = false;
-            if (this.inactiveTimeout) {
-                clearTimeout(this.inactiveTimeout);
-                this.inactiveTimeout = null;
-            }
-            this.inactiveTimeout = setTimeout(() => {
-                this.inactive = true;
-            }, INACTIVE_DELAY);
+            timeoutWithAction(
+                this,
+                () => { this.inactive = false; },
+                () => { this.inactive = true; },
+                INACTIVE_DELAY
+            );
         });
     }
 
