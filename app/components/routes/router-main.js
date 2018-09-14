@@ -63,7 +63,7 @@ class RouterMain extends Router {
             if (migration) this.filesystemUpgrade();
         }, true);
 
-        reaction(() => this.current, () => {
+        reaction(() => this.current || this.currentIndex, () => {
             this.inactive = false;
             if (this.inactiveTimeout) {
                 clearTimeout(this.inactiveTimeout);
