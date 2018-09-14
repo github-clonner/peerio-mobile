@@ -13,12 +13,18 @@ const receiptRow = {
     backgroundColor: vars.black25,
     alignSelf: 'flex-end',
     flexDirection: 'row',
-    justifyContent: 'center',
+    alignItems: 'center',
     width: 40,
     marginLeft: 8,
     marginRight: 8,
     borderRadius: 16,
-    paddingHorizontal: 1
+    paddingHorizontal: 2
+};
+
+const half = {
+    flex: 1,
+    alignItems: 'center',
+    alignSelf: 'center'
 };
 
 const textStyle = {
@@ -40,7 +46,7 @@ export default class ViewReceipts extends SafeComponent {
 
     receiptLabel(receipts, keepAvatar) {
         if (receipts.length === 1 || keepAvatar) {
-            return <ReadReceipt username={receipts[0].username} />;
+            return <ReadReceipt username={receipts[0].username} avatarSize={vars.iconSizeSmall} />;
         }
         if (receipts.length < 10) {
             return <Text style={textStyle}>{receipts.length}</Text>;
@@ -54,8 +60,12 @@ export default class ViewReceipts extends SafeComponent {
 
         return (
             <View style={receiptRow}>
-                {icons.plain('remove_red_eye', vars.iconSizeSmall, vars.darkBlue)}
-                {this.receiptLabel(receipts, keepAvatar)}
+                <View style={half}>
+                    {icons.plain('remove-red-eye', 12, vars.darkBlue)}
+                </View>
+                <View style={half}>
+                    {this.receiptLabel(receipts, keepAvatar)}
+                </View>
             </View>
         );
     }
