@@ -8,7 +8,8 @@ import ContactList from '../contacts/contact-list';
 import SettingsLevel1 from '../settings/settings-level-1';
 import Files from '../files/files';
 import ChannelInvite from '../messaging/channel-invite';
-import icebear, { User } from '../../lib/icebear';
+import { User } from '../../lib/icebear';
+import contactState from '../contacts/contact-state';
 import chatState from '../messaging/chat-state';
 import drawerState from '../shared/drawer-state';
 import mockChatStore from './mock-chat-store';
@@ -62,9 +63,8 @@ export default class MockChatList extends Component {
         mockFileStore.install();
         chatState.store = mockChatStore;
         chatState.init();
-        icebear.chatStore = mockChatStore;
-        icebear.contactStore = mockContactStore;
-        icebear.fileStore = mockFileStore;
+        contactState.store = mockContactStore;
+        contactState.init();
     }
 
     addGlobalDrawer = () => {
