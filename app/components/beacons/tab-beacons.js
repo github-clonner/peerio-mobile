@@ -2,7 +2,6 @@ import { observable } from 'mobx';
 import AreaBeacon from './area-beacon';
 import routes from '../routes/routes';
 
-
 class TabBeacons {
     get chatBeacon() {
         const condition = () => routes.main.route === 'chats';

@@ -16,6 +16,7 @@ import mockContactStore from './mock-contact-store';
 import mockFileStore from './mock-file-store';
 import TabContainer from '../layout/tab-container';
 import BeaconLayout from '../beacons/beacon-layout';
+import routes from '../routes/routes';
 
 @observer
 export default class MockBeacon extends Component {
@@ -27,30 +28,28 @@ export default class MockBeacon extends Component {
         chatState.init();
         contactState.store = mockContactStore;
         contactState.init();
+        routes.main.route = 'contacts';
     }
 
     get list() {
-        const { route } = chatState.routerMain;
+        const { route } = routes.main;
         switch (route) {
             case 'channelInviteList': return <ChannelInvite />;
             case 'settings': return <SettingsLevel1 />;
             case 'chats': return <ChatList />;
             case 'contacts': return <ContactList />;
             case 'files': return <Files />;
-            default: return <ContactList />;
+            default: return null;
         }
     }
 
     render() {
         return (
             <View style={{ backgroundColor: 'white', flex: 1, flexGrow: 1, paddingTop: vars.layoutPaddingTop }}>
-                <View>
-                    {/* <TabContainer /> */}
-                    {this.list}
-                    <TabContainer />
-                    <PopupLayout key="popups" />
-                    <StatusBar barStyle="default" />
-                </View>
+                {this.list}
+                <TabContainer />
+                <PopupLayout key="popups" />
+                <StatusBar barStyle="default" />
                 <BeaconLayout />
             </View>
         );
