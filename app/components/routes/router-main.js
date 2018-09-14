@@ -27,6 +27,8 @@ import { popupUpgradeNotification, popupUpgradeProgress } from '../shared/popups
 import preferenceStore from '../settings/preference-store';
 import whiteLabelComponents from '../../components/whitelabel/white-label-components';
 
+const INACTIVE_DELAY = 5000;
+
 class RouterMain extends Router {
     // current route object
     @observable current = null;
@@ -40,6 +42,7 @@ class RouterMain extends Router {
     @observable contactStateLoaded = false;
     @observable loading = false;
     @observable invoked = false;
+    @observable inactive = false;
     _initialRoute = 'chats';
 
     constructor() {
@@ -59,6 +62,17 @@ class RouterMain extends Router {
         reaction(() => fileStore.migration.pending, migration => {
             if (migration) this.filesystemUpgrade();
         }, true);
+
+        reaction(() => this.current, () => {
+            this.inactive = false;
+            if (this.inactiveTimeout) {
+                clearTimeout(this.inactiveTimeout);
+                this.inactiveTimeout = null;
+            }
+            this.inactiveTimeout = setTimeout(() => {
+                this.inactive = true;
+            }, INACTIVE_DELAY);
+        });
     }
 
     @action initialRoute() {
