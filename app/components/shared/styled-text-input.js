@@ -273,13 +273,11 @@ export default class StyledTextInput extends SafeComponent {
     }
 
     get helperText() {
-        const { inputName, helperText } = this.props;
-        // Username valid helper text
-        const text = (inputName === S.USERNAME) && this.isValid ? 'title_hintUsernameValid' : helperText;
+        const { helperText } = this.props;
         return (
             <View style={styledTextInput.bottomMessageContainer}>
                 <Text style={styledTextInput.helperTextStyle}>
-                    {tx(text)}
+                    {tx(helperText)}
                 </Text>
             </View>
         );
