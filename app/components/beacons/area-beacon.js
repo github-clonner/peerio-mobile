@@ -10,7 +10,10 @@ import { User } from '../../lib/icebear';
 import beaconState from './beacon-state';
 import { tx } from '../utils/translator';
 
-const pointerSource = require('../../assets/pointer-beacon.png');
+const pointerUpImg = require('../../assets/beacon-pointer-up.png');
+const pointerDownImg = require('../../assets/beacon-pointer-down.png');
+const pointerLeftImg = require('../../assets/beacon-pointer-left.png');
+const pointerRightImg = require('../../assets/beacon-pointer-right.png');
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
@@ -50,56 +53,74 @@ export default class AreaBeacon extends SafeComponent {
             (2 * vars.beaconPadding));
     }
 
-    get beaconIsTop() {
+    // Returns true if beacon is pointing to an element that is in the top half of the screen
+    get isParentTop() {
         if (!this.props.position) return null;
         const { pageY: y } = this.props.position;
         return y <= windowHeight / 2;
     }
 
-    get contentPositionHorizontal() {
+    // Returns true if beacon is pointing to an element that is in the left half of the screen
+    get isParentLeft() {
+        if (!this.props.position) return null;
+        const { pageX: x } = this.props.position;
+        return x <= windowWidth / 2;
+    }
+
+    get parentHorizontalPos() {
         return this.props.position.pageX;
+    }
+
+    get pointerImgSource() {
+        const { sidePointer } = this.props;
+        if (!sidePointer && this.isParentTop) return pointerUpImg;
+        else if (!sidePointer && !this.isParentTop) return pointerDownImg;
+        else if (sidePointer && this.isParentLeft) return pointerLeftImg;
+        else if (sidePointer && !this.isParentLeft) return pointerRightImg;
+        return null;
+    }
+
+    // Need to switch width and height when pointer is on the side
+    get pointerHeight() {
+        return !this.props.sidePointer ? vars.pointerHeight : vars.pointerWidth;
+    }
+
+    // Need to switch width and height when pointer is on the side
+    get pointerWidth() {
+        return !this.props.sidePointer ? vars.pointerWidth : vars.pointerHeight;
     }
 
     get pointerHorizontalLeftMost() {
         return {
-            containerWidth: vars.beaconWidth,
-            containerPositionX: { left: this.contentPositionHorizontal - vars.pointerHeight },
-            pointerPositionX: { left: vars.pointerPadding },
-            pointerPositionY: this.beaconIsTop ? { top: 0 } : { bottom: 0 },
-            rectanglePositionX: { left: 0 }
+            containerPositionX: { left: this.parentHorizontalPos - vars.pointerPadding },
+            pointerPositionX: { left: vars.pointerPadding }
         };
     }
 
     get pointerHorizontalOneThird() {
         return {
-            containerWidth: vars.beaconWidth,
-            containerPositionX: { left: this.contentPositionHorizontal - vars.beaconWidth / 3 },
-            pointerPositionX: { left: vars.beaconWidth / 3 },
-            rectanglePositionX: { left: 0 }
+            containerPositionX: { left: this.parentHorizontalPos - vars.beaconWidth / 3 },
+            pointerPositionX: { left: vars.beaconWidth / 3 }
         };
     }
 
     get pointerHorizontalTwoThirds() {
         return {
-            containerWidth: vars.beaconWidth,
-            containerPositionX: { right: this.contentPositionHorizontal - 2 * vars.beaconWidth / 3 },
-            pointerPositionX: { right: vars.beaconWidth / 3 },
-            rectanglePositionX: { right: 0 }
+            containerPositionX: { right: this.parentHorizontalPos - 2 * vars.beaconWidth / 3 },
+            pointerPositionX: { right: vars.beaconWidth / 3 }
         };
     }
 
     get pointerHorizontalRightMost() {
         return {
-            containerWidth: vars.beaconWidth,
-            containerPositionX: { right: this.contentPositionHorizontal - vars.beaconWidth - vars.pointerHeight },
-            pointerPositionX: { right: vars.pointerPadding },
-            rectanglePositionX: { left: 0 }
+            containerPositionX: { right: this.parentHorizontalPos - (vars.beaconWidth + vars.pointerPadding) },
+            pointerPositionX: { right: vars.pointerPadding }
         };
     }
 
     // only have 4 positions for now, even though design wants them to be flexible
     // set beacon position X based on where content is with regards to the width of the screen
-    get horizontalPointerMeasures() {
+    get verticalPointerMeasures() {
         const { position } = this.props;
         if (!position) return null;
 
@@ -114,14 +135,39 @@ export default class AreaBeacon extends SafeComponent {
     }
 
     // only have one position for now which is centered, even though design wants them to be flexible
-    get verticalPointerMeasures() {
-        return { pointerPositionY: { top: 0, bottom: 0 } };
+    get horizontalPointerMeasures() {
+        const { pageX, frameWidth } = this.props.position;
+
+        return (this.isParentLeft ? {
+            containerPositionX: { left: pageX + frameWidth },
+            rectanglePositionX: { right: 0 },
+            pointerPositionX: { left: 1 }
+        } : {
+            containerPositionX: { right: windowWidth - pageX },
+            rectanglePositionX: { left: 0 },
+            pointerPositionX: { right: 1 }
+        });
+    }
+
+    get rectanglePositionY() {
+        return this.isParentTop ? { bottom: 0 } : { top: 0 };
+    }
+
+    get pointerPositionY () {
+        if (!this.props.sidePointer) return this.isParentTop ? { top: 1 } : { bottom: 1 };
+        return { top: this.beaconHeight / 2 - this.pointerHeight / 2 };
     }
 
     get containerPositionY() {
         const { pageY, frameHeight } = this.props.position;
-        return this.beaconIsTop ?
-            { top: pageY - (vars.pointerHeight - frameHeight) / 2 } : { top: pageY - (this.beaconHeight - frameHeight / 2) - 3 - vars.pointerHeight };
+
+        if (!this.props.sidePointer) {
+            return (this.isParentTop ?
+                { top: pageY + frameHeight } :
+                { bottom: windowHeight - (pageY + frameHeight) }
+            );
+        }
+        return { top: pageY - this.beaconHeight / 2 + frameHeight / 2 };
     }
 
     @action.bound onDescriptionTextLayout(e) {
@@ -130,49 +176,40 @@ export default class AreaBeacon extends SafeComponent {
     }
 
     renderThrow() {
-        const { position, headerText, descriptionText, pointerDirection } = this.props;
+        const { position, headerText, descriptionText } = this.props;
 
-        if (!position || !headerText && !descriptionText || !pointerDirection) return null;
+        if (!position || !headerText && !descriptionText) return null;
 
         let pointerMeasures;
-        if (pointerDirection === 'left' || pointerDirection === 'right') pointerMeasures = this.verticalPointerMeasures;
-        else if (pointerDirection === 'up' || pointerDirection === 'down') pointerMeasures = this.horizontalPointerMeasures;
+        if (!this.props.sidePointer) pointerMeasures = this.verticalPointerMeasures;
+        else if (this.props.sidePointer) pointerMeasures = this.horizontalPointerMeasures;
         else throw Error('Area Beacon: Invalid pointer direction. Should be one of "right", "left", "up", "down"');
 
         const {
-            containerWidth,
             containerPositionX,
-            pointerPositionX,
-            pointerPositionY,
-            rectanglePositionX
+            rectanglePositionX,
+            pointerPositionX
         } = pointerMeasures;
 
         const container = [containerPositionX, this.containerPositionY, {
-            width: containerWidth,
-            height: this.beaconHeight + vars.pointerHeight,
             position: 'absolute',
-            borderColor: 'red',
-            borderWidth: 1
+            width: vars.beaconWidth + (this.props.sidePointer ? vars.pointerHeight : 0),
+            height: this.beaconHeight + (!this.props.sidePointer ? vars.pointerHeight : 0)
         }];
 
-        const rectanglePositionY = this.beaconIsTop ? { bottom: 0 } : { top: 0 };
-
-        const rectangle = [rectanglePositionY, rectanglePositionX, {
+        const rectangle = [rectanglePositionX, this.rectanglePositionY, {
             position: 'absolute',
             width: vars.beaconWidth,
             height: this.beaconHeight,
             backgroundColor: vars.beaconBg,
-            borderRadius: 8,
             padding: vars.beaconPadding,
-            borderColor: 'green',
-            borderWidth: 1
+            borderRadius: 8
         }];
 
-        const pointer = [pointerPositionY, pointerPositionX, {
+        const pointer = [pointerPositionX, this.pointerPositionY, {
             position: 'absolute',
-            width: vars.pointerWidth,
-            height: vars.pointerHeight,
-            transform: [{ rotate: '180deg' }]
+            width: this.pointerWidth,
+            height: this.pointerHeight
         }];
 
         return (
@@ -185,7 +222,7 @@ export default class AreaBeacon extends SafeComponent {
                     {headerText && <Text bold style={[textStyle, { paddingBottom: vars.beaconPadding }]}>{tx(headerText)}</Text>}
                     {descriptionText && <Text semibold={!headerText} style={textStyle} onLayout={this.onDescriptionTextLayout}>{tx(descriptionText)}</Text>}
                 </TouchableOpacity>
-                <Image style={pointer} source={pointerSource} />
+                <Image style={pointer} source={this.pointerImgSource} />
             </View>
         );
     }

@@ -52,7 +52,8 @@ export default class SpotBeacon extends SafeComponent {
             (this.bubbleDiameter / 2));
     }
 
-    get beaconIsTop() {
+    // Returns true if beacon is pointing to an element that is in the top half of the screen
+    get isParentTop() {
         if (!this.props.position) return null;
         const { pageY: y } = this.props.position;
         return y <= windowHeight / 2;
@@ -132,7 +133,7 @@ export default class SpotBeacon extends SafeComponent {
 
     get containerPositionY() {
         const { pageY, frameHeight } = this.props.position;
-        return this.beaconIsTop ?
+        return this.isParentTop ?
             { top: pageY - (this.bubbleDiameter - frameHeight) / 2 } : { top: pageY - (this.beaconHeight - frameHeight / 2) };
     }
 
@@ -156,8 +157,8 @@ export default class SpotBeacon extends SafeComponent {
         } = this.horizontalMeasures;
 
         // set padding between bubble and text based on where the bubble is positioned
-        const paddingTop = this.beaconIsTop ? this.bubblePadding : vars.beaconPadding;
-        const paddingBottom = this.beaconIsTop ? vars.beaconPadding : this.bubblePadding;
+        const paddingTop = this.isParentTop ? this.bubblePadding : vars.beaconPadding;
+        const paddingBottom = this.isParentTop ? vars.beaconPadding : this.bubblePadding;
 
         const container = [containerPositionX, this.containerPositionY, {
             width: containerWidth,
@@ -165,7 +166,7 @@ export default class SpotBeacon extends SafeComponent {
             position: 'absolute'
         }];
 
-        const rectanglePositionY = this.beaconIsTop ? { bottom: 0 } : { top: 0 };
+        const rectanglePositionY = this.isParentTop ? { bottom: 0 } : { top: 0 };
 
         const rectangle = [rectanglePositionY, rectanglePositionX, {
             position: 'absolute',
@@ -179,7 +180,7 @@ export default class SpotBeacon extends SafeComponent {
             paddingBottom
         }];
 
-        const circlePositionY = this.beaconIsTop ? { top: 0 } : { bottom: 0 };
+        const circlePositionY = this.isParentTop ? { top: 0 } : { bottom: 0 };
         const outerCircle = [circlePositionY, circlePositionX, {
             position: 'absolute',
             width: this.bubbleDiameter,
