@@ -10,7 +10,7 @@ class BeaconState {
     @computed get activeBeacon() {
         return _.chain(this.beacons)
             .filter(b => notSeen(b.id))
-            .filter(b => b.condition() === true)
+            .filter(b => b.condition())
             .sortBy(b => b.priority)
             .first()
             .value();
