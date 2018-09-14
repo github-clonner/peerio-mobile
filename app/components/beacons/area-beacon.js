@@ -183,7 +183,6 @@ export default class AreaBeacon extends SafeComponent {
         let pointerMeasures;
         if (!this.props.sidePointer) pointerMeasures = this.verticalPointerMeasures;
         else if (this.props.sidePointer) pointerMeasures = this.horizontalPointerMeasures;
-        else throw Error('Area Beacon: Invalid pointer direction. Should be one of "right", "left", "up", "down"');
 
         const {
             containerPositionX,
