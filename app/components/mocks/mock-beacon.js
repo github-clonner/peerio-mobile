@@ -7,26 +7,26 @@ import ContactList from '../contacts/contact-list';
 import SettingsLevel1 from '../settings/settings-level-1';
 import Files from '../files/files';
 import ChannelInvite from '../messaging/channel-invite';
-import icebear, { User } from '../../lib/icebear';
+import { User } from '../../lib/icebear';
 import chatState from '../messaging/chat-state';
+import contactState from '../contacts/contact-state';
 import mockChatStore from './mock-chat-store';
 import { vars } from '../../styles/styles';
 import mockContactStore from './mock-contact-store';
 import mockFileStore from './mock-file-store';
 import TabContainer from '../layout/tab-container';
-import SpotBeacon from '../beacons/spot-beacon';
+import BeaconLayout from '../beacons/beacon-layout';
 
 @observer
 export default class MockBeacon extends Component {
     componentWillMount() {
-        User.current = {};
+        User.current = mockContactStore.createMock();
         User.current.activePlans = [];
         mockFileStore.install();
         chatState.store = mockChatStore;
         chatState.init();
-        icebear.chatStore = mockChatStore;
-        icebear.contactStore = mockContactStore;
-        icebear.fileStore = mockFileStore;
+        contactState.store = mockContactStore;
+        contactState.init();
     }
 
     get list() {
@@ -44,12 +44,14 @@ export default class MockBeacon extends Component {
     render() {
         return (
             <View style={{ backgroundColor: 'white', flex: 1, flexGrow: 1, paddingTop: vars.layoutPaddingTop }}>
-                <TabContainer />
-                {this.list}
-                {/* <TabContainer /> */}
-                <SpotBeacon />
-                <PopupLayout key="popups" />
-                <StatusBar barStyle="default" />
+                <View>
+                    {/* <TabContainer /> */}
+                    {this.list}
+                    <TabContainer />
+                    <PopupLayout key="popups" />
+                    <StatusBar barStyle="default" />
+                </View>
+                <BeaconLayout />
             </View>
         );
     }
