@@ -1,9 +1,10 @@
 import { observable } from 'mobx';
 import Beacon from './beacon';
+import routes from '../routes/routes';
 
 class TabBeacons {
     get chatBeacon() {
-        const condition = () => true;
+        const condition = () => routes.main.inactive;
         return observable({
             id: 'mobile-chat-icon',
             priority: 5,
@@ -17,7 +18,7 @@ class TabBeacons {
     }
 
     get filesBeacon() {
-        const condition = () => true;
+        const condition = () => routes.main.inactive;
         return observable({
             id: 'mobile-files-icon',
             priority: 3,
@@ -31,7 +32,7 @@ class TabBeacons {
     }
 
     get contactBeacon() {
-        const condition = () => true;
+        const condition = () => routes.main.inactive;
         return observable({
             id: 'mobile-contact-icon',
             priority: 1,
