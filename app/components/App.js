@@ -20,6 +20,7 @@ import TestHelper from './helpers/test-helper';
 import MockComponent from './mocks';
 import ActionSheetLayout from './layout/action-sheet-layout';
 import Text from './controls/custom-text';
+import loginState from './login/login-state';
 import { uploadFileAndroid, uploadFileiOS, wakeUpAndUploadFileiOS } from './utils/shared-files';
 
 const { height, width } = Dimensions.get('window');
@@ -52,8 +53,13 @@ export default class App extends SafeComponent {
     async componentWillMount() {
         if (!MockComponent) {
             let route = routerApp.routes.loading;
-            if (!await User.getLastAuthenticated()
-                && !await TinyDb.system.getValue('apple-review-login')) {
+
+            // Have existing user that isn't logged in
+            if (await loginState.haveLoggedOutUser()) {
+                route = routerApp.routes.loginWelcomeBack;
+            }
+            // No existing user
+            if (!await User.getLastAuthenticated() && !await TinyDb.system.getValue('apple-review-login')) {
                 route = routerApp.routes.loginWelcome;
             }
             route.transition();
