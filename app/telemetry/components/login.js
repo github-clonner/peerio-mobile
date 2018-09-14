@@ -48,8 +48,8 @@ const login = setup(
                 {
                     item: label,
                     location: TmHelper.currentRoute,
-                    state: S.ERROR_TYPE,
-                    error: errorMessage(errorMsg)
+                    state: S.ERROR,
+                    errorType: errorMessage(errorMsg)
                 }
             ];
         },
