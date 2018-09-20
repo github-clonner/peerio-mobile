@@ -11,7 +11,7 @@ const startChatBeacon = createZeroStateBeacon({
     condition: () => {
         const firstLoginChat = routes.main.route === 'chats';
         const noChatsCreated = chatStore.chats.length === 0;
-        return firstLoginChat || noChatsCreated;
+        return firstLoginChat && noChatsCreated;
     },
     priority: 6,
     component: SpotBeacon,
@@ -26,7 +26,7 @@ const uploadFileBeacon = createZeroStateBeacon({
         const firstLoginFiles = routes.main.route.toLowerCase().includes('file');
         const noFilesUploaded = fileStore.files.length === 0;
 
-        return firstLoginFiles || noFilesUploaded;
+        return firstLoginFiles && noFilesUploaded;
     },
     priority: 4,
     component: SpotBeacon,
@@ -42,7 +42,7 @@ const addContactBeacon = createZeroStateBeacon({
         const noAddedContacts = contactStore.contacts.length === 0;
 
         return !preferenceStore.prefs.importContactsInBackground
-            && (firstLoginContacts || noAddedContacts);
+            && firstLoginContacts && noAddedContacts;
     },
     priority: 2,
     component: SpotBeacon,
