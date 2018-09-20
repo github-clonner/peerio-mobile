@@ -2,7 +2,6 @@ import { observable } from 'mobx';
 import SpotBeacon from './spot-beacon';
 import AreaBeacon from './area-beacon';
 import routes from '../routes/routes';
-import uiState from '../layout/ui-state';
 import { chatStore, fileStore, contactStore } from '../../lib/peerio-icebear';
 import beaconState from './beacon-state';
 import preferenceStore from '../settings/preference-store';
@@ -10,7 +9,7 @@ import preferenceStore from '../settings/preference-store';
 const startChatBeacon = createZeroStateBeacon({
     id: 'startChat',
     condition: () => {
-        const firstLoginChat = uiState.isFirstLogin && routes.main.route === 'chats';
+        const firstLoginChat = routes.main.route === 'chats';
         const noChatsCreated = chatStore.chats.length === 0;
         return firstLoginChat || noChatsCreated;
     },
@@ -24,7 +23,7 @@ const startChatBeacon = createZeroStateBeacon({
 const uploadFileBeacon = createZeroStateBeacon({
     id: 'uploadFiles',
     condition: () => {
-        const firstLoginFiles = uiState.isFirstLogin && routes.main.route.toLowerCase().includes('file');
+        const firstLoginFiles = routes.main.route.toLowerCase().includes('file');
         const noFilesUploaded = fileStore.files.length === 0;
 
         return firstLoginFiles || noFilesUploaded;
@@ -39,7 +38,7 @@ const uploadFileBeacon = createZeroStateBeacon({
 const addContactBeacon = createZeroStateBeacon({
     id: 'search',
     condition: () => {
-        const firstLoginContacts = uiState.isFirstLogin && routes.main.route.toLowerCase().includes('contact');
+        const firstLoginContacts = routes.main.route.toLowerCase().includes('contact');
         const noAddedContacts = contactStore.contacts.length === 0;
 
         return !preferenceStore.prefs.importContactsInBackground
@@ -53,7 +52,7 @@ const addContactBeacon = createZeroStateBeacon({
 
 const syncBeacon = createZeroStateBeacon({
     id: 'sync',
-    condition: () => true,
+    condition: () => !preferenceStore.prefs.importContactsInBackground,
     priority: 0,
     component: AreaBeacon,
     descriptionText: 'description_sync_beacon'

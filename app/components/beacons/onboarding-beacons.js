@@ -2,10 +2,11 @@ import { observable } from 'mobx';
 import SpotBeacon from './spot-beacon';
 import routes from '../routes/routes';
 import beaconState from './beacon-state';
+import uiState from '../layout/ui-state';
 
 const chatBeacon = createOnboardingBeacon({
     id: 'chat',
-    condition: () => routes.main.inactive,
+    condition: () => uiState.isFirstLogin && routes.main.inactive,
     priority: 5,
     component: SpotBeacon,
     headerText: 'title_chat_beacon',
@@ -14,7 +15,7 @@ const chatBeacon = createOnboardingBeacon({
 
 const filesBeacon = createOnboardingBeacon({
     id: 'files',
-    condition: () => routes.main.inactive,
+    condition: () => uiState.isFirstLogin && routes.main.inactive,
     priority: 3,
     component: SpotBeacon,
     headerText: 'title_files_beacon',
@@ -23,7 +24,7 @@ const filesBeacon = createOnboardingBeacon({
 
 const contactBeacon = createOnboardingBeacon({
     id: 'contact',
-    condition: () => routes.main.inactive,
+    condition: () => uiState.isFirstLogin && routes.main.inactive,
     priority: 1,
     component: SpotBeacon,
     headerText: 'title_contact_beacon',
