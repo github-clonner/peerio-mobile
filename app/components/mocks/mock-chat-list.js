@@ -72,7 +72,7 @@ export default class MockChatList extends Component {
     };
 
     addLocalDrawer = () => {
-        drawerState.addDrawer(TopDrawerPendingFiles, drawerState.DRAWER_CONTEXT.FILES);
+        drawerState.addDrawer(TopDrawerPendingFiles, 'files');
     };
 
     removeDrawer = () => {
@@ -99,14 +99,8 @@ export default class MockChatList extends Component {
 
     render() {
         return (
-            <View
-                style={{
-                    backgroundColor: 'white',
-                    flex: 1,
-                    flexGrow: 1,
-                    paddingTop: vars.layoutPaddingTop
-                }}
-            >
+            <View style={{ backgroundColor: 'white', flex: 1, flexGrow: 1, paddingTop: vars.layoutPaddingTop }}>
+                <TabContainer />
                 {this.list}
                 <PopupLayout key="popups" />
                 <StatusBar barStyle="default" />

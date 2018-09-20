@@ -1,6 +1,7 @@
 import React from 'react';
 import { action, observable, reaction } from 'mobx';
 import uiState from '../layout/ui-state';
+import routes from '../routes/routes';
 
 // to identify our drawers
 let lastDrawerId = 0;
@@ -35,13 +36,6 @@ class DrawerState {
         return drawerConfig;
     }
 
-    DRAWER_CONTEXT = {
-        CHATS: 'chats',
-        FILES: 'files',
-        CONTACTS: 'contacts',
-        SETTINGS: 'settings'
-    };
-
     get globalDrawer() {
         return this.drawers.find(drawer => !drawer.context);
     }
@@ -49,10 +43,10 @@ class DrawerState {
     // TODO animate hiding drawer when keyboard is shown
     // Try to get Global drawer. Else try to get Local drawer in the given context
     // Otherwise return null
-    getDrawer(context) {
+    getDrawer() {
         // hide drawers when keyboard is visible
         if (uiState.keyboardHeight) return null;
-        return this.globalDrawer || this.drawers.find(drawer => drawer.context === context);
+        return this.globalDrawer || this.drawers.find(drawer => drawer.context === routes.main.route);
     }
 
     // Try to dismiss top drawer in the specified context.
@@ -78,5 +72,5 @@ class DrawerState {
 }
 
 const drawerState = new DrawerState();
-
+global.drawerState = drawerState;
 export default drawerState;

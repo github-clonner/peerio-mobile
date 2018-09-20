@@ -92,7 +92,7 @@ class TopDrawerMaintenance extends SafeComponent {
 
     renderThrow() {
         // double checking in case maintenance window was set to null right before render
-        if (!TopDrawerMaintenance.trigger) return null;
+        if (!TopDrawerMaintenance.trigger()) return null;
         const [start, end] =
             serverSettings.maintenanceWindow.map(date => moment(date).format('DD/MM/YYYY hh:mm'));
         return (
@@ -165,7 +165,7 @@ class TopDrawerAutoMount extends SafeComponent {
         await new Promise(resolve => when(() => preferenceStore.loaded, resolve));
         drawerState.addDrawerTrigger(
             TopDrawerPendingFiles,
-            drawerState.DRAWER_CONTEXT.FILES, // files-only context
+            'files', // triggered when route is 'files'
             {}, // empty additional props
             () => preferenceStore.prefs.pendingFilesBannerVisible && fileState.store.folderStore.root.hasLegacyFiles,
             () => {

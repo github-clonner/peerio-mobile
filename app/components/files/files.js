@@ -22,7 +22,7 @@ import uiState from '../layout/ui-state';
 import SharedFolderRemovalNotif from './shared-folder-removal-notif';
 import SearchBar from '../controls/search-bar';
 import FlatListWithDrawer from '../shared/flat-list-with-drawer';
-import drawerState from '../shared/drawer-state';
+import zeroStateBeacons from '../beacons/zerostate-beacons';
 
 const iconClear = require('../../assets/file_icons/ic_close.png');
 
@@ -47,6 +47,7 @@ export default class Files extends SafeComponent {
         return !fileState.isFileSelectionMode &&
             <PlusBorderIcon
                 action={() => FileUploadActionSheet.show(false, true)}
+                beacon={zeroStateBeacons.uploadFileBeacon}
                 testID="buttonUploadFileToFiles" />;
     }
 
@@ -133,7 +134,6 @@ export default class Files extends SafeComponent {
     list() {
         return (
             <FlatListWithDrawer
-                context={drawerState.DRAWER_CONTEXT.FILES}
                 setScrollViewRef={this.flatListRef}
                 ListHeaderComponent={!this.isZeroState && this.searchTextbox()}
                 ListFooterComponent={this.noFilesMatchSearch}
@@ -159,12 +159,7 @@ export default class Files extends SafeComponent {
 
     get noFilesInFolder() {
         if (!this.isEmpty) return null;
-        const s = {
-            color: vars.txtMedium,
-            textAlign: 'center',
-            marginTop: vars.headerSpacing
-        };
-        return <Text style={s}>{tx('title_noFilesInFolder')}</Text>;
+        return <FilesZeroStatePlaceholder emptyFolder />;
     }
 
     onChangeFindFilesText(text) {
@@ -287,14 +282,14 @@ export default class Files extends SafeComponent {
     }
 
     renderThrow() {
+        const { noFilesInFolder } = this;
         return (
             <View
                 style={{ flex: 1, flexGrow: 1 }}>
                 <View style={{ flex: 1, flexGrow: 1, backgroundColor: vars.darkBlueBackground05 }}>
                     {upgradeForFiles()}
-                    {this.noFilesInFolder}
+                    {noFilesInFolder || this.body()}
                     {/* this.sharedFolderRemovalNotifs() */}
-                    {this.body()}
                 </View>
                 <ProgressOverlay enabled={fileState.store.loading} />
                 {this.toolbar()}

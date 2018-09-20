@@ -20,6 +20,7 @@ import TestHelper from './helpers/test-helper';
 import MockComponent from './mocks';
 import ActionSheetLayout from './layout/action-sheet-layout';
 import Text from './controls/custom-text';
+import BeaconLayout from './beacons/beacon-layout';
 import loginState from './login/login-state';
 import { uploadFileAndroid, uploadFileiOS, wakeUpAndUploadFileiOS } from './utils/shared-files';
 import { TopDrawerAutoMount } from './shared/top-drawer-components';
@@ -126,6 +127,8 @@ export default class App extends SafeComponent {
         return (
             <View style={(height < 500) ? tabletHack : { flex: 1, flexGrow: 1 }}>
                 <RouteNavigator key="navigator" routes={routerApp} />
+                <BeaconLayout />
+                {/* BeaconLayout.debugHelper */}
                 <ModalLayout key="modals" />
                 <PopupLayout key="popups" />
                 <ActionSheetLayout key="actionSheets" />

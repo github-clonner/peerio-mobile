@@ -133,6 +133,14 @@ const vars = {
     popupHorizontalMargin: scaleDim(16),
     topDrawerHeight: 192,
     tfaInputWidth: scaleDim(124),
+    beaconWidth: scaleDim(272),
+    beaconBorderWidth: 4,
+    beaconBg: '#5461CC',
+    beaconPadding: 8,
+    pointerPadding: 16,
+    pointerHeight: 12,
+    pointerWidth: 28,
+    beaconLineHeight: scaleDim(16),
     signupButtonWidth: 82,
     scrollOffset: 500, // arbitrary large offset
 
@@ -246,8 +254,6 @@ const vars = {
     fileInnerItemPaddingRight: 8,
     loadingScreenMarginBottom: scaleDim(170),
     loadingScreenMarginTop: scaleDim(206),
-    chatZeroStateImageWidth: scaleDim(405),
-    chatZeroStateImageHeight: scaleDim(155),
     dmInvitePaddingTop: scaleDim(90),
     verificationMessageWidth: scaleDim(260),
     modalPaddingVertical: 40,
@@ -255,6 +261,10 @@ const vars = {
     wizardPadding: 36,
     height80: height * 0.8,
     topCircleSizeSmall: 52,
+    contactZeroStateArrowWidth: 50,
+    contactZeroStateArrowWidthSmall: 40,
+    contactZeroStateArrowHeight: 30,
+    contactZeroStateArrowHeightSmall: 24,
 
     font: {
         size: {
