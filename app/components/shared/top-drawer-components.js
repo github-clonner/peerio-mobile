@@ -87,7 +87,7 @@ class TopDrawerMaintenance extends SafeComponent {
     }
 
     readMore() {
-        Linking.openURL(config.translator.urlMap.maintenanceReadMore);
+        Linking.openURL(config.translator.urlMap.maintenanceReadMore.link);
     }
 
     renderThrow() {
@@ -138,7 +138,7 @@ class TopDrawerNewContact extends SafeComponent {
 @observer
 class TopDrawerPendingFiles extends SafeComponent {
     learnMore() {
-        Linking.openURL(config.translator.urlMap.pendingFiles);
+        Linking.openURL(config.translator.urlMap.pendingFiles.link);
     }
 
     renderThrow() {
