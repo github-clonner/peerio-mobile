@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.363.0"></a>
+# [3.363.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.345.0...v3.363.0) (2018-09-20)
+
+
+### Bug Fixes
+
+* adjust to sdk modifications ([3a86d65](https://github.com/PeerioTechnologies/peerio-mobile/commit/3a86d65))
+* deps ([3db8bee](https://github.com/PeerioTechnologies/peerio-mobile/commit/3db8bee))
+* fix saving settings on last step ([8585676](https://github.com/PeerioTechnologies/peerio-mobile/commit/8585676))
+* key choice logic in key-value-storage.js ([#312](https://github.com/PeerioTechnologies/peerio-mobile/issues/312)) ([ff5af3d](https://github.com/PeerioTechnologies/peerio-mobile/commit/ff5af3d))
+
+
+### Features
+
+* Android share extension ([#291](https://github.com/PeerioTechnologies/peerio-mobile/issues/291)) ([d4d0e6d](https://github.com/PeerioTechnologies/peerio-mobile/commit/d4d0e6d))
+* maintenance top drawer for mobile [ch13234] ([#319](https://github.com/PeerioTechnologies/peerio-mobile/issues/319)) ([aa32153](https://github.com/PeerioTechnologies/peerio-mobile/commit/aa32153))
+* no keychain errors popups. retry instead [ch13622] ([#316](https://github.com/PeerioTechnologies/peerio-mobile/issues/316)) ([8ad12fa](https://github.com/PeerioTechnologies/peerio-mobile/commit/8ad12fa))
+* pending files top drawer [ch13632] ([#317](https://github.com/PeerioTechnologies/peerio-mobile/issues/317)) ([c6d82be](https://github.com/PeerioTechnologies/peerio-mobile/commit/c6d82be))
+* welcome back screen [branch ch12939] ([#309](https://github.com/PeerioTechnologies/peerio-mobile/issues/309)) ([61c6650](https://github.com/PeerioTechnologies/peerio-mobile/commit/61c6650))
+
+
+
 <a name="3.362.0"></a>
 # [3.362.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.361.0...v3.362.0) (2018-09-19)
 
