@@ -69,8 +69,8 @@ export default class ContactZeroStatePlaceholder extends SafeComponent {
     }
 
     get bottomTitle() {
-        const text = preferenceStore.prefs.importContactsInBackground ? 'title_contacts_zeroState0' :
-            'title_contacts_zeroState1';
+        const text = preferenceStore.prefs.importContactsInBackground ? 'title_contacts_zeroState1' :
+            'title_contacts_zeroState0';
         return (
             <View style={{ alignItems: 'center' }}>
                 <Text style={textStyle} {...testLabel('title_addYourContacts')}>
@@ -86,7 +86,7 @@ export default class ContactZeroStatePlaceholder extends SafeComponent {
                 <Image
                     source={zeroStateImage}
                     style={[adjustImageDimensions(zeroStateImage, width - vars.spacing.medium.mini2x * 2, null),
-                        { marginBottom: vars.spacing.huge.maxi }
+                        { marginBottom: 24 }
                     ]}
                 />
             </View>);
