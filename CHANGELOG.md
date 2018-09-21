@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.366.0"></a>
+# [3.366.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.365.0...v3.366.0) (2018-09-21)
+
+
+### Bug Fixes
+
+* don't show onboarding beacons to returning users. show zero state beacons to returning users [ch14016] ([46cb77e](https://github.com/PeerioTechnologies/peerio-mobile/commit/46cb77e))
+* no onboarding beacons if there are already some files ([dd3a6e8](https://github.com/PeerioTechnologies/peerio-mobile/commit/dd3a6e8))
+
+
+
 <a name="3.365.0"></a>
 # [3.365.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.364.0...v3.365.0) (2018-09-20)
 
