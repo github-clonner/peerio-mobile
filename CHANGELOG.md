@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.367.0"></a>
+# [3.367.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.366.0...v3.367.0) (2018-09-22)
+
+
+### Bug Fixes
+
+* fallback ROOT for android ([a7be1fe](https://github.com/PeerioTechnologies/peerio-mobile/commit/a7be1fe))
+
+
+
 <a name="3.366.0"></a>
 # [3.366.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.365.0...v3.366.0) (2018-09-21)
 
