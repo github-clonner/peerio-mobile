@@ -6,7 +6,6 @@ import android.util.Log;
 import com.facebook.react.ReactApplication;
 import com.airbnb.android.react.lottie.LottiePackage;
 import com.corbt.keepawake.KCKeepAwakePackage;
-import com.filepicker.FilePickerPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.rt2zz.reactnativecontacts.ReactNativeContacts;
 import com.BV.LinearGradient.LinearGradientPackage;
@@ -51,7 +50,6 @@ public class MainApplication extends Application implements ReactApplication {
                     new MainReactPackage(),
             new LottiePackage(),
                     new KCKeepAwakePackage(),
-                    new FilePickerPackage(),
                     new PickerPackage(),
                     new ReactNativeContacts(),
                     new RNSodiumPackage(),

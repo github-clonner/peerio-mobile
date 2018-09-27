@@ -11,4 +11,3 @@ if [ ! -f env.sh ]; then
 fi
 mkdir -p app/lib/peerio-icebear
 rm -rf node_modules/react-native/third-party/glog-0.3.4/test-driver
-rm -rf node_modules/react-native-file-picker/.git

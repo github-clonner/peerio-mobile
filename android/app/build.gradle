@@ -155,7 +155,6 @@ android {
 dependencies {
     compile project(':lottie-react-native')
     compile project(':react-native-keep-awake')
-    compile project(':react-native-file-picker')
     compile project(':react-native-image-crop-picker')
     compile project(':react-native-contacts')
     compile project(':react-native-linear-gradient')
