@@ -1,16 +1,16 @@
 const { existingUsers } = require('../helpers/userHelper');
 
 const { defineSupportCode } = require('cucumber');
-const { waitForEmail } = require('peerio-icebear/test/e2e/code/helpers/maildrop.js');
-const { getUrl } = require('peerio-icebear/test/e2e/code/helpers/https.js');
+// const { waitForEmail } = require('peerio-icebear/test/e2e/code/helpers/maildrop.js');
+// const { getUrl } = require('peerio-icebear/test/e2e/code/helpers/https.js');
 
-const emailConfirmUrlRegex = /"(https:\/\/hocuspocus\.peerio\.com\/confirm-address\/.*?)"/;
-const primaryEmailConfirmSubject = 'Welcome to Peerio (Staging)! Confirm your account.';
+// const emailConfirmUrlRegex = /"(https:\/\/hocuspocus\.peerio\.com\/confirm-address\/.*?)"/;
+// const primaryEmailConfirmSubject = 'Welcome to Peerio (Staging)! Confirm your account.';
 
 async function confirmPrimaryEmail(emailAddress) {
-    const email = await waitForEmail(emailAddress, primaryEmailConfirmSubject);
-    const url = emailConfirmUrlRegex.exec(email.body)[1];
-    await getUrl(url);
+    // const email = await waitForEmail(emailAddress, primaryEmailConfirmSubject);
+    // const url = emailConfirmUrlRegex.exec(email.body)[1];
+    // await getUrl(url);
 }
 
 defineSupportCode(({ Given, When, Then }) => {
@@ -25,10 +25,6 @@ defineSupportCode(({ Given, When, Then }) => {
 
     Then('I am presented with my passcode', async function () {
         await this.savePasscode();
-    });
-
-    Then('I confirm that I saved my passcode', async function () {
-        await this.confirmSavingPasscode();
     });
 
     Then('I am taken to the Login Start screen', async function () {

@@ -102,7 +102,6 @@ class World {
         await this.twoFactorAuthPrompt.tokenInput.setValue(token);
         await this.twoFactorAuthPrompt.hideKeyboardHelper();
         await this.twoFactorAuthPrompt.submitButton.click();
-        await this.twoFactorAuthPrompt.submitButton.click(); // TODO tap twice
     }
 
     async enterTokenInPrompt() {
@@ -118,8 +117,11 @@ class World {
     }
 
     async typePersonalInfo(username) {
-        if (!username) this.username = new Date().getTime();
-        else this.username = username;
+        this.username = new Date().getTime();
+        if (username) {
+            this.username = username;
+        }
+
         const email = `${this.username}@test.lan`;
         console.log('Creating account with username', this.username);
 
@@ -127,11 +129,16 @@ class World {
         await this.createAccountPage.hideKeyboardHelper();
         await this.createAccountPage.lastName.setValue('last');
         await this.createAccountPage.hideKeyboardHelper();
+        await this.createAccountPage.nextButton.click();
+
         await this.createAccountPage.username.setValue(this.username);
         await this.createAccountPage.hideKeyboardHelper();
+        await this.createAccountPage.nextButton.click();
+
         await this.createAccountPage.email.setValue(email);
         await this.createAccountPage.hideKeyboardHelper();
-        await this.createAccountPage.nextButton.click();
+
+        await this.createAccountPage.createButton.click();
     }
 
     async savePasscode() {
@@ -139,21 +146,17 @@ class World {
             this.passphrase = innerText;
         });
         console.log('Creating account with passphrase', this.passphrase);
-        await this.createAccountPage.nextButton.click();
-    }
 
-    async confirmSavingPasscode() {
-        await this.createAccountPage.confirmInput.setValue('I have saved my account key');
-        await this.createAccountPage.hideKeyboardHelper();
+        await this.createAccountPage.copyButton.click();
         await this.createAccountPage.nextButton.click();
-    }
 
-    async skipContactSync() {
-        await this.createAccountPage.skipButton.click();
+        await this.createAccountPage.acceptButton.click();
+        await this.createAccountPage.shareButton.click();
     }
 
     async seeWelcomeScreen() {
         await this.homePage.isVisible;
+        await this.homePage.chatTab.click();
     }
 
     async dismissEmailConfirmationPopup() {
@@ -181,8 +184,6 @@ class World {
         await this.selectCreateAccount();
         await this.typePersonalInfo(username);
         await this.savePasscode();
-        await this.confirmSavingPasscode();
-        await this.skipContactSync();
         await this.seeWelcomeScreen();
         await this.dismissEmailConfirmationPopup();
     }

@@ -7,6 +7,7 @@ import { vars } from '../../styles/styles';
 import SafeComponent from '../shared/safe-component';
 import signupState from './signup-state';
 import Text from '../controls/custom-text';
+import testLabel from '../helpers/test-label';
 
 const accountKeyStyle = {
     height: Platform.OS === 'ios' ? vars.font.size.smaller : null,
@@ -71,6 +72,7 @@ export default class SignupGenerationBox extends SafeComponent {
     get text() {
         return (
             <Text
+                {...testLabel('passphrase')}
                 numberofLines={1}
                 minimumFontScale={0.1}
                 adjustsFontSizeToFit

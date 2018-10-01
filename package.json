@@ -25,8 +25,8 @@
     "build-android-debug": "cd android && ./gradlew assembleDebug",
     "test": "./scripts/setup_tests.sh && ./scripts/run-tests.sh",
     "cucumber": "source env.sh && ./scripts/cucumber.sh",
-    "test-ios": "source env.sh && cucumberjs test/spec/files/folders.feature -r test/code -f node_modules/cucumber-pretty --world-parameters '{\"platform\": \"ios\"}'",
-    "test-android": "source env.sh && cucumberjs test/spec/files/folders.feature -r test/code -f node_modules/cucumber-pretty --world-parameters '{\"platform\": \"android\"}'",
+    "test-ios": "source env.sh && cucumberjs test/spec/account/login.feature -r test/code -f node_modules/cucumber-pretty --world-parameters '{\"platform\": \"ios\"}'",
+    "test-android": "source env.sh && cucumberjs test/spec/account/login.feature -r test/code -f node_modules/cucumber-pretty --world-parameters '{\"platform\": \"android\"}'",
     "gp-peerio": "npm run build-android && bash scripts/release_android.sh && fastlane android alpha",
     "commit-msg": "validate-commit-msg"
   },
@@ -110,7 +110,7 @@
     "url-regex": "4.1.1"
   },
   "devDependencies": {
-    "appium": "1.7.1",
+    "appium": "1.9.1",
     "authorize-ios": "1.0.4",
     "babel-eslint": "8.2.3",
     "babel-plugin-console-kungfu": "github:PeerioTechnologies/babel-plugin-console-kungfu#v1.0.0",
