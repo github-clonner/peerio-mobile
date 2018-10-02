@@ -144,11 +144,7 @@ export default class StyledTextInput extends SafeComponent {
 
     @action.bound async onChangeText(text) {
         this.isDirty = true;
-        // key is entered and the key is '@'
-        if (this.props.tmTrackEmailError &&
-            this.prevTextLength + 1 === text.length && text[text.length - 1] === '@') {
-            tm.login.onLoginWithEmail(this.props.label, tx('error_usingEmailInUsernameField'));
-        }
+        if (this.props.onChange) this.props.onChange(text, this.prevTextLength);
         let inputText = text;
         const { Version, OS } = Platform;
         if (OS !== 'android' || Version > 22) {
@@ -348,5 +344,5 @@ StyledTextInput.propTypes = {
     onBlur: PropTypes.any,
     onFocus: PropTypes.any,
     lowerCase: PropTypes.bool,
-    tmTrackEmailError: PropTypes.bool
+    onChangeText: PropTypes.any
 };

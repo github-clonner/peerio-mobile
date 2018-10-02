@@ -18,6 +18,8 @@ const { S } = telemetry;
 const { validators } = validation;
 const { usernameLogin } = validators;
 
+const USERNAME_LABEL = 'title_username';
+
 const findKeyText = {
     alignSelf: 'center',
     color: vars.peerioBlue,
@@ -69,6 +71,12 @@ export default class LoginInputs extends SafeComponent {
             (!this.props.hideUsernameInput && !this.usernameInput.isValid));
     }
 
+    tmEmailError(text, prevTextLength) {
+        if (prevTextLength + 1 === text.length && text[text.length - 1] === '@') {
+            tm.login.onLoginWithEmail(tx(USERNAME_LABEL), tx('error_usingEmailInUsernameField'));
+        }
+    }
+
     render() {
         const { hideUsernameInput } = this.props;
         return (
@@ -79,8 +87,8 @@ export default class LoginInputs extends SafeComponent {
                         state={this.usernameState}
                         inputName={S.USERNAME}
                         validations={usernameLogin}
-                        label={tx('title_username')}
-                        tmTrackEmailError
+                        label={tx(USERNAME_LABEL)}
+                        onChange={this.tmEmailError}
                         ref={this.usernameInputRef}
                         lowerCase
                         testID="usernameLogin" />
