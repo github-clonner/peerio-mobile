@@ -110,7 +110,7 @@
     "url-regex": "4.1.1"
   },
   "devDependencies": {
-    "appium": "1.9.1",
+    "appium": "1.8.1",
     "authorize-ios": "1.0.4",
     "babel-eslint": "8.2.3",
     "babel-plugin-console-kungfu": "github:PeerioTechnologies/babel-plugin-console-kungfu#v1.0.0",
