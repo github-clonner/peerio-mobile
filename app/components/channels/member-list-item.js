@@ -24,7 +24,7 @@ export default class MemberListItem extends SafeComponent {
 
     adminTextStyle = {
         color: vars.subtleText,
-        fontSize: vars.font.size.smallerx
+        fontSize: vars.font.size11
     };
 
     avatarStyle = {

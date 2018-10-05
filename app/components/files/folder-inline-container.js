@@ -34,7 +34,7 @@ const header = {
 
 const infoStyle = {
     color: vars.textBlack54,
-    fontSize: vars.font.size.smaller
+    fontSize: vars.font.size12
 };
 
 @observer
@@ -57,7 +57,7 @@ export default class FolderInlineContainer extends SafeComponent {
             flexGrow: 1,
             flexShrink: 1,
             color: vars.txtDark,
-            fontSize: vars.font.size.normal,
+            fontSize: vars.font.size14,
             marginLeft: vars.spacing.small.midi2x
         };
         return (<Text numberOfLines={1} ellipsizeMode="tail" style={nameStyle}>{name}</Text>);

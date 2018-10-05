@@ -18,22 +18,22 @@ const marginWhite = margin - paddingWhite;
 
 const smallLabel = {
     color: vars.txtDate,
-    fontSize: vars.font.size.small
+    fontSize: vars.font.size10
 };
 
 const boldLabel = {
     color: vars.txtDark,
-    fontSize: vars.font.size.bigger
+    fontSize: vars.font.size16
 };
 
 const mediumLabel = {
     color: vars.txtDate,
-    fontSize: vars.font.size.normal
+    fontSize: vars.font.size14
 };
 
 const descLabel = {
     color: vars.txtDark,
-    fontSize: vars.font.size.smaller
+    fontSize: vars.font.size12
 };
 
 const descIncludesLabel = [descLabel, {

@@ -93,7 +93,7 @@ export default class FolderSelect extends SafeComponent {
         const leftIcon = this.currentFolder.isRoot ?
             icons.dark('close', () => routes.modal.discard()) :
             icons.dark('arrow-back', () => { this.currentFolder = this.currentFolder.parent; });
-        const fontSize = vars.font.size.normal;
+        const fontSize = vars.font.size14;
         const title = 'title_moveFileTo';
         const outerStyle = { marginBottom: 0 };
         return <ModalHeader {...{ leftIcon, title, fontSize, outerStyle }} />;

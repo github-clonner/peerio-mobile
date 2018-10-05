@@ -178,7 +178,7 @@ export default class LoadingScreen extends Component {
             alignItems: 'center'
         };
         const flavorTextStyle = {
-            fontSize: vars.font.size.big,
+            fontSize: vars.font.size18,
             color: vars.subtleText,
             paddingHorizontal: vars.spacing.medium.maxi2x,
             textAlign: 'center',
@@ -199,7 +199,7 @@ export default class LoadingScreen extends Component {
         };
         const statusTextStyle = {
             marginTop: vars.spacing.medium.midi2x,
-            fontSize: vars.font.size.big,
+            fontSize: vars.font.size18,
             color: vars.subtleText,
             textAlign: 'center'
         };

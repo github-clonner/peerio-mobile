@@ -13,7 +13,7 @@ export default class LayoutModalExit extends SafeComponent {
     exitRow() {
         const { title, rightIcon } = this.props;
         const leftIcon = icons.dark('close', () => this.props.onClose());
-        const fontSize = vars.font.size.normal;
+        const fontSize = vars.font.size14;
         const outerStyle = { marginBottom: 0 };
         return <ModalHeader {...{ leftIcon, rightIcon, title, fontSize, outerStyle }} />;
     }

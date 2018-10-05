@@ -21,11 +21,11 @@ const { S } = telemetry;
 
 const titleStyle = {
     color: vars.lighterBlackText,
-    fontSize: vars.font.size.huge
+    fontSize: vars.font.size20
 };
 const textStyle = {
     color: vars.lighterBlackText,
-    fontSize: vars.font.size.normal
+    fontSize: vars.font.size14
 };
 const textDownloadStyle = {
     textDecorationLine: 'underline',

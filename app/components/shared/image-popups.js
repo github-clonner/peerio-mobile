@@ -15,7 +15,7 @@ const deleteRoomIllustration = require('../../assets/chat/delete-room.png');
 const emailInvitesIllustration = require('../../assets/email-invite-confirmation.png');
 
 const titleStyle = {
-    fontSize: vars.font.size.big,
+    fontSize: vars.font.size18,
     marginBottom: vars.spacing.small.midi2x,
     color: vars.txtDark
 };

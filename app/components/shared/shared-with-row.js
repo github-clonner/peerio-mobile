@@ -29,7 +29,7 @@ const numberSharedWithContainer = {
     zIndex: 0
 };
 const numberSharedWithText = {
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size12,
     color: vars.sharedWithNumberFontColor,
     textAlign: 'right'
 };

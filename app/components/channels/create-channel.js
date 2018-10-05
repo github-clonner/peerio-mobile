@@ -27,7 +27,7 @@ const card = {
 
 const titleStyle = {
     color: vars.peerioBlue,
-    fontSize: vars.font.size.bigger,
+    fontSize: vars.font.size16,
     marginLeft: vars.spacing.small.maxi
 };
 

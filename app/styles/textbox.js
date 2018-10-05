@@ -21,7 +21,7 @@ const textbox = {
     padding: 0,
     height: 28,
     color: vars.textBlack87,
-    fontSize: vars.font.size.normal
+    fontSize: vars.font.size14
 };
 
 const radius = {
@@ -68,7 +68,7 @@ export default {
             text: {
                 color: vars.black38,
                 alignSelf: 'center',
-                fontSize: vars.font.size.normal
+                fontSize: vars.font.size14
             }
         },
         small: {
@@ -76,7 +76,7 @@ export default {
             text: {
                 color: vars.peerioBlue,
                 alignSelf: 'center',
-                fontSize: vars.font.size.small
+                fontSize: vars.font.size10
             }
         }
     },

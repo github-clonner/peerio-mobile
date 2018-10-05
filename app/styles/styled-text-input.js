@@ -4,7 +4,7 @@ const textinputStyle = {
     color: vars.black87,
     // without input height text input is rendered zero-height on iOS
     height: vars.inputHeight,
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     paddingHorizontal: vars.inputPaddingHorizontal
 };
 
@@ -16,12 +16,12 @@ const bottomMessageContainer = {
 };
 
 const errorTextStyle = {
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size12,
     color: vars.red
 };
 
 const helperTextStyle = {
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size12,
     color: vars.peerioBlue
 };
 
@@ -31,7 +31,7 @@ const inputContainer = {
 
 const labelContainerStyle = {
     position: 'absolute',
-    top: (-vars.font.size.smaller / 2) - 2,
+    top: (-vars.font.size12 / 2) - 2,
     left: vars.spacing.small.mini2x,
     backgroundColor: 'white',
     paddingLeft: vars.spacing.small.mini2x,

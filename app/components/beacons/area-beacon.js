@@ -16,7 +16,7 @@ const windowWidth = Dimensions.get('window').width;
 
 const textStyle = {
     lineHeight: vars.beaconLineHeight,
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size12,
     color: 'white'
 };
 

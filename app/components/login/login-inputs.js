@@ -23,7 +23,7 @@ const USERNAME_LABEL = 'title_username';
 const findKeyText = {
     alignSelf: 'center',
     color: vars.peerioBlue,
-    fontSize: vars.font.size.normal
+    fontSize: vars.font.size14
 };
 
 @observer

@@ -19,11 +19,11 @@ export default class GhostsZeroState extends SafeComponent {
     messaging() {
         const headerStyle = {
             textAlign: 'center',
-            fontSize: vars.font.size.huge
+            fontSize: vars.font.size20
         };
         const infoStyle = {
             textAlign: 'center',
-            fontSize: vars.font.size.bigger
+            fontSize: vars.font.size16
         };
         const outerContainerStyle = {
             flex: 1,

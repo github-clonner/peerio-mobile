@@ -191,7 +191,7 @@ export default class StyledTextInput extends SafeComponent {
         if (this.focused) color = vars.peerioBlue;
         if (this.valid === INVALID) color = vars.red;
         const labelStyle = {
-            fontSize: vars.font.size.smaller,
+            fontSize: vars.font.size12,
             alignSelf: 'center',
             color
         };

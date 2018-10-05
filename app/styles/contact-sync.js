@@ -8,7 +8,7 @@ const formStyle = {
 
 const textNormal = {
     color: vars.lighterBlackText,
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     lineHeight: 24,
     marginBottom: vars.spacing.small.maxi,
     justifyContent: 'center',
@@ -17,7 +17,7 @@ const textNormal = {
 
 const titleDark = [textNormal, {
     color: vars.black,
-    fontSize: vars.font.size.bigger
+    fontSize: vars.font.size16
 }];
 
 const container = {
@@ -36,7 +36,7 @@ const headerContainer = {
 const textStyle = {
     flex: 1,
     color: vars.white,
-    fontSize: vars.font.size.big,
+    fontSize: vars.font.size18,
     fontWeight: 'bold',
     textAlign: 'center',
     backgroundColor: 'transparent'

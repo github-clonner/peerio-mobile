@@ -32,14 +32,14 @@ const wrapper = {
 
 const headerStyle = {
     color: vars.peerioBlue,
-    fontSize: vars.font.size.huge,
+    fontSize: vars.font.size20,
     textAlign: 'center',
     marginTop: vars.spacing.medium.maxi,
     marginBottom: vars.spacing.huge.maxi
 };
 
 const textStyle = {
-    fontSize: vars.font.size.bigger,
+    fontSize: vars.font.size16,
     color: vars.textBlack87,
     textAlign: 'center',
     width: 200,

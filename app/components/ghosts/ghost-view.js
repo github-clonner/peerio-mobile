@@ -20,17 +20,17 @@ const row = {
 
 const normalText = {
     color: vars.txtDark,
-    fontSize: vars.font.size.smaller
+    fontSize: vars.font.size12
 };
 
 const lightText = {
     color: vars.subtleText,
-    fontSize: vars.font.size.smaller
+    fontSize: vars.font.size12
 };
 
 const boldText = {
     fontWeight: '700',
-    fontSize: vars.font.size.big,
+    fontSize: vars.font.size18,
     height: 36
 };
 
@@ -45,7 +45,7 @@ const textBlock = {
     flex: 1,
     flexGrow: 1,
     padding,
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size12,
     marginVertical
 };
 

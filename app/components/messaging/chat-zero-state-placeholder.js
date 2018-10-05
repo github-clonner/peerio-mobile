@@ -28,13 +28,13 @@ const textStyle = {
 };
 
 const chatHeaderStyle = {
-    fontSize: vars.font.size.huge,
+    fontSize: vars.font.size20,
     paddingTop: vars.spacing.medium.maxi2x,
     paddingHorizontal: vars.spacing.large.maxi
 };
 
 const chatDescriptionStyle = {
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     marginVertical: vars.spacing.medium.mini,
     paddingHorizontal: vars.spacing.large.maxi
 };

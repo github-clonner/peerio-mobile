@@ -54,19 +54,19 @@ const headerContainer = {
 };
 
 const headerStyle = {
-    fontSize: vars.font.size.massive, // TODO font should be 27, massive = 24
+    fontSize: vars.font.size27, // TODO font should be 27, massive = 24
     color: vars.darkBlue,
     marginBottom: vars.spacing.small.midi
 };
 
 const headerStyle2 = {
-    fontSize: vars.font.size.massive, // TODO font should be 27, massive = 24
+    fontSize: vars.font.size27, // TODO font should be 27, massive = 24
     color: vars.darkBlue,
     marginBottom: vars.spacing.medium.midi
 };
 
 const description = {
-    fontSize: vars.font.big,
+    fontSize: vars.font.size18,
     color: vars.textBlack87,
     marginBottom: vars.spacing.medium.maxi2x
 };

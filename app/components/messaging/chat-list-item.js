@@ -46,12 +46,12 @@ const unreadCircleStyle = {
 };
 
 const circleTextStyle = {
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     color: vars.badgeText
 };
 
 const textNewStyle = {
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size12,
     color: vars.unreadTextColor
 };
 

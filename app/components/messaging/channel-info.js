@@ -19,14 +19,14 @@ const leaveRoomImage = require('../../assets/chat/icon-M-leave.png');
 const textStyle = {
     color: vars.txtDate,
     marginTop: vars.spacing.small.maxi,
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size12,
     marginLeft: vars.spacing.medium.midi
 };
 
 const topicTextStyle = {
     color: vars.txtDark,
     margin: vars.spacing.medium.midi,
-    fontSize: vars.font.size.normal
+    fontSize: vars.font.size14
 };
 
 @observer

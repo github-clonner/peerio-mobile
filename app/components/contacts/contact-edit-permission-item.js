@@ -100,7 +100,7 @@ export default class ContactEditPermissionItem extends SafeComponent {
             paddingLeft: avatarPadding
         };
         const nameStyle = {
-            fontSize: vars.font.size.normal,
+            fontSize: vars.font.size14,
             color: vars.lighterBlackText,
             paddingLeft: vars.spacing.medium.mini2x
         };

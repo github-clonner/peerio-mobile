@@ -9,7 +9,7 @@ import { a } from '../controls/tag-handlers';
 
 const popupTextStyle = {
     color: vars.txtDark,
-    fontSize: vars.font.size.smaller
+    fontSize: vars.font.size12
 };
 
 const linkStyle = [popupTextStyle, {

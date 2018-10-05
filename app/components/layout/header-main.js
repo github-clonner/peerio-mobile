@@ -24,7 +24,7 @@ export default class HeaderMain extends SafeComponent {
             vars.iconSize + (2 * vars.headerIconMargin) + extraMargin : 0;
         const textStyle = {
             color: vars.white,
-            fontSize: vars.font.size.huge,
+            fontSize: vars.font.size20,
             textAlign: 'center',
             alignItems: 'center',
             justifyContent: 'center',

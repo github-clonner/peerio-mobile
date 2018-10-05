@@ -18,7 +18,7 @@ const topTitleText = {
 };
 
 const smallText = {
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     opacity: 0.7,
     color: 'white',
     marginLeft: vars.spacing.small.midi2x
@@ -37,7 +37,7 @@ const planFooterInfo = [featureListTextMedium, {
 
 const featureSmallText = {
     color: 'white',
-    fontSize: vars.font.size.normal
+    fontSize: vars.font.size14
 };
 
 const block0 = {

@@ -32,13 +32,13 @@ const shareContainer = {
 };
 
 const shareTextStyle = {
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size12,
     color: vars.extraSubtleText,
     marginBottom: vars.spacing.small.mini
 };
 
 const recipientStyle = {
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     color: vars.lighterBlackText
 };
 

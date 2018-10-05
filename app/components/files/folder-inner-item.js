@@ -25,12 +25,12 @@ const folderInfoContainerStyle = {
 const folderInfoStyle = {
     backgroundColor: 'transparent',
     color: vars.extraSubtleText,
-    fontSize: vars.font.size.smaller
+    fontSize: vars.font.size12
 };
 
 const nameStyle = {
     color: vars.darkBlue,
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     backgroundColor: 'transparent'
 };
 

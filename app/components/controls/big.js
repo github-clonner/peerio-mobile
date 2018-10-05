@@ -8,7 +8,7 @@ import { vars } from '../../styles/styles';
 export default class Big extends Component {
     render() {
         const style = {
-            fontSize: vars.font.size.big
+            fontSize: vars.font.size18
         };
         return (
             <Text style={[style, this.props.style]}>

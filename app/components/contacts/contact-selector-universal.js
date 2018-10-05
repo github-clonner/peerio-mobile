@@ -102,7 +102,7 @@ export default class ContactSelectorUniversal extends SafeComponent {
         const { title, onExit } = this.props;
         const leftIcon = icons.dark('close', onExit, null, null, 'closeButton');
         const rightIcon = this.props.multiselect ? this.shareButton : null;
-        const fontSize = vars.font.size.big;
+        const fontSize = vars.font.size18;
         return <ModalHeader {...{ leftIcon, rightIcon, title, fontSize }} />;
     }
 

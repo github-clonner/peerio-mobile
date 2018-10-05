@@ -23,13 +23,13 @@ const titleContainer = {
 };
 
 const titleText = {
-    fontSize: vars.font.size.big,
+    fontSize: vars.font.size18,
     color: vars.textBlack87,
     paddingLeft: 8
 };
 
 const descriptionText = {
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     color: vars.textBlack87
 };
 

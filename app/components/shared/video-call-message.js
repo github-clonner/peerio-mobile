@@ -10,7 +10,7 @@ import { vars } from '../../styles/styles';
 
 const videoCallMsgStyle = {
     color: vars.black38,
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     lineHeight: 22,
     borderWidth: 0
 };

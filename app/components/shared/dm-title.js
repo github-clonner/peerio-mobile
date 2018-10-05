@@ -7,12 +7,12 @@ import Text from '../controls/custom-text';
 
 const fullnameTextStyle = {
     color: vars.txtDark,
-    fontSize: vars.font.size.normal
+    fontSize: vars.font.size14
 };
 
 const usernameTextStyle = {
     color: vars.txtMedium,
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     fontWeight: 'normal'
 };
 

@@ -38,7 +38,7 @@ export default class AvatarCircle extends SafeComponent {
         }];
         const avatarLetter = (
             <View style={coloredAvatarStyle}>
-                <Text style={{ color: tryColor.isLight ? 'black' : 'white', textAlign: 'center', width: 14 * ratio, fontSize: vars.font.size.smaller * ratio }}>
+                <Text style={{ color: tryColor.isLight ? 'black' : 'white', textAlign: 'center', width: 14 * ratio, fontSize: vars.font.size12 * ratio }}>
                     {letter}
                 </Text>
             </View>
