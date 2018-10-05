@@ -56,6 +56,17 @@ const shared = setup({
                 sublocation: TmHelper.currentRoute
             }
         ];
+    },
+
+    textInputOnMaxChars: (label) => {
+        return [
+            S.TEXT_INPUT,
+            {
+                item: label,
+                sublocation: TmHelper.currentRoute,
+                state: S.MAX_CHARACTERS
+            }
+        ];
     }
 });
 
