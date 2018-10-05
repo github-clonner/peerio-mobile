@@ -125,6 +125,13 @@
 			remoteGlobalIDString = 832C81801AAF6DEF007FA2F7;
 			remoteInfo = RCTVibration;
 		};
+		020D12A021670C1D007484E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 85F72AE1AB9C4B249FDE6333 /* RNFS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6456441F1EB8DA9100672408;
+			remoteInfo = "RNFS-tvOS";
+		};
 		02202B781E840AF7006CDA9B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 450DEE9B4CC440CA96F796BA /* RNMail.xcodeproj */;
@@ -903,6 +910,7 @@
 			isa = PBXGroup;
 			children = (
 				02E096D11DAE3B3B00641B85 /* libRNFS.a */,
+				020D12A121670C1D007484E3 /* libRNFS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1377,6 +1385,13 @@
 			fileType = archive.ar;
 			path = libRCTVibration.a;
 			remoteRef = 00C302E31ABCB9EE00DB3ED1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		020D12A121670C1D007484E3 /* libRNFS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFS.a;
+			remoteRef = 020D12A021670C1D007484E3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		02202B791E840AF7006CDA9B /* libRNMail.a */ = {
