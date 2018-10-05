@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.373.0"></a>
+# [3.373.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.369.0...v3.373.0) (2018-10-05)
+
+
+### Bug Fixes
+
+* fix crash on requesting face id [ch14251] ([99bcd4c](https://github.com/PeerioTechnologies/peerio-mobile/commit/99bcd4c))
+
+
+
 <a name="3.371.0"></a>
 # [3.371.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.370.0...v3.371.0) (2018-09-27)
 
