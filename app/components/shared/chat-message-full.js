@@ -25,8 +25,7 @@ const itemContainerStyle = {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: vars.spacing.medium.mini2x,
-    paddingRight: vars.spacing.medium.mini2x
+    paddingLeft: vars.spacing.medium.mini2x
 };
 
 const nameMessageContainerStyle = {
@@ -44,6 +43,13 @@ const msgStyle = {
     borderWidth: 0
 };
 
+const flexRow = {
+    flexDirection: 'row',
+    flex: 1,
+    flexGrow: 1,
+    flexShrink: 1
+};
+
 @observer
 export default class ChatMessageFull extends SafeComponent {
     renderThrow() {
@@ -57,17 +63,19 @@ export default class ChatMessageFull extends SafeComponent {
                         <TouchableContactAvatar contact={messageObject.sender} />
                         <View style={[nameMessageContainerStyle]}>
                             <ChatMessageData message={messageObject} />
-                            <ChatMessageBody
-                                messageObject={messageObject}
-                                chat={chat}
-                                onFileAction={onFileAction}
-                                onLegacyFileAction={onLegacyFileAction}
-                                onInlineImageAction={onInlineImageAction} />
+                            <View style={flexRow}>
+                                <ChatMessageBody
+                                    messageObject={messageObject}
+                                    chat={chat}
+                                    onFileAction={onFileAction}
+                                    onLegacyFileAction={onLegacyFileAction}
+                                    onInlineImageAction={onInlineImageAction} />
+                                <ViewReceipts receipts={messageObject.receipts} keepAvatar={!chat.isChannel} />
+                            </View>
                         </View>
                     </View>
                     <MessageSentError message={messageObject} chat={chat} />
                     <CorruptedMessage visible={messageObject.signatureError} />
-                    <ViewReceipts receipts={messageObject.receipts} />
                 </View>
             </View>
         );
