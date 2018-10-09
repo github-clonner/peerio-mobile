@@ -153,7 +153,7 @@ authenticator app.`}
                     </View>
                 </View>
                 <View style={{ left: paddingHorizontal + 12, bottom: paddingVertical, position: 'absolute' }}>
-                    {buttons.redTextButton('button_2FADeactivate', this.disable2fa)}
+                    {buttons.redTextButton('title_2FADisableAuth', this.disable2fa)}
                 </View>
             </View>
         );
