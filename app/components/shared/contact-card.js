@@ -65,9 +65,10 @@ export default class ContactCard extends SafeComponent {
     }
 
     get avatar() {
-        const { disableTapping, contact, loading, invited } = this.props;
+        const { disableTapping, contact, loading, invited, onPress } = this.props;
         return (
             <TouchableOpacity
+                onPress={onPress}
                 style={avatarStyle}
                 pressRetentionOffset={vars.retentionOffset}
                 disabled={disableTapping} >
