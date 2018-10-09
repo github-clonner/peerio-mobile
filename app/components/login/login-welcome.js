@@ -29,6 +29,12 @@ const logoBar = {
     backgroundColor: vars.darkBlue
 };
 
+const headerContainer = {
+    flex: 0,
+    paddingHorizontal: signupStyles.pagePadding,
+    paddingTop: vars.spacing.large.mini2x
+};
+
 const buttonContainer = {
     marginBottom: vars.spacing.small.maxi,
     alignItems: 'flex-start'
@@ -72,7 +78,7 @@ export default class LoginWelcome extends SafeComponent {
                             style={adjustImageDimensions(logoWelcome, undefined, vars.welcomeHeaderHeight)} />
                     </View>
                 </DebugMenuTrigger>
-                <View style={[signupStyles.container, { paddingHorizontal: signupStyles.pagePaddingLarge }]}>
+                <View style={[headerContainer, { paddingHorizontal: signupStyles.pagePaddingLarge }]}>
                     <LoginHeading title="title_newUserWelcome" subTitle="title_newUserWelcomeDescription" />
                     <View style={buttonContainer}>
                         {buttons.roundBlueBgButton(

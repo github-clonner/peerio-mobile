@@ -29,23 +29,17 @@ const emptyProgressBar = {
 const container = {
     flex: 0,
     paddingHorizontal: pagePadding,
-    paddingTop: vars.spacing.large.mini2x
+    paddingTop: vars.spacing.huge.midi2x -
+        // because container is always below the progressBar in the signup screens
+        (progressBarContainer.marginTop + progressBarContainer.height) -
+        // smaller distance on smaller phones
+        (vars.isDeviceScreenSmall ? vars.spacing.medium.maxi2x : 0)
 };
 
 const container2 = {
     paddingHorizontal: pagePadding,
     // align title with the one from signup-step-3
     paddingTop: 68
-};
-
-const backButtonContainer = {
-    height: vars.iconSizeMedium,
-    width: vars.iconSizeMedium,
-    borderWidth: 2,
-    borderColor: vars.darkBlue,
-    borderRadius: vars.iconSizeMedium,
-    justifyContent: 'center',
-    alignItems: 'center'
 };
 
 const headerContainer = {
@@ -104,7 +98,6 @@ export default {
     emptyProgressBar,
     container,
     container2,
-    backButtonContainer,
     headerContainer,
     headerStyle,
     headerStyle2,
