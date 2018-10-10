@@ -1925,7 +1925,6 @@
 					"\"$(SRCROOT)/peeriomobile\"",
 					"$(PROJECT_DIR)/peeriomobile/libsodium-ios/lib",
 					"$(PROJECT_DIR)/lib",
-					"\"$(SRCROOT)/peeriomobile\"",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
