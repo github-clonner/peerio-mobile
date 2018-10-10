@@ -44,7 +44,7 @@ const inputContainer = {
 };
 
 const errorStyle = {
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size12,
     color: vars.red,
     margin: vars.spacing.medium.mini2x,
     marginTop: -4,

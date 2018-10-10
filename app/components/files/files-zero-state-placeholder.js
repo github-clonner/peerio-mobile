@@ -23,13 +23,13 @@ const imageStyle = {
 const headerStyle = {
     color: vars.textBlack87,
     textAlign: 'center',
-    fontSize: vars.font.size.huge
+    fontSize: vars.font.size20
 };
 const labelStyle = {
     marginVertical: vars.spacing.medium.midi,
     color: vars.textBlack87,
     textAlign: 'center',
-    fontSize: vars.font.size.normal
+    fontSize: vars.font.size14
 };
 @observer
 export default class FilesPlaceholder extends SafeComponent {

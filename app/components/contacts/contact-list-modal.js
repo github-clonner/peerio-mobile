@@ -75,7 +75,7 @@ export default class ContactListModal extends SafeComponent {
             flexGrow: 1
         };
         const textStyle = {
-            fontSize: vars.font.size.normal,
+            fontSize: vars.font.size14,
             color: 'rgba(0, 0, 0, .54)'
         };
         return (

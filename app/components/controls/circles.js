@@ -25,7 +25,7 @@ const dash = {
 
 const dashText = {
     color: 'white',
-    fontSize: vars.font.size.big
+    fontSize: vars.font.size18
 };
 
 @observer

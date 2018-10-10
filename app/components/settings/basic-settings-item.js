@@ -22,7 +22,7 @@ const itemContainerStyle = {
 
 const descriptionStyle = {
     color: vars.txtLightGrey,
-    fontSize: vars.font.size.smaller
+    fontSize: vars.font.size12
 };
 
 @observer
@@ -42,7 +42,7 @@ export default class BasicSettingsItem extends SafeComponent {
         const { title, description, disabled, untappable, children, rightIcon } = this.props;
         const titleStyle = {
             color: disabled ? vars.txtLightGrey : vars.txtDark,
-            fontSize: vars.font.size.normal
+            fontSize: vars.font.size14
         };
         const offset = vars.retentionOffset;
         return (

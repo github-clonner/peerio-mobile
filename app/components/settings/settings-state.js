@@ -78,7 +78,7 @@ class SettingsState extends RoutedState {
         }
         if (passphrase) {
             const mp = (
-                <Text bold style={{ fontSize: vars.font.size.normal }}>
+                <Text bold style={{ fontSize: vars.font.size14 }}>
                     {passphrase}
                 </Text>
             );

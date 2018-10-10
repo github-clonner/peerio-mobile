@@ -139,7 +139,7 @@ export default class TextBox extends SafeComponent {
                 style={{
                     height: 14,
                     color: vars.red,
-                    fontSize: vars.font.size.smaller,
+                    fontSize: vars.font.size12,
                     backgroundColor: 'transparent'
                 }}>{t(this.validationMessage)}</Text>
         ) : (
@@ -190,7 +190,7 @@ export default class TextBox extends SafeComponent {
         const returnKeyType = this.props.returnKeyType || 'default';
         const style = this.focused ? textbox.focused : textbox.blurred;
         const icAlert = this.validationMessage ? textbox.alertVisible : textbox.alertInvisible;
-        let fontSize = vars.font.size.normal;
+        let fontSize = vars.font.size14;
         const astl = this.props.autoShrinkTextLimit;
         if (astl && this.value && this.value.length && astl < this.value.length) {
             fontSize = Math.floor(fontSize * astl / this.value.length);

@@ -32,13 +32,13 @@ const welcomeContainerStyle = {
 
 const welcomeHeaderStyle = {
     color: vars.textBlack87,
-    fontSize: vars.font.size.huge,
+    fontSize: vars.font.size20,
     fontWeight: 'bold'
 };
 
 const upgradeDescriptionStyle = {
     color: vars.textBlack87,
-    fontSize: vars.font.size.bigger,
+    fontSize: vars.font.size16,
     marginBottom: vars.spacing.large.mini
 };
 
@@ -54,7 +54,7 @@ const featureContainer = {
 
 const featureStyle = {
     color: vars.textBlack54,
-    fontSize: vars.font.size.bigger,
+    fontSize: vars.font.size16,
     marginBottom: vars.spacing.small.midi2x
 };
 

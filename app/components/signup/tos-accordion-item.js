@@ -15,7 +15,7 @@ const { S } = telemetry;
 
 const textTitleStyle = {
     flex: 1,
-    fontSize: vars.font.size.bigger
+    fontSize: vars.font.size16
 };
 const textStyle = {
     color: vars.textBlack54

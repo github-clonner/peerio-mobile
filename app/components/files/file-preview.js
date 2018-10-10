@@ -101,7 +101,7 @@ export default class FilePreview extends SafeComponent {
                     {fileImagePlaceholder}
                 </View>
                 <View style={nameContainer}>
-                    <Text style={{ fontSize: vars.font.size.smaller, color: vars.txtLightGrey }}>
+                    <Text style={{ fontSize: vars.font.size12, color: vars.txtLightGrey }}>
                         {tx('title_name')}
                     </Text>
                     <TextInput

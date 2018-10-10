@@ -7,14 +7,34 @@ import beaconState from './beacon-state';
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
+const fadeInAnimation = {
+    duration: 250,
+    create: {
+        type: LayoutAnimation.Types.easeIn,
+        property: LayoutAnimation.Properties.opacity
+    },
+    update: {
+        type: LayoutAnimation.Types.easeIn
+    }
+};
+
+const fadeOutAnimation = {
+    duration: 150,
+    delete: {
+        type: LayoutAnimation.Types.easeIn,
+        property: LayoutAnimation.Properties.opacity
+    }
+};
+
 @observer
 export default class AbstractBeacon extends SafeComponent {
+    @observable fadingOut;
     @observable descriptionTextHeight;
     // to understand if user follows the beacon flow or not
     wasPressed = false;
 
     componentWillMount() {
-        LayoutAnimation.easeInEaseOut();
+        LayoutAnimation.configureNext(fadeInAnimation);
     }
 
     componentWillUnmount() {
@@ -24,6 +44,7 @@ export default class AbstractBeacon extends SafeComponent {
 
     @action.bound onPress() {
         const { id } = this.props;
+        LayoutAnimation.configureNext(fadeOutAnimation);
         beaconState.removeBeacon(id);
         beaconState.markSeen([id]);
     }
@@ -35,6 +56,7 @@ export default class AbstractBeacon extends SafeComponent {
         if (onDismiss) {
             // we are not calling onDismiss to not
             // spam saving beacon requests
+            LayoutAnimation.configureNext(fadeOutAnimation);
             beaconState.removeBeacon(id);
             onDismiss();
         } else {

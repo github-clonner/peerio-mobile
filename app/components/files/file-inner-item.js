@@ -66,11 +66,11 @@ export default class FileInnerItem extends SafeComponent {
         const checked = this.props.file && this.props.file.selected;
         const nameStyle = {
             color: vars.txtDark,
-            fontSize: vars.font.size.normal
+            fontSize: vars.font.size14
         };
         const infoStyle = {
             color: vars.extraSubtleText,
-            fontSize: vars.font.size.smaller
+            fontSize: vars.font.size12
         };
         const itemContainerStyle = {
             flex: 1,

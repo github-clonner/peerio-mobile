@@ -46,7 +46,8 @@ async function twoFactorAuthPopup(active2FARequest) {
         tx('dialog_enter2FA'),
         type === 'login' ? tx('title_trustThisDevice') : null,
         uiState.trustDevice2FA,
-        true
+        true,
+        type === 'disable'
     );
     if (result === false) {
         if (type === 'login') {

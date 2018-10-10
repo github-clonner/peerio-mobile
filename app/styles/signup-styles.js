@@ -29,7 +29,11 @@ const emptyProgressBar = {
 const container = {
     flex: 0,
     paddingHorizontal: pagePadding,
-    paddingTop: vars.spacing.large.mini2x
+    paddingTop: vars.spacing.huge.midi2x -
+        // because container is always below the progressBar in the signup screens
+        (progressBarContainer.marginTop + progressBarContainer.height) -
+        // smaller distance on smaller phones
+        (vars.isDeviceScreenSmall ? vars.spacing.medium.maxi2x : 0)
 };
 
 const container2 = {
@@ -38,35 +42,25 @@ const container2 = {
     paddingTop: 68
 };
 
-const backButtonContainer = {
-    height: vars.iconSizeMedium,
-    width: vars.iconSizeMedium,
-    borderWidth: 2,
-    borderColor: vars.darkBlue,
-    borderRadius: vars.iconSizeMedium,
-    justifyContent: 'center',
-    alignItems: 'center'
-};
-
 const headerContainer = {
     marginTop: vars.spacing.small.maxi2x,
     marginBottom: vars.spacing.medium.maxi
 };
 
 const headerStyle = {
-    fontSize: vars.font.size.massive, // TODO font should be 27, massive = 24
+    fontSize: vars.font.size27, // TODO font should be 27, massive = 24
     color: vars.darkBlue,
     marginBottom: vars.spacing.small.midi
 };
 
 const headerStyle2 = {
-    fontSize: vars.font.size.massive, // TODO font should be 27, massive = 24
+    fontSize: vars.font.size27, // TODO font should be 27, massive = 24
     color: vars.darkBlue,
     marginBottom: vars.spacing.medium.midi
 };
 
 const description = {
-    fontSize: vars.font.big,
+    fontSize: vars.font.size18,
     color: vars.textBlack87,
     marginBottom: vars.spacing.medium.maxi2x
 };
@@ -104,7 +98,6 @@ export default {
     emptyProgressBar,
     container,
     container2,
-    backButtonContainer,
     headerContainer,
     headerStyle,
     headerStyle2,

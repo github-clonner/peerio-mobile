@@ -18,7 +18,7 @@ export default class IdentityVerificationNotice extends Component {
         flex: 1,
         color: vars.txtMedium,
         flexGrow: 1,
-        fontSize: vars.font.size.smaller
+        fontSize: vars.font.size12
     };
 
     hyperlink = {

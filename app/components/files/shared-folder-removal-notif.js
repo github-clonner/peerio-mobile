@@ -24,15 +24,15 @@ const greenWarningLine = {
 const topTextStyle = {
     flex: 1,
     color: vars.subtleText,
-    fontSize: vars.font.size.normal
+    fontSize: vars.font.size14
 };
 const listTextStyle = {
     flex: 0.5,
-    fontSize: vars.font.size.normal
+    fontSize: vars.font.size14
 };
 const bottomTextStyle = {
     color: vars.subtleText,
-    fontSize: vars.font.size.normal
+    fontSize: vars.font.size14
 };
 
 @observer

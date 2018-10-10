@@ -17,7 +17,7 @@ const container = {
     backgroundColor: vars.darkBlueBackground05
 };
 const headerStyle = {
-    fontSize: vars.font.size.big,
+    fontSize: vars.font.size18,
     color: vars.textBlack87,
     paddingTop: vars.spacing.huge.midi3x,
     paddingBottom: vars.spacing.large.midi2x,

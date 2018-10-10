@@ -23,7 +23,7 @@ const emojiTada = require('../../assets/emoji/tada.png');
 const headingStyle = {
     color: vars.lighterBlackText,
     textAlign: 'center',
-    fontSize: vars.font.size.bigger,
+    fontSize: vars.font.size16,
     lineHeight: 22
 };
 
@@ -51,12 +51,12 @@ const infoText = {
 
 const hostedByStyle = {
     color: vars.subtleText,
-    fontSize: vars.font.size.normal
+    fontSize: vars.font.size14
 };
 
 const hostNameStyle = {
     color: vars.black,
-    fontSize: vars.font.size.normal
+    fontSize: vars.font.size14
 };
 
 const buttonContainer = {
@@ -84,7 +84,7 @@ const moreText = {
     alignSelf: 'flex-end',
     lineHeight: vars.avatarDiameter,
     color: vars.white,
-    fontSize: vars.font.size.small
+    fontSize: vars.font.size10
 };
 
 @observer

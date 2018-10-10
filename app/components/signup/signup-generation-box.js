@@ -10,10 +10,10 @@ import Text from '../controls/custom-text';
 import testLabel from '../helpers/test-label';
 
 const accountKeyStyle = {
-    height: Platform.OS === 'ios' ? vars.font.size.smaller : null,
+    height: Platform.OS === 'ios' ? vars.font.size12 : null,
     alignSelf: 'stretch',
     textAlign: 'center',
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size12,
     color: '#E90162',
     letterSpacing: Platform.OS === 'android' ? 3 : 0
 };

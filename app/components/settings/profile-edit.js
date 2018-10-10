@@ -25,7 +25,7 @@ const textinputContainer = {
 };
 
 const textinput = {
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     height: vars.inputHeight,
     color: vars.txtDark,
     marginLeft: vars.inputPaddingLeft,
@@ -35,7 +35,7 @@ const textinput = {
 };
 
 const textStatic = {
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     color: vars.txtDark,
     marginLeft: vars.inputPaddingLeft,
     flex: 1,
@@ -273,7 +273,7 @@ export default class ProfileEdit extends SafeComponent {
                             {...testLabel('fullName')}
                             style={{
                                 color: vars.textBlack87,
-                                fontSize: vars.font.size.bigger,
+                                fontSize: vars.font.size16,
                                 marginVertical: vars.spacing.small.mini2x
                             }}>{firstName} {lastName}</Text>
                         <Text style={{ color: vars.textBlack54 }}>@{username}</Text>
@@ -326,7 +326,7 @@ export default class ProfileEdit extends SafeComponent {
                 </View>
                 <View style={{ margin: vars.spacing.medium.midi, marginTop: vars.spacing.small.midi2x }}>
                     <Text style={{ color: vars.txtDate, marginBottom: vars.spacing.small.midi }}>{t('title_publicKey')}</Text>
-                    <Text style={{ color: vars.txtMedium, fontFamily: `Verdana`, fontSize: vars.font.size.bigger }} numberOfLines={2}>
+                    <Text style={{ color: vars.txtMedium, fontFamily: `Verdana`, fontSize: vars.font.size16 }} numberOfLines={2}>
                         {fingerprintSkylarFormatted}
                     </Text>
                 </View>

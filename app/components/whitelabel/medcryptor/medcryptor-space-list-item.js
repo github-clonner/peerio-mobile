@@ -20,7 +20,7 @@ const containerStyle = {
 };
 
 const textStyle = {
-    fontSize: vars.font.size.bigger,
+    fontSize: vars.font.size16,
     color: vars.subtleText
 };
 
@@ -38,7 +38,7 @@ const circleStyle = {
 };
 
 const textCircleStyle = {
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     color: vars.badgeText
 };
 
@@ -61,7 +61,7 @@ const newCircleStyle = {
 };
 
 const textNewStyle = {
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size12,
     color: vars.invitedBadgeText
 };
 

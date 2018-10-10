@@ -33,7 +33,7 @@ export default class ChannelListItem extends SafeComponent {
         };
 
         const textStyle = {
-            fontSize: vars.font.size.bigger,
+            fontSize: vars.font.size16,
             color: vars.subtleText
         };
 
@@ -50,7 +50,7 @@ export default class ChannelListItem extends SafeComponent {
         };
 
         const textCircleStyle = {
-            fontSize: vars.font.size.normal,
+            fontSize: vars.font.size14,
             color: vars.badgeText
         };
         const hasUnread = unreadCount > 0;

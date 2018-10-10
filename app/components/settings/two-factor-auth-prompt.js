@@ -14,7 +14,7 @@ const image = require('../../assets/2fa-illustration.png');
 const { width } = Dimensions.get('window');
 const imageWidth = width - (2 * vars.popupHorizontalMargin);
 const headingStyle = {
-    fontSize: vars.font.size.big,
+    fontSize: vars.font.size18,
     marginBottom: vars.spacing.medium.mini2x,
     color: vars.textBlack87
 };

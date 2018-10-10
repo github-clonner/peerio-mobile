@@ -7,6 +7,7 @@ import { vars } from '../../styles/styles';
 import Text from '../controls/custom-text';
 
 const containerStyle = {
+    marginRight: 8,
     borderWidth: 0,
     borderColor: 'yellow',
     flexGrow: 1,
@@ -19,17 +20,17 @@ const containerStyle = {
 
 const fullnameTextStyle = {
     color: vars.txtDark,
-    fontSize: vars.font.size.normal
+    fontSize: vars.font.size14
 };
 
 const usernameTextStyle = {
     color: vars.txtMedium,
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     fontWeight: 'normal'
 };
 
 const dateTextStyle = {
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size12,
     color: vars.txtDate,
     marginLeft: vars.spacing.small.midi2x
 };

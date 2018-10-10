@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.375.0"></a>
+# [3.375.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.374.0...v3.375.0) (2018-10-09)
+
+
+### Features
+
+* read receipt ([#321](https://github.com/PeerioTechnologies/peerio-mobile/issues/321)) ([a6b0c07](https://github.com/PeerioTechnologies/peerio-mobile/commit/a6b0c07))
+
+
+
+<a name="3.374.0"></a>
+# [3.374.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.369.0...v3.374.0) (2018-10-05)
+
+
+### Bug Fixes
+
+* fix crash on requesting face id [ch14251] ([99bcd4c](https://github.com/PeerioTechnologies/peerio-mobile/commit/99bcd4c))
+
+
+
+<a name="3.373.0"></a>
+# [3.373.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.369.0...v3.373.0) (2018-10-05)
+
+
+### Bug Fixes
+
+* fix crash on requesting face id [ch14251] ([99bcd4c](https://github.com/PeerioTechnologies/peerio-mobile/commit/99bcd4c))
+
+
+
 <a name="3.371.0"></a>
 # [3.371.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.370.0...v3.371.0) (2018-09-27)
 

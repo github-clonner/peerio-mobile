@@ -46,7 +46,7 @@ export default class ContactView extends SafeComponent {
                             numberOfLines={2}
                             style={{
                                 color: vars.txtDark,
-                                fontSize: vars.font.size.bigger,
+                                fontSize: vars.font.size16,
                                 marginVertical: vars.spacing.small.mini2x
                             }}>{contact.email}</Text>
                     </View>
@@ -77,7 +77,7 @@ export default class ContactView extends SafeComponent {
                             numberOfLines={2}
                             style={{
                                 color: vars.txtDark,
-                                fontSize: vars.font.size.bigger,
+                                fontSize: vars.font.size16,
                                 marginVertical: vars.spacing.small.mini2x
                             }}>{firstName} {lastName}</Text>
                         <Text style={{ color: vars.txtDark }}>@{username}</Text>
@@ -90,7 +90,7 @@ export default class ContactView extends SafeComponent {
                     {tofuErrorControl}
                     {isDeleted && <Text style={{ color: vars.txtAlert }}>{t('title_accountDeleted')}</Text>}
                     <Text style={{ color: vars.txtDate, marginVertical: vars.spacing.small.maxi }}>{t('title_publicKey')}</Text>
-                    <Text style={{ color: vars.txtMedium, fontFamily: `Verdana`, fontSize: vars.font.size.bigger }} numberOfLines={2}>
+                    <Text style={{ color: vars.txtMedium, fontFamily: `Verdana`, fontSize: vars.font.size16 }} numberOfLines={2}>
                         {fingerprintSkylarFormatted}
                     </Text>
                 </View>

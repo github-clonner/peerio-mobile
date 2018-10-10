@@ -6,12 +6,12 @@ import testLabel from '../helpers/test-label';
 import Text from '../controls/custom-text';
 
 const goStyle = {
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     color: vars.peerioBlue
 };
 
 const disabledStyle = {
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     color: vars.disabled
 };
 
@@ -165,7 +165,7 @@ const icons = {
         };
         const textStyle = {
             color: fgColor,
-            fontSize: vars.font.size.normal,
+            fontSize: vars.font.size14,
             textAlign: 'center'
         };
         return (
@@ -210,8 +210,8 @@ const icons = {
         );
     },
 
-    imageButtonNoPadding(source, onPress, opacity) {
-        const width = vars.iconSize;
+    imageButtonNoPadding(source, onPress, size, opacity) {
+        const width = size || vars.iconSize;
         const height = width;
         return (
             <TouchableOpacity

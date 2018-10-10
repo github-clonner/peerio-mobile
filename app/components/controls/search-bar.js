@@ -6,7 +6,7 @@ import { vars } from '../../styles/styles';
 import testLabel from '../helpers/test-label';
 
 const height = vars.searchInputHeight;
-const fontSize = vars.font.size.bigger;
+const fontSize = vars.font.size16;
 const marginTop = Platform.OS === 'android' ? (height - fontSize + 2) / 2 : 0;
 
 const container = {

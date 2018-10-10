@@ -25,7 +25,7 @@ const footer = {
 };
 
 const filenameStyle = {
-    fontSize: vars.font.size.smallerx,
+    fontSize: vars.font.size11,
     color: vars.txtDark,
     backgroundColor: 'transparent'
 };
@@ -33,7 +33,7 @@ const filenameStyle = {
 const FILE_SIZE = '843KB';
 
 const filesizeStyle = {
-    fontSize: vars.font.size.smallerx,
+    fontSize: vars.font.size11,
     color: vars.textBlack54,
     backgroundColor: 'transparent'
 };
@@ -54,7 +54,7 @@ const innerPreviewBox = {
 
 const previewHeaderText = {
     color: vars.white,
-    fontSize: vars.font.size.smaller
+    fontSize: vars.font.size12
 };
 
 const textBox = {
@@ -68,7 +68,7 @@ const textBox = {
 
 const textBoxText = {
     color: vars.textBlack87,
-    fontSize: vars.font.size.xsmall,
+    fontSize: vars.font.size8,
     marginVertical: 4
 };
 

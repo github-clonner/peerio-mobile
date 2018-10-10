@@ -59,7 +59,7 @@ export default class ChannelInviteListItem extends SafeComponent {
         };
 
         const textStyle = {
-            fontSize: vars.font.size.bigger,
+            fontSize: vars.font.size16,
             color: vars.unreadTextColor,
             fontWeight: 'bold',
             textDecorationLine: this.declinedStyle ? 'line-through' : 'none'
@@ -77,7 +77,7 @@ export default class ChannelInviteListItem extends SafeComponent {
         };
 
         const textNewStyle = {
-            fontSize: vars.font.size.smaller,
+            fontSize: vars.font.size12,
             color: vars.invitedBadgeText
         };
 

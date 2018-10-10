@@ -21,11 +21,11 @@ const { S } = telemetry;
 
 const titleStyle = {
     color: vars.lighterBlackText,
-    fontSize: vars.font.size.huge
+    fontSize: vars.font.size20
 };
 const textStyle = {
     color: vars.lighterBlackText,
-    fontSize: vars.font.size.normal
+    fontSize: vars.font.size14
 };
 const textDownloadStyle = {
     textDecorationLine: 'underline',
@@ -355,7 +355,7 @@ function popupKeychainError(title, subTitle, text) {
     });
 }
 
-function popup2FA(title, placeholder, text, checked, cancelable) {
+function popup2FA(title, placeholder, text, checked, cancelable, checkboxHidden) {
     return new Promise((resolve) => {
         const state = observable({
             value: '',
@@ -368,8 +368,11 @@ function popup2FA(title, placeholder, text, checked, cancelable) {
         buttons.push({
             id: 'ok', text: tu('button_submit'), action: () => resolve(state), get disabled() { return !state.value; }
         });
-        const checkbox =
-            <CheckBox {...{ text, state }} property="checked" accessibilityLabel="trustDevice" />;
+        const checkbox = checkboxHidden ? null :
+            (<CheckBox {...{ text, state }}
+                property="checked"
+                accessibilityLabel="trustDevice"
+            />);
         const onSubmitEditing = () => {
             resolve(state);
             popupState.discardPopup();

@@ -26,7 +26,7 @@ export default class ChatChannelInvitesSection extends SafeComponent {
         const textStyle = {
             color: vars.peerioBlue,
             paddingVertical: 9,
-            fontSize: vars.font.size.bigger
+            fontSize: vars.font.size16
         };
 
         return (

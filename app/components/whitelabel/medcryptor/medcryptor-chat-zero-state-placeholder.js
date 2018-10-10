@@ -9,7 +9,7 @@ import routes from '../../routes/routes';
 
 const chatHeaderStyle = {
     color: vars.darkBlue,
-    fontSize: vars.font.size.massive,
+    fontSize: vars.font.size24,
     textAlign: 'center',
     marginTop: vars.spacing.medium.maxi2x,
     marginBottom: vars.spacing.medium.mini2x

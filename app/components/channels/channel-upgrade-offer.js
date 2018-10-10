@@ -30,7 +30,7 @@ export default class ChannelUpgradeOffer extends Component {
         const offerTextStyle = {
             color: 'white',
             backgroundColor: 'transparent',
-            fontSize: vars.font.size.smaller,
+            fontSize: vars.font.size12,
             lineHeight: 20,
             textAlign: 'justify',
             // Padding is due to React JS bug with lineHeight on android

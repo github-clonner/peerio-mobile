@@ -33,7 +33,7 @@ export default class ReadReceipt extends SafeComponent {
         };
         const letterView = (
             <View style={[circleStyle, circleOnline]}>
-                <Text style={{ fontSize: vars.readReceiptFontSize, color: 'white' }}>{letter}</Text>
+                <Text style={{ fontSize: vars.avatarLetterSize, color: vars.white }}>{letter}</Text>
             </View>
         );
         const uri = mediumAvatarUrl;

@@ -35,7 +35,7 @@ const descText = {
 const text = {
     flexGrow: 1,
     flexShrink: 1,
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     color: vars.txtMedium,
     paddingLeft: padding
 };
@@ -49,12 +49,12 @@ export default class FileInlineContainer extends SafeComponent {
             borderRadius: 4
         };
         const errorStyle = {
-            fontSize: vars.font.size.smaller,
+            fontSize: vars.font.size12,
             color: vars.lighterBlackText,
             fontStyle: 'italic'
         };
         const learnMoreStyle = {
-            fontSize: vars.font.size.smaller,
+            fontSize: vars.font.size12,
             color: vars.peerioBlue
         };
         return (

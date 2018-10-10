@@ -24,7 +24,7 @@ const titleStyle = {
 
 const descriptionTextStyle = {
     color: vars.peerioBlue,
-    fontSize: vars.font.size.smaller
+    fontSize: vars.font.size12
 };
 
 @observer

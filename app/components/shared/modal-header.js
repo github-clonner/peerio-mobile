@@ -17,7 +17,7 @@ export default class ModalHeader extends Component {
             textAlign: 'center',
             flexGrow: 1,
             flexShrink: 1,
-            fontSize: this.props.fontSize || vars.font.size.huge,
+            fontSize: this.props.fontSize || vars.font.size20,
             color: vars.textBlack54
         };
 

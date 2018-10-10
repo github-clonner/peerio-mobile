@@ -32,13 +32,13 @@ export default class Logs extends Component {
     sendButton() {
         const outer = {
             position: 'absolute',
-            right: 40,
-            bottom: 40
+            right: 20,
+            bottom: 20
         };
         const s = {
-            padding: vars.spacing.large.mini2x,
+            padding: 16,
             opacity: 0.9,
-            backgroundColor: vars.fabEnabled,
+            backgroundColor: vars.darkBlue,
             borderRadius: 14
         };
         return (

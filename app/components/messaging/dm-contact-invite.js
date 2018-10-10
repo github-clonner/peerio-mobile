@@ -32,13 +32,13 @@ const emojiStyle = {
 const headingStyle = {
     color: vars.lighterBlackText,
     textAlign: 'center',
-    fontSize: vars.font.size.bigger,
+    fontSize: vars.font.size16,
     lineHeight: 22
 };
 
 const inviteMethodStyle = {
     color: vars.txtMedium,
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size12,
     marginBottom: vars.spacing.medium.maxi2x
 };
 

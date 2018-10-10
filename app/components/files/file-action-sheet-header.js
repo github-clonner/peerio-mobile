@@ -35,7 +35,7 @@ const infoIconStyle = {
 };
 
 const infoTextStyle = {
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size12,
     alignItems: 'center',
     textAlign: 'center',
     paddingHorizontal: vars.spacing.huge.mini2x,

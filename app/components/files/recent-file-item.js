@@ -26,11 +26,11 @@ export default class RecentFileItem extends SafeComponent {
         const iconRight = icons.dark('more-vert', this.props.onMenu);
         const nameStyle = {
             color: vars.txtDark,
-            fontSize: vars.font.size.normal
+            fontSize: vars.font.size14
         };
         const infoStyle = {
             color: vars.extraSubtleText,
-            fontSize: vars.font.size.smaller
+            fontSize: vars.font.size12
         };
         const itemContainerStyle = {
             flex: 1,

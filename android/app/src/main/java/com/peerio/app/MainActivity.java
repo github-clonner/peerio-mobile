@@ -2,9 +2,11 @@ package com.peerio.app;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.content.Intent;
 
+import net.kangyufei.KeyEventModule;
 import com.facebook.react.*;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
@@ -75,5 +77,12 @@ public class MainActivity extends ReactActivity {
     @Override
     protected ReactActivityDelegate createReactActivityDelegate() {
         return new LaunchActivityDelegate(this, getMainComponentName());
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        KeyEventModule.getInstance().onKeyUpEvent(keyCode, event);
+        super.onKeyUp(keyCode, event);
+        return true;
     }
 }

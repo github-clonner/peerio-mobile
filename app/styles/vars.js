@@ -267,23 +267,25 @@ const vars = {
     contactZeroStateArrowHeightSmall: 24,
 
     font: {
-        size: {
-            xsmall: scaleDim(8),
-            normal: scaleDim(14),
-            smaller: scaleDim(12),
-            smallerx: scaleDim(11),
-            small: scaleDim(10),
-            big: scaleDim(18),
-            bigger: scaleDim(16),
-            huge: scaleDim(20),
-            massive: scaleDim(24)
-        }
+        size8: 8,
+        size10: 10,
+        size11: 11,
+        size12: 12,
+        size14: 14,
+        size16: 16,
+        size18: 18,
+        size20: 20,
+        size24: 24,
+        size27: 27,
+        size30: 30
     },
+
     accountTitleFontSize: scaleDim(37),
     accountListFontSize: scaleDim(21),
     signupFontSize: scaleDim(36),
     profileEditFontSize: scaleDim(60),
-    readReceiptFontSize: scaleDim(9),
+    avatarLetterSize: scaleDim(9),
+    readReceiptFontSize: scaleDim(12),
     sharedWithNumberFontColor: '#F2F2F2',
     sharedWithNumberBackground: 'grey',
     fontTitleSize: 16,

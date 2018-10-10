@@ -9,7 +9,7 @@ import { vars } from '../../styles/styles';
 
 const textStyle = {
     color: vars.txtMedium,
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     lineHeight: 22
 };
 

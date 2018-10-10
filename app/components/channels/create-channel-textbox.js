@@ -8,7 +8,7 @@ import testLabel from '../helpers/test-label';
 import Text from '../controls/custom-text';
 
 const height = vars.inputHeight;
-const fontSize = vars.font.size.normal;
+const fontSize = vars.font.size14;
 
 const container = {
     flexDirection: 'row',
@@ -31,7 +31,7 @@ const placeholderStyle = {
 };
 
 const bottomTextStyle = {
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size12,
     color: vars.txtDate,
     marginLeft: vars.spacing.large.midixx,
     marginBottom: vars.spacing.medium.mini2x
@@ -39,7 +39,7 @@ const bottomTextStyle = {
 
 const titleStyle = {
     color: vars.peerioBlue,
-    fontSize: vars.font.size.bigger
+    fontSize: vars.font.size16
 };
 
 @observer

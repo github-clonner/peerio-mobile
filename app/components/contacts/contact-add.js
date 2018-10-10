@@ -30,7 +30,7 @@ const textinputContainer = {
 };
 
 const textStyle = {
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size12,
     color: vars.textBlack54
 };
 
@@ -44,7 +44,7 @@ const buttonRow = {
 };
 
 const textinput = {
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     height: vars.inputHeight,
     color: vars.txtDark,
     flex: 1,
@@ -53,7 +53,7 @@ const textinput = {
 };
 
 const textStatic = {
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     color: vars.txtDark,
     marginLeft: vars.inputPaddingLeft,
     flex: 1,

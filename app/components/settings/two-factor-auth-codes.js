@@ -26,7 +26,7 @@ const bgStyle = {
 
 const headerStyle = {
     color: vars.txtDark,
-    fontSize: vars.font.size.bigger,
+    fontSize: vars.font.size16,
     marginLeft: vars.spacing.small.midi2x
 };
 
@@ -39,7 +39,7 @@ const infoStyle = {
 const labelStyle = {
     color: vars.txtDate,
     marginBottom: vars.spacing.small.mini2x,
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size12,
     marginLeft: vars.spacing.small.midi2x
 };
 
@@ -153,7 +153,7 @@ authenticator app.`}
                     </View>
                 </View>
                 <View style={{ left: paddingHorizontal + 12, bottom: paddingVertical, position: 'absolute' }}>
-                    {buttons.redTextButton('button_2FADeactivate', this.disable2fa)}
+                    {buttons.redTextButton('title_2FADisableAuth', this.disable2fa)}
                 </View>
             </View>
         );

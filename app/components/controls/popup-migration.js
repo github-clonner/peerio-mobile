@@ -81,7 +81,7 @@ export default class PopupMigration extends SafeComponent {
     renderThrow() {
         const alternatingTextStyle = {
             color: vars.black,
-            fontSize: vars.font.size.smaller,
+            fontSize: vars.font.size12,
             textAlign: 'center'
         };
         return (

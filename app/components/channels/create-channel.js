@@ -27,14 +27,13 @@ const card = {
 
 const titleStyle = {
     color: vars.peerioBlue,
-    fontSize: vars.font.size.bigger,
+    fontSize: vars.font.size16,
     marginLeft: vars.spacing.small.maxi
 };
 
 @observer
 export default class CreateChannel extends Component {
     @observable channelName = '';
-    @observable channelPurpose = '';
     @observable step = 0;
     @observable inProgress = false;
 
@@ -60,7 +59,7 @@ export default class CreateChannel extends Component {
 
     @action.bound async createChannel(contacts) {
         this.inProgress = true;
-        await chatState.startChat(contacts, true, this.channelName, this.channelPurpose);
+        await chatState.startChat(contacts, true, this.channelName);
         chatState.routerModal.discard();
     }
 
@@ -110,14 +109,6 @@ export default class CreateChannel extends Component {
                     bottomText={tx('title_channelNameLimit',
                         { maxChatNameLength: config.chat.maxChatNameLength })}
                     maxLength={config.chat.maxChatNameLength} />
-                <CreateChannelTextBox
-                    labelText="title_roomPurpose"
-                    placeholderText="title_channelTopicPlaceholder"
-                    property="channelPurpose"
-                    state={this}
-                    bottomText="title_channelTopicOptional"
-                    maxLength={config.chat.maxChatPurposeLength}
-                    multiline />
             </View>
         );
     }

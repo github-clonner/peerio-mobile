@@ -97,7 +97,7 @@ export default class PopupLayout extends SafeComponent {
         };
 
         const title = {
-            fontSize: vars.font.size.big,
+            fontSize: vars.font.size18,
             marginBottom: vars.spacing.small.midi2x,
             color: vars.txtDark
         };

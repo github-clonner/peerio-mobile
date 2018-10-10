@@ -37,7 +37,7 @@ export default class ContactEditPermission extends SafeComponent {
         const leftIcon = icons.dark('close', onExit);
         /* TODO: show unshare button */
         const rightIcon = null; // this.unshareButton
-        const fontSize = vars.font.size.big;
+        const fontSize = vars.font.size18;
         const outerStyle = { backgroundColor: 'transparent' };
         return <ModalHeader {...{ leftIcon, rightIcon, title, fontSize, outerStyle }} />;
     }

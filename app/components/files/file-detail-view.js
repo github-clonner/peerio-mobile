@@ -17,7 +17,7 @@ import snackbarState from '../snackbars/snackbar-state';
 
 const textStyle = {
     textAlign: 'center',
-    fontSize: vars.font.size.bigger,
+    fontSize: vars.font.size16,
     color: vars.extraSubtleText,
     marginBottom: vars.spacing.medium.mini2x
 };
