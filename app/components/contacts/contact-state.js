@@ -58,7 +58,7 @@ class ContactState extends RoutedState {
     @observable loading = false;
     @observable found = [];
     @observable recipients = [];
-    @observable recipientsMap = observable.shallowMap();
+    @observable recipientsMap = observable.map(null, { deep: false });
 
 
     @action contactView(contact) {

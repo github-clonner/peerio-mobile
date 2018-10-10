@@ -6,7 +6,7 @@ class MappedCollection {
     }
 
     @observable items = [];
-    @observable itemsMap = observable.shallowMap();
+    @observable itemsMap = observable.map(null, { deep: false });
 
     findByItemKey(item) {
         return this.findByKey(this.getKey(item));
