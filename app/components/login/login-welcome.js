@@ -7,8 +7,6 @@ import loginState from './login-state';
 import ActivityOverlay from '../controls/activity-overlay';
 import { vars, signupStyles } from '../../styles/styles';
 import buttons from '../helpers/buttons';
-import DebugMenu from '../shared/debug-menu';
-import DebugMenuTrigger from '../shared/debug-menu-trigger';
 import SafeComponent from '../shared/safe-component';
 import LoginHeading from './login-heading';
 import { adjustImageDimensions } from '../helpers/image';
@@ -70,14 +68,11 @@ export default class LoginWelcome extends SafeComponent {
                         source={imageWelcome}
                         style={{ height, alignSelf: 'center' }} />
                 </View>
-                <DebugMenu />
-                <DebugMenuTrigger>
-                    <View style={logoBar}>
-                        <Image
-                            source={logoWelcome}
-                            style={adjustImageDimensions(logoWelcome, undefined, vars.welcomeHeaderHeight)} />
-                    </View>
-                </DebugMenuTrigger>
+                <View style={logoBar}>
+                    <Image
+                        source={logoWelcome}
+                        style={adjustImageDimensions(logoWelcome, undefined, vars.welcomeHeaderHeight)} />
+                </View>
                 <View style={[headerContainer, { paddingHorizontal: signupStyles.pagePaddingLarge }]}>
                     <LoginHeading title="title_newUserWelcome" subTitle="title_newUserWelcomeDescription" />
                     <View style={buttonContainer}>

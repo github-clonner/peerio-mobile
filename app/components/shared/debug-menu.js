@@ -4,7 +4,7 @@ import { when, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { config, overrideServer, socket } from '../../lib/icebear';
 import loginState from '../login/login-state';
-import { wizard, vars } from '../../styles/styles';
+import { vars } from '../../styles/styles';
 import Button from '../controls/button';
 import Logs from '../logs/logs';
 import consoleOverride from '../../lib/console-override';
@@ -35,11 +35,17 @@ export default class DebugMenu extends SafeComponent {
 
     renderThrow() {
         if (!uiState.showDebugMenu) return null;
-
+        const container = {
+            backgroundColor: vars.darkBlueBackground15,
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            bottom: 0,
+            right: 0
+        };
         const debugContainer = {
-            backgroundColor: vars.darkBlue,
-            height: 120,
-            marginTop: vars.spacing.small.maxi2x
+            paddingHorizontal: vars.spacing.medium.maxi2x,
+            marginVertical: vars.spacing.small.maxi2x
         };
         const buttonContainer = {
             flexDirection: 'row',
@@ -47,45 +53,63 @@ export default class DebugMenu extends SafeComponent {
             justifyContent: 'space-between',
             paddingHorizontal: vars.loginWizard_debugMenu_paddingH
         };
-        const s = [wizard.footer.button.base, {
+        const button = {
+            height: 36,
             padding: vars.spacing.small.mini2x,
             justifyContent: 'center',
-            backgroundColor: '#FFFFFF10',
+            backgroundColor: vars.darkBlue,
             borderColor: '#FFFFFF50',
             borderWidth: 1,
             borderRadius: 6
-        }];
+        };
         const input = {
-            marginHorizontal: vars.spacing.medium.maxi2x,
             height: 40,
             backgroundColor: '#FFFFFF90',
             marginTop: vars.spacing.small.maxi2x,
-            fontFamily: vars.peerioFontFamily
+            fontFamily: vars.peerioFontFamily,
+            borderColor: vars.darkBlue,
+            borderWidth: 1,
+            borderRadius: 8
         };
         return (
-            <View>
+            <View style={container}>
                 <View style={debugContainer}>
+                    <View>
+                        <Button
+                            style={button}
+                            onPress={() => { uiState.showDebugMenu = false; }}
+                            text="Hide Debug Menu"
+                            textStyle={{ textAlign: 'center' }} />
+                    </View>
                     <View style={buttonContainer}>
-                        <Button
-                            style={s}
-                            onPress={() => { this.showDebugLogs = !this.showDebugLogs; }}
-                            text="Show logs"
-                            disabled={this.disableButtons} />
-                        <Button
-                            style={s}
-                            onPress={() => { consoleOverride.verbose = !consoleOverride.verbose; }}
-                            text={consoleOverride.verbose ? 'Verbose On' : 'Verbose Off'}
-                            disabled={this.disableButtons} />
-                        <Button
-                            style={s}
-                            onPress={() => this.debugServer(this.switchServerValue)}
-                            text="Override server"
-                            disabled={this.disableButtons} />
-                        <Button
-                            style={s}
-                            onPress={() => this.debugServer(null)}
-                            text="Reset"
-                            disabled={this.disableButtons} />
+                        <View style={{ flex: 1 }}>
+                            <Button
+                                style={button}
+                                onPress={() => { this.showDebugLogs = !this.showDebugLogs; }}
+                                text="Toggle logs"
+                                textStyle={{ textAlign: 'center' }}
+                                disabled={this.disableButtons} />
+                            <Button
+                                style={button}
+                                onPress={() => { consoleOverride.verbose = !consoleOverride.verbose; }}
+                                text="Toggle Verbose"
+                                textStyle={{ textAlign: 'center' }}
+                                disabled={this.disableButtons} />
+                        </View>
+                        <View style={{ flex: 1 }}>
+                            <Button
+                                style={button}
+                                onPress={() => this.debugServer(this.switchServerValue)}
+                                text="Override server"
+                                textStyle={{ textAlign: 'center' }}
+                                disabled={this.disableButtons} />
+                            <Button
+                                style={button}
+                                onPress={() => this.debugServer(null)}
+                                text="Reset Server"
+                                textStyle={{ textAlign: 'center' }}
+                                disabled={this.disableButtons} />
+                        </View>
                     </View>
                     <View style={{ flex: 0 }}>
                         <TextInput
@@ -103,7 +127,7 @@ export default class DebugMenu extends SafeComponent {
 
     get debugLogs() {
         return this.showDebugLogs ?
-            <View style={{ backgroundColor: 'white', height: height * 0.6 }}>
+            <View style={{ backgroundColor: 'white', height: height * 0.6, marginHorizontal: 8 }}>
                 <Logs />
             </View> : null;
     }

@@ -2,6 +2,8 @@ import React from 'react';
 import { View, PanResponder, Linking, DeviceEventEmitter,
     AppState, ActivityIndicator, NativeModules,
     Dimensions, PixelRatio, Platform, StatusBar } from 'react-native';
+import RNShakeEvent from 'react-native-shake-event';
+import KeyEvent from 'react-native-key-event';
 import { observer } from 'mobx-react/native';
 import SafeComponent from './shared/safe-component';
 import PopupLayout from './layout/popup-layout';
@@ -24,6 +26,7 @@ import BeaconLayout from './beacons/beacon-layout';
 import loginState from './login/login-state';
 import { uploadFileAndroid, uploadFileiOS, wakeUpAndUploadFileiOS } from './utils/shared-files';
 import { TopDrawerAutoMount } from './shared/top-drawer-components';
+import DebugMenu from './shared/debug-menu';
 
 const { height, width } = Dimensions.get('window');
 @observer
@@ -89,6 +92,16 @@ export default class App extends SafeComponent {
 
         uploadFileAndroid(this.props.sharedFile);
         DeviceEventEmitter.addListener('sharedFile', uploadFileAndroid);
+
+        KeyEvent.onKeyUpListener(keyCode => {
+            if (keyCode.unicodeChar === 78 && keyCode.isShiftPressed) uiState.showDebugMenu = true;
+        });
+
+        RNShakeEvent.addEventListener('shake', () => { uiState.showDebugMenu = true; });
+    }
+
+    componentWillUnmount() {
+        RNShakeEvent.removeEventListener('shake');
     }
 
     _handleAppStateChange(appState) {
@@ -131,6 +144,7 @@ export default class App extends SafeComponent {
                 {/* BeaconLayout.debugHelper */}
                 <ModalLayout key="modals" />
                 <PopupLayout key="popups" />
+                <DebugMenu />
                 <ActionSheetLayout key="actionSheets" />
                 {uiState.picker}
                 <Text key="debug" style={{ height: 0 }} testID="debugText">{uiState.debugText}</Text>

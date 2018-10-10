@@ -4,6 +4,8 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import net.kangyufei.KeyEventPackage;
+import com.jadsonlourenco.RNShakeEvent.RNShakeEventPackage;
 import com.airbnb.android.react.lottie.LottiePackage;
 import com.corbt.keepawake.KCKeepAwakePackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
@@ -48,7 +50,9 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
-            new LottiePackage(),
+                    new KeyEventPackage(),
+                    new RNShakeEventPackage(),
+                    new LottiePackage(),
                     new KCKeepAwakePackage(),
                     new PickerPackage(),
                     new ReactNativeContacts(),
