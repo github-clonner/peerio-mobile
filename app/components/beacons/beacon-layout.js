@@ -20,7 +20,7 @@ export default class BeaconLayout extends SafeComponent {
                 () => { this.beacon = newBeacon; },
                 BEACON_DELAY
             );
-        }, true);
+        }, {fireImmediately: true});
     }
 
     static get debugHelper() {

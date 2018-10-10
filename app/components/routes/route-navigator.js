@@ -19,7 +19,7 @@ export default class RouteNavigator extends Component {
             uiState.hideAll().then(() => {
                 this.route = rInfo;
             });
-        }, true);
+        }, {fireImmediately: true});
     }
 
     renderScene(route) {

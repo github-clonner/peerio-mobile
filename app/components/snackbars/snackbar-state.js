@@ -19,7 +19,7 @@ class SnackBarState extends RoutedState {
 
             reaction(() => clientApp.clientVersionDeprecated, value => {
                 if (value) warnings.addSevere('warning_deprecated');
-            }, true);
+            }, {fireImmediately: true});
         });
     }
 
