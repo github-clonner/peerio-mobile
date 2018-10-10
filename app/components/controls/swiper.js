@@ -22,7 +22,7 @@ export default class Swiper extends SafeComponent {
 
         reaction(() => this.width && this.visible, () => {
             this.visible ? this.show() : this.hide();
-        }, {fireImmediately: true});
+        }, { fireImmediately: true });
     }
 
     get visible() {

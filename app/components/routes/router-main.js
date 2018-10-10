@@ -1,6 +1,6 @@
 import React from 'react';
 import { LayoutAnimation, Platform } from 'react-native';
-import { observable, reaction, action, when,extendObservable } from 'mobx';
+import { observable, reaction, action, when, extendObservable } from 'mobx';
 import RNKeepAwake from 'react-native-keep-awake';
 import Router from './router';
 import uiState from '../layout/ui-state';
@@ -68,7 +68,7 @@ class RouterMain extends Router {
 
         reaction(() => fileStore.migration.pending, migration => {
             if (migration) this.filesystemUpgrade();
-        }, {fireImmediately: true});
+        }, { fireImmediately: true });
 
         reaction(() => this.current || this.currentIndex, () => {
             timeoutWithAction(

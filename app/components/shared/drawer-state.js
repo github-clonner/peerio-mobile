@@ -20,7 +20,7 @@ class DrawerState {
                 const drawerConfig = this.addDrawer(componentClass, context, propsParam);
                 drawerConfig.onDismiss = onDismiss;
             }
-        }, {fireImmediately: true});
+        }, { fireImmediately: true });
     }
 
     addDrawer(componentClass, context, propsParam) {

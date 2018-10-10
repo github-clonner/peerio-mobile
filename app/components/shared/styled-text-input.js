@@ -45,7 +45,7 @@ export default class StyledTextInput extends SafeComponent {
         this.reaction = reaction(() => socket.connected, () => {
             // Only run validation on reconnect, not on disconnect
             if (socket.connected) this.validate();
-        }, {fireImmediately: true});
+        }, { fireImmediately: true });
     }
 
     componentWillUnmount() {
