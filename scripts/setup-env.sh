@@ -11,5 +11,5 @@ if [ ! -f env.sh ]; then
 fi
 mkdir -p app/lib/peerio-icebear
 cd node_modules/react-native
-./ios-install-third-party.sh
+./scripts/ios-install-third-party.sh
 rm -rf third-party/glog-0.3.4/test-driver
