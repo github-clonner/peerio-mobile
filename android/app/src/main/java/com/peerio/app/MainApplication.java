@@ -11,7 +11,6 @@ import com.corbt.keepawake.KCKeepAwakePackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.rt2zz.reactnativecontacts.ReactNativeContacts;
 import com.BV.LinearGradient.LinearGradientPackage;
-import com.chirag.RNMail.RNMail;
 import com.idehub.Billing.InAppBillingBridgePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.zmxv.RNSound.RNSoundPackage;
@@ -59,7 +58,6 @@ public class MainApplication extends Application implements ReactApplication {
                     new RNSodiumPackage(),
                     new RNKeychainPackage(),
                     new LinearGradientPackage(),
-                    new RNMail(),
                     new InAppBillingBridgePackage(),
                     new VectorIconsPackage(),
                     new RNSoundPackage(),
