@@ -1,4 +1,6 @@
 import RNShare from 'react-native-share';
+import RNFS from 'react-native-fs';
+import FileOpener from 'react-native-file-opener';
 import { Platform } from 'react-native';
 import { observable, action } from 'mobx';
 import { mainState, uiState, loginState } from '../states';
@@ -109,9 +111,9 @@ class SignupState extends RoutedState {
         });
     }
 
-    get backupFileName() {
-        return `${this.username}-${tx('title_appName')}.pdf`;
-    }
+    backupFileName = ext => {
+        return `${this.username}-${tx('title_appName')}.${ext}`;
+    };
 
     @action.bound
     async saveAccountKey() {
@@ -122,7 +124,7 @@ class SignupState extends RoutedState {
             passphrase,
             backupFileName
         } = this;
-        const fileSavePath = config.FileStream.getTempCachePath(backupFileName);
+        let fileSavePath = config.FileStream.getTempCachePath(backupFileName('pdf'));
         await saveAccountKeyBackup(
             fileSavePath,
             `${firstName} ${lastName}`,
@@ -134,7 +136,16 @@ class SignupState extends RoutedState {
         try {
             const viewer = config.FileStream.launchViewer(fileSavePath);
             if (Platform.OS !== 'android') RNShare.open({ type: 'text/pdf', url: fileSavePath });
-            await viewer;
+            try {
+                await viewer;
+            } catch (e) { // No PDF reader installed on Android, or if viewer failed for any other reason
+                console.error(e);
+                fileSavePath = config.FileStream.getTempCachePath(backupFileName('txt'));
+                const content = `${tx('title_appName')} Username: ${username}\n${tx('title_appName')} Account Key: ${passphrase}`;
+
+                await RNFS.writeFile(fileSavePath, content, 'utf8');
+                await FileOpener.open(fileSavePath, 'text/*', fileSavePath);
+            }
             this.keyBackedUp = true;
         } catch (e) {
             console.error(e);
