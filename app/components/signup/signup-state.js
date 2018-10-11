@@ -10,10 +10,14 @@ import {
     crypto,
     saveAccountKeyBackup,
     config,
-    validation
+    validation,
+    telemetry
 } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import { when } from '../../../node_modules/mobx/lib/mobx';
+import tm from '../../telemetry';
+
+const { S } = telemetry;
 
 const { validators } = validation;
 const { suggestUsername } = validators;
@@ -145,6 +149,7 @@ class SignupState extends RoutedState {
 
                 await RNFS.writeFile(fileSavePath, content, 'utf8');
                 await FileOpener.open(fileSavePath, 'text/*', fileSavePath);
+                tm.signup.confirmSaveAk(S.TXT);
             }
             this.keyBackedUp = true;
         } catch (e) {
