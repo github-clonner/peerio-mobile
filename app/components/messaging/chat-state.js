@@ -35,7 +35,7 @@ class ChatState extends RoutedState {
                 console.log(`chat-store: loading ${chat.id}`);
                 this.loading = false;
             } else if (this.routerMain && this.routerMain.route === 'chats') this.routerMain.chats();
-        }, true);
+        }, { fireImmediately: true });
     }
 
     @action async init() {

@@ -56,7 +56,7 @@ export default class ViewReceipts extends SafeComponent {
                         this.receiptLabel = this.receiptNumber;
                     }, 3000);
                 }
-            }, true);
+            }, { fireImmediately: true });
         });
     }
 

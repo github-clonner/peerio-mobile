@@ -48,7 +48,7 @@ export default class Thumbnail extends Component {
     }
 
     componentWillMount() {
-        reaction(() => this.props.path, this.updatePath, true);
+        reaction(() => this.props.path, this.updatePath, { fireImmediately: true });
     }
 
     @action.bound layoutPreviewContainer(e) {

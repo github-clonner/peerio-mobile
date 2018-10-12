@@ -45,10 +45,10 @@ export default class TextBox extends SafeComponent {
         reaction(() => this.value, text => {
             if (this._value === text) return;
             this._value = text;
-        }, true);
+        }, { fireImmediately: true });
         reaction(() => [this.focused, this.value], () => {
             LayoutAnimation.easeInEaseOut();
-        }, true);
+        }, { fireImmediately: true });
         const s = this.props.state;
         if (s) {
             // add focus callback so that we can be focused on Next action

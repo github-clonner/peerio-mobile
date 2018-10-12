@@ -1,5 +1,5 @@
 import React from 'react';
-import { observable, reaction, action, when } from 'mobx';
+import { observable, reaction, action, when, extendObservable } from 'mobx';
 import RNKeepAwake from 'react-native-keep-awake';
 import Router from './router';
 import uiState from '../layout/ui-state';
@@ -67,7 +67,7 @@ class RouterMain extends Router {
 
         reaction(() => fileStore.migration.pending, migration => {
             if (migration) this.filesystemUpgrade();
-        }, true);
+        }, { fireImmediately: true });
 
         reaction(() => this.current || this.currentIndex, () => {
             timeoutWithAction(
@@ -125,7 +125,7 @@ class RouterMain extends Router {
 
     add(key, components, routeState) {
         const route = super.add(key, null);
-        route.components = observable.ref(components);
+        extendObservable(route, { components }, { components: observable.ref });
         route.routeState = routeState;
         this[key] = route.transition = async (item, suppressTransition, index) => {
             await uiState.hideAll();

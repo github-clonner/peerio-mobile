@@ -85,7 +85,7 @@ export default class Files extends SafeComponent {
         ], () => {
             console.debug(`files.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
             this.dataSource = this.data.slice(0, Math.min(this.data.length, this.maxLoadedIndex));
-        }, true);
+        }, { fireImmediately: true });
     }
 
     componentWillUnmount() {

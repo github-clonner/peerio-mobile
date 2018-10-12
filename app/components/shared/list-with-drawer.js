@@ -48,7 +48,7 @@ export default class ListWithDrawer extends SafeComponent {
                     this.onHideTopDrawer();
                 }
             },
-            true
+            { fireImmediately: true }
         );
     }
 

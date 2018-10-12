@@ -87,7 +87,7 @@ export default class ChatList extends SafeComponent {
             this.bottomIndicatorVisible
         ], () => {
             LayoutAnimation.easeInEaseOut();
-        }, true);
+        }, { fireImmediately: true });
     }
 
     componentWillUnmount() {
