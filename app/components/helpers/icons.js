@@ -90,8 +90,18 @@ const icons = {
         return icons.basic(name, colorFg, onPress, s, null, true, testId, disabled);
     },
 
-    coloredSmall(name, onPress, colorFg, backgroundColor) {
-        return icons.basic(name, colorFg, onPress, backgroundColor ? { backgroundColor } : {}, vars.iconSizeSmall);
+    coloredSmall(name, onPress, colorFg) {
+        return (
+            <TouchableOpacity
+                pressRetentionOffset={vars.pressRetentionOffset}
+                onPress={onPress}>
+                <Icon
+                    name={name}
+                    size={vars.iconSizeSmall}
+                    style={{ marginRight: vars.spacing.small.midi2x }}
+                    color={colorFg} />
+            </TouchableOpacity>
+        );
     },
 
     coloredAsText(name, color, size) {

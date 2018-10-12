@@ -74,7 +74,9 @@ class SettingsState extends RoutedState {
         let { passphrase } = user;
         if (!passphrase && keychain.hasPlugin) {
             const data = await keychain.get(`user::${user.username}`);
-            if (data) ({ passphrase } = JSON.parse(data));
+            if (data) {
+                ({ passphrase } = JSON.parse(data));
+            }
         }
         if (passphrase) {
             const mp = (
@@ -96,4 +98,5 @@ class SettingsState extends RoutedState {
     }
 }
 
-export default new SettingsState();
+const settingsState = new SettingsState();
+export default settingsState;

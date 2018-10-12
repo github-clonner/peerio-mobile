@@ -26,7 +26,6 @@ const container = {
 const placeholderStyle = {
     flexGrow: 1,
     height,
-    lineHeight: height * 1.5,
     paddingTop: 0,
     marginTop,
     marginLeft: vars.spacing.small.midi,

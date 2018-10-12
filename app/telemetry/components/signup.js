@@ -84,6 +84,16 @@ const signup = setup(
             ];
         },
 
+        confirmSaveAk: (fileType) => {
+            return [
+                S.DOWNLOAD_CONFIRM,
+                {
+                    item: S.ACCOUNT_KEY,
+                    fileType
+                }
+            ];
+        },
+
         readMorePopup: (item) => {
             return [
                 S.READ_MORE,

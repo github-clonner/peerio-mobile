@@ -149,10 +149,15 @@ export default class Chat extends SafeComponent {
                 if (!this.refreshing) {
                     if (!this.initialScrollDone ||
                         wasAtBottom) {
+                        requestAnimationFrame(() => { this.initialScrollDone = true; });
+                        if (this.contentHeight < this.scrollViewHeight
+                            && !this.chat.canGoUp && !this.chat.canGoDown) {
+                            console.log(`chat.js: ignoring auto scrolling because content size is small`);
+                            return;
+                        }
                         console.log('chat.js: auto scrolling');
                         this.isAtBottom = wasAtBottom;
                         this.scrollView.scrollTo({ y, animated: false });
-                        requestAnimationFrame(() => { this.initialScrollDone = true; });
                     }
                 }
 

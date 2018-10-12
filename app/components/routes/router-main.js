@@ -1,5 +1,4 @@
 import React from 'react';
-import { LayoutAnimation, Platform } from 'react-native';
 import { observable, reaction, action, when, extendObservable } from 'mobx';
 import RNKeepAwake from 'react-native-keep-awake';
 import Router from './router';
@@ -30,6 +29,7 @@ import { popupUpgradeNotification, popupUpgradeProgress } from '../shared/popups
 import preferenceStore from '../settings/preference-store';
 import whiteLabelComponents from '../../components/whitelabel/white-label-components';
 import { timeoutWithAction } from '../utils/timeouts';
+import { transitionAnimation } from '../helpers/animations';
 
 const INACTIVE_DELAY = 5000;
 
@@ -40,7 +40,6 @@ class RouterMain extends Router {
     @observable isInputVisible = false;
     @observable blackStatusBar = false;
     @observable currentIndex = 0;
-    @observable suppressTransition = false;
     @observable chatStateLoaded = false;
     @observable fileStateLoaded = false;
     @observable contactStateLoaded = false;
@@ -131,7 +130,7 @@ class RouterMain extends Router {
         this[key] = route.transition = async (item, suppressTransition, index) => {
             await uiState.hideAll();
             if (this.route !== key) {
-                !suppressTransition && LayoutAnimation.easeInEaseOut();
+                !suppressTransition && transitionAnimation();
                 this.onTransition(this.current, false, item);
             }
             this.resetMenus();
@@ -141,7 +140,7 @@ class RouterMain extends Router {
             let newIndex = index;
             if (newIndex === undefined) newIndex = (components.length > 1 && item) ? 1 : 0;
             if (newIndex !== this.currentIndex) {
-                !suppressTransition && LayoutAnimation.easeInEaseOut();
+                !suppressTransition && transitionAnimation();
             }
             this.currentIndex = newIndex;
             this.onTransition(route, true, item);
@@ -183,7 +182,7 @@ class RouterMain extends Router {
         await uiState.hideAll();
         if (this.currentIndex > 0) this.currentIndex--;
         this.onTransition(this.current, true);
-        if (Platform.OS !== 'android') LayoutAnimation.easeInEaseOut();
+        transitionAnimation();
         console.log(`router-main: transition to ${this.route}:${this.currentIndex}`);
     }
 
