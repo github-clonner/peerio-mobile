@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 /* eslint-disable */
 import { Text } from 'react-native';
-/* eslint-enable */
-import { observer } from 'mobx-react/native';
 
-@observer
+// TODO: implement @observer in ancestors
 export default class SafeComponent extends Component {
     renderThrow() {
         throw new Error('must override SafeComponent: renderThrow');

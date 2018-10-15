@@ -7,13 +7,12 @@ import { User } from '../../lib/icebear';
 
 @observer
 export default class SettingsToggleItem extends SafeComponent {
-    get state() { return User.current.settings; }
-
     toggle = () => {
+        const state = User.current.settings;
         const { property } = this.props;
-        const value = !this.state[property];
+        const value = !state[property];
         // so that UI reflects immediately
-        this.state[property] = value;
+        state[property] = value;
         User.current.saveSettings(settings => {
             settings[property] = value;
         });
@@ -22,7 +21,7 @@ export default class SettingsToggleItem extends SafeComponent {
     renderThrow() {
         return (
             <ToggleItem
-                state={this.state}
+                state={User.current.settings}
                 prop={this.props.property}
                 reverse={this.props.reverse}
                 title={this.props.title}
