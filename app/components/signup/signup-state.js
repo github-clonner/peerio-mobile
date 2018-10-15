@@ -47,7 +47,7 @@ class SignupState extends RoutedState {
     @observable role = '';
     @observable medicalId = '';
     @observable usernameSuggestions = [];
-    @observable subscribeToPromoEmails = false;
+    @observable subscribeToPromoEmails = true;
     @observable isPdfPreviewVisible = false;
 
     get isFirst() {
