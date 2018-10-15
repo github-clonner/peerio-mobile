@@ -78,6 +78,9 @@ export default class Notifications extends SafeComponent {
                         property="messageNotifications"
                         title={tx('title_forNewMessage')}
                     />
+                    {__DEV__ && <SettingsToggleItem
+                        property="disableOnboardingEmails"
+                        title="Disable onboarding emails" />}
                 </ScrollView>
             </View>
         );
