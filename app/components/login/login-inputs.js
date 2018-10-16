@@ -26,6 +26,14 @@ const findKeyText = {
     fontSize: vars.font.size14
 };
 
+function loginTelemetryHelper(name) {
+    return {
+        eventName: S.TEXT_INPUT,
+        item: name,
+        location: S.SIGN_IN
+    };
+}
+
 @observer
 export default class LoginInputs extends SafeComponent {
     usernameState = observable({ value: '' });
@@ -85,7 +93,7 @@ export default class LoginInputs extends SafeComponent {
                 {!hideUsernameInput && (<View>
                     <StyledTextInput
                         state={this.usernameState}
-                        inputName={S.USERNAME}
+                        telemetry={loginTelemetryHelper(S.USERNAME)}
                         validations={usernameLogin}
                         label={tx(USERNAME_LABEL)}
                         onChange={this.tmEmailError}
@@ -96,7 +104,7 @@ export default class LoginInputs extends SafeComponent {
                 </View>)}
                 <StyledTextInput
                     state={this.passwordState}
-                    inputName={S.ACCOUNT_KEY}
+                    telemetry={loginTelemetryHelper(S.ACCOUNT_KEY)}
                     label={tx('title_AccountKey')}
                     onSubmit={this.submit}
                     secureText

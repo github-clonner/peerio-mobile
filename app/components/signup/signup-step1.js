@@ -24,6 +24,14 @@ const { firstName, lastName } = validators;
 
 const MAX_NAME_LENGTH = config.user.maxNameLength;
 
+function signupTelemetryHelper(name) {
+    return {
+        eventName: S.TEXT_INPUT,
+        item: name,
+        location: S.ONBOARDING
+    };
+}
+
 @observer
 export default class SignupStep1 extends SafeComponent {
     firstnameState = observable({ value: '' });
@@ -81,7 +89,7 @@ export default class SignupStep1 extends SafeComponent {
                         autoFocus
                         state={this.firstnameState}
                         validations={firstName}
-                        inputName={S.FIRST_NAME}
+                        telemetry={signupTelemetryHelper(S.FIRST_NAME)}
                         label={`${tx('title_firstName')}*`}
                         helperText={this.firstnameState.value.length >= MAX_NAME_LENGTH ?
                             tx('title_characterLimitReached') :
@@ -97,7 +105,7 @@ export default class SignupStep1 extends SafeComponent {
                     <StyledTextInput
                         state={this.lastnameState}
                         validations={lastName}
-                        inputName={S.LAST_NAME}
+                        telemetry={signupTelemetryHelper(S.LAST_NAME)}
                         label={`${tx('title_lastName')}*`}
                         helperText={this.lastnameState.value.length >= MAX_NAME_LENGTH ?
                             tx('title_characterLimitReached') :

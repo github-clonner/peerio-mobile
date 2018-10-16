@@ -1,19 +1,29 @@
-/*
-    These are the events for components that are shared between multiple views.
-    Since they appear in more than one place, they need to know TmHelper.currentRoute for the `Sublocation` prop.
-*/
 import { telemetry } from '../../lib/icebear';
 import { setup } from '../main';
 import TmHelper from '../helpers';
 
 const { S, errorMessage } = telemetry;
 
+/*
+    These are the events for components that are shared between multiple views. Since they can appear
+    in more than one place, they need to know TmHelper.currentRoute for the `Sublocation` prop.
+
+    Properties recieved from the component are (unless in some cases like textInputOnClear):
+    - eventName (eg. S.TEXT_INPUT)
+    - item (eg. S.USERNAME)
+    - location (eg. S.SIGN_IN)
+
+    Other properties such as state and errorType as specific to each event
+    and are therefore either defined here OR sent by the component when the event is triggered.
+*/
+
 const shared = setup({
-    textInputOnFocus: (label) => {
+    textInputOnFocus: (tm) => {
         return [
-            S.TEXT_INPUT,
+            tm.eventName,
             {
-                item: label,
+                item: tm.item,
+                location: tm.location,
                 sublocation: TmHelper.currentRoute,
                 state: S.IN_FOCUS
             }
@@ -21,13 +31,14 @@ const shared = setup({
     },
 
     // Used to send errors when input is blurred
-    textInputOnBlur: (label, errorMsg) => {
+    textInputOnBlur: (tm, errorMsg) => {
         if (!errorMsg) return null; // Do not send error event if there is no error message
         if (errorMsg === 'error_usernameNotAvailable') return null; // Do not track this error here
         return [
-            S.TEXT_INPUT,
+            tm.eventName,
             {
-                item: label,
+                item: tm.item,
+                location: tm.location,
                 sublocation: TmHelper.currentRoute,
                 state: S.ERROR,
                 errorType: errorMessage(errorMsg)
@@ -35,12 +46,13 @@ const shared = setup({
         ];
     },
 
-    textInputOnError: (label, errorMsg) => {
+    textInputOnError: (tm, errorMsg) => {
         if (errorMsg !== 'error_usernameNotAvailable' && errorMsg !== 'error_wrongAK') return null;
         return [
-            S.TEXT_INPUT,
+            tm.eventName,
             {
-                item: label,
+                item: tm.itme,
+                location: tm.location,
                 sublocation: TmHelper.currentRoute,
                 state: S.ERROR,
                 errorType: errorMessage(errorMsg)
@@ -48,21 +60,23 @@ const shared = setup({
         ];
     },
 
-    textInputOnClear: (label) => {
+    textInputOnClear: (tm) => {
         return [
             S.CLEAR_TEXT,
             {
-                item: label,
+                item: tm.item,
+                location: tm.location,
                 sublocation: TmHelper.currentRoute
             }
         ];
     },
 
-    textInputOnMaxChars: (label) => {
+    textInputOnMaxChars: (tm) => {
         return [
-            S.TEXT_INPUT,
+            tm.eventName,
             {
-                item: label,
+                item: tm.item,
+                location: tm.location,
                 sublocation: TmHelper.currentRoute,
                 state: S.MAX_CHARACTERS
             }

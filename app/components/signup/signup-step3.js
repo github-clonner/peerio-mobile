@@ -25,6 +25,14 @@ const checkboxContainer = {
     marginBottom: vars.spacing.small.maxi
 };
 
+function signupTelemetryHelper(name) {
+    return {
+        eventName: S.TEXT_INPUT,
+        item: name,
+        location: S.ONBOARDING
+    };
+}
+
 @observer
 export default class SignupStep3 extends SafeComponent {
     emailState = observable({ value: '' });
@@ -73,7 +81,7 @@ export default class SignupStep3 extends SafeComponent {
                         autoFocus
                         state={this.emailState}
                         validations={email}
-                        inputName={S.EMAIL}
+                        telemetry={signupTelemetryHelper(S.EMAIL)}
                         label={`${tx('title_email')}*`}
                         helperText={tx('title_hintEmail')}
                         lowerCase

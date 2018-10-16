@@ -24,6 +24,14 @@ const { username } = validators;
 
 const MAX_USERNAME_LENGTH = config.user.maxUsernameLength;
 
+function signupTelemetryHelper(name) {
+    return {
+        eventName: S.TEXT_INPUT,
+        item: name,
+        location: S.ONBOARDING
+    };
+}
+
 @observer
 export default class SignupStep2 extends SafeComponent {
     // used for telemetry option to know if user autofilled username before or after getting error
@@ -135,7 +143,7 @@ export default class SignupStep2 extends SafeComponent {
                         autoFocus
                         state={this.usernameState}
                         validations={username}
-                        inputName={S.USERNAME}
+                        telemetry={signupTelemetryHelper(S.USERNAME)}
                         helperText={this.usernameState.value.length >= MAX_USERNAME_LENGTH ?
                             tx('title_characterLimitReached') :
                             tx('title_hintUsername')}
