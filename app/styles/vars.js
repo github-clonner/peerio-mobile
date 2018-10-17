@@ -209,7 +209,7 @@ const vars = {
     footerMarginX: 24,
     statusBarHeight,
     layoutPaddingTop,
-    welcomeHeaderHeight: 80 + statusBarHeight,
+    welcomeHeaderHeight: (isDeviceScreenBig ? 80 + iPhoneXTop : 64),
     headerHeight: 56,
     headerSpacing: 56 + layoutPaddingTop,
     headerIconMargin: 16,
@@ -268,6 +268,7 @@ const vars = {
 
     font: {
         size8: 8,
+        size9: 9,
         size10: 10,
         size11: 11,
         size12: 12,
@@ -277,7 +278,8 @@ const vars = {
         size20: 20,
         size24: 24,
         size27: 27,
-        size30: 30
+        size30: 30,
+        size36: 36
     },
 
     accountTitleFontSize: scaleDim(37),
@@ -290,7 +292,7 @@ const vars = {
     sharedWithNumberBackground: 'grey',
     fontTitleSize: 16,
     largeInputWidth: 240,
-    inputHeight: 46,
+    inputHeight: 48,
     searchInputHeight: 32,
     inputPaddingLeft: 10,
     inputPaddingHorizontal: 8,
