@@ -1,7 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, LayoutAnimation, Platform } from 'react-native';
-import sectionListGetItemLayout from 'react-native-section-list-get-item-layout';
+import { View, LayoutAnimation } from 'react-native';
 import { observable, reaction, action, computed } from 'mobx';
 import { chatInviteStore, chatStore } from '../../lib/icebear';
 import SafeComponent from '../shared/safe-component';
@@ -88,11 +87,17 @@ export default class ChatList extends SafeComponent {
         ], () => {
             LayoutAnimation.easeInEaseOut();
         }, { fireImmediately: true });
+
+        setTimeout(() => {
+            this.scrollView._wrapperListRef._listRef.scrollToOffset({ offset: 0 });
+        }, 100);
+        setTimeout(() => {
+            const lastRoom = chatStore.allRooms[chatStore.allRooms.length - 1];
+            lastRoom.unreadCount = 3;
+        }, 2000);
     }
 
     componentWillUnmount() {
-        this.reaction && this.reaction();
-        this.reaction = null;
         this.indicatorReaction && this.indicatorReaction();
         this.indicatorReaction = null;
         uiState.currentScrollView = null;
@@ -241,15 +246,6 @@ export default class ChatList extends SafeComponent {
         });
         Object.assign(this, { minSectionIndex, minItemIndex, maxSectionIndex, maxItemIndex });
     }
-
-    // TODO: fix getitemlayout for RN 0.55
-    getItemLayout = Platform.OS === 'android' ? null : sectionListGetItemLayout({
-        // first section is channels
-        // second section is DMs
-        getItemHeight: (rowData, sectionIndex /* , rowIndex */) => sectionIndex === 0 ?
-            vars.sectionHeaderHeight : vars.chatListItemDMHeight,
-        getSectionHeaderHeight: () => vars.sectionHeaderHeight
-    });
 
     listView() {
         if (chatState.routerMain.currentIndex !== 0) return null;
