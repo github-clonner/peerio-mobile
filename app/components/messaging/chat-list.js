@@ -91,10 +91,6 @@ export default class ChatList extends SafeComponent {
         setTimeout(() => {
             this.scrollView._wrapperListRef._listRef.scrollToOffset({ offset: 0 });
         }, 100);
-        setTimeout(() => {
-            const lastRoom = chatStore.allRooms[chatStore.allRooms.length - 1];
-            lastRoom.unreadCount = 3;
-        }, 2000);
     }
 
     componentWillUnmount() {
