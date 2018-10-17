@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, LayoutAnimation } from 'react-native';
+import { View, LayoutAnimation, Platform } from 'react-native';
 import { observable, reaction, action, computed } from 'mobx';
 import { chatInviteStore, chatStore } from '../../lib/icebear';
 import SafeComponent from '../shared/safe-component';
@@ -89,7 +89,16 @@ export default class ChatList extends SafeComponent {
         }, { fireImmediately: true });
 
         setTimeout(() => {
-            this.scrollView._wrapperListRef._listRef.scrollToOffset({ offset: 0 });
+            // TODO: unify this
+            if (Platform.OS === 'android') {
+                this.scrollView.scrollToLocation({
+                    sectionIndex: 0,
+                    itemIndex: 0,
+                    viewOffset: 0
+                });
+            } else {
+                this.scrollView._wrapperListRef._listRef.scrollToOffset({ offset: 0 });
+            }
         }, 100);
     }
 
