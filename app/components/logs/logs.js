@@ -7,6 +7,7 @@ import Text from '../controls/custom-text';
 import { vars } from '../../styles/styles';
 import { User, config } from '../../lib/icebear';
 
+// uses react-native-mail module
 const { RNMail } = NativeModules;
 
 const mapFormat = ({ time, msg }) => ({
