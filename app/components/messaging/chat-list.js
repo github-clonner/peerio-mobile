@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, LayoutAnimation, Platform } from 'react-native';
+import { View, Platform } from 'react-native';
 import { observable, reaction, action, computed } from 'mobx';
 import { chatInviteStore, chatStore } from '../../lib/icebear';
 import SafeComponent from '../shared/safe-component';
@@ -21,6 +21,7 @@ import { vars } from '../../styles/styles';
 import ChatZeroStatePlaceholder from './chat-zero-state-placeholder';
 import SectionListWithDrawer from '../shared/section-list-with-drawer';
 import zeroStateBeacons from '../beacons/zerostate-beacons';
+import { transitionAnimation } from '../helpers/animations';
 
 const INITIAL_LIST_SIZE = 10;
 
@@ -84,9 +85,7 @@ export default class ChatList extends SafeComponent {
         this.indicatorReaction = reaction(() => [
             this.topIndicatorVisible,
             this.bottomIndicatorVisible
-        ], () => {
-            LayoutAnimation.easeInEaseOut();
-        }, { fireImmediately: true });
+        ], transitionAnimation, { fireImmediately: true });
 
         setTimeout(() => {
             // TODO: unify this
