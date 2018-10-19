@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.379.0"></a>
+# [3.379.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.378.0...v3.379.0) (2018-10-19)
+
+
+### Bug Fixes
+
+* extract displayName and extension with more fallbacks [ch15563] ([a7a851e](https://github.com/PeerioTechnologies/peerio-mobile/commit/a7a851e))
+* use transitionAnimation instead of LayoutAnimation to prevent android crash [ch15564] ([1f2a58d](https://github.com/PeerioTechnologies/peerio-mobile/commit/1f2a58d))
+
+
+
 <a name="3.378.0"></a>
 # [3.378.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.377.0...v3.378.0) (2018-10-18)
 
