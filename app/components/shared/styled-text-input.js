@@ -261,8 +261,7 @@ export default class StyledTextInput extends SafeComponent {
     // reserves space below text input for error or helper message
     get bottomTextSpacer() {
         const marginBottom = styledTextInput.bottomMessageContainer.height
-            + styledTextInput.bottomMessageContainer.marginTop
-            + styledTextInput.bottomMessageContainer.marginBottom;
+            + styledTextInput.bottomMessageContainer.marginTop;
         return (<View style={{ marginBottom }} />);
     }
 
@@ -280,9 +279,12 @@ export default class StyledTextInput extends SafeComponent {
 
     get helperText() {
         const { helperText } = this.props;
+        const style = this.focused ?
+            styledTextInput.helperTextFocusedStyle :
+            styledTextInput.helperTextBlurredStyle;
         return (
             <View style={styledTextInput.bottomMessageContainer}>
-                <Text style={styledTextInput.helperTextStyle}>
+                <Text style={style}>
                     {tx(helperText)}
                 </Text>
             </View>
@@ -291,7 +293,7 @@ export default class StyledTextInput extends SafeComponent {
 
     get bottomText() {
         if (this.hasError) return this.errorText;
-        else if (this.props.helperText && this.focused) return this.helperText;
+        else if (this.props.helperText) return this.helperText;
         return this.bottomTextSpacer;
     }
 

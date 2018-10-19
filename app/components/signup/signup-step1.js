@@ -79,6 +79,7 @@ export default class SignupStep1 extends SafeComponent {
     }
 
     renderThrow() {
+        const spaceBetweenInputs = vars.isDeviceScreenBig ? 16 : 6;
         return (
             <View style={signupStyles.page}>
                 <SignupStepIndicator />
@@ -102,6 +103,7 @@ export default class SignupStep1 extends SafeComponent {
                         onSubmitEditing={this.onSubmitFirstName}
                         ref={this.firstNameInputRef}
                         testID="firstName" />
+                    <View style={{ height: spaceBetweenInputs }} />
                     <StyledTextInput
                         state={this.lastnameState}
                         validations={lastName}
