@@ -47,7 +47,8 @@ const login = setup(
                 S.TEXT_INPUT,
                 {
                     item: label,
-                    location: TmHelper.currentRoute,
+                    location: S.SIGN_IN,
+                    sublocation: TmHelper.currentRoute,
                     state: S.ERROR,
                     errorType: errorMessage(errorMsg)
                 }

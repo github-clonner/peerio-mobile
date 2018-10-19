@@ -51,7 +51,7 @@ const shared = setup({
         return [
             tm.eventName,
             {
-                item: tm.itme,
+                item: tm.item,
                 location: tm.location,
                 sublocation: TmHelper.currentRoute,
                 state: S.ERROR,
