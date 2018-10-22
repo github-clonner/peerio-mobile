@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.380.0"></a>
+# [3.380.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.379.0...v3.380.0) (2018-10-22)
+
+
+### Bug Fixes
+
+* return file picker manager back [ch15624] ([2adcf52](https://github.com/PeerioTechnologies/peerio-mobile/commit/2adcf52))
+
+
+
 <a name="3.379.0"></a>
 # [3.379.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.378.0...v3.379.0) (2018-10-19)
 
