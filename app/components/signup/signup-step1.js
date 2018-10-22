@@ -14,7 +14,6 @@ import buttons from '../helpers/buttons';
 import SignupButtonBack from './signup-button-back';
 import SignupHeading from './signup-heading';
 import SignupStepIndicator from './signup-step-indicator';
-import TmHelper from '../../telemetry/helpers';
 import tm from '../../telemetry';
 
 const { S } = telemetry;
@@ -24,11 +23,13 @@ const { firstName, lastName } = validators;
 
 const MAX_NAME_LENGTH = config.user.maxNameLength;
 
+const sublocation = S.ACCOUNT_NAME;
+
 function signupTelemetryHelper(name) {
     return {
-        eventName: S.TEXT_INPUT,
         item: name,
-        location: S.ONBOARDING
+        location: S.ONBOARDING,
+        sublocation
     };
 }
 
@@ -44,7 +45,6 @@ export default class SignupStep1 extends SafeComponent {
 
     componentDidMount() {
         this.startTime = Date.now();
-        TmHelper.currentRoute = S.ACCOUNT_NAME;
         // QUICK SIGNUP DEV FLAG
         if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
             this.firstNameInput.onChangeText(capitalize(randomWords()));
@@ -62,7 +62,7 @@ export default class SignupStep1 extends SafeComponent {
     }
 
     componentWillUnmount() {
-        tm.signup.duration(this.startTime);
+        tm.signup.duration({ sublocation, startTime: this.startTime });
     }
 
     @action.bound async handleNextButton() {
@@ -70,7 +70,7 @@ export default class SignupStep1 extends SafeComponent {
         signupState.firstName = this.firstnameState.value;
         signupState.lastName = this.lastnameState.value;
         signupState.next();
-        tm.signup.navigate(S.NEXT);
+        tm.signup.navigate({ sublocation, option: S.NEXT });
     }
 
     get isNextDisabled() {
@@ -84,7 +84,7 @@ export default class SignupStep1 extends SafeComponent {
             <View style={signupStyles.page}>
                 <SignupStepIndicator />
                 <View style={signupStyles.container}>
-                    <SignupButtonBack />
+                    <SignupButtonBack telemetry={{ sublocation, option: S.BACK }} />
                     <SignupHeading title="title_createYourAccount" subTitle="title_nameHeading" />
                     <StyledTextInput
                         autoFocus

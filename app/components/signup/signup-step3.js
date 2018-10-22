@@ -13,7 +13,6 @@ import CheckBox from '../shared/checkbox';
 import SignupButtonBack from './signup-button-back';
 import SignupHeading from './signup-heading';
 import SignupStepIndicator from './signup-step-indicator';
-import TmHelper from '../../telemetry/helpers';
 import tm from '../../telemetry';
 
 const { S } = telemetry;
@@ -25,11 +24,13 @@ const checkboxContainer = {
     marginBottom: vars.spacing.small.maxi
 };
 
+const sublocation = S.ACCOUNT_EMAIL;
+
 function signupTelemetryHelper(name) {
     return {
-        eventName: S.TEXT_INPUT,
         item: name,
-        location: S.ONBOARDING
+        location: S.ONBOARDING,
+        sublocation
     };
 }
 
@@ -40,7 +41,6 @@ export default class SignupStep3 extends SafeComponent {
 
     componentDidMount() {
         this.startTime = Date.now();
-        TmHelper.currentRoute = S.ACCOUNT_EMAIL;
         // QUICK SIGNUP DEV FLAG
         if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
             const rnd = new Date().getTime() % 100000;
@@ -54,7 +54,7 @@ export default class SignupStep3 extends SafeComponent {
     }
 
     componentWillUnmount() {
-        tm.signup.duration(this.startTime);
+        tm.signup.duration({ sublocation, startTime: this.startTime });
     }
 
     @action tmToggleChecked() {
@@ -65,7 +65,7 @@ export default class SignupStep3 extends SafeComponent {
         if (this.isCreateDisabled) return;
         signupState.email = this.emailState.value;
         signupState.next();
-        tm.signup.navigate(S.CREATE);
+        tm.signup.navigate({ sublocation, option: S.CREATE });
     }
 
     get isCreateDisabled() { return !socket.connected || !this.emailState.value || !this.emailInput.isValid; }
@@ -76,7 +76,7 @@ export default class SignupStep3 extends SafeComponent {
             <View style={signupStyles.page}>
                 <SignupStepIndicator />
                 <View style={signupStyles.container}>
-                    <SignupButtonBack />
+                    <SignupButtonBack telemetry={{ sublocation, option: S.BACK }} />
                     <SignupHeading title="title_createYourAccount" subTitle="title_whatIsYourEmail" />
                     <StyledTextInput
                         autoFocus

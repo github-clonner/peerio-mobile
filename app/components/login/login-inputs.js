@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
 import { observable, action, when } from 'mobx';
@@ -25,14 +26,6 @@ const findKeyText = {
     color: vars.peerioBlue,
     fontSize: vars.font.size14
 };
-
-function loginTelemetryHelper(name) {
-    return {
-        eventName: S.TEXT_INPUT,
-        item: name,
-        location: S.SIGN_IN
-    };
-}
 
 @observer
 export default class LoginInputs extends SafeComponent {
@@ -79,9 +72,10 @@ export default class LoginInputs extends SafeComponent {
             (!this.props.hideUsernameInput && !this.usernameInput.isValid));
     }
 
+    @action.bound
     tmEmailError(text, prevTextLength) {
         if (prevTextLength + 1 === text.length && text[text.length - 1] === '@') {
-            tm.login.onLoginWithEmail(tx(USERNAME_LABEL), tx('error_usingEmailInUsernameField'));
+            tm.login.onLoginWithEmail(this.props.telemetry(S.USERNAME), tx('error_usingEmailInUsernameField'));
         }
     }
 
@@ -93,7 +87,7 @@ export default class LoginInputs extends SafeComponent {
                 {!hideUsernameInput && (<View>
                     <StyledTextInput
                         state={this.usernameState}
-                        telemetry={loginTelemetryHelper(S.USERNAME)}
+                        telemetry={this.props.telemetry(S.USERNAME)}
                         validations={usernameLogin}
                         label={tx(USERNAME_LABEL)}
                         onChange={this.tmEmailError}
@@ -104,7 +98,7 @@ export default class LoginInputs extends SafeComponent {
                 </View>)}
                 <StyledTextInput
                     state={this.passwordState}
-                    telemetry={loginTelemetryHelper(S.ACCOUNT_KEY)}
+                    telemetry={this.props.telemetry(S.ACCOUNT_KEY)}
                     label={tx('title_AccountKey')}
                     onSubmit={this.submit}
                     secureText
@@ -129,3 +123,8 @@ export default class LoginInputs extends SafeComponent {
         );
     }
 }
+
+LoginInputs.propTypes = {
+    telemetry: PropTypes.any.isRequired,
+    hideUsernameInput: PropTypes.any
+};

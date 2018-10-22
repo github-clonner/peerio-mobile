@@ -14,7 +14,6 @@ import buttons from '../helpers/buttons';
 import SignupButtonBack from './signup-button-back';
 import SignupHeading from './signup-heading';
 import SignupStepIndicator from './signup-step-indicator';
-import TmHelper from '../../telemetry/helpers';
 import tm from '../../telemetry';
 
 const { S } = telemetry;
@@ -24,11 +23,13 @@ const { username } = validators;
 
 const MAX_USERNAME_LENGTH = config.user.maxUsernameLength;
 
+const sublocation = S.ACCOUNT_USERNAME;
+
 function signupTelemetryHelper(name) {
     return {
-        eventName: S.TEXT_INPUT,
         item: name,
-        location: S.ONBOARDING
+        location: S.ONBOARDING,
+        sublocation
     };
 }
 
@@ -45,7 +46,6 @@ export default class SignupStep2 extends SafeComponent {
 
     componentDidMount() {
         this.startTime = Date.now();
-        TmHelper.currentRoute = S.ACCOUNT_USERNAME;
         // QUICK SIGNUP DEV FLAG
         if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
             this.usernameInput.onChangeText(randomWords({ min: 2, max: 2, join: 'o' }).substring(0, 16));
@@ -69,14 +69,14 @@ export default class SignupStep2 extends SafeComponent {
 
     componentWillUnmount() {
         this.suggestionAnimationReaction();
-        tm.signup.duration(this.startTime);
+        tm.signup.duration({ sublocation, startTime: this.startTime });
     }
 
     @action.bound handleNextButton() {
         if (this.isNextDisabled) return;
         signupState.username = this.usernameState.value;
         signupState.next();
-        tm.signup.navigate(S.NEXT);
+        tm.signup.navigate({ sublocation, option: S.NEXT });
     }
 
     get isNextDisabled() { return !socket.connected || !this.usernameState.value || !this.usernameInput.isValid; }
@@ -153,7 +153,7 @@ export default class SignupStep2 extends SafeComponent {
             <View style={signupStyles.page}>
                 <SignupStepIndicator />
                 <View style={signupStyles.container}>
-                    <SignupButtonBack />
+                    <SignupButtonBack telemetry={{ sublocation, option: S.BACK }} />
                     <SignupHeading title="title_createYourAccount" subTitle="title_usernameHeading" />
                     <StyledTextInput
                         autoFocus

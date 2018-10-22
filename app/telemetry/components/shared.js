@@ -1,17 +1,13 @@
 import { telemetry } from '../../lib/icebear';
 import { setup } from '../main';
-import TmHelper from '../helpers';
 
 const { S, errorMessage } = telemetry;
 
 /*
-    These are the events for components that are shared between multiple views. Since they can appear
-    in more than one place, they need to know TmHelper.currentRoute for the `Sublocation` prop.
-
-    Properties recieved from the component are (unless in some cases like textInputOnClear):
-    - eventName (eg. S.TEXT_INPUT)
+    Properties recieved from the component are:
     - item (eg. S.USERNAME)
     - location (eg. S.SIGN_IN)
+    - sublocation (eg. S.WELCOME_SCREEN)
 
     Other properties such as state and errorType as specific to each event
     and are therefore either defined here OR sent by the component when the event is triggered.
@@ -20,11 +16,11 @@ const { S, errorMessage } = telemetry;
 const shared = setup({
     textInputOnFocus: (tm) => {
         return [
-            tm.eventName,
+            S.TEXT_INPUT,
             {
                 item: tm.item,
                 location: tm.location,
-                sublocation: TmHelper.currentRoute,
+                sublocation: tm.sublocation,
                 state: S.IN_FOCUS
             }
         ];
@@ -35,11 +31,11 @@ const shared = setup({
         if (!errorMsg) return null; // Do not send error event if there is no error message
         if (errorMsg === 'error_usernameNotAvailable') return null; // Do not track this error here
         return [
-            tm.eventName,
+            S.TEXT_INPUT,
             {
                 item: tm.item,
                 location: tm.location,
-                sublocation: TmHelper.currentRoute,
+                sublocation: tm.sublocation,
                 state: S.ERROR,
                 errorType: errorMessage(errorMsg)
             }
@@ -49,11 +45,11 @@ const shared = setup({
     textInputOnError: (tm, errorMsg) => {
         if (errorMsg !== 'error_usernameNotAvailable' && errorMsg !== 'error_wrongAK') return null;
         return [
-            tm.eventName,
+            S.TEXT_INPUT,
             {
                 item: tm.item,
                 location: tm.location,
-                sublocation: TmHelper.currentRoute,
+                sublocation: tm.sublocation,
                 state: S.ERROR,
                 errorType: errorMessage(errorMsg)
             }
@@ -66,18 +62,18 @@ const shared = setup({
             {
                 item: tm.item,
                 location: tm.location,
-                sublocation: TmHelper.currentRoute
+                sublocation: tm.sublocation
             }
         ];
     },
 
     textInputOnMaxChars: (tm) => {
         return [
-            tm.eventName,
+            S.TEXT_INPUT,
             {
                 item: tm.item,
                 location: tm.location,
-                sublocation: TmHelper.currentRoute,
+                sublocation: tm.sublocation,
                 state: S.MAX_CHARACTERS
             }
         ];

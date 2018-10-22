@@ -38,10 +38,12 @@ const buttonContainer = {
     alignItems: 'flex-start'
 };
 
+const sublocation = S.WELCOME_SCREEN;
+
 @observer
 export default class LoginWelcome extends SafeComponent {
     @action.bound onSignupPress() {
-        tm.signup.onStartAccountCreation();
+        tm.signup.onStartAccountCreation({ sublocation });
         loginState.routes.app.signupStep1();
     }
 
@@ -52,11 +54,10 @@ export default class LoginWelcome extends SafeComponent {
 
     componentDidMount() {
         this.startTime = Date.now();
-        TmHelper.currentRoute = S.WELCOME_SCREEN;
     }
 
     componentWillUnmount() {
-        tm.signup.duration(this.startTime);
+        tm.signup.duration({ sublocation, startTime: this.startTime });
     }
 
     render() {

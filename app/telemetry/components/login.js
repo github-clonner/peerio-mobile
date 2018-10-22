@@ -1,17 +1,17 @@
 import { telemetry } from '../../lib/icebear';
 import { setup } from '../main';
-import TmHelper from '../helpers';
 
 const { S, duration, errorMessage } = telemetry;
 
 const login = setup(
     {
-        duration: (startTime) => {
+        duration: (tm) => {
             return [
                 S.DURATION,
                 {
                     location: S.SIGN_IN,
-                    totalTime: duration(startTime)
+                    sublocation: tm.sublocation,
+                    totalTime: duration(tm.startTime)
                 }
             ];
         },
@@ -21,17 +21,18 @@ const login = setup(
                 S.NAVIGATE, {
                     option: S.SIGN_IN,
                     location: S.ONBOARDING,
-                    sublocation: TmHelper.currentRoute
+                    sublocation: S.WELCOME_SCREEN
                 }
             ];
         },
 
-        navigate: (option) => {
+        navigate: (tm) => {
             return [
                 S.NAVIGATE,
                 {
-                    option,
-                    location: S.SIGN_IN
+                    option: tm.option,
+                    location: S.SIGN_IN,
+                    sublocation: tm.sublocation
                 }
             ];
         },
@@ -42,13 +43,13 @@ const login = setup(
             ];
         },
 
-        onLoginWithEmail: (label, errorMsg) => {
+        onLoginWithEmail: (tm, errorMsg) => {
             return [
                 S.TEXT_INPUT,
                 {
-                    item: label,
-                    location: S.SIGN_IN,
-                    sublocation: TmHelper.currentRoute,
+                    item: tm.item,
+                    location: tm.location,
+                    sublocation: tm.sublocation,
                     state: S.ERROR,
                     errorType: errorMessage(errorMsg)
                 }

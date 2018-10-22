@@ -12,7 +12,6 @@ import LoginButtonBack from './login-button-back';
 import LoginInputs from './login-inputs';
 import { User, telemetry } from '../../lib/icebear';
 import tm from '../../telemetry';
-import TmHelper from '../../telemetry/helpers';
 import ActivityOverlay from '../controls/activity-overlay';
 
 const { S } = telemetry;
@@ -32,18 +31,27 @@ const subtitleStyle = {
     marginBottom: marginBottom + 10
 };
 
+const sublocation = S.WELCOME_BACK_SCREEN;
+
+function loginTelemetryHelper(name) {
+    return {
+        item: name,
+        location: S.SIGN_IN,
+        sublocation
+    };
+}
+
 @observer
 export default class LoginWelcomeBack extends SafeComponent {
     @observable lastUser;
 
     async componentDidMount() {
         this.startTime = Date.now();
-        TmHelper.currentRoute = S.WELCOME_BACK_SCREEN;
         this.lastUser = await User.getLastAuthenticated();
     }
 
     componentWillUnmount() {
-        tm.login.duration(this.startTime);
+        tm.login.duration({ sublocation, startTime: this.startTime });
     }
 
     @action.bound onSignupPress() {
@@ -82,7 +90,7 @@ export default class LoginWelcomeBack extends SafeComponent {
             <View style={signupStyles.page}>
                 <IntroStepIndicator max={1} current={1} />
                 <View style={[signupStyles.container, { paddingHorizontal: signupStyles.pagePaddingLarge }]}>
-                    <LoginButtonBack />
+                    <LoginButtonBack telemetry={{ sublocation, option: S.BACK }} />
                     <View style={{ marginTop }}>
                         <Text semibold serif style={titleStyle}>
                             {tx('title_welcomeBackFirstname', { firstName: this.lastUser.firstName })}
@@ -94,7 +102,7 @@ export default class LoginWelcomeBack extends SafeComponent {
                             }}
                         </T>
                     </View>
-                    <LoginInputs hideUsernameInput />
+                    <LoginInputs telemetry={loginTelemetryHelper} hideUsernameInput />
                 </View>
                 <ActivityOverlay large visible={loginState.isInProgress} />
                 <StatusBar hidden />
