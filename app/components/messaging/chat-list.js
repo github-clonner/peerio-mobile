@@ -81,6 +81,14 @@ export default class ChatList extends SafeComponent {
                 viewPosition: 0
             });
         };
+        uiState.testAction3 = () => {
+            this.scrollView.scrollToLocation({
+                sectionIndex: 0,
+                itemIndex: -1,
+                viewOffset: vars.topDrawerHeight,
+                animated: true
+            });
+        };
 
         this.indicatorReaction = reaction(() => [
             this.topIndicatorVisible,
@@ -90,11 +98,7 @@ export default class ChatList extends SafeComponent {
         setTimeout(() => {
             // TODO: unify this
             if (Platform.OS === 'android') {
-                this.scrollView.scrollToLocation({
-                    sectionIndex: 0,
-                    itemIndex: 0,
-                    viewOffset: 0
-                });
+                // we don't do anything here because no indicator update is an iOS problem right now
             } else {
                 this.scrollView._wrapperListRef._listRef.scrollToOffset({ offset: 0 });
             }
