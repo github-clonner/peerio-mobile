@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.381.0"></a>
+# [3.381.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.380.0...v3.381.0) (2018-10-22)
+
+
+### Bug Fixes
+
+* fix drawer appearing/disappearing on android RN0.55 [ch 15668] ([7658370](https://github.com/PeerioTechnologies/peerio-mobile/commit/7658370))
+
+
+
 <a name="3.380.0"></a>
 # [3.380.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.379.0...v3.380.0) (2018-10-22)
 
