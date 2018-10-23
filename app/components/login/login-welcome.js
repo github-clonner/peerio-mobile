@@ -12,7 +12,6 @@ import LoginHeading from './login-heading';
 import { adjustImageDimensions } from '../helpers/image';
 import { telemetry } from '../../lib/icebear';
 import tm from '../../telemetry';
-import TmHelper from '../../telemetry/helpers';
 
 const { S } = telemetry;
 
