@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.384.0"></a>
+# [3.384.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.383.0...v3.384.0) (2018-10-23)
+
+
+### Bug Fixes
+
+* remove shake in favor of tapping. fix debug menu for iPhoneX. [ch 15718] ([4e969e6](https://github.com/PeerioTechnologies/peerio-mobile/commit/4e969e6))
+
+
+
 <a name="3.383.0"></a>
 # [3.383.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.378.0...v3.383.0) (2018-10-23)
 
