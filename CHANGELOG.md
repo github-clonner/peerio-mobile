@@ -2,6 +2,47 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.385.0"></a>
+# [3.385.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.384.0...v3.385.0) (2018-10-23)
+
+
+### Bug Fixes
+
+* button color [branch ch9961] ([#354](https://github.com/PeerioTechnologies/peerio-mobile/issues/354)) ([fd92334](https://github.com/PeerioTechnologies/peerio-mobile/commit/fd92334))
+
+
+
+<a name="3.381.0"></a>
+# [3.381.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.380.0...v3.381.0) (2018-10-22)
+
+
+### Bug Fixes
+
+* fix drawer appearing/disappearing on android RN0.55 [ch 15668] ([7658370](https://github.com/PeerioTechnologies/peerio-mobile/commit/7658370))
+
+
+
+<a name="3.380.0"></a>
+# [3.380.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.379.0...v3.380.0) (2018-10-22)
+
+
+### Bug Fixes
+
+* return file picker manager back [ch15624] ([2adcf52](https://github.com/PeerioTechnologies/peerio-mobile/commit/2adcf52))
+
+
+
+<a name="3.379.0"></a>
+# [3.379.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.378.0...v3.379.0) (2018-10-19)
+
+
+### Bug Fixes
+
+* extract displayName and extension with more fallbacks [ch15563] ([a7a851e](https://github.com/PeerioTechnologies/peerio-mobile/commit/a7a851e))
+* use transitionAnimation instead of LayoutAnimation to prevent android crash [ch15564] ([1f2a58d](https://github.com/PeerioTechnologies/peerio-mobile/commit/1f2a58d))
+
+
+
 <a name="3.381.0"></a>
 # [3.381.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.380.0...v3.381.0) (2018-10-22)
 
