@@ -87,7 +87,7 @@
     "react-native-billing": "2.10.0",
     "react-native-cli": "2.0.1",
     "react-native-contacts": "github:PeerioTechnologies/react-native-contacts#0.55",
-    "react-native-device-info": "github:PeerioTechnologies/react-native-device-info#0.55",
+    "react-native-device-info": "0.24.3",
     "react-native-file-opener": "github:PeerioTechnologies/react-native-file-opener#0.55",
     "react-native-fs": "github:PeerioTechnologies/react-native-fs#master",
     "react-native-image-crop-picker": "github:PeerioTechnologies/react-native-image-crop-picker#0.55",

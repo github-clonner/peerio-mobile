@@ -14,6 +14,7 @@ import { User, telemetry } from '../../lib/icebear';
 import tm from '../../telemetry';
 import TmHelper from '../../telemetry/helpers';
 import ActivityOverlay from '../controls/activity-overlay';
+import DebugMenuTrigger from '../shared/debug-menu-trigger';
 
 const { S } = telemetry;
 
@@ -83,17 +84,19 @@ export default class LoginWelcomeBack extends SafeComponent {
                 <IntroStepIndicator max={1} current={1} />
                 <View style={[signupStyles.container, { paddingHorizontal: signupStyles.pagePaddingLarge }]}>
                     <LoginButtonBack />
-                    <View style={{ marginTop }}>
-                        <Text semibold serif style={titleStyle}>
-                            {tx('title_welcomeBackFirstname', { firstName: this.lastUser.firstName })}
-                        </Text>
-                        <T k="title_switchUser" style={subtitleStyle}>
-                            {{
-                                username: this.lastUser.username,
-                                switchUser: this.switchUserLink
-                            }}
-                        </T>
-                    </View>
+                    <DebugMenuTrigger>
+                        <View style={{ marginTop }}>
+                            <Text semibold serif style={titleStyle}>
+                                {tx('title_welcomeBackFirstname', { firstName: this.lastUser.firstName })}
+                            </Text>
+                            <T k="title_switchUser" style={subtitleStyle}>
+                                {{
+                                    username: this.lastUser.username,
+                                    switchUser: this.switchUserLink
+                                }}
+                            </T>
+                        </View>
+                    </DebugMenuTrigger>
                     <LoginInputs hideUsernameInput />
                 </View>
                 <ActivityOverlay large visible={loginState.isInProgress} />
