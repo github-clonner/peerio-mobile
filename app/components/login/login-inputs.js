@@ -35,6 +35,9 @@ export default class LoginInputs extends SafeComponent {
     @action.bound usernameInputRef(ref) { this.usernameInput = ref; }
     @action.bound passwordInputRef(ref) { this.passwordInput = ref; }
 
+    tmUsername = { ...this.props.telemetry, item: S.USERNAME };
+    tmAccountKey = { ...this.props.telemetry, item: S.ACCOUNT_KEY };
+
     async componentDidMount() {
         const { hideUsernameInput } = this.props;
         if (hideUsernameInput) {
@@ -75,7 +78,7 @@ export default class LoginInputs extends SafeComponent {
     @action.bound
     tmEmailError(text, prevTextLength) {
         if (prevTextLength + 1 === text.length && text[text.length - 1] === '@') {
-            tm.login.onLoginWithEmail(this.props.telemetry(S.USERNAME), tx('error_usingEmailInUsernameField'));
+            tm.login.onLoginWithEmail(this.tmUsername, tx('error_usingEmailInUsernameField'));
         }
     }
 
@@ -87,7 +90,7 @@ export default class LoginInputs extends SafeComponent {
                 {!hideUsernameInput && (<View>
                     <StyledTextInput
                         state={this.usernameState}
-                        telemetry={this.props.telemetry(S.USERNAME)}
+                        telemetry={this.tmUsername}
                         validations={usernameLogin}
                         label={tx(USERNAME_LABEL)}
                         onChange={this.tmEmailError}
@@ -98,7 +101,7 @@ export default class LoginInputs extends SafeComponent {
                 </View>)}
                 <StyledTextInput
                     state={this.passwordState}
-                    telemetry={this.props.telemetry(S.ACCOUNT_KEY)}
+                    telemetry={this.tmAccountKey}
                     label={tx('title_AccountKey')}
                     onSubmit={this.submit}
                     secureText

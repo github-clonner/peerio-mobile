@@ -33,13 +33,10 @@ const subtitleStyle = {
 
 const sublocation = S.WELCOME_BACK_SCREEN;
 
-function loginTelemetryHelper(name) {
-    return {
-        item: name,
-        location: S.SIGN_IN,
-        sublocation
-    };
-}
+const loginTelemetryHelper = {
+    location: S.SIGN_IN,
+    sublocation
+};
 
 @observer
 export default class LoginWelcomeBack extends SafeComponent {

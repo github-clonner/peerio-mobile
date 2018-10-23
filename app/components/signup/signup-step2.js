@@ -25,13 +25,11 @@ const MAX_USERNAME_LENGTH = config.user.maxUsernameLength;
 
 const sublocation = S.ACCOUNT_USERNAME;
 
-function signupTelemetryHelper(name) {
-    return {
-        item: name,
-        location: S.ONBOARDING,
-        sublocation
-    };
-}
+const tmUsername = {
+    item: S.USERNAME,
+    location: S.ONBOARDING,
+    sublocation
+};
 
 const suggestionContainerHeight = signupStyles.suggestionContainer.maxHeight;
 
@@ -159,7 +157,7 @@ export default class SignupStep2 extends SafeComponent {
                         autoFocus
                         state={this.usernameState}
                         validations={username}
-                        telemetry={signupTelemetryHelper(S.USERNAME)}
+                        telemetry={tmUsername}
                         helperText={this.usernameState.value.length >= MAX_USERNAME_LENGTH ?
                             tx('title_characterLimitReached') :
                             tx('title_hintUsername')}

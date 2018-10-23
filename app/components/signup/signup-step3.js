@@ -26,13 +26,11 @@ const checkboxContainer = {
 
 const sublocation = S.ACCOUNT_EMAIL;
 
-function signupTelemetryHelper(name) {
-    return {
-        item: name,
-        location: S.ONBOARDING,
-        sublocation
-    };
-}
+const tmEmail = {
+    item: S.EMAIL,
+    location: S.ONBOARDING,
+    sublocation
+};
 
 @observer
 export default class SignupStep3 extends SafeComponent {
@@ -82,7 +80,7 @@ export default class SignupStep3 extends SafeComponent {
                         autoFocus
                         state={this.emailState}
                         validations={email}
-                        telemetry={signupTelemetryHelper(S.EMAIL)}
+                        telemetry={tmEmail}
                         label={`${tx('title_email')}*`}
                         helperText={tx('title_hintEmail')}
                         lowerCase

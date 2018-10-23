@@ -25,13 +25,10 @@ const MAX_NAME_LENGTH = config.user.maxNameLength;
 
 const sublocation = S.ACCOUNT_NAME;
 
-function signupTelemetryHelper(name) {
-    return {
-        item: name,
-        location: S.ONBOARDING,
-        sublocation
-    };
-}
+const signupTelemetryHelper = {
+    location: S.ONBOARDING,
+    sublocation
+};
 
 @observer
 export default class SignupStep1 extends SafeComponent {
@@ -42,6 +39,9 @@ export default class SignupStep1 extends SafeComponent {
     @action.bound lastNameInputRef(ref) { this.lastNameInput = ref; }
 
     @action.bound onSubmitFirstName() { this.lastNameInput.onFocus(); }
+
+    tmFirstname = { ...signupTelemetryHelper, item: S.FIRST_NAME };
+    tmLastname = { ...signupTelemetryHelper, item: S.LAST_NAME };
 
     componentDidMount() {
         this.startTime = Date.now();
@@ -90,7 +90,7 @@ export default class SignupStep1 extends SafeComponent {
                         autoFocus
                         state={this.firstnameState}
                         validations={firstName}
-                        telemetry={signupTelemetryHelper(S.FIRST_NAME)}
+                        telemetry={this.tmFirstname}
                         label={`${tx('title_firstName')}*`}
                         helperText={this.firstnameState.value.length >= MAX_NAME_LENGTH ?
                             tx('title_characterLimitReached') :
@@ -107,7 +107,7 @@ export default class SignupStep1 extends SafeComponent {
                     <StyledTextInput
                         state={this.lastnameState}
                         validations={lastName}
-                        telemetry={signupTelemetryHelper(S.LAST_NAME)}
+                        telemetry={this.tmLastname}
                         label={`${tx('title_lastName')}*`}
                         helperText={this.lastnameState.value.length >= MAX_NAME_LENGTH ?
                             tx('title_characterLimitReached') :

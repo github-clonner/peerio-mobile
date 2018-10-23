@@ -16,13 +16,10 @@ const { S } = telemetry;
 
 const sublocation = S.SIGN_IN;
 
-function loginTelemetryHelper(name) {
-    return {
-        item: name,
-        location: S.SIGN_IN,
-        sublocation
-    };
-}
+const loginTelemetryHelper = {
+    location: S.SIGN_IN,
+    sublocation
+};
 
 @observer
 export default class LoginClean extends SafeComponent {
