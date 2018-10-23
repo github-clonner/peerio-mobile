@@ -196,7 +196,7 @@ task copyDownloadableDepsToLibs(type: Copy) {
 configurations.all {
     resolutionStrategy {
         force 'com.android.support:design:23.4.0'
-        force 'com.android.support:support-v4:27+'
+        force 'com.android.support:support-v4:27.0.1'
         force 'com.android.support:appcompat-v7:27.1.1'
     }
 }
