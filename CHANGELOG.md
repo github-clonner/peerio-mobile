@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.382.0"></a>
+# [3.382.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.378.0...v3.382.0) (2018-10-23)
+
+
+### Bug Fixes
+
+* temporarily disable shake event trigger [ch15718] ([9dbf7d7](https://github.com/PeerioTechnologies/peerio-mobile/commit/9dbf7d7))
+
+
+
 <a name="3.381.0"></a>
 # [3.381.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.378.0...v3.381.0) (2018-10-23)
 
