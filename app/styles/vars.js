@@ -1,4 +1,5 @@
 import { Platform, Dimensions, PixelRatio } from 'react-native';
+import deviceInfo from 'react-native-device-info';
 
 import branding from './branding';
 
@@ -27,11 +28,7 @@ function getDevicePixelRatio() {
 const devicePixelRatio = getDevicePixelRatio();
 
 function isIphoneX() {
-    const { OS, isPad, isTVOS } = Platform;
-    const dim = 812;
-    return (
-        OS === 'ios' && !isPad && !isTVOS && (width === dim || height === dim)
-    );
+    return deviceInfo.hasNotch();
 }
 
 const iPhoneXTop = isIphoneX() ? 16 : 0;
