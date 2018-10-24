@@ -13,6 +13,7 @@ import LoginInputs from './login-inputs';
 import { User, telemetry } from '../../lib/icebear';
 import tm from '../../telemetry';
 import ActivityOverlay from '../controls/activity-overlay';
+import DebugMenuTrigger from '../shared/debug-menu-trigger';
 
 const { S } = telemetry;
 
@@ -88,17 +89,19 @@ export default class LoginWelcomeBack extends SafeComponent {
                 <IntroStepIndicator max={1} current={1} />
                 <View style={[signupStyles.container, { paddingHorizontal: signupStyles.pagePaddingLarge }]}>
                     <LoginButtonBack telemetry={{ sublocation, option: S.BACK }} />
-                    <View style={{ marginTop }}>
-                        <Text semibold serif style={titleStyle}>
-                            {tx('title_welcomeBackFirstname', { firstName: this.lastUser.firstName })}
-                        </Text>
-                        <T k="title_switchUser" style={subtitleStyle}>
-                            {{
-                                username: this.lastUser.username,
-                                switchUser: this.switchUserLink
-                            }}
-                        </T>
-                    </View>
+                    <DebugMenuTrigger>
+                        <View style={{ marginTop }}>
+                            <Text semibold serif style={titleStyle}>
+                                {tx('title_welcomeBackFirstname', { firstName: this.lastUser.firstName })}
+                            </Text>
+                            <T k="title_switchUser" style={subtitleStyle}>
+                                {{
+                                    username: this.lastUser.username,
+                                    switchUser: this.switchUserLink
+                                }}
+                            </T>
+                        </View>
+                    </DebugMenuTrigger>
                     <LoginInputs telemetry={loginTelemetryHelper} hideUsernameInput />
                 </View>
                 <ActivityOverlay large visible={loginState.isInProgress} />
