@@ -14,6 +14,7 @@ class UIState extends RoutedState {
     };
 
     @observable actionSheetShown = false;
+    @observable modalShown = false;
     @observable fileUpdateProgress = 0; // TODO remove when fileState progress is wired
     @observable isFirstLogin = false;
     @observable focusedTextBox = null;

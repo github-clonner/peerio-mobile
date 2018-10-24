@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Image } from 'react-native';
+import { Image, TouchableOpacity } from 'react-native';
 import vars from '../../styles/vars';
 import icons from '../helpers/icons';
 import beaconState from '../beacons/beacon-state';
@@ -14,7 +14,6 @@ export default class MeasureableIcon extends MeasureableView {
             console.log('MeasureableIcon: ignoring empty beacon');
             return;
         }
-        // console.log(JSON.stringify(position));
         beacon.position = position;
         beacon.content = this.content;
         beacon.onPressIcon = onPress;
@@ -22,14 +21,12 @@ export default class MeasureableIcon extends MeasureableView {
         beaconState.requestBeacon(beacon);
     };
 
-    // TODO clean up mock beacons
-    // ---------------------
     componentWillUnmount() {
         if (this.props.beacon) beaconState.removeBeacon(this.props.beacon.id);
     }
 
     get content() {
-        const { iconSource } = this.props;
+        const { iconSource, icon, color, testId } = this.props;
         if (iconSource) {
             return (
                 <Image
@@ -38,14 +35,20 @@ export default class MeasureableIcon extends MeasureableView {
                 />
             );
         }
-        return icons.plain(this.props.icon, undefined, this.props.color);
+        return icons.plain(icon, undefined, color, testId);
     }
 
     renderThrow() {
+        const { onPress } = this.props;
         return (
-            <MeasureableView onMeasure={this.props.beacon ? this.onMeasure : null}>
-                {this.content}
-            </MeasureableView>
+            <TouchableOpacity
+                pressRetentionOffset={vars.pressRetentionOffset}
+                onPress={onPress}>
+                <MeasureableView onMeasure={this.props.beacon ? this.onMeasure : null}>
+                    {this.content}
+                </MeasureableView>
+            </TouchableOpacity>
+
         );
     }
 }
