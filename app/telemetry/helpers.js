@@ -21,6 +21,8 @@ class TmHelper {
             event: event[0],
             properties: event[1] || {}
         };
+        // Required for Telemetry Analyst to debug signup and login telemetry events in order
+        if (__DEV__) baseProps.eventTime = Date.now();
         obj.properties = Object.assign(obj.properties, baseProps);
         telemetry.send(obj);
     }
