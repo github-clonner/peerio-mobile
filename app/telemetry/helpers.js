@@ -22,7 +22,6 @@ class TmHelper {
             properties: event[1] || {}
         };
         obj.properties = Object.assign(obj.properties, baseProps);
-        console.log(obj);
         telemetry.send(obj);
     }
 }
