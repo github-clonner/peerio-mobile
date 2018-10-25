@@ -66,7 +66,7 @@ export default class LoginInputs extends SafeComponent {
                 if (e.deleted || e.blacklisted) {
                     errorMessage = 'error_accountSuspendedTitle';
                 }
-                this.passwordInput.setCustomError(errorMessage);
+                this.passwordInput.setCustomError(errorMessage, false);
             });
     }
 

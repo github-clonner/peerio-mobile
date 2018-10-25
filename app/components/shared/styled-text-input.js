@@ -66,11 +66,12 @@ export default class StyledTextInput extends SafeComponent {
      * Sets validation state to INVALID and displays the custom error.
      * Custom error always overrides normal error. Custom error is cleared onFocus.
      * @param {String} error - The error to be displayed
+     * @param {Boolean} sendTmEvent - Whether the event needs to be sent through telemetry or not
      */
-    @action.bound setCustomError(error) {
+    @action.bound setCustomError(error, sendTmEvent) {
         this.valid = INVALID;
         this.customErrorTextCopy = error;
-        tm.shared.textInputOnError(this.props.telemetry, error);
+        if (sendTmEvent) tm.shared.textInputOnError(this.props.telemetry, error);
     }
 
     // Checks if text field is empty and validates accordingly
