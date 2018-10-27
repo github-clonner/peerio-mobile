@@ -311,7 +311,7 @@ function popupTOS() {
                 text: tu('button_ok'),
                 action: () => {
                     resolve();
-                    tm.signup.durationItem(startTime, S.TERMS_OF_USE);
+                    tm.signup.durationItem({ startTime, item: S.TERMS_OF_USE });
                 }
             }]
         });
@@ -333,7 +333,7 @@ function popupPrivacy() {
                 text: tu('button_ok'),
                 action: () => {
                     resolve();
-                    tm.signup.durationItem(startTime, S.PRIVACY_POLICY);
+                    tm.signup.durationItem({ startTime, item: S.PRIVACY_POLICY });
                 }
             }]
         });
