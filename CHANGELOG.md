@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.391.0"></a>
+# [3.391.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.390.0...v3.391.0) (2018-11-01)
+
+
+### Bug Fixes
+
+* show room invites [ch16421] ([6658775](https://github.com/PeerioTechnologies/peerio-mobile/commit/6658775))
+
+
+
 <a name="3.390.0"></a>
 # [3.390.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.385.0...v3.390.0) (2018-11-01)
 
