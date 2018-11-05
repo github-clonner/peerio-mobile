@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import _ from 'lodash';
-import { View, LayoutAnimation } from 'react-native';
+import { View } from 'react-native';
 import { reaction, observable, when } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
@@ -9,6 +9,7 @@ import ReadReceipt from './read-receipt';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import Text from '../controls/custom-text';
+import { transitionAnimation } from '../helpers/animations';
 
 const receiptRow = {
     backgroundColor: vars.black25,
@@ -41,7 +42,7 @@ export default class ViewReceipts extends SafeComponent {
         when(() => this.props.receipts && this.props.receipts.length, () => {
             this.prev = this.props.receipts.length;
             this.calculateLabel();
-            LayoutAnimation.easeInEaseOut();
+            transitionAnimation();
 
             this._observer = reaction(() => this.props.receipts && this.props.receipts.length, () => {
                 if (!this.props.receipts || !this.props.receipts.length) return;

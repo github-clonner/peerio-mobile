@@ -1,7 +1,7 @@
 import React from 'react';
 import { observable, action, reaction, when } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { View, TouchableOpacity, LayoutAnimation } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import randomWords from 'random-words';
 import Text from '../controls/custom-text';
 import { vars, signupStyles } from '../../styles/styles';
@@ -15,6 +15,7 @@ import SignupButtonBack from './signup-button-back';
 import SignupHeading from './signup-heading';
 import SignupStepIndicator from './signup-step-indicator';
 import tm from '../../telemetry';
+import { transitionAnimation } from '../helpers/animations';
 
 const { S } = telemetry;
 
@@ -56,7 +57,7 @@ export default class SignupStep2 extends SafeComponent {
 
         this.suggestionAnimationReaction = reaction(
             () => signupState.usernameSuggestions,
-            () => LayoutAnimation.easeInEaseOut()
+            transitionAnimation
         );
         signupState.suggestUsernames();
 

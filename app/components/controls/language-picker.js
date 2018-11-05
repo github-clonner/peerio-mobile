@@ -1,9 +1,9 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { LayoutAnimation } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import PickerPopup from './picker-popup';
 import uiState from '../layout/ui-state';
+import { transitionAnimation } from '../helpers/animations';
 
 @observer
 export default class LanguagePicker extends SafeComponent {
@@ -13,7 +13,7 @@ export default class LanguagePicker extends SafeComponent {
     }
 
     componentWillUpdate() {
-        LayoutAnimation.easeInEaseOut();
+        transitionAnimation();
     }
 
     renderThrow() {

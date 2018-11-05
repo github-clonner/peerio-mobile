@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, TouchableOpacity, LayoutAnimation } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
@@ -9,6 +9,7 @@ import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import AvatarCircle from '../shared/avatar-circle';
 import Text from '../controls/custom-text';
+import { transitionAnimation } from '../helpers/animations';
 
 const avatarPadding = 16;
 let currentContactItem = null;
@@ -22,7 +23,7 @@ export default class ContactEditPermissionItem extends SafeComponent {
     }
 
     set showWarning(value) {
-        LayoutAnimation.easeInEaseOut();
+        transitionAnimation();
         if (currentContactItem) {
             currentContactItem._showWarning = false;
         }
@@ -36,7 +37,7 @@ export default class ContactEditPermissionItem extends SafeComponent {
     // We hide the item, then do "unshare" logic after hide animation ends
     // Finally reset the UI state of the list item
     @action.bound removeClick() {
-        LayoutAnimation.easeInEaseOut();
+        transitionAnimation();
         this.collapsed = true;
         // wait for animation to finish before removing item
         setTimeout(() => {

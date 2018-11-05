@@ -1,13 +1,14 @@
 import React from 'react';
 import { observable, action } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { View, Dimensions, Image, LayoutAnimation } from 'react-native';
+import { View, Dimensions, Image } from 'react-native';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import TextInputStateful from '../controls/text-input-stateful';
 import testLabel from '../helpers/test-label';
+import { transitionAnimation } from '../helpers/animations';
 
 const image = require('../../assets/2fa-illustration.png');
 
@@ -45,12 +46,12 @@ export default class TwoFactorAuthPrompt extends SafeComponent {
     @observable focused = false;
 
     @action.bound focus() {
-        LayoutAnimation.easeInEaseOut();
+        transitionAnimation();
         this.focused = true;
     }
 
     @action.bound blur() {
-        LayoutAnimation.easeInEaseOut();
+        transitionAnimation();
         this.focused = false;
     }
 
