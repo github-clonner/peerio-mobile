@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, Animated } from 'react-native';
-import { observable, reaction, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import FilesZeroStatePlaceholder from './files-zero-state-placeholder';
@@ -56,12 +56,9 @@ export default class Files extends SafeComponent {
         return fileState.store.folderStore.currentFolder.name;
     }
 
-    @observable dataSource = [];
-    @observable refreshing = false;
-    @observable maxLoadedIndex = INITIAL_LIST_SIZE;
     actionsHeight = new Animated.Value(0);
 
-    get data() {
+    @computed get data() {
         let data = fileState.store.searchQuery ?
             fileState.store.filesAndFoldersSearchResult
             : fileState.store.folderStore.currentFolder.filesAndFoldersDefaultSorting;
@@ -69,30 +66,7 @@ export default class Files extends SafeComponent {
         return data;
     }
 
-    componentDidMount() {
-        this.reactionNavigation = reaction(() => fileState.store.folderStore.currentFolder,
-            action(() => {
-                this.maxLoadedIndex = INITIAL_LIST_SIZE;
-                this.refresh++;
-            }));
-        this.reaction = reaction(() => [
-            fileState.routerMain.route === 'files',
-            fileState.routerMain.currentIndex === 0,
-            this.data,
-            this.data.length,
-            fileState.store.searchQuery,
-            this.maxLoadedIndex
-        ], () => {
-            console.debug(`files.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
-            this.dataSource = this.data.slice(0, Math.min(this.data.length, this.maxLoadedIndex));
-        }, { fireImmediately: true });
-    }
-
     componentWillUnmount() {
-        this.reaction && this.reaction();
-        this.reaction = null;
-        this.reactionNavigation && this.reactionNavigation();
-        this.reactionNavigation = null;
         // remove icebear hook for deletion
         fileState.store.bulk.deleteFolderConfirmator = null;
     }
@@ -110,10 +84,6 @@ export default class Files extends SafeComponent {
                 onFileAction={() => FileActionSheet.show(item)}
                 onFolderAction={() => FoldersActionSheet.show(item)} />
         );
-    };
-
-    onEndReached = () => {
-        if (this.maxLoadedIndex <= this.data.length) this.maxLoadedIndex += PAGE_SIZE;
     };
 
     flatListRef = (ref) => { uiState.currentScrollView = ref; };
@@ -140,11 +110,9 @@ export default class Files extends SafeComponent {
                 keyExtractor={this.keyExtractor}
                 initialNumToRender={INITIAL_LIST_SIZE}
                 pageSize={PAGE_SIZE}
-                data={this.dataSource}
+                data={this.data}
                 extraData={this.refresh}
-                renderItem={this.item}
-                onEndReached={this.onEndReached}
-                onEndReachedThreshold={0.5} />
+                renderItem={this.item} />
         );
     }
 
