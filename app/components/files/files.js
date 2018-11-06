@@ -72,7 +72,10 @@ export default class Files extends SafeComponent {
         let data = fileState.store.searchQuery ?
             fileState.store.filesAndFoldersSearchResult
             : fileState.store.folderStore.currentFolder.filesAndFoldersDefaultSorting;
-        if (fileState.isFileSelectionMode) data = data.filter(item => !item.isLegacy && item.readyForDownload);
+        if (fileState.isFileSelectionMode) {
+            data = data.filter(item => !item.isLegacy &&
+                (item.isFolder || item.readyForDownload));
+        }
         return data;
     }
 
