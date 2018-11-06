@@ -16,11 +16,18 @@ const receiptRow = {
     alignSelf: 'flex-end',
     flexDirection: 'row',
     alignItems: 'center',
+    height: 20,
     width: 40,
-    marginLeft: 8,
-    marginRight: 8,
+    marginHorizontal: 8,
     borderRadius: 16,
     paddingHorizontal: 2
+};
+
+const emptyReceiptRow = {
+    alignSelf: 'flex-end',
+    height: 20,
+    width: 40,
+    marginHorizontal: 8
 };
 
 const half = {
@@ -92,7 +99,7 @@ export default class ViewReceipts extends SafeComponent {
 
     renderThrow() {
         const { receipts } = this.props;
-        if (!receipts || !receipts.length) return <View style={receiptRow} />;
+        if (!receipts || !receipts.length) return <View style={emptyReceiptRow} />;
 
         return (
             <View style={receiptRow}>
