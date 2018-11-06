@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.394.0"></a>
+# [3.394.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.393.0...v3.394.0) (2018-11-06)
+
+
+### Bug Fixes
+
+* alignment and size ([#356](https://github.com/PeerioTechnologies/peerio-mobile/issues/356)) ([78bc732](https://github.com/PeerioTechnologies/peerio-mobile/commit/78bc732))
+* ui allows removing volume owner ([#362](https://github.com/PeerioTechnologies/peerio-mobile/issues/362)) ([80aafca](https://github.com/PeerioTechnologies/peerio-mobile/commit/80aafca))
+
+
+
 <a name="3.393.0"></a>
 # [3.393.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.391.0...v3.393.0) (2018-11-04)
 
