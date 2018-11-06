@@ -23,6 +23,9 @@ import SharedFolderRemovalNotif from './shared-folder-removal-notif';
 import SearchBar from '../controls/search-bar';
 import FlatListWithDrawer from '../shared/flat-list-with-drawer';
 import zeroStateBeacons from '../beacons/zerostate-beacons';
+import filesBeacons from '../beacons/files-beacons';
+import MeasureableView from '../shared/measureable-view';
+import beaconState from '../beacons/beacon-state';
 
 const iconClear = require('../../assets/file_icons/ic_close.png');
 
@@ -33,6 +36,13 @@ function backFolderAction() {
     fileState.store.folderStore.currentFolder = fileState.store.folderStore.currentFolder.parent;
 }
 
+const beaconStyle = {
+    marginLeft: 100
+};
+
+const beaconContentStyle = {
+    marginLeft: -100
+};
 @observer
 export default class Files extends SafeComponent {
     @observable findFilesText;
@@ -47,7 +57,7 @@ export default class Files extends SafeComponent {
         return !fileState.isFileSelectionMode &&
             <PlusBorderIcon
                 action={() => FileUploadActionSheet.show(false, true)}
-                beacon={zeroStateBeacons.uploadFileBeacon}
+                beacon={[zeroStateBeacons.uploadFileBeacon, filesBeacons.foldersBeacon]}
                 testID="buttonUploadFileToFiles" />;
     }
 
@@ -101,18 +111,28 @@ export default class Files extends SafeComponent {
         );
     }
 
+    onMeasure = position => {
+        const beacon = filesBeacons.fileReceivedBeacon;
+        beacon.position = position;
+        beaconState.requestBeacon(beacon);
+    };
+
     list() {
         return (
-            <FlatListWithDrawer
-                setScrollViewRef={this.flatListRef}
-                ListHeaderComponent={!this.isZeroState && this.searchTextbox()}
-                ListFooterComponent={this.noFilesMatchSearch}
-                keyExtractor={this.keyExtractor}
-                initialNumToRender={INITIAL_LIST_SIZE}
-                pageSize={PAGE_SIZE}
-                data={this.data}
-                extraData={this.refresh}
-                renderItem={this.item} />
+            <MeasureableView style={beaconStyle} onMeasure={this.onMeasure}>
+                <View style={beaconContentStyle}>
+                    <FlatListWithDrawer
+                        setScrollViewRef={this.flatListRef}
+                        ListHeaderComponent={!this.isZeroState && this.searchTextbox()}
+                        ListFooterComponent={this.noFilesMatchSearch}
+                        keyExtractor={this.keyExtractor}
+                        initialNumToRender={INITIAL_LIST_SIZE}
+                        pageSize={PAGE_SIZE}
+                        data={this.data}
+                        extraData={this.refresh}
+                        renderItem={this.item} />
+                </View>
+            </MeasureableView>
         );
     }
 

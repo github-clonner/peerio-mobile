@@ -8,17 +8,26 @@ import MeasureableView from '../shared/measureable-view';
 
 @observer
 export default class MeasureableIcon extends MeasureableView {
-    onMeasure = (position) => {
-        const { beacon, onPress, spotBgColor } = this.props;
-        if (!beacon) {
-            console.log('MeasureableIcon: ignoring empty beacon');
-            return;
-        }
+    request = (beacon, position) => {
+        const { onPress, spotBgColor } = this.props;
         beacon.position = position;
         beacon.content = this.content;
         beacon.onPressIcon = onPress;
         beacon.spotBgColor = spotBgColor;
         beaconState.requestBeacon(beacon);
+    };
+
+    onMeasure = (position) => {
+        const { beacon } = this.props;
+        if (!beacon) {
+            console.log('MeasureableIcon: ignoring empty beacon');
+            return;
+        }
+        if (Array.isArray(beacon)) {
+            beacon.forEach(b => this.request(b, position));
+        } else {
+            this.request(beacon, position);
+        }
     };
 
     componentWillUnmount() {
