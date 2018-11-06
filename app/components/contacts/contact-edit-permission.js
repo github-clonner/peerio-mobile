@@ -43,9 +43,13 @@ export default class ContactEditPermission extends SafeComponent {
     }
 
     item = ({ item }) => {
-        return (<ContactEditPermissionItem
-            contact={item}
-            onUnshare={this.unshareFrom} />);
+        const { folder } = this.props;
+        return (
+            <ContactEditPermissionItem
+                contact={item}
+                isOwner={item.username === folder.owner}
+                onUnshare={this.unshareFrom} />
+        );
     };
 
     keyExtractor = contact => contact.username;
