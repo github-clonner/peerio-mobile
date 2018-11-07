@@ -17,7 +17,8 @@ export default class GrayLabel extends SafeComponent {
     adminContainerStyle = {
         backgroundColor: vars.adminBadgeColor,
         borderRadius: 4,
-        padding: vars.spacing.small.mini2x,
+        paddingHorizontal: vars.spacing.small.mini2x,
+        paddingVertical: vars.spacing.small.mini,
         overflow: 'hidden'
     };
 
