@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.396.0"></a>
+# [3.396.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.395.0...v3.396.0) (2018-11-07)
+
+
+### Features
+
+* room invite UI [branch ch16458] ([#366](https://github.com/PeerioTechnologies/peerio-mobile/issues/366)) ([0a18346](https://github.com/PeerioTechnologies/peerio-mobile/commit/0a18346))
+
+
+
 <a name="3.395.0"></a>
 # [3.395.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.394.0...v3.395.0) (2018-11-06)
 
