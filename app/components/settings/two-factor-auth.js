@@ -44,9 +44,9 @@ async function twoFactorAuthPopup(active2FARequest) {
     const { submit, cancel, type } = active2FARequest;
     // result returns true if 2fa code was entered, false if popup was canceled
     const result = await popup2FA(
-        tx('title_2FARequired'),
-        tx('dialog_enter2FA'),
-        type === 'login' ? tx('title_trustThisDevice') : null,
+        tx('title_2FAInput'),
+        tx('title_2FAHelperText'),
+        type === 'login' ? tx('title_verifyDeviceTwoWeeks') : null,
         uiState.trustDevice2FA,
         true,
         type === 'disable'
@@ -64,6 +64,7 @@ async function twoFactorAuthPopup(active2FARequest) {
         await submit(value, checked);
     } catch (e) {
         console.error(e);
+        uiState.tfaFailed = true;
         if (type === 'login') tm.login.onUserTfaLoginFailed(User.current.autologinEnabled);
     }
 }
@@ -147,7 +148,7 @@ export default class TwoFactorAuth extends SafeComponent {
                 </View>
                 <View>
                     <Text>
-                        {tx('dialog_enter2FA')}
+                        {tx('title_2FAHelperText')}
                     </Text>
                 </View>
                 <View style={{ marginVertical }}>
@@ -171,7 +172,7 @@ export default class TwoFactorAuth extends SafeComponent {
                             }}
                             {...testLabel('confirmationCodeInput')}
                             placeholderTextColor={vars.txtDate}
-                            placeholder="123456"
+                            placeholder={tx('title_2FAHelperText')}
                             onChangeText={text => { this.confirmCode = text; }}
                             value={this.confirmCode} />
                         {buttons.blueTextButton(tx('button_confirm'),

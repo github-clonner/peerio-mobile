@@ -32,6 +32,7 @@ class UIState extends RoutedState {
     @observable currentScrollViewPosition = 0;
     @observable customOverlayComponent = null;
     @observable trustDevice2FA = false;
+    @observable tfaFailed = false;
     @observable declinedChannelId = null;
     @observable hideTabs = false;
     @observable languages = {

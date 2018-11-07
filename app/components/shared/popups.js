@@ -370,6 +370,7 @@ function popup2FA(title, placeholder, text, checked, cancelable, checkboxHidden)
         });
         const checkbox = checkboxHidden ? null :
             (<CheckBox {...{ text, state }}
+                alignLeft
                 property="checked"
                 accessibilityLabel="trustDevice"
             />);

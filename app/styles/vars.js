@@ -91,6 +91,7 @@ const vars = {
     textBlack38: 'rgba(0, 0, 0, .38)',
     textBlack54: 'rgba(0, 0, 0, .54)',
     textBlack87: 'rgba(0, 0, 0, .87)',
+    textDarkBlue54: 'rgba(4, 11, 64, 0.54)',
     linkColor: '#0e94cb',
     // Non-text
     black03: 'rgba(0, 0, 0, 0.03)',
