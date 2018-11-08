@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.399.0"></a>
+# [3.399.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.398.0...v3.399.0) (2018-11-08)
+
+
+### Bug Fixes
+
+* disable preview for GIFs in iOS [ch16832] ([38b9bf2](https://github.com/PeerioTechnologies/peerio-mobile/commit/38b9bf2))
+
+
+
 <a name="3.398.0"></a>
 # [3.398.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.397.0...v3.398.0) (2018-11-08)
 
