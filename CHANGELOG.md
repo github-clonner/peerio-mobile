@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.398.0"></a>
+# [3.398.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.397.0...v3.398.0) (2018-11-08)
+
+
+### Features
+
+* implement a separate component for rendering GIF images on iOS [ch16832] ([3f64110](https://github.com/PeerioTechnologies/peerio-mobile/commit/3f64110))
+* show unread indicator for invites and pending dms [ch16754] ([9559506](https://github.com/PeerioTechnologies/peerio-mobile/commit/9559506))
+
+
+
 <a name="3.397.0"></a>
 # [3.397.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.396.0...v3.397.0) (2018-11-07)
 
