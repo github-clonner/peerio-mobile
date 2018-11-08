@@ -360,7 +360,8 @@ export default class FileInlineImage extends SafeComponent {
                     {this.opened &&
                         <View style={inner}>
                             {!downloading && this.loadImage && width && height ?
-                                <TouchableOpacity onPress={this.imageAction} >
+                                /* TODO: make a separate preview for GIF images on iOS */
+                                <TouchableOpacity onPress={shouldUseFLAnimated ? null : this.imageAction} >
                                     {shouldUseFLAnimated ?
                                         <FLAnimatedImage source={{ uri: source.uri }}
                                             style={{ width, height }} /> :
