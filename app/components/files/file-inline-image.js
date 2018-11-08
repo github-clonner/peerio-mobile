@@ -3,6 +3,7 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { observable, when, reaction, action } from 'mobx';
 import { View, Image, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
+import FLAnimatedImage from 'react-native-gif';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import Progress from '../shared/progress';
@@ -329,7 +330,8 @@ export default class FileInlineImage extends SafeComponent {
         const { image } = this.props;
         const { fileId, downloading } = image;
         const { width, height, loaded, showUpdateSettingsLink, cachingFailed } = this;
-        const { source, acquiringSize } = this.cachedImage || {};
+        const { source, acquiringSize, shouldUseFLAnimated } = this.cachedImage || {};
+        console.log(`render ${source}, shouldUseFLAnimated: ${shouldUseFLAnimated}`);
         const isLocal = !!fileId;
         if (!clientApp.uiUserPrefs.externalContentConsented && !isLocal) {
             return <InlineUrlPreviewConsent onChange={() => { this.showUpdateSettingsLink = true; }} />;
@@ -359,15 +361,18 @@ export default class FileInlineImage extends SafeComponent {
                         <View style={inner}>
                             {!downloading && this.loadImage && width && height ?
                                 <TouchableOpacity onPress={this.imageAction} >
-                                    <Image
-                                        onProgress={this.handleProgress}
-                                        onLoadEnd={this.handleLoadEnd}
-                                        onLoad={this.onLoad}
-                                        onError={this.onErrorLoadingImage}
-                                        source={{ uri: source.uri, width, height }}
-                                        style={{ width, height }} />
+                                    {shouldUseFLAnimated ?
+                                        <FLAnimatedImage source={{ uri: source.uri }}
+                                            style={{ width, height }} /> :
+                                        <Image
+                                            onProgress={this.handleProgress}
+                                            onLoadEnd={this.handleLoadEnd}
+                                            onLoad={this.onLoad}
+                                            onError={this.onErrorLoadingImage}
+                                            source={{ uri: source.uri, width, height }}
+                                            style={{ width, height }} />}
                                 </TouchableOpacity>
-                                : null }
+                                : null}
                             {!this.loadImage && !this.tooBig && this.displayImageOffer}
                             {!this.loadImage && this.tooBig && !this.oversizeCutoff && this.displayTooBigImageOffer}
                             {!this.loadImage && this.oversizeCutoff && this.displayCutOffImageOffer}
