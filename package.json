@@ -69,7 +69,6 @@
     "mobx-react": "5.2.8",
     "moment": "2.22.2",
     "path": "0.12.7",
-    "pbkdf2": "github:PeerioTechnologies/pbkdf2",
     "pdfform.js": "1.0.13",
     "peerio-copy": "github:PeerioTechnologies/peerio-copy#icebear",
     "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#dev",
