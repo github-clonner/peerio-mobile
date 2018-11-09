@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.400.0"></a>
+# [3.400.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.399.0...v3.400.0) (2018-11-09)
+
+
+### Bug Fixes
+
+* fix onLoadEnd for gif [ch16832] ([8a99c91](https://github.com/PeerioTechnologies/peerio-mobile/commit/8a99c91))
+
+
+
 <a name="3.399.0"></a>
 # [3.399.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.398.0...v3.399.0) (2018-11-08)
 
