@@ -10,10 +10,6 @@ import { tx } from '../../utils/translator';
 
 @observer
 export default class MedCryptorChatList extends ChatList {
-    componentDidMount() {
-        this.secondSectionItems[this.secondSectionItems.length - 1].unreadCount = 1;
-    }
-
     @computed get firstSectionItems() {
         return medcryptorChatState.store.nonSpaceRooms;
     }
