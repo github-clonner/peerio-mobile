@@ -6,7 +6,7 @@ import mobileConfig from './mobile-config';
  * it with platform-specific config and shims
  */
 
- // this is for websocketio
+// this is for websocketio
 global.navigator = global.navigator || {};
 global.navigator.userAgent = global.navigator.userAgent || 'react-native';
 
