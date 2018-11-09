@@ -4,7 +4,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import { TinyDb } from '../../lib/icebear';
 
 // TODO: clean up the db once in a while
-const imageCacheTinyDb = TinyDb.open('imageCaches.v2');
+const imageCacheTinyDb = TinyDb.open('imageCaches.v3');
 
 class CachedImage {
     @observable source = null;

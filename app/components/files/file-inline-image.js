@@ -296,6 +296,11 @@ export default class FileInlineImage extends SafeComponent {
         this.errorDisplayingImage = true;
     }
 
+    @action.bound onLoadGif() {
+        this.handleLoadEnd();
+        this.onLoad();
+    }
+
     get displayErrorMessage() {
         const outer = {
             padding: this.outerPadding
@@ -331,7 +336,7 @@ export default class FileInlineImage extends SafeComponent {
         const { fileId, downloading } = image;
         const { width, height, loaded, showUpdateSettingsLink, cachingFailed } = this;
         const { source, acquiringSize, shouldUseFLAnimated } = this.cachedImage || {};
-        console.log(`render ${source}, shouldUseFLAnimated: ${shouldUseFLAnimated}`);
+        // console.log(`render ${source ? source.uri : null}, shouldUseFLAnimated: ${shouldUseFLAnimated}`);
         const isLocal = !!fileId;
         if (!clientApp.uiUserPrefs.externalContentConsented && !isLocal) {
             return <InlineUrlPreviewConsent onChange={() => { this.showUpdateSettingsLink = true; }} />;
@@ -348,7 +353,7 @@ export default class FileInlineImage extends SafeComponent {
                     onLayout={this.layout}
                     file={image}
                     onActionSheet={this.props.onAction}
-                    onAction={this.imageAction}
+                    onAction={shouldUseFLAnimated ? null : this.imageAction}
                     onLegacyFileAction={this.props.onLegacyFileAction}
                     isImage
                     isOpen={this.opened}
@@ -363,7 +368,9 @@ export default class FileInlineImage extends SafeComponent {
                                 /* TODO: make a separate preview for GIF images on iOS */
                                 <TouchableOpacity onPress={shouldUseFLAnimated ? null : this.imageAction} >
                                     {shouldUseFLAnimated ?
-                                        <FLAnimatedImage source={{ uri: source.uri }}
+                                        <FLAnimatedImage
+                                            source={{ uri: source.uri }}
+                                            onLoadEnd={this.onLoadGif}
                                             style={{ width, height }} /> :
                                         <Image
                                             onProgress={this.handleProgress}
