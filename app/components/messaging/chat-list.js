@@ -51,17 +51,18 @@ export default class ChatList extends SafeComponent {
         );
     }
 
+    addSection = (sectionTitle, items) => {
+        if (!items || !items.length) return [];
+        return [
+            [{ sectionTitle }],
+            items
+        ];
+    };
+
     @computed get dataSource() {
-        const addSection = (sectionTitle, items) => {
-            if (!items || !items.length) return [];
-            return [
-                [{ sectionTitle }],
-                items
-            ];
-        };
         return [].concat(
-            ...addSection('title_channels', this.firstSectionItems),
-            ...addSection('title_directMessages', this.secondSectionItems)
+            ...this.addSection('title_channels', this.firstSectionItems),
+            ...this.addSection('title_directMessages', this.secondSectionItems)
         );
     }
 
