@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.401.0"></a>
+# [3.401.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.400.0...v3.401.0) (2018-11-10)
+
+
+### Bug Fixes
+
+* incorrect AreaBeacon positioing and hacks [ch16857] ([2237185](https://github.com/PeerioTechnologies/peerio-mobile/commit/2237185))
+* MC chat list ([#368](https://github.com/PeerioTechnologies/peerio-mobile/issues/368)) ([7a6c9a8](https://github.com/PeerioTechnologies/peerio-mobile/commit/7a6c9a8))
+* remove option for rooms ([#369](https://github.com/PeerioTechnologies/peerio-mobile/issues/369)) ([612cd0d](https://github.com/PeerioTechnologies/peerio-mobile/commit/612cd0d))
+* remove test unread counter ([870881b](https://github.com/PeerioTechnologies/peerio-mobile/commit/870881b))
+
+
+
 <a name="3.400.0"></a>
 # [3.400.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.399.0...v3.400.0) (2018-11-09)
 
