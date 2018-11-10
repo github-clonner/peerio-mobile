@@ -1,7 +1,7 @@
 import React from 'react';
 import { when } from 'mobx';
 import { tx } from '../utils/translator';
-import { fileState } from '../states';
+import { fileState, chatState } from '../states';
 import routes from '../routes/routes';
 import ActionSheetLayout from '../layout/action-sheet-layout';
 import { fileHelpers, config, User } from '../../lib/icebear';
@@ -77,7 +77,8 @@ export default class FileActionSheet {
         }
 
         // Move
-        actionButtons.push({
+        // TODO: a better way to not show move option in DMs and rooms
+        (routes.main.route !== 'chats') && actionButtons.push({
             title: tx('button_move'),
             disabled: isLegacy,
             action: async () => {
