@@ -46,4 +46,3 @@ const mocks = { // eslint-disable-line
 
 // switch this to mocks item to test [TODO: replace with storybooks]
 export default null;
-// export default mocks.MockBeaconFiles;
