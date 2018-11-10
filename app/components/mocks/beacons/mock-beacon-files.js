@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { action, observable } from 'mobx';
+import { action } from 'mobx';
 import { View, StatusBar } from 'react-native';
 import { observer } from 'mobx-react/native';
-import Text from '../../controls/custom-text';
 import PopupLayout from '../../layout/popup-layout';
 import { User } from '../../../lib/icebear';
 import contactState from '../../contacts/contact-state';
