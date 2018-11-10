@@ -1,7 +1,7 @@
 import React from 'react';
 import { when } from 'mobx';
 import { tx } from '../utils/translator';
-import { fileState, chatState } from '../states';
+import { fileState } from '../states';
 import routes from '../routes/routes';
 import ActionSheetLayout from '../layout/action-sheet-layout';
 import { fileHelpers, config, User } from '../../lib/icebear';
