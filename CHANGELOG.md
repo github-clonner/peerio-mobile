@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.402.0"></a>
+# [3.402.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.401.0...v3.402.0) (2018-11-11)
+
+
+### Bug Fixes
+
+* fix medcryptor route initialization [ch16983] ([affe008](https://github.com/PeerioTechnologies/peerio-mobile/commit/affe008))
+
+
+
 <a name="3.401.0"></a>
 # [3.401.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.400.0...v3.401.0) (2018-11-10)
 
