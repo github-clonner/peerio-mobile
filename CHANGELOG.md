@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.403.0"></a>
+# [3.403.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.402.0...v3.403.0) (2018-11-12)
+
+
+### Bug Fixes
+
+* **MC:** go back after declining room ([#372](https://github.com/PeerioTechnologies/peerio-mobile/issues/372)) ([9d83d12](https://github.com/PeerioTechnologies/peerio-mobile/commit/9d83d12))
+
+
+
 <a name="3.402.0"></a>
 # [3.402.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.401.0...v3.402.0) (2018-11-11)
 
