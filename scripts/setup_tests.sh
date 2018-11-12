@@ -16,11 +16,3 @@ case "${unameOut}" in
         ;;
 esac
 
-if ! [ -x "$(command -v virtualenv)" ]; then
-  echo 'virtualenv is not installed.' >&2
-  sudo pip install virtualenv
-fi
-
-rm -rf .pyenv
-virtualenv -p `which python2.7` .pyenv && source .pyenv/bin/activate
-pip install -r tests/requirements.txt
