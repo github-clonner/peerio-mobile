@@ -23,7 +23,7 @@
     "build-ios-sim-debug": "cd ios && xcodebuild -project peeriomobile.xcodeproj -configuration Debug -scheme peeriomobile -destination platform='iOS Simulator,name=iPhone 6,OS=10.2' -derivedDataPath build",
     "build-android": "cd android && ./gradlew assembleRelease && git add version.properties && git commit -m 'chore(fastlane): android fastlane' && git push",
     "build-android-debug": "cd android && ./gradlew assembleDebug",
-    "test": "./scripts/setup_tests.sh && ./scripts/run-tests.sh",
+    "test": "./scripts/setup-tests.sh && ./scripts/run-tests.sh",
     "cucumber": "source env.sh && ./scripts/cucumber.sh",
     "test-ios": "source env.sh && cucumberjs test/spec/account/login.feature -r test/code -f node_modules/cucumber-pretty --world-parameters '{\"platform\": \"ios\"}'",
     "test-android": "source env.sh && cucumberjs test/spec/account/login.feature -r test/code -f node_modules/cucumber-pretty --world-parameters '{\"platform\": \"android\"}'",
