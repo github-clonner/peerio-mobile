@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { computed } from 'mobx';
+import { computed, when } from 'mobx';
 import ChatList from '../../../components/messaging/chat-list';
 import chatState from '../../../components/messaging/chat-state';
 import BackIcon from '../../layout/back-icon';
@@ -12,10 +12,12 @@ import ChannelListItem from '../../../components/messaging/channel-list-item';
 export default class MedcryptorSpaceScreen extends ChatList {
     componentWillMount() {
         chatState.spaceOpen = true;
+        this.goBackReaction = when(() => !chatState.store.spaces.currentSpace, routes.main.chats);
     }
 
     componentWillUnmount() {
         chatState.spaceOpen = false;
+        this.goBackReaction && this.goBackReaction();
     }
 
     get rightIcon() {
@@ -27,11 +29,11 @@ export default class MedcryptorSpaceScreen extends ChatList {
     }
 
     @computed get firstSectionItems() {
-        return chatState.store.spaces.currentSpace.internalRooms;
+        return chatState.store.spaces.currentSpace ? chatState.store.spaces.currentSpace.internalRooms : [];
     }
 
     @computed get secondSectionItems() {
-        return chatState.store.spaces.currentSpace.patientRooms;
+        return chatState.store.spaces.currentSpace ? chatState.store.spaces.currentSpace.patientRooms : [];
     }
 
     @computed get dataSource() {
