@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.404.0"></a>
+# [3.404.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.403.0...v3.404.0) (2018-11-13)
+
+
+### Features
+
+* enable sharing local folders and volumes in dms and rooms [ch16391] ([56b74e5](https://github.com/PeerioTechnologies/peerio-mobile/commit/56b74e5))
+
+
+
 <a name="3.403.0"></a>
 # [3.403.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.402.0...v3.403.0) (2018-11-12)
 
