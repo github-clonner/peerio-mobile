@@ -73,7 +73,6 @@ defineSupportCode(({ When, Then }) => {
         await this.app.pause(1000);
         await this.chatPage.leaveRoomButton.click();
         await this.chatPage.confirmLeaveRoomButton.click();
-        await this.chatPage.alertLeftRoom.click();
     });
 
     Then('they sign out', async function () {
