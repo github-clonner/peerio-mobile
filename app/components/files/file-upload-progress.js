@@ -37,7 +37,8 @@ export default class FileUploadProgress extends SafeComponent {
                 {...this.props}
                 onCancel={this.cancel}
                 value={this.value}
-                max={this.max} />
+                max={this.max}
+            />
         );
     }
 }

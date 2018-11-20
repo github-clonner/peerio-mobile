@@ -47,16 +47,14 @@ export default class ChatList extends SafeComponent {
             <PlusBorderIcon
                 action={CreateActionSheet.show}
                 beacon={zeroStateBeacons.startChatBeacon}
-                testID="buttonCreateNewChat" />
+                testID="buttonCreateNewChat"
+            />
         );
     }
 
     addSection = (sectionTitle, items) => {
         if (!items || !items.length) return [];
-        return [
-            [{ sectionTitle }],
-            items
-        ];
+        return [[{ sectionTitle }], items];
     };
 
     @computed get dataSource() {
@@ -67,7 +65,8 @@ export default class ChatList extends SafeComponent {
     }
 
     @computed get firstSectionItems() {
-        const allChannels = chatState.store.allRooms.filter(c => !c.isChannel || c.headLoaded) || [];
+        const allChannels =
+            chatState.store.allRooms.filter(c => !c.isChannel || c.headLoaded) || [];
         allChannels.sort((a, b) => {
             const first = (a.name || a.channelName || '').toLocaleLowerCase();
             const second = (b.name || b.channelName || '').toLocaleLowerCase();
@@ -88,10 +87,11 @@ export default class ChatList extends SafeComponent {
 
         // android has buggy overlay if you trigger animation immediately
         if (Platform.OS !== 'android') {
-            this.indicatorReaction = reaction(() => [
-                this.topIndicatorVisible,
-                this.bottomIndicatorVisible
-            ], transitionAnimation, { fireImmediately: true });
+            this.indicatorReaction = reaction(
+                () => [this.topIndicatorVisible, this.bottomIndicatorVisible],
+                transitionAnimation,
+                { fireImmediately: true }
+            );
         }
     }
 
@@ -105,10 +105,12 @@ export default class ChatList extends SafeComponent {
         return item.kegDbId || item.id || item.sectionTitle;
     }
 
-    inviteItem = (chat) => <ChannelInviteListItem id={chat.kegDbId} chat={chat} channelName={chat.channelName} />;
-    channelItem = (chat) => <ChannelListItem chat={chat} channelName={chat.name} />;
-    dmItem = (chat) => <ChatListItem height={vars.listItemHeight} key={chat.id} chat={chat} />;
-    renderListItem = (item) => {
+    inviteItem = chat => (
+        <ChannelInviteListItem id={chat.kegDbId} chat={chat} channelName={chat.channelName} />
+    );
+    channelItem = chat => <ChannelListItem chat={chat} channelName={chat.name} />;
+    dmItem = chat => <ChatListItem height={vars.listItemHeight} key={chat.id} chat={chat} />;
+    renderListItem = item => {
         if (item.kegDbId) return this.inviteItem(item);
         if (item.isChannel) return this.channelItem(item);
         if (item.sectionTitle) return <ChatSectionHeader title={tx(item.sectionTitle)} />;
@@ -116,26 +118,24 @@ export default class ChatList extends SafeComponent {
         return this.dmItem(item);
     };
 
-    item = (item) => {
+    item = item => {
         const chat = item.item;
         if (!chat.id && !chat.kegDbId && !chat.spaceId && !chat.sectionTitle) return null;
 
         return this.renderListItem(chat);
     };
 
-    getItemOffset = (index) => {
+    getItemOffset = index => {
         let offset = 0;
         const { firstSectionItems, secondSectionItems } = this;
         // first item is a section header
-        const firstSectionLength = firstSectionItems.length ?
-            firstSectionItems.length + 1 : 0;
+        const firstSectionLength = firstSectionItems.length ? firstSectionItems.length + 1 : 0;
         // first section
         if (firstSectionLength) {
             offset += Math.min(index, firstSectionLength) * vars.sectionHeaderHeight;
         }
         // first item is a section header
-        const secondSectionLength = secondSectionItems.length ?
-            secondSectionItems.length + 1 : 0;
+        const secondSectionLength = secondSectionItems.length ? secondSectionItems.length + 1 : 0;
         if (secondSectionLength) {
             if (index > firstSectionLength) {
                 offset += vars.sectionHeaderHeight;
@@ -191,8 +191,7 @@ export default class ChatList extends SafeComponent {
         const pos = this.firstUnreadItem;
         if (!pos) return;
         const { itemOffset } = this.getItemOffset(pos.index);
-        const offset = itemOffset
-            + (drawerState.getDrawer() ? vars.topDrawerHeight : 0);
+        const offset = itemOffset + (drawerState.getDrawer() ? vars.topDrawerHeight : 0);
         // console.log(`scroll up to ${pos.index}, ${itemOffset}, ${offset}`);
         this.scrollView.scrollToOffset({ offset });
     }
@@ -204,8 +203,11 @@ export default class ChatList extends SafeComponent {
         const pos = this.lastUnreadItem;
         if (!pos) return;
         const { itemOffset, length } = this.getItemOffset(pos.index);
-        const offset = itemOffset - this.flatListHeight + length
-            + (drawerState.getDrawer() ? vars.topDrawerHeight : 0);
+        const offset =
+            itemOffset -
+            this.flatListHeight +
+            length +
+            (drawerState.getDrawer() ? vars.topDrawerHeight : 0);
         // console.log(`${this.flatListHeight} scroll down to ${pos.index}, ${itemOffset}, ${offset}`);
         this.scrollView.scrollToOffset({ offset });
     }
@@ -260,16 +262,23 @@ export default class ChatList extends SafeComponent {
     }
 
     renderThrow() {
-        const body = ((chatState.store.chats.length || chatInviteStore.received.length) && chatState.store.loaded) ?
-            this.listView : <ChatZeroStatePlaceholder />;
+        const body =
+            (chatState.store.chats.length || chatInviteStore.received.length) &&
+            chatState.store.loaded ? (
+                this.listView
+            ) : (
+                <ChatZeroStatePlaceholder />
+            );
 
         return (
             <View style={{ flexGrow: 1, flex: 1 }}>
-                <View style={{ flexGrow: 1, flex: 1 }}>
-                    {body}
-                </View>
-                {this.topIndicatorVisible && <UnreadMessageIndicator isAlignedTop action={this.scrollUpToUnread} />}
-                {this.bottomIndicatorVisible && <UnreadMessageIndicator action={this.scrollDownToUnread} />}
+                <View style={{ flexGrow: 1, flex: 1 }}>{body}</View>
+                {this.topIndicatorVisible && (
+                    <UnreadMessageIndicator isAlignedTop action={this.scrollUpToUnread} />
+                )}
+                {this.bottomIndicatorVisible && (
+                    <UnreadMessageIndicator action={this.scrollDownToUnread} />
+                )}
                 <ProgressOverlay enabled={chatState.store.loading} />
             </View>
         );

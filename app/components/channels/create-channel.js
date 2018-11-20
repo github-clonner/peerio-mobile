@@ -39,14 +39,19 @@ export default class CreateChannel extends Component {
     @observable inProgress = false;
 
     componentDidMount() {
-        reaction(() => this.step, () => {
-            this._disableScrollUpdate = true;
-            setTimeout(() => this._scrollView.scrollToEnd(), 0);
-        });
+        reaction(
+            () => this.step,
+            () => {
+                this._disableScrollUpdate = true;
+                setTimeout(() => this._scrollView.scrollToEnd(), 0);
+            }
+        );
         reaction(() => this.step, transitionAnimation);
     }
 
-    refContactSelector = ref => { this._contactSelector = ref; };
+    refContactSelector = ref => {
+        this._contactSelector = ref;
+    };
 
     next() {
         Keyboard.dismiss();
@@ -65,10 +70,12 @@ export default class CreateChannel extends Component {
     }
 
     get isValid() {
-        return this.channelName.trim().length > 0
-            && this.channelName.trim().length <= config.chat.maxChatNameLength
-            && socket.authenticated
-            && !this.inProgress;
+        return (
+            this.channelName.trim().length > 0 &&
+            this.channelName.trim().length <= config.chat.maxChatNameLength &&
+            socket.authenticated &&
+            !this.inProgress
+        );
     }
 
     nextIcon() {
@@ -77,13 +84,15 @@ export default class CreateChannel extends Component {
                 tu('button_go'),
                 () => this.next(),
                 { color: vars.peerioBlue },
-                'buttonGo');
+                'buttonGo'
+            );
         }
         return icons.text(
             tu('button_next'),
             () => this.next(),
             { color: vars.peerioBlue },
-            'buttonNext');
+            'buttonNext'
+        );
     }
 
     nextIconDisabled() {
@@ -107,9 +116,11 @@ export default class CreateChannel extends Component {
                     placeholderText="title_channelNamePlaceholder"
                     property="channelName"
                     state={this}
-                    bottomText={tx('title_channelNameLimit',
-                        { maxChatNameLength: config.chat.maxChatNameLength })}
-                    maxLength={config.chat.maxChatNameLength} />
+                    bottomText={tx('title_channelNameLimit', {
+                        maxChatNameLength: config.chat.maxChatNameLength
+                    })}
+                    maxLength={config.chat.maxChatNameLength}
+                />
             </View>
         );
     }
@@ -124,9 +135,12 @@ export default class CreateChannel extends Component {
                     action={this.createChannel}
                     ref={this.refContactSelector}
                     leftIconComponent={<Text style={titleStyle}>{tx('title_with')}</Text>}
-                    inputPlaceholder="title_roomParticipants" />
+                    inputPlaceholder="title_roomParticipants"
+                />
             </View>
-        ) : <View style={card} />;
+        ) : (
+            <View style={card} />
+        );
     }
 
     get scrollView() {
@@ -135,8 +149,13 @@ export default class CreateChannel extends Component {
                 keyboardShouldPersistTaps="handled"
                 scrollEnabled={false}
                 showsHorizontalScrollIndicator={false}
-                ref={sv => { this._scrollView = sv; }}
-                key="scroll" horizontal pagingEnabled removeClippedSubviews={false}>
+                ref={sv => {
+                    this._scrollView = sv;
+                }}
+                key="scroll"
+                horizontal
+                pagingEnabled
+                removeClippedSubviews={false}>
                 {this.firstPage}
                 {this.secondPage}
             </ScrollView>
@@ -144,7 +163,12 @@ export default class CreateChannel extends Component {
     }
 
     get paywall() {
-        return <View style={card}>{this.exitRow()}<ChannelUpgradeOffer /></View>;
+        return (
+            <View style={card}>
+                {this.exitRow()}
+                <ChannelUpgradeOffer />
+            </View>
+        );
     }
 
     render() {

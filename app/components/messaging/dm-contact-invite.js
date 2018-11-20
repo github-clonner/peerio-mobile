@@ -50,7 +50,9 @@ const buttonContainer = {
 
 @observer
 export default class DmContactInvite extends SafeComponent {
-    get chat() { return chatState.currentChat; }
+    get chat() {
+        return chatState.currentChat;
+    }
 
     @action.bound async decline() {
         this.chat.dismiss();
@@ -67,8 +69,12 @@ export default class DmContactInvite extends SafeComponent {
         const { chat } = this;
         const participant = chat.otherParticipants[0];
         const greetingCopy = chat.isReceived ? 'title_helloDmInvite' : 'title_goodNews';
-        const headingCopy = chat.isReceived ? 'title_newUserDmInviteHeading' : 'title_dmInviteHeading';
-        const inviteMethodCopy = chat.isAutoImport ? 'title_userInAddressBook' : 'title_invitedUserViaEmail';
+        const headingCopy = chat.isReceived
+            ? 'title_newUserDmInviteHeading'
+            : 'title_dmInviteHeading';
+        const inviteMethodCopy = chat.isAutoImport
+            ? 'title_userInAddressBook'
+            : 'title_invitedUserViaEmail';
         return (
             <View style={container}>
                 <Image source={emojiTada} style={emojiStyle} resizeMode="contain" />
@@ -76,9 +82,14 @@ export default class DmContactInvite extends SafeComponent {
                 <Text style={[headingStyle, { marginBottom: vars.spacing.medium.maxi }]}>
                     {tx(headingCopy, { contactName: participant.fullName })}
                 </Text>
-                {!chat.isReceived && <Text semibold style={inviteMethodStyle}>
-                    {tx(inviteMethodCopy, { firstName: participant.firstName, email: participant.addresses[0] })}
-                </Text>}
+                {!chat.isReceived && (
+                    <Text semibold style={inviteMethodStyle}>
+                        {tx(inviteMethodCopy, {
+                            firstName: participant.firstName,
+                            email: participant.addresses[0]
+                        })}
+                    </Text>
+                )}
                 <View style={{ alignItems: 'center' }}>
                     <AvatarCircle contact={participant} medium />
                 </View>
@@ -86,15 +97,36 @@ export default class DmContactInvite extends SafeComponent {
                     {participant.usernameTag}
                 </Text>
                 <IdentityVerificationNotice />
-                {showButtons && (<View style={buttonContainer}>
-                    <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center', paddingRight: vars.spacing.medium.maxi2x }}>
-                        {buttons.blueTextButton(tx('button_dismiss'), this.decline, null, null, 'button_dismiss')}
+                {showButtons && (
+                    <View style={buttonContainer}>
+                        <View
+                            style={{
+                                flex: 1,
+                                alignItems: 'flex-end',
+                                justifyContent: 'center',
+                                paddingRight: vars.spacing.medium.maxi2x
+                            }}>
+                            {buttons.blueTextButton(
+                                tx('button_dismiss'),
+                                this.decline,
+                                null,
+                                null,
+                                'button_dismiss'
+                            )}
+                        </View>
+                        <View
+                            style={{ flex: 1, alignItems: 'flex-start', justifyContent: 'center' }}>
+                            {buttons.roundBlueBgButton(
+                                tx('button_message'),
+                                this.accept,
+                                null,
+                                'button_message'
+                            )}
+                        </View>
                     </View>
-                    <View style={{ flex: 1, alignItems: 'flex-start', justifyContent: 'center' }}>
-                        {buttons.roundBlueBgButton(tx('button_message'), this.accept, null, 'button_message')}
-                    </View>
-                </View>)}
-            </View>);
+                )}
+            </View>
+        );
     }
 }
 

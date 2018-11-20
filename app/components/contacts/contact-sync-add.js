@@ -54,17 +54,19 @@ export default class ContactSyncAdd extends SafeComponent {
     @action getPeerioContacts(phoneContacts) {
         const promises = [];
         phoneContacts.forEach(c => {
-            promises.push((async () => {
-                try {
-                    const contact = await contactState.resolveAndCache(c.email);
-                    if (!contact.notFound && !contact.isHidden) {
-                        this.contactList.push(new ListItem(contact, c.fullName, true));
-                        this.refreshList();
+            promises.push(
+                (async () => {
+                    try {
+                        const contact = await contactState.resolveAndCache(c.email);
+                        if (!contact.notFound && !contact.isHidden) {
+                            this.contactList.push(new ListItem(contact, c.fullName, true));
+                            this.refreshList();
+                        }
+                    } catch (e) {
+                        console.error(e);
                     }
-                } catch (e) {
-                    console.error(e);
-                }
-            })());
+                })()
+            );
         });
         return Promise.all(promises);
     }
@@ -92,9 +94,13 @@ export default class ContactSyncAdd extends SafeComponent {
         this.refreshList();
     }
 
-    @action.bound refreshList() { this.refresh++; }
+    @action.bound refreshList() {
+        this.refresh++;
+    }
 
-    keyExtractor(item, index) { return `${item.contact.email}-${index}`; }
+    keyExtractor(item, index) {
+        return `${item.contact.email}-${index}`;
+    }
 
     contactItem = ({ item }) => {
         return (
@@ -102,7 +108,8 @@ export default class ContactSyncAdd extends SafeComponent {
                 key={item.contact.username}
                 contact={item.contact}
                 checked={item.selected}
-                onPress={() => this.toggleCheckbox(item)} />
+                onPress={() => this.toggleCheckbox(item)}
+            />
         );
     };
 
@@ -115,30 +122,35 @@ export default class ContactSyncAdd extends SafeComponent {
                     </Text>
                     {buttons.blueTextButton(
                         this.allSelected ? tx('title_deselectAll') : tx('title_selectAll'),
-                        this.allSelected ? this.deselectAll : this.selectAll)}
+                        this.allSelected ? this.deselectAll : this.selectAll
+                    )}
                 </View>
                 <FlatList
                     initialNumToRender={INITIAL_LIST_SIZE}
                     data={this.contactList}
                     renderItem={this.contactItem}
                     extraData={this.refresh}
-                    keyExtractor={this.keyExtractor} />
+                    keyExtractor={this.keyExtractor}
+                />
             </View>
         );
     }
 
     @action.bound addSelectedContacts() {
-        this.selectedContacts.forEach(i => contactState.store.getContactAndSave(i.contact.username));
+        this.selectedContacts.forEach(i =>
+            contactState.store.getContactAndSave(i.contact.username)
+        );
         routes.main.contactSyncInvite();
     }
 
     footer() {
         return (
-            <View style={footerContainer} >
+            <View style={footerContainer}>
                 {buttons.blueTextButton(
                     tx('button_add'),
                     this.addSelectedContacts,
-                    this.selectedContacts.length === 0)}
+                    this.selectedContacts.length === 0
+                )}
             </View>
         );
     }
@@ -149,6 +161,7 @@ export default class ContactSyncAdd extends SafeComponent {
                 {this.body()}
                 {this.footer()}
                 <ActivityOverlay large visible={this.inProgress} />
-            </View>);
+            </View>
+        );
     }
 }

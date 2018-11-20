@@ -25,7 +25,9 @@ export default class ContactEditPermission extends SafeComponent {
     get unshareButton() {
         const extraWidth = 20;
         // TODO: can we ever get not isFolder here, @karim?
-        const { folder: { isFolder, isShared } } = this.props;
+        const {
+            folder: { isFolder, isShared }
+        } = this.props;
         if (isFolder && isShared) {
             return icons.text(tu('button_unshare'), this.props.action, null, null, extraWidth);
         }
@@ -48,7 +50,8 @@ export default class ContactEditPermission extends SafeComponent {
             <ContactEditPermissionItem
                 contact={item}
                 isOwner={item.username === folder.owner}
-                onUnshare={this.unshareFrom} />
+                onUnshare={this.unshareFrom}
+            />
         );
     };
 
@@ -61,16 +64,14 @@ export default class ContactEditPermission extends SafeComponent {
                 initialNumToRender={INITIAL_LIST_SIZE}
                 pageSize={PAGE_SIZE}
                 data={this.props.folder.otherParticipants || []}
-                renderItem={this.item} />);
+                renderItem={this.item}
+            />
+        );
     }
 
     renderThrow() {
         const { footer } = this.props;
-        const header = (
-            <View style={{ flex: 0 }}>
-                {this.exitRow()}
-            </View>
-        );
+        const header = <View style={{ flex: 0 }}>{this.exitRow()}</View>;
         const body = this.body();
         const layoutStyle = {
             backgroundColor: 'white'
@@ -82,7 +83,8 @@ export default class ContactEditPermission extends SafeComponent {
                 header={header}
                 noFitHeight
                 footer={footer}
-                style={layoutStyle} />
+                style={layoutStyle}
+            />
         );
     }
 }

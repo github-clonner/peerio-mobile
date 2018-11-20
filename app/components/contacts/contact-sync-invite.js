@@ -59,7 +59,7 @@ export default class ContactSyncInvite extends SafeComponent {
 
     silentInvite(onlyNonSelected) {
         const silentSyncEmails = this.contactList
-            .filter(li => onlyNonSelected ? !li.selected : true)
+            .filter(li => (onlyNonSelected ? !li.selected : true))
             .map(li => li.contact.username);
         contactState.batchInvite(silentSyncEmails, true);
     }
@@ -85,19 +85,21 @@ export default class ContactSyncInvite extends SafeComponent {
     @action getNonPeerioContacts(phoneContacts) {
         const promises = [];
         phoneContacts.forEach(c => {
-            promises.push((async () => {
-                try {
-                    const contact = await contactState.resolveAndCache(c.email);
-                    if (contact.notFound || contact.isHidden) {
-                        const listItem = new ListItem(contact, c.fullName, false);
-                        listItem.visible = true;
-                        this.contactList.push(listItem);
-                        this.refreshList();
+            promises.push(
+                (async () => {
+                    try {
+                        const contact = await contactState.resolveAndCache(c.email);
+                        if (contact.notFound || contact.isHidden) {
+                            const listItem = new ListItem(contact, c.fullName, false);
+                            listItem.visible = true;
+                            this.contactList.push(listItem);
+                            this.refreshList();
+                        }
+                    } catch (e) {
+                        console.error(e);
                     }
-                } catch (e) {
-                    console.error(e);
-                }
-            })());
+                })()
+            );
         });
         return Promise.all(promises);
     }
@@ -142,7 +144,9 @@ export default class ContactSyncInvite extends SafeComponent {
                 <SearchBar
                     textValue={this.searchBarValue}
                     placeholderText={tx('title_searchContacts')}
-                    onChangeText={text => { this.onChangeSearchBarText(text); }}
+                    onChangeText={text => {
+                        this.onChangeSearchBarText(text);
+                    }}
                     leftIcon={leftIcon}
                     rightIcon={rightIcon}
                 />
@@ -177,7 +181,9 @@ export default class ContactSyncInvite extends SafeComponent {
         this.refresh++;
     }
 
-    keyExtractor(item, index) { return `${item.contact.email}-${index}`; }
+    keyExtractor(item, index) {
+        return `${item.contact.email}-${index}`;
+    }
 
     contactItem = ({ item }) => {
         if (!item.visible) return null;
@@ -188,7 +194,8 @@ export default class ContactSyncInvite extends SafeComponent {
                 contact={item.contact}
                 phoneContactName={item.phoneContactName}
                 checked={item.selected}
-                onPress={() => this.toggleCheckbox(item)} />
+                onPress={() => this.toggleCheckbox(item)}
+            />
         );
     };
 
@@ -201,20 +208,24 @@ export default class ContactSyncInvite extends SafeComponent {
                     </Text>
                     {buttons.blueTextButton(
                         this.allSelected ? tx('title_deselectAll') : tx('title_selectAll'),
-                        this.allSelected ? this.deselectAll : this.selectAll)}
+                        this.allSelected ? this.deselectAll : this.selectAll
+                    )}
                 </View>
                 <FlatList
                     initialNumToRender={INITIAL_LIST_SIZE}
                     data={this.contactList}
                     renderItem={this.contactItem}
                     extraData={this.refresh}
-                    keyExtractor={this.keyExtractor} />
+                    keyExtractor={this.keyExtractor}
+                />
             </View>
         );
     }
 
     @action.bound async inviteSelectedContacts() {
-        const confirmed = await imagePopups.confirmInvites(tx('title_confirmEmailInvite', { numSelectedContacts: this.selectedContacts.length }));
+        const confirmed = await imagePopups.confirmInvites(
+            tx('title_confirmEmailInvite', { numSelectedContacts: this.selectedContacts.length })
+        );
         if (await confirmed) {
             contactState.batchInvite(this.selectedEmails);
             const contactsAdded = contactState.store.addedContacts.length;
@@ -237,11 +248,14 @@ export default class ContactSyncInvite extends SafeComponent {
     footer() {
         if (uiState.keyboardHeight) return null;
         return (
-            <View style={footerContainer} >
+            <View style={footerContainer}>
                 {buttons.blueTextButton(
-                    this.selectedContacts.length === 1 ? tx('button_sendInvite') : tx('button_sendInvites'),
+                    this.selectedContacts.length === 1
+                        ? tx('button_sendInvite')
+                        : tx('button_sendInvites'),
                     this.inviteSelectedContacts,
-                    this.selectedContacts.length === 0)}
+                    this.selectedContacts.length === 0
+                )}
             </View>
         );
     }
@@ -253,6 +267,7 @@ export default class ContactSyncInvite extends SafeComponent {
                 {this.body()}
                 {this.footer()}
                 <ActivityOverlay large visible={this.inProgress} />
-            </View>);
+            </View>
+        );
     }
 }

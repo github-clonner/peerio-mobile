@@ -6,7 +6,6 @@ import SafeComponent from '../shared/safe-component';
 import ChatActionSheet from '../messaging/chat-action-sheet';
 import ErrorCircle from './error-circle';
 
-
 @observer
 export default class MessageSentError extends SafeComponent {
     @action.bound onPress() {
@@ -22,7 +21,8 @@ export default class MessageSentError extends SafeComponent {
             <ErrorCircle
                 onPress={this.onPress}
                 invert={!message.sendError}
-                visible={!!message.signatureError || message.sendError} />
+                visible={!!message.signatureError || message.sendError}
+            />
         );
     }
 }

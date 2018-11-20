@@ -46,7 +46,11 @@ export default class SignupCancel extends SafeComponent {
             tm.signup.readMorePopup({ item: S.TERMS_OF_USE });
             await popupTOS();
         };
-        return (<Text style={{ color: vars.peerioBlue }} onPress={onPress}>{text}</Text>);
+        return (
+            <Text style={{ color: vars.peerioBlue }} onPress={onPress}>
+                {text}
+            </Text>
+        );
     }
 
     @action.bound openPrivacyLink(text) {
@@ -54,7 +58,11 @@ export default class SignupCancel extends SafeComponent {
             tm.signup.readMorePopup({ item: S.PRIVACY_POLICY });
             await popupPrivacy();
         };
-        return (<Text style={{ color: vars.peerioBlue }} onPress={onPress}>{text}</Text>);
+        return (
+            <Text style={{ color: vars.peerioBlue }} onPress={onPress}>
+                {text}
+            </Text>
+        );
     }
 
     @action.bound cancel() {
@@ -72,19 +80,25 @@ export default class SignupCancel extends SafeComponent {
             <View style={signupStyles.page}>
                 <View style={signupStyles.container2}>
                     <SignupHeading title="title_cancelSignup" />
-                    <Text style={[signupStyles.subTitle, { marginBottom: vars.spacing.medium.midi2x }]}>
+                    <Text
+                        style={[
+                            signupStyles.subTitle,
+                            { marginBottom: vars.spacing.medium.midi2x }
+                        ]}>
                         {tx('title_declineExplanation')}
                     </Text>
                     <Text semibold style={signupStyles.subTitle}>
                         {tx('title_whyRequired')}
                     </Text>
                     <Text style={signupStyles.description2}>
-                        {<T k="title_whyRequiredExplanation">
-                            {{
-                                openPrivacy: this.openPrivacyLink,
-                                openTerms: this.openTermsLink
-                            }}
-                        </T>}
+                        {
+                            <T k="title_whyRequiredExplanation">
+                                {{
+                                    openPrivacy: this.openPrivacyLink,
+                                    openTerms: this.openTermsLink
+                                }}
+                            </T>
+                        }
                     </Text>
 
                     <Text semibold style={signupStyles.subTitle}>
@@ -100,13 +114,15 @@ export default class SignupCancel extends SafeComponent {
                             this.cancel,
                             !socket.connected,
                             null,
-                            'button_decline')}
+                            'button_decline'
+                        )}
                         <View style={{ width: 16 }} />
                         {buttons.roundBlueBgButton(
                             tx('button_goBack'),
                             this.goBack,
                             !socket.connected,
-                            'button_accept')}
+                            'button_accept'
+                        )}
                     </View>
                 </View>
             </View>

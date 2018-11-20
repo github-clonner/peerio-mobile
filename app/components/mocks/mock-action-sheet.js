@@ -9,9 +9,7 @@ import buttons from '../helpers/buttons';
 class FileActionSheet {
     static show(file) {
         const header = (
-            <FileActionSheetHeader
-                file={file}
-                onPress={() => console.log('Go to file')} />
+            <FileActionSheetHeader file={file} onPress={() => console.log('Go to file')} />
         );
         const actionButtons = [
             {

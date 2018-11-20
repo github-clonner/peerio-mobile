@@ -66,22 +66,39 @@ export default class LoginWelcome extends SafeComponent {
                     <Image
                         resizeMode="contain"
                         source={imageWelcome}
-                        style={{ height, alignSelf: 'center', marginBottom: -vars.spacing.small.midi2x }} />
+                        style={{
+                            height,
+                            alignSelf: 'center',
+                            marginBottom: -vars.spacing.small.midi2x
+                        }}
+                    />
                 </View>
                 <View style={logoBar}>
                     <Image
                         source={logoWelcome}
-                        style={adjustImageDimensions(logoWelcome, undefined, vars.welcomeHeaderHeight)} />
+                        style={adjustImageDimensions(
+                            logoWelcome,
+                            undefined,
+                            vars.welcomeHeaderHeight
+                        )}
+                    />
                 </View>
-                <View style={[headerContainer, { paddingHorizontal: signupStyles.pagePaddingLarge }]}>
-                    <LoginHeading title="title_newUserWelcome" subTitle="title_newUserWelcomeDescription" />
+                <View
+                    style={[headerContainer, { paddingHorizontal: signupStyles.pagePaddingLarge }]}>
+                    <LoginHeading
+                        title="title_newUserWelcome"
+                        subTitle="title_newUserWelcomeDescription"
+                    />
                     <View style={buttonContainer}>
                         {buttons.roundBlueBgButton(
                             tx('button_CreateAccount'),
                             this.onSignupPress,
                             null,
                             'button_CreateAccount',
-                            { width: vars.roundedButtonWidth, marginBottom: vars.spacing.small.midi2x }
+                            {
+                                width: vars.roundedButtonWidth,
+                                marginBottom: vars.spacing.small.midi2x
+                            }
                         )}
                         {buttons.roundWhiteBgButton(
                             tx('button_login'),

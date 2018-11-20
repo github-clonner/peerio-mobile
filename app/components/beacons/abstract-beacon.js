@@ -36,12 +36,15 @@ export default class AbstractBeacon extends SafeComponent {
 
     componentWillMount() {
         LayoutAnimation.configureNext(fadeInAnimation);
-        this.dismissBeaconReaction = reaction(() => uiState.modalShown, () => {
-            const { onUnmount, id } = this.props;
-            if (beaconState.activeBeacon.id === id) {
-                onUnmount && onUnmount(this.wasPressed);
+        this.dismissBeaconReaction = reaction(
+            () => uiState.modalShown,
+            () => {
+                const { onUnmount, id } = this.props;
+                if (beaconState.activeBeacon.id === id) {
+                    onUnmount && onUnmount(this.wasPressed);
+                }
             }
-        });
+        );
     }
 
     componentWillUnmount() {

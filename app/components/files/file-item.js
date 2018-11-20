@@ -57,9 +57,20 @@ export default class FileItem extends SafeComponent {
         const { file } = this.props;
         return (
             <View style={fileContainer}>
-                {file.isFolder ?
-                    <FolderInnerItem folder={file} onPress={this.onFolderPress} onFolderAction={this.onFolderAction} /> :
-                    <FileInnerItem file={file} onPress={f => this.press(f)} onFileAction={this.onFileAction} rowID={this.props.rowID} />}
+                {file.isFolder ? (
+                    <FolderInnerItem
+                        folder={file}
+                        onPress={this.onFolderPress}
+                        onFolderAction={this.onFolderAction}
+                    />
+                ) : (
+                    <FileInnerItem
+                        file={file}
+                        onPress={f => this.press(f)}
+                        onFileAction={this.onFileAction}
+                        rowID={this.props.rowID}
+                    />
+                )}
             </View>
         );
     }

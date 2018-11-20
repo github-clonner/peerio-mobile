@@ -23,16 +23,18 @@ class ContactState extends RoutedState {
         await this.cache.open();
         // if we already ran import, do not reinvite existing contacts
         // and do not reinitialize cache
-        this.importedEmails = this.importedEmails || await this.cache.getValue('imported_emails') || {};
+        this.importedEmails =
+            this.importedEmails || (await this.cache.getValue('imported_emails')) || {};
         console.log(`loaded cached imported emails: ${Object.keys(this.importedEmails).length}`);
         // TODO: fix crash when revoking contact permissions on android
         if (Platform.OS !== 'android') {
             await this.syncCachedEmails();
         }
         // TODO: android implementation of RNContacts.subscribeToUpdates
-        RNContacts.subscribeToUpdates && RNContacts.subscribeToUpdates(() => {
-            console.log(`contact-store.js: subscribed to updates`);
-        });
+        RNContacts.subscribeToUpdates &&
+            RNContacts.subscribeToUpdates(() => {
+                console.log(`contact-store.js: subscribed to updates`);
+            });
     }
 
     @action.bound async syncCachedEmails() {
@@ -63,7 +65,6 @@ class ContactState extends RoutedState {
     @observable recipients = [];
     @observable recipientsMap = observable.map(null, { deep: false });
 
-
     @action contactView(contact) {
         this.routerMain.resetMenus();
         this.currentContact = contact;
@@ -81,11 +82,10 @@ class ContactState extends RoutedState {
     getFiltered(findUserText, exclude = {}) {
         // TODO: it is actually debatable if we need to filter
         // contacts which are already in our contact list
-        const result = this.store.whitelabel.filter(findUserText || '')
+        const result = this.store.whitelabel
+            .filter(findUserText || '')
             .filter(c => c.username !== User.current.username && !exclude[c.username]);
-        return result.length ? result : this.found.filter(
-            c => !c.loading && !c.notFound
-        );
+        return result.length ? result : this.found.filter(c => !c.loading && !c.notFound);
     }
 
     @action sendTo(contact) {
@@ -101,19 +101,23 @@ class ContactState extends RoutedState {
     // if we have no contacts except User.current
     get empty() {
         const { addedContacts, invitedNotJoinedContacts, contacts } = this.store;
-        return !contacts || (contacts.length <= 1
-            && !contacts.filter(u => User.current.username !== u.username).length)
-            && !invitedNotJoinedContacts.length
-            && !addedContacts.length;
+        return (
+            !contacts ||
+            (contacts.length <= 1 &&
+                !contacts.filter(u => User.current.username !== u.username).length &&
+                !invitedNotJoinedContacts.length &&
+                !addedContacts.length)
+        );
     }
 
     softRequestPermission = async () => {
         const hasPermissions =
-            await this.hasExistingPermissions() ||
-            await popupContactPermission(
+            (await this.hasExistingPermissions()) ||
+            ((await popupContactPermission(
                 tx('title_permissionContacts'),
                 tx('title_permissionContactsDescroption')
-            ) && await this.hasPermissions();
+            )) &&
+                (await this.hasPermissions()));
         clientApp.uiUserPrefs.importContactsInBackground = hasPermissions;
         return hasPermissions;
     };
@@ -191,30 +195,32 @@ class ContactState extends RoutedState {
     @action getPhoneContacts() {
         // cache contacts so they are not requested each time
         if (this._cachedPhoneContacts) return Promise.resolve(this._cachedPhoneContacts);
-        return new Promise(resolve => RNContacts.getAllWithoutPhotos((err, contacts) => {
-            if (err) {
-                console.error(err);
-                resolve([]);
-                return;
-            }
-            this._cachedPhoneContacts = contacts;
-            // free memory used by _cachedPhoneContacts after 120s
-            setTimeout(() => {
-                this._cachedPhoneContacts = null;
-            }, 120000);
-            resolve(contacts);
-        }));
+        return new Promise(resolve =>
+            RNContacts.getAllWithoutPhotos((err, contacts) => {
+                if (err) {
+                    console.error(err);
+                    resolve([]);
+                    return;
+                }
+                this._cachedPhoneContacts = contacts;
+                // free memory used by _cachedPhoneContacts after 120s
+                setTimeout(() => {
+                    this._cachedPhoneContacts = null;
+                }, 120000);
+                resolve(contacts);
+            })
+        );
     }
 
     @action.bound async syncContacts() {
-        if (!await this.softRequestPermission()) {
+        if (!(await this.softRequestPermission())) {
             return;
         }
         this.routerMain.contactSyncAdd();
     }
 
     @action.bound async inviteContacts() {
-        if (!await this.softRequestPermission()) {
+        if (!(await this.softRequestPermission())) {
             return;
         }
         this.routerMain.contactSyncInvite();
@@ -224,9 +230,9 @@ class ContactState extends RoutedState {
      * Note: This functionality is currently unused anywhere but might be in the future
      * Automatically add contacts without confirming with user
      * Invites need to be confirmed by user
-    */
+     */
     @action.bound async testImport() {
-        if (!await this.softRequestPermission()) {
+        if (!(await this.softRequestPermission())) {
             return;
         }
         this.isInProgress = true;
@@ -254,7 +260,8 @@ class ContactState extends RoutedState {
             }
         });
 
-        this.store.importContacts(emails)
+        this.store
+            .importContacts(emails)
             .then(success => {
                 console.log('contact-state.js: import success');
                 return success;
@@ -291,7 +298,8 @@ class ContactState extends RoutedState {
             if (emailAddresses) {
                 emailAddresses.forEach(emailAddress => {
                     const { email } = emailAddress;
-                    if (email) contactEmails.push({ email, fullName: `${givenName} ${familyName}` });
+                    if (email)
+                        contactEmails.push({ email, fullName: `${givenName} ${familyName}` });
                 });
             }
         });
@@ -310,7 +318,7 @@ class ContactState extends RoutedState {
 
     // TODO replace with bulk
     @action batchInvite(emails, isAutoImport) {
-        emails.forEach((email) => {
+        emails.forEach(email => {
             if (!this.importedEmails) this.importedEmails = {};
             this.importedEmails[email] = email;
             this.store.inviteNoWarning(email, undefined, isAutoImport);

@@ -35,7 +35,9 @@ const tmEmail = {
 @observer
 export default class SignupStep3 extends SafeComponent {
     emailState = observable({ value: '' });
-    @action.bound emailInputRef(ref) { this.emailInput = ref; }
+    @action.bound emailInputRef(ref) {
+        this.emailInput = ref;
+    }
 
     componentDidMount() {
         this.startTime = Date.now();
@@ -66,16 +68,23 @@ export default class SignupStep3 extends SafeComponent {
         tm.signup.navigate({ sublocation, option: S.CREATE });
     }
 
-    get isCreateDisabled() { return !socket.connected || !this.emailState.value || !this.emailInput.isValid; }
+    get isCreateDisabled() {
+        return !socket.connected || !this.emailState.value || !this.emailInput.isValid;
+    }
 
     renderThrow() {
-        const buttonMarginTop = vars.isDeviceScreenBig ? vars.spacing.large.minix : vars.spacing.small.maxi;
+        const buttonMarginTop = vars.isDeviceScreenBig
+            ? vars.spacing.large.minix
+            : vars.spacing.small.maxi;
         return (
             <View style={signupStyles.page}>
                 <SignupStepIndicator />
                 <View style={signupStyles.container}>
                     <SignupButtonBack telemetry={{ sublocation, option: S.BACK }} />
-                    <SignupHeading title="title_createYourAccount" subTitle="title_whatIsYourEmail" />
+                    <SignupHeading
+                        title="title_createYourAccount"
+                        subTitle="title_whatIsYourEmail"
+                    />
                     <StyledTextInput
                         autoFocus
                         state={this.emailState}
@@ -91,7 +100,8 @@ export default class SignupStep3 extends SafeComponent {
                         required
                         clearTextIcon
                         ref={this.emailInputRef}
-                        testID="email" />
+                        testID="email"
+                    />
                     <View style={[signupStyles.separator, { marginBottom: 0 }]} />
                     <View style={checkboxContainer}>
                         <CheckBox
@@ -100,7 +110,8 @@ export default class SignupStep3 extends SafeComponent {
                             onChange={this.tmToggleChecked}
                             property="subscribeToPromoEmails"
                             text={tx('title_subscribeNewsletter')}
-                            accessibilityLabel={tx('title_subscribeNewsletter')} />
+                            accessibilityLabel={tx('title_subscribeNewsletter')}
+                        />
                     </View>
                     <View style={{ alignItems: 'flex-end', marginTop: buttonMarginTop }}>
                         {buttons.roundBlueBgButton(
@@ -108,7 +119,8 @@ export default class SignupStep3 extends SafeComponent {
                             this.handleCreateButton,
                             this.isCreateDisabled,
                             'button_create',
-                            { width: vars.signupButtonWidth, marginVertical: 30 })}
+                            { width: vars.signupButtonWidth, marginVertical: 30 }
+                        )}
                     </View>
                 </View>
             </View>

@@ -92,7 +92,7 @@ export default class LoadingScreen extends Component {
         const loadingProgressContainer = {
             position: 'absolute',
             top: '50%',
-            marginTop: vars.spacing.medium.maxi2x + (logoHeight / 2)
+            marginTop: vars.spacing.medium.maxi2x + logoHeight / 2
         };
         const animationContainer = {
             alignSelf: 'stretch', // this is for android throwing errors
@@ -111,22 +111,24 @@ export default class LoadingScreen extends Component {
         };
         return (
             <View style={container}>
-                {this.revealAnimVisible && <LottieView
-                    progress={this.revealAnimValue}
-                    style={[animationContainer, { backgroundColor: vars.darkBlue }]}
-                    source={revealAnimation}
-                    resizeMode="cover"
-                />}
-                {this.logoAnimVisible && <LottieView
-                    progress={this.logoAnimValue}
-                    style={[animationContainer, { backgroundColor: vars.darkBlueBackground05 }]}
-                    source={logoAnimation}
-                    resizeMode="cover"
-                />}
+                {this.revealAnimVisible && (
+                    <LottieView
+                        progress={this.revealAnimValue}
+                        style={[animationContainer, { backgroundColor: vars.darkBlue }]}
+                        source={revealAnimation}
+                        resizeMode="cover"
+                    />
+                )}
+                {this.logoAnimVisible && (
+                    <LottieView
+                        progress={this.logoAnimValue}
+                        style={[animationContainer, { backgroundColor: vars.darkBlueBackground05 }]}
+                        source={logoAnimation}
+                        resizeMode="cover"
+                    />
+                )}
                 <View style={loadingProgressContainer}>
-                    <Animated.Text style={statusTextStyle}>
-                        {this.statusText}
-                    </Animated.Text>
+                    <Animated.Text style={statusTextStyle}>{this.statusText}</Animated.Text>
                 </View>
                 <View style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
                     <SnackBarConnection />

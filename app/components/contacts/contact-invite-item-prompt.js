@@ -28,8 +28,15 @@ export default class ContactInviteItemPrompt extends SafeComponent {
         return (
             <View style={{ alignItems: 'center', flexGrow: 1 }}>
                 <View style={{ flexDirection: 'row', marginHorizontal: vars.spacing.large.midi2x }}>
-                    <Icon name="help-outline" size={vars.iconSize} color={vars.txtDate} style={{ marginRight: vars.spacing.small.midi2x }} />
-                    <Text style={{ color: vars.txtDate }}>{t('title_inviteContactByEmail2', { email })}</Text>
+                    <Icon
+                        name="help-outline"
+                        size={vars.iconSize}
+                        color={vars.txtDate}
+                        style={{ marginRight: vars.spacing.small.midi2x }}
+                    />
+                    <Text style={{ color: vars.txtDate }}>
+                        {t('title_inviteContactByEmail2', { email })}
+                    </Text>
                 </View>
                 <View style={{ flexDirection: 'row', marginHorizontal: vars.spacing.large.midi2x }}>
                     <whiteLabelComponents.ContactAddWarning />

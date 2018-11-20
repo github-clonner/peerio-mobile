@@ -49,11 +49,15 @@ export default class Files extends SafeComponent {
     }
 
     get rightIcon() {
-        return !fileState.isFileSelectionMode &&
-            <PlusBorderIcon
-                action={() => FileUploadActionSheet.show(false, true)}
-                beacon={[zeroStateBeacons.uploadFileBeacon, filesBeacons.foldersBeacon]}
-                testID="buttonUploadFileToFiles" />;
+        return (
+            !fileState.isFileSelectionMode && (
+                <PlusBorderIcon
+                    action={() => FileUploadActionSheet.show(false, true)}
+                    beacon={[zeroStateBeacons.uploadFileBeacon, filesBeacons.foldersBeacon]}
+                    testID="buttonUploadFileToFiles"
+                />
+            )
+        );
     }
 
     get layoutTitle() {
@@ -64,12 +68,11 @@ export default class Files extends SafeComponent {
     actionsHeight = new Animated.Value(0);
 
     @computed get data() {
-        let data = fileState.store.searchQuery ?
-            fileState.store.filesAndFoldersSearchResult
+        let data = fileState.store.searchQuery
+            ? fileState.store.filesAndFoldersSearchResult
             : fileState.store.folderStore.currentFolder.filesAndFoldersDefaultSorting;
         if (fileState.isFileSelectionMode) {
-            data = data.filter(item => !item.isLegacy &&
-                (item.isFolder || item.readyForDownload));
+            data = data.filter(item => !item.isLegacy && (item.isFolder || item.readyForDownload));
         }
         return data;
     }
@@ -87,7 +90,9 @@ export default class Files extends SafeComponent {
         uiState.testAction2 = null;
     }
 
-    onChangeFolder = folder => { fileState.store.folderStore.currentFolder = folder; };
+    onChangeFolder = folder => {
+        fileState.store.folderStore.currentFolder = folder;
+    };
 
     item = ({ item, index }) => {
         // fileId for file, id for folder
@@ -98,13 +103,16 @@ export default class Files extends SafeComponent {
                 rowID={index}
                 onChangeFolder={this.onChangeFolder}
                 onFileAction={() => FileActionSheet.show(item)}
-                onFolderAction={() => FoldersActionSheet.show(item)} />
+                onFolderAction={() => FoldersActionSheet.show(item)}
+            />
         );
     };
 
-    flatListRef = (ref) => { uiState.currentScrollView = ref; };
+    flatListRef = ref => {
+        uiState.currentScrollView = ref;
+    };
 
-    keyExtractor = fsObject => fsObject ? (fsObject.fileId || fsObject.id) : null;
+    keyExtractor = fsObject => (fsObject ? fsObject.fileId || fsObject.id : null);
 
     get noFilesMatchSearch() {
         if (this.data.length || !fileState.findFilesText || fileState.store.loading) return null;
@@ -136,17 +144,19 @@ export default class Files extends SafeComponent {
                     pageSize={PAGE_SIZE}
                     data={this.data}
                     extraData={this.refresh}
-                    renderItem={this.item} />
+                    renderItem={this.item}
+                />
             </MeasureableView>
         );
     }
 
-    get isZeroState() { return fileState.store.isEmpty; }
+    get isZeroState() {
+        return fileState.store.isEmpty;
+    }
 
     get isEmpty() {
         const folder = fileState.store.folderStore.currentFolder;
-        if (this.data.length
-            || (!folder.isShared && folder.isRoot)) return false;
+        if (this.data.length || (!folder.isShared && folder.isRoot)) return false;
         return true;
     }
 
@@ -210,7 +220,8 @@ export default class Files extends SafeComponent {
                 onSubmit={this.onSubmit}
                 leftIcon={leftIcon}
                 rightIcon={rightIcon}
-            />);
+            />
+        );
     }
 
     toolbar() {
@@ -231,18 +242,22 @@ export default class Files extends SafeComponent {
             paddingRight: vars.spacing.small.midi2x
         };
         return (
-            fileState.isFileSelectionMode && <View style={container}>
-                <ButtonText
-                    testID="fileShareButtonCancel"
-                    onPress={this.handleExit}
-                    secondary
-                    text={tx('button_cancel')} />
-                <ButtonText
-                    testID="fileShareButtonShare"
-                    onPress={this.submitSelection}
-                    text={tx('button_share')}
-                    disabled={!fileState.showSelection} />
-            </View>
+            fileState.isFileSelectionMode && (
+                <View style={container}>
+                    <ButtonText
+                        testID="fileShareButtonCancel"
+                        onPress={this.handleExit}
+                        secondary
+                        text={tx('button_cancel')}
+                    />
+                    <ButtonText
+                        testID="fileShareButtonShare"
+                        onPress={this.submitSelection}
+                        text={tx('button_share')}
+                        disabled={!fileState.showSelection}
+                    />
+                </View>
+            )
         );
     }
 
@@ -268,17 +283,19 @@ export default class Files extends SafeComponent {
     }
 
     body() {
-        if (this.data.length
-            || fileState.findFilesText
-            || !fileState.store.folderStore.currentFolder.isRoot) return this.list();
+        if (
+            this.data.length ||
+            fileState.findFilesText ||
+            !fileState.store.folderStore.currentFolder.isRoot
+        )
+            return this.list();
         return this.isZeroState && <FilesZeroStatePlaceholder />;
     }
 
     renderThrow() {
         const { noFilesInFolder } = this;
         return (
-            <View
-                style={{ flex: 1, flexGrow: 1 }}>
+            <View style={{ flex: 1, flexGrow: 1 }}>
                 <View style={{ flex: 1, flexGrow: 1, backgroundColor: vars.darkBlueBackground05 }}>
                     {upgradeForFiles()}
                     {noFilesInFolder || this.body()}

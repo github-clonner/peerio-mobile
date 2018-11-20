@@ -12,18 +12,20 @@ export default class FlatListWithDrawer extends ListWithDrawer {
         this.scrollView = sv;
     }
 
-    scrollDrawerOutOfView = (animated) => {
-        this.scrollView && this.scrollView.scrollToOffset({
-            offset: vars.topDrawerHeight,
-            animated
-        });
+    scrollDrawerOutOfView = animated => {
+        this.scrollView &&
+            this.scrollView.scrollToOffset({
+                offset: vars.topDrawerHeight,
+                animated
+            });
     };
 
-    scrollToStart = (animated) => {
-        this.scrollView && this.scrollView.scrollToOffset({
-            offset: 0,
-            animated
-        });
+    scrollToStart = animated => {
+        this.scrollView &&
+            this.scrollView.scrollToOffset({
+                offset: 0,
+                animated
+            });
     };
 
     renderThrow() {
@@ -32,7 +34,8 @@ export default class FlatListWithDrawer extends ListWithDrawer {
                 ref={this.scrollViewRef}
                 {...this.props.scrollHelper}
                 {...this.props}
-                ListHeaderComponent={this.topDrawer} />
+                ListHeaderComponent={this.topDrawer}
+            />
         );
     }
 }

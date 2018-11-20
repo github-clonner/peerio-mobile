@@ -60,7 +60,11 @@ export default class FolderInlineContainer extends SafeComponent {
             fontSize: vars.font.size14,
             marginLeft: vars.spacing.small.midi2x
         };
-        return (<Text numberOfLines={1} ellipsizeMode="tail" style={nameStyle}>{name}</Text>);
+        return (
+            <Text numberOfLines={1} ellipsizeMode="tail" style={nameStyle}>
+                {name}
+            </Text>
+        );
     }
 
     @action.bound onAction() {
@@ -78,8 +82,16 @@ export default class FolderInlineContainer extends SafeComponent {
         const { convertingToVolume, convertingFromFolder } = folder;
         const optionsIcon = (
             <View style={{ flex: 0 }}>
-                {icons.dark('more-vert', this.onAction, null, null, null, convertingToVolume || convertingFromFolder)}
-            </View>);
+                {icons.dark(
+                    'more-vert',
+                    this.onAction,
+                    null,
+                    null,
+                    null,
+                    convertingToVolume || convertingFromFolder
+                )}
+            </View>
+        );
         return (
             <View style={[header, { height: vars.inlineFolderContainerHeight }]}>
                 {icons.darkNoPadding('folder-shared')}
@@ -90,13 +102,20 @@ export default class FolderInlineContainer extends SafeComponent {
     }
 
     get unsharedBody() {
-        const text = this.folder ?
-            tx('title_folderNameUnshared', { folderName: this.folder.name }) : tx('title_folderUnshared');
+        const text = this.folder
+            ? tx('title_folderNameUnshared', { folderName: this.folder.name })
+            : tx('title_folderUnshared');
         return (
             <View style={container}>
                 <View style={[header, { padding }]}>
                     {icons.darkNoPadding('folder', null, null, null, true)}
-                    <View style={{ flexGrow: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <View
+                        style={{
+                            flexGrow: 1,
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
+                        }}>
                         <View style={{ marginLeft: vars.spacing.small.midi2x }}>
                             <Text italic style={infoStyle}>
                                 {text}
@@ -113,11 +132,15 @@ export default class FolderInlineContainer extends SafeComponent {
             <View style={container}>
                 <View style={[header, { padding }]}>
                     {icons.darkNoPadding('folder')}
-                    <View style={{ flexGrow: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <View
+                        style={{
+                            flexGrow: 1,
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
+                        }}>
                         <View style={{ marginLeft: vars.spacing.small.midi2x }}>
-                            <Text style={infoStyle}>
-                                {tx('title_folderUnshared')}
-                            </Text>
+                            <Text style={infoStyle}>{tx('title_folderUnshared')}</Text>
                         </View>
                         <View>
                             {buttons.uppercaseBlueButton(tx('button_reshare'), this.reshare)}
@@ -135,8 +158,10 @@ export default class FolderInlineContainer extends SafeComponent {
         // TODO temporary solution until SDK supports "owner, editor, viewer" logic
         // If the folder has been unshared, we need to show appropriate UX feedback
         // Check that either the User or Recipient have lost access to the folder
-        const showUnshareBody = !folder || folder.allParticipants.filter(c => c.username === dmRecipient.username).length === 0 ||
-        folder.allParticipants.filter(c => c.username === User.current.username).length === 0;
+        const showUnshareBody =
+            !folder ||
+            folder.allParticipants.filter(c => c.username === dmRecipient.username).length === 0 ||
+            folder.allParticipants.filter(c => c.username === User.current.username).length === 0;
         if (showUnshareBody) return this.unsharedBody;
 
         const outer = {

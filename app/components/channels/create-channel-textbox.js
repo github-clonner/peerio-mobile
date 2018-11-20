@@ -49,11 +49,18 @@ export default class CreateChannelTextBox extends Component {
     }
 
     render() {
-        const { labelText, placeholderText, property, bottomText, maxLength, multiline } = this.props;
+        const {
+            labelText,
+            placeholderText,
+            property,
+            bottomText,
+            maxLength,
+            multiline
+        } = this.props;
         const testID = `textInput-${property}`;
         // hack for v-align, padding top and bottom need to be specified
         let paddingTop = 0;
-        if (Platform.OS === 'ios' && multiline) paddingTop = ((height - fontSize) / 2 - 1);
+        if (Platform.OS === 'ios' && multiline) paddingTop = (height - fontSize) / 2 - 1;
         const style = [placeholderStyle, { paddingTop, paddingBottom: 0 }];
         return (
             <View>
@@ -71,7 +78,8 @@ export default class CreateChannelTextBox extends Component {
                         style={style}
                         maxLength={maxLength}
                         multiline={multiline}
-                        {...testLabel(testID)} />
+                        {...testLabel(testID)}
+                    />
                 </View>
                 <Text style={bottomTextStyle}>{tx(bottomText)}</Text>
             </View>

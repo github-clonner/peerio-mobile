@@ -57,7 +57,9 @@ class UIState extends RoutedState {
     @action showPicker(picker) {
         this.hideKeyboard();
         this.picker = picker;
-        setTimeout(() => { this.pickerVisible = true; }, 0);
+        setTimeout(() => {
+            this.pickerVisible = true;
+        }, 0);
     }
 
     @action hidePicker() {
@@ -66,7 +68,9 @@ class UIState extends RoutedState {
 
     @action hideKeyboard() {
         Keyboard.dismiss();
-        setTimeout(() => { this.pickerVisible = false; }, 0);
+        setTimeout(() => {
+            this.pickerVisible = false;
+        }, 0);
     }
 
     @action.bound hideAll() {
@@ -77,7 +81,8 @@ class UIState extends RoutedState {
     }
 
     @action setLocale(lc) {
-        return locales.loadLocaleFile(lc)
+        return locales
+            .loadLocaleFile(lc)
             .then(locale => {
                 console.log(`ui-state.js: ${lc}`);
                 console.log(lc);
@@ -94,8 +99,7 @@ class UIState extends RoutedState {
     }
 
     @action load() {
-        return TinyDb.system.getValue('state')
-            .then(s => this.setLocale(s && s.locale || 'en'));
+        return TinyDb.system.getValue('state').then(s => this.setLocale((s && s.locale) || 'en'));
     }
 
     @action save() {
@@ -106,11 +110,22 @@ class UIState extends RoutedState {
     @action scrollToTextBox() {
         const { focusedTextBox, currentScrollView, keyboardHeight } = this;
         if (focusedTextBox && currentScrollView) {
-            const y = focusedTextBox.offsetY - (height - keyboardHeight) + focusedTextBox.offsetHeight + this.currentScrollViewPosition;
+            const y =
+                focusedTextBox.offsetY -
+                (height - keyboardHeight) +
+                focusedTextBox.offsetHeight +
+                this.currentScrollViewPosition;
             if (y > 0) {
-                console.log(`scroll to ${y}, for ${focusedTextBox.offsetY}, ${this.currentScrollViewPosition}`);
+                console.log(
+                    `scroll to ${y}, for ${focusedTextBox.offsetY}, ${
+                        this.currentScrollViewPosition
+                    }`
+                );
                 currentScrollView.scrollTo({ y, animated: true });
-                when(() => this.keyboardHeight === 0, () => currentScrollView.scrollTo({ y: 0, animated: true }));
+                when(
+                    () => this.keyboardHeight === 0,
+                    () => currentScrollView.scrollTo({ y: 0, animated: true })
+                );
             }
         }
     }
@@ -141,19 +156,22 @@ reaction(() => uiState.languageSelected, ls => uiState.setLocale(ls));
 
 reaction(() => uiState.keyboardHeight, () => uiState.scrollToTextBox());
 
-reaction(() => uiState.focusedTextBox, () => {
-    const { focusedTextBox } = uiState;
-    if (focusedTextBox) {
-        uiState.pickerVisible = false;
-        uiState.scrollToTextBox();
+reaction(
+    () => uiState.focusedTextBox,
+    () => {
+        const { focusedTextBox } = uiState;
+        if (focusedTextBox) {
+            uiState.pickerVisible = false;
+            uiState.scrollToTextBox();
+        }
     }
-});
+);
 
-Keyboard.addListener('keyboardWillShow', (e) => {
+Keyboard.addListener('keyboardWillShow', e => {
     uiState.keyboardHeight = e.endCoordinates.height;
 });
 
-Keyboard.addListener('keyboardDidShow', (e) => {
+Keyboard.addListener('keyboardDidShow', e => {
     uiState.keyboardHeight = e.endCoordinates.height;
     console.log(`ui-state.js: keyboard height ${uiState.keyboardHeight}`);
 });

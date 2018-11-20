@@ -17,7 +17,9 @@ class ChatState extends RoutedState {
     @observable collapseFirstChannelInfoList = false;
 
     // to be able to easily refactor, keep the name "chatStore"
-    get chatStore() { return this.store; }
+    get chatStore() {
+        return this.store;
+    }
 
     _loading = true;
 
@@ -28,13 +30,18 @@ class ChatState extends RoutedState {
             sounds.received();
         });
 
-        reaction(() => this.chatStore.activeChat, chat => {
-            if (chat) {
-                console.log(`chat-store switched to ${chat.id}`);
-                console.log(`chat-store: loading ${chat.id}`);
-                this.loading = false;
-            } else if (this.routerMain && this.routerMain.route === 'chats') this.routerMain.chats();
-        }, { fireImmediately: true });
+        reaction(
+            () => this.chatStore.activeChat,
+            chat => {
+                if (chat) {
+                    console.log(`chat-store switched to ${chat.id}`);
+                    console.log(`chat-store: loading ${chat.id}`);
+                    this.loading = false;
+                } else if (this.routerMain && this.routerMain.route === 'chats')
+                    this.routerMain.chats();
+            },
+            { fireImmediately: true }
+        );
     }
 
     @action async init() {
@@ -50,8 +57,11 @@ class ChatState extends RoutedState {
 
     get loading() {
         const c = this.currentChat;
-        return this._loading ||
-            this.chatStore.loading || c && (c.loadingMeta || c.loadingInitialPage);
+        return (
+            this._loading ||
+            this.chatStore.loading ||
+            (c && (c.loadingMeta || c.loadingInitialPage))
+        );
     }
 
     set loading(v) {
@@ -79,23 +89,31 @@ class ChatState extends RoutedState {
         clientApp.isInChatsView = active && !!c;
         this.loading = c && c.loadingMeta;
         if (active) {
-            when(() => !this.chatStore.loading, () => {
-                if (!this.chatStore.chats.length) this.loading = false;
-                c && this.activate(c);
-                console.log(`chat-state.js: active: ${c && c.active}, isFocused: ${clientApp.isFocused}, isInChatsView: ${clientApp.isInChatsView}`);
-            });
+            when(
+                () => !this.chatStore.loading,
+                () => {
+                    if (!this.chatStore.chats.length) this.loading = false;
+                    c && this.activate(c);
+                    console.log(
+                        `chat-state.js: active: ${c && c.active}, isFocused: ${
+                            clientApp.isFocused
+                        }, isInChatsView: ${clientApp.isInChatsView}`
+                    );
+                }
+            );
         }
     }
 
     get unreadMessages() {
         let r = 0;
-        this.chatStore.chats.forEach(c => { r += c.unreadCount; });
+        this.chatStore.chats.forEach(c => {
+            r += c.unreadCount;
+        });
         return r;
     }
 
     get canSend() {
-        return this.currentChat && this.currentChat.id &&
-            !this.currentChat.loadingMessages;
+        return this.currentChat && this.currentChat.id && !this.currentChat.loadingMessages;
     }
 
     get canSendAck() {
@@ -129,13 +147,14 @@ class ChatState extends RoutedState {
 
     @action addMessage(msg) {
         this.selfNewMessageCounter++;
-        this.currentChat && msg &&
-            this.currentChat.sendMessage(msg).catch(sounds.destroy);
+        this.currentChat && msg && this.currentChat.sendMessage(msg).catch(sounds.destroy);
     }
 
     @action shareFilesAndFolders(filesAndFolders) {
         this.selfNewMessageCounter++;
-        this.currentChat && filesAndFolders && filesAndFolders.length &&
+        this.currentChat &&
+            filesAndFolders &&
+            filesAndFolders.length &&
             this.currentChat.shareFilesAndFolders(filesAndFolders).catch(sounds.destroy);
     }
 
@@ -146,15 +165,18 @@ class ChatState extends RoutedState {
 
     @action addAck() {
         this.selfNewMessageCounter++;
-        this.currentChat && this.currentChat
-            .sendAck().catch(sounds.destroy);
+        this.currentChat && this.currentChat.sendAck().catch(sounds.destroy);
     }
 
     get titleAction() {
         if (this.routerMain.currentIndex === 0) return null;
-        return this.currentChat ? (() => {
-            this.currentChat.isChannel ? this.routerModal.channelInfo() : this.routerModal.chatInfo();
-        }) : null;
+        return this.currentChat
+            ? () => {
+                  this.currentChat.isChannel
+                      ? this.routerModal.channelInfo()
+                      : this.routerModal.chatInfo();
+              }
+            : null;
     }
 
     fabAction() {

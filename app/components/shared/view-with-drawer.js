@@ -14,32 +14,36 @@ export default class ViewWithDrawer extends ListWithDrawer {
         this.scrollView = sv;
     }
 
-    scrollDrawerOutOfView = (animated) => {
-        this.scrollView && this.scrollView.scrollTo({
-            y: vars.topDrawerHeight,
-            animated
-        });
+    scrollDrawerOutOfView = animated => {
+        this.scrollView &&
+            this.scrollView.scrollTo({
+                y: vars.topDrawerHeight,
+                animated
+            });
     };
 
-    scrollToStart = (animated) => {
-        this.scrollView && this.scrollView.scrollTo({
-            y: 0,
-            animated
-        });
+    scrollToStart = animated => {
+        this.scrollView &&
+            this.scrollView.scrollTo({
+                y: 0,
+                animated
+            });
     };
 
     renderThrow() {
-        const minHeight = this.layoutHeight + (this.androidExtraScrollingSpace ? vars.topDrawerHeight : 0);
+        const minHeight =
+            this.layoutHeight + (this.androidExtraScrollingSpace ? vars.topDrawerHeight : 0);
         return (
             <ScrollView
-                onLayout={(event) => { this.layoutHeight = event.nativeEvent.layout.height; }}
+                onLayout={event => {
+                    this.layoutHeight = event.nativeEvent.layout.height;
+                }}
                 ref={this.scrollViewRef}
                 {...this.props.scrollHelper}
-                {...this.props} >
+                {...this.props}>
                 {this.topDrawer}
-                <View style={{ minHeight }}>
-                    {this.props.children}
-                </View>
-            </ScrollView>);
+                <View style={{ minHeight }}>{this.props.children}</View>
+            </ScrollView>
+        );
     }
 }

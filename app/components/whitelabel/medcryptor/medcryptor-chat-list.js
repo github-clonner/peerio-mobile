@@ -17,7 +17,10 @@ export default class MedCryptorChatList extends ChatList {
     @computed get dataSource() {
         return [].concat(
             ...this.addSection('title_channels', this.firstSectionItems),
-            ...this.addSection('mcr_title_patientFiles', medcryptorChatState.store.spaces.spacesList),
+            ...this.addSection(
+                'mcr_title_patientFiles',
+                medcryptorChatState.store.spaces.spacesList
+            ),
             ...this.addSection('title_directMessages', this.secondSectionItems)
         );
     }
@@ -26,7 +29,7 @@ export default class MedCryptorChatList extends ChatList {
         return <MedcryptorChatZeroStatePlaceholder />;
     }
 
-    spaceItem = (chat) => {
+    spaceItem = chat => {
         return <MedcryptorSpaceListItem space={chat} />;
     };
 
@@ -34,7 +37,7 @@ export default class MedCryptorChatList extends ChatList {
         return item.kegDbId || item.id || item.title || item.spaceId || item.sectionTitle;
     }
 
-    renderListItem = (chat) => {
+    renderListItem = chat => {
         if (chat.kegDbId) return this.inviteItem(chat);
         if (chat.spaceName) return this.spaceItem(chat);
         if (chat.isChannel) return this.channelItem(chat);

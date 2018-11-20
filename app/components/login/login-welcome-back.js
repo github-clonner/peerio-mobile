@@ -87,12 +87,18 @@ export default class LoginWelcomeBack extends SafeComponent {
         return (
             <View style={signupStyles.page}>
                 <IntroStepIndicator max={1} current={1} />
-                <View style={[signupStyles.container, { paddingHorizontal: signupStyles.pagePaddingLarge }]}>
+                <View
+                    style={[
+                        signupStyles.container,
+                        { paddingHorizontal: signupStyles.pagePaddingLarge }
+                    ]}>
                     <LoginButtonBack telemetry={{ sublocation, option: S.BACK }} />
                     <DebugMenuTrigger>
                         <View style={{ marginTop }}>
                             <Text semibold serif style={titleStyle}>
-                                {tx('title_welcomeBackFirstname', { firstName: this.lastUser.firstName })}
+                                {tx('title_welcomeBackFirstname', {
+                                    firstName: this.lastUser.firstName
+                                })}
                             </Text>
                             <T k="title_switchUser" style={subtitleStyle}>
                                 {{

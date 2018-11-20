@@ -25,7 +25,9 @@ export default class MockBeaconFiles extends Component {
         User.current = mockContactStore.createMock();
         User.current.activePlans = [];
         User.current.beacons = {
-            get() { return null; }
+            get() {
+                return null;
+            }
         };
         contactState.store = mockContactStore;
         contactState.init();
@@ -40,7 +42,13 @@ export default class MockBeaconFiles extends Component {
 
     render() {
         return (
-            <View style={{ backgroundColor: 'white', flex: 1, flexGrow: 1, paddingTop: vars.layoutPaddingTop }}>
+            <View
+                style={{
+                    backgroundColor: 'white',
+                    flex: 1,
+                    flexGrow: 1,
+                    paddingTop: vars.layoutPaddingTop
+                }}>
                 <MeasureableView onMeasure={this.onMeasure}>
                     <View style={filesView} />
                 </MeasureableView>

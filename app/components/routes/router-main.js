@@ -15,7 +15,14 @@ import ContactSyncInvite from '../contacts/contact-sync-invite';
 import ContactView from '../contacts/contact-view';
 import ContactList from '../contacts/contact-list';
 import ContactListInvite from '../contacts/contact-list-invite';
-import { fileState, chatState, settingsState, contactState, contactAddState, invitationState } from '../states';
+import {
+    fileState,
+    chatState,
+    settingsState,
+    contactState,
+    contactAddState,
+    invitationState
+} from '../states';
 // import { enablePushNotifications } from '../../lib/push';
 import routes from './routes';
 import loginState from '../login/login-state';
@@ -49,31 +56,55 @@ class RouterMain extends Router {
     constructor() {
         super();
         routes.main = this;
-        reaction(() => this.currentIndex && (this.route !== 'chats'), i => { this.isBackVisible = i > 0; });
+        reaction(
+            () => this.currentIndex && this.route !== 'chats',
+            i => {
+                this.isBackVisible = i > 0;
+            }
+        );
         reaction(() => [this.route, this.currentIndex], () => uiState.hideAll());
         this.add('welcomeZeroState', [<WelcomeZeroState />]);
         this.add('files', [<Files />, <FileDetailView />], fileState);
-        this.add('chats', [<whiteLabelComponents.ChatList />, <whiteLabelComponents.Chat />], chatState);
+        this.add(
+            'chats',
+            [<whiteLabelComponents.ChatList />, <whiteLabelComponents.Chat />],
+            chatState
+        );
         this.add('contacts', [<ContactList />, <ContactView nonModal />], contactState);
         this.add('contactAdd', [<ContactAdd />], contactAddState);
         this.add('contactSyncAdd', [<ContactSyncAdd />], contactAddState);
         this.add('contactSyncInvite', [<ContactSyncInvite />], contactAddState);
         this.add('contactInvite', [<ContactListInvite />], contactAddState);
-        this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />], settingsState);
+        this.add(
+            'settings',
+            [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />],
+            settingsState
+        );
         this.add('channelInvite', [<whiteLabelComponents.ChannelInvite />], invitationState);
 
-        reaction(() => fileStore.migration.pending, migration => {
-            if (migration) this.filesystemUpgrade();
-        }, { fireImmediately: true });
+        reaction(
+            () => fileStore.migration.pending,
+            migration => {
+                if (migration) this.filesystemUpgrade();
+            },
+            { fireImmediately: true }
+        );
 
-        reaction(() => this.current || this.currentIndex, () => {
-            timeoutWithAction(
-                this,
-                () => { this.inactive = false; },
-                () => { this.inactive = true; },
-                INACTIVE_DELAY
-            );
-        });
+        reaction(
+            () => this.current || this.currentIndex,
+            () => {
+                timeoutWithAction(
+                    this,
+                    () => {
+                        this.inactive = false;
+                    },
+                    () => {
+                        this.inactive = true;
+                    },
+                    INACTIVE_DELAY
+                );
+            }
+        );
     }
 
     @action initialRoute() {
@@ -118,11 +149,14 @@ class RouterMain extends Router {
                 fileStore.migration.confirmMigration();
             }
             popupUpgradeProgress();
-            when(() => !fileStore.migration.pending, () => {
-                popupState.discardPopup();
-                snackbarState.pushTemporary(tx('title_fileUpdateComplete'));
-                RNKeepAwake.deactivate();
-            });
+            when(
+                () => !fileStore.migration.pending,
+                () => {
+                    popupState.discardPopup();
+                    snackbarState.pushTemporary(tx('title_fileUpdateComplete'));
+                    RNKeepAwake.deactivate();
+                }
+            );
             RNKeepAwake.activate();
         }
     }
@@ -142,7 +176,7 @@ class RouterMain extends Router {
             this.route = key;
 
             let newIndex = index;
-            if (newIndex === undefined) newIndex = (components.length > 1 && item) ? 1 : 0;
+            if (newIndex === undefined) newIndex = components.length > 1 && item ? 1 : 0;
             if (newIndex !== this.currentIndex) {
                 !suppressTransition && transitionAnimation();
             }
@@ -165,13 +199,17 @@ class RouterMain extends Router {
     }
 
     get currentComponent() {
-        return this.current && (this.current.components.length > this.currentIndex)
-            ? this.current.components[this.currentIndex].type.prototype : {};
+        return this.current && this.current.components.length > this.currentIndex
+            ? this.current.components[this.currentIndex].type.prototype
+            : {};
     }
 
     onTransition(route, active, param) {
         try {
-            route && route.routeState && route.routeState.onTransition && route.routeState.onTransition(active, param);
+            route &&
+                route.routeState &&
+                route.routeState.onTransition &&
+                route.routeState.onTransition(active, param);
         } catch (e) {
             console.error(e);
         }

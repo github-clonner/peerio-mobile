@@ -44,10 +44,14 @@ export default class TosAccordionItem extends SafeComponent {
     keyExtractor = item => item.subtitle;
 
     paragraphItem({ item }) {
-        return (<View style={paragraphStyle}>
-            <Text bold style={textStyle}>{tx(item.subtitle)}</Text>
-            <Text style={textStyle}>{tx(item.description)}</Text>
-        </View>);
+        return (
+            <View style={paragraphStyle}>
+                <Text bold style={textStyle}>
+                    {tx(item.subtitle)}
+                </Text>
+                <Text style={textStyle}>{tx(item.description)}</Text>
+            </View>
+        );
     }
 
     renderThrow() {
@@ -74,14 +78,18 @@ export default class TosAccordionItem extends SafeComponent {
             <View style={container}>
                 <TouchableOpacity onPress={this.toggle} style={titleStyle}>
                     {this.isOpen ? leftIcon.on : leftIcon.off}
-                    <Text semibold style={[textTitleStyle, { color: titleTextColor }]}>{tx(title)}</Text>
+                    <Text semibold style={[textTitleStyle, { color: titleTextColor }]}>
+                        {tx(title)}
+                    </Text>
                     {icons.darkNoPadding(rightIconName, this.toggle)}
                 </TouchableOpacity>
-                {this.isOpen ? <FlatList
-                    data={content}
-                    keyExtractor={this.keyExtractor}
-                    renderItem={this.paragraphItem}
-                /> : null}
+                {this.isOpen ? (
+                    <FlatList
+                        data={content}
+                        keyExtractor={this.keyExtractor}
+                        renderItem={this.paragraphItem}
+                    />
+                ) : null}
             </View>
         );
     }

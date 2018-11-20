@@ -29,11 +29,15 @@ export default class MedcryptorSpaceScreen extends ChatList {
     }
 
     @computed get firstSectionItems() {
-        return chatState.store.spaces.currentSpace ? chatState.store.spaces.currentSpace.internalRooms : [];
+        return chatState.store.spaces.currentSpace
+            ? chatState.store.spaces.currentSpace.internalRooms
+            : [];
     }
 
     @computed get secondSectionItems() {
-        return chatState.store.spaces.currentSpace ? chatState.store.spaces.currentSpace.patientRooms : [];
+        return chatState.store.spaces.currentSpace
+            ? chatState.store.spaces.currentSpace.patientRooms
+            : [];
     }
 
     @computed get dataSource() {
@@ -47,6 +51,12 @@ export default class MedcryptorSpaceScreen extends ChatList {
         return ['mcr_title_internalRooms', 'mcr_title_patientRooms'];
     }
 
-    inviteItem = (chat) => <ChannelInviteListItem id={chat.kegDbId} chat={chat} channelName={chat.chatHead.nameInSpace} />;
-    channelItem = (chat) => <ChannelListItem chat={chat} channelName={chat.chatHead.nameInSpace} />;
+    inviteItem = chat => (
+        <ChannelInviteListItem
+            id={chat.kegDbId}
+            chat={chat}
+            channelName={chat.chatHead.nameInSpace}
+        />
+    );
+    channelItem = chat => <ChannelListItem chat={chat} channelName={chat.chatHead.nameInSpace} />;
 }

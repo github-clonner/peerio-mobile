@@ -78,7 +78,8 @@ export default class ChatListItem extends SafeComponent {
                 <Text semibold style={textNewStyle}>
                     {tx('title_new')}
                 </Text>
-            </View>);
+            </View>
+        );
     }
 
     renderUnreadCountBadge() {
@@ -139,14 +140,15 @@ export default class ChatListItem extends SafeComponent {
                         <View style={pinStyle}>
                             {chat.isFavorite && icons.iconPinnedChat(pinOn)}
                         </View>
-                        <AvatarCircle contact={contact} loading={contact.loading} invited={contact.invited} />
+                        <AvatarCircle
+                            contact={contact}
+                            loading={contact.loading}
+                            invited={contact.invited}
+                        />
                         <DeletedCircle visible={contact.isDeleted} />
                     </View>
                     <View style={[titleStyle]}>
-                        <DmTitle
-                            contact={contact}
-                            unread={unread}
-                        />
+                        <DmTitle contact={contact} unread={unread} />
                     </View>
                     {this.rightIcon}
                 </View>

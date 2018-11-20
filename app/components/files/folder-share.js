@@ -22,9 +22,7 @@ export default class FolderShare extends Component {
     }
 
     // TODO: Wiring
-    @action.bound unshareAction() {
-
-    }
+    @action.bound unshareAction() {}
 
     @action.bound togglePage() {
         Keyboard.dismiss();
@@ -38,14 +36,15 @@ export default class FolderShare extends Component {
 
     get renderContactSelector() {
         const { folder } = this.props;
-        const footer = folder && folder.isShared ? (
-            <SharedFolderFooter
-                title="title_viewSharedWith"
-                action={this.togglePage}
-                volume={folder}
-                showAvatars
-            />
-        ) : null;
+        const footer =
+            folder && folder.isShared ? (
+                <SharedFolderFooter
+                    title="title_viewSharedWith"
+                    action={this.togglePage}
+                    volume={folder}
+                    showAvatars
+                />
+            ) : null;
         return (
             <ContactSelectorUniversal
                 onExit={this.exit}
@@ -54,36 +53,37 @@ export default class FolderShare extends Component {
                 inputPlaceholder="title_searchByUsernameOrEmail"
                 multiselect
                 footer={footer}
-            />);
+            />
+        );
     }
 
     get renderContactEdit() {
         if (this.currentPage !== 1) return null;
-        return (<ContactEditPermission
-            onExit={this.exit}
-            action={this.unshareAction}
-            title="title_sharedWith"
-            folder={this.props.folder}
-            footer={<SharedFolderFooter
-                title="button_shareWithOthers"
-                action={this.togglePage}
-                icon="person-add"
-            />}
-        />);
+        return (
+            <ContactEditPermission
+                onExit={this.exit}
+                action={this.unshareAction}
+                title="title_sharedWith"
+                folder={this.props.folder}
+                footer={
+                    <SharedFolderFooter
+                        title="button_shareWithOthers"
+                        action={this.togglePage}
+                        icon="person-add"
+                    />
+                }
+            />
+        );
     }
 
     render() {
-        const page = this.currentPage === 0 ?
-            this.renderContactSelector : this.renderContactEdit;
+        const page = this.currentPage === 0 ? this.renderContactSelector : this.renderContactEdit;
         // we need this container to keep non-transparent background
         // between LayoutAnimation transitions
         const container = {
-            flexGrow: 1, backgroundColor: vars.darkBlueBackground05
+            flexGrow: 1,
+            backgroundColor: vars.darkBlueBackground05
         };
-        return (
-            <View style={container}>
-                {page}
-            </View>
-        );
+        return <View style={container}>{page}</View>;
     }
 }

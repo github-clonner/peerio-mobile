@@ -34,8 +34,7 @@ export default class SignupRoleMedcryptor extends SafeComponent {
     }
 
     get isValidForAU() {
-        return medcryptorUiState.specialtySelected &&
-            medcryptorUiState.roleSelected;
+        return medcryptorUiState.specialtySelected && medcryptorUiState.roleSelected;
     }
 
     get isValidForNonAU() {
@@ -65,7 +64,10 @@ export default class SignupRoleMedcryptor extends SafeComponent {
                 <View style={signupStyles.container}>
                     <View>
                         <SignupButtonBack />
-                        <SignupHeading title="title_createYourAccount" subTitle="mcr_title_practitionerDetails" />
+                        <SignupHeading
+                            title="title_createYourAccount"
+                            subTitle="mcr_title_practitionerDetails"
+                        />
                         {this.body}
                     </View>
                     <View style={{ alignItems: 'flex-end' }}>
@@ -74,7 +76,8 @@ export default class SignupRoleMedcryptor extends SafeComponent {
                             this.handleNextButton,
                             this.isNextDisabled,
                             'button_next',
-                            { width: vars.signupButtonWidth, marginVertical: 30 })}
+                            { width: vars.signupButtonWidth, marginVertical: 30 }
+                        )}
                     </View>
                 </View>
             </View>

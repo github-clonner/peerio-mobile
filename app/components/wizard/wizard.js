@@ -18,14 +18,21 @@ export default class Wizard extends SafeComponent {
         return index < pages.length ? this.pageComponents[index]() : null;
     }
 
-    get index() { return this._index; }
-    set index(i) { this._index = i; }
+    get index() {
+        return this._index;
+    }
+    set index(i) {
+        this._index = i;
+    }
 
     constructor(props) {
         super(props);
-        reaction(() => this.index, () => {
-            transitionAnimation();
-        });
+        reaction(
+            () => this.index,
+            () => {
+                transitionAnimation();
+            }
+        );
     }
 
     _handleBack = () => {
@@ -51,17 +58,15 @@ export default class Wizard extends SafeComponent {
     }
 
     changeIndex(shift) {
-        uiState.hideAll().then(() => { this.index += shift; });
+        uiState.hideAll().then(() => {
+            this.index += shift;
+        });
     }
 
     wizard() {
         // return this.pages.map((k, i) => this._animatedContainer(k, this[k](), i));
         const container = { flexGrow: 1 };
         const component = this.currentPage;
-        return (
-            <View style={container}>
-                {component}
-            </View>
-        );
+        return <View style={container}>{component}</View>;
     }
 }

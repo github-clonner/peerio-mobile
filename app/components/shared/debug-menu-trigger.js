@@ -17,7 +17,7 @@ export default class DebugMenuTrigger extends Component {
         }
     }
 
-    render () {
+    render() {
         return (
             <TouchableWithoutFeedback
                 pressRetentionOffset={vars.retentionOffset}
@@ -27,4 +27,3 @@ export default class DebugMenuTrigger extends Component {
         );
     }
 }
-

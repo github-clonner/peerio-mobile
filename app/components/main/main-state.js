@@ -43,7 +43,7 @@ class MainState extends RoutedState {
         const hasPin = await user.hasPasscode();
         if (!hasPin) {
             const skipPIN = `${user.username}::skipPIN`;
-            if (!await TinyDb.system.getValue(skipPIN)) {
+            if (!(await TinyDb.system.getValue(skipPIN))) {
                 await this.routes.modal.createPin();
             }
             await TinyDb.system.setValue(skipPIN, true);
@@ -63,10 +63,10 @@ class MainState extends RoutedState {
         } catch (e) {
             console.error(e);
         }
-        keychainKey = `user::${user.username}::${(new Date().getTime())}`;
+        keychainKey = `user::${user.username}::${new Date().getTime()}`;
         console.log(`main-state.js: keychain key: ${keychainKey}`);
         await TinyDb.system.setValue(`user::${user.username}::keychain`, keychainKey);
-        if (!await keychain.save(keychainKey, user.serializeAuthData(), secureWithTouchID)) {
+        if (!(await keychain.save(keychainKey, user.serializeAuthData(), secureWithTouchID))) {
             await popupYes(null, tx('title_autologinSetFail'));
             console.log('main-state.js: keychain is not saved');
             return;

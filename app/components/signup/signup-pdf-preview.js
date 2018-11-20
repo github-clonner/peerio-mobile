@@ -106,19 +106,16 @@ export default class SignupPdfPreview extends SafeComponent {
                 </View>
                 <View style={footer}>
                     <View>
-                        <Text style={filenameStyle}>
-                            {signupState.backupFileName('pdf')}
-                        </Text>
-                        <Text style={filesizeStyle}>
-                            {FILE_SIZE}
-                        </Text>
+                        <Text style={filenameStyle}>{signupState.backupFileName('pdf')}</Text>
+                        <Text style={filesizeStyle}>{FILE_SIZE}</Text>
                     </View>
                     {buttons.roundBlueBgButton(
                         tx('button_downloadPdf'),
                         this.saveAccountKey,
                         null,
                         'button_downloadPdf',
-                        { marginHorizontal: vars.spacing.small.mini2x })}
+                        { marginHorizontal: vars.spacing.small.mini2x }
+                    )}
                 </View>
             </View>
         );
