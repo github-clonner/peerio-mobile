@@ -1,48 +1,68 @@
+const process = require('process');
+const readline = require('readline');
 // Port where we'll run the websocket server
 const webSocketsServerPort = 1337;
 // websocket and http servers
-const webSocketServer = require('websocket').server;
 const http = require('http');
 
-const clients = [];
+const server = http.createServer(() => {});
 
-const server = http.createServer(function (/* request, response */) {
-    // Not important for us. We're writing WebSocket server,
-    // not HTTP server
-});
-server.listen(webSocketsServerPort, function () {
+const io = require('socket.io')(server);
+
+server.listen(webSocketsServerPort, function() {
     console.log(`${new Date()} Server is listening on port ${webSocketsServerPort}`);
 });
-/**
- * WebSocket server
- */
-const wsServer = new webSocketServer({
-    // WebSocket server is tied to a HTTP server. WebSocket
-    // request is just an enhanced HTTP request. For more info
-    // http://tools.ietf.org/html/rfc6455#page-6
-    httpServer: server
+
+const messageMap = {};
+let index = 0;
+
+function formatAndSaveMessage(data) {
+    const id = `${++index}`;
+    const timestamp = new Date().getTime();
+    const message = {
+        id,
+        timestamp,
+        data
+    };
+    messageMap[id] = message;
+    return message;
+}
+
+// event fired every time a new client connects:
+io.on('connection', socket => {
+    console.log(`Client connected [id=${socket.id}]`);
+
+    // when socket disconnects, remove it from the list:
+    socket.on('message', message => {
+        console.log(`Incoming message`);
+        console.log(message);
+    });
+    // when socket disconnects, remove it from the list:
+    socket.on('disconnect', () => {
+        console.log(`Client gone [id=${socket.id}]`);
+    });
 });
-// This callback function is called every time someone
-// tries to connect to the WebSocket server
-wsServer.on('request', function (request) {
-    console.log(`${new Date()} Connection from origin ${request.origin}`);
-    // accept connection - you should check 'request.origin' to
-    // make sure that client is connecting from your website
-    // (http://en.wikipedia.org/wiki/Same_origin_policy)
-    const connection = request.accept(null, request.origin);
-    // we need to know client index to remove them on 'close' event
-    // const currentConnectionIndex = clientIndex++;
-    clients.push(connection);
-    console.log(`${new Date()} Connection accepted.`);
-    // user sent some message
-    connection.on('message', function (message) {
-        if (message.type === 'utf8') { // accept only text
-            console.log(JSON.stringify(message));
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+function prompt() {
+    rl.question('test-cli > ', line => {
+        if (line === 'quit') {
+            io.close();
+            rl.close();
+            server.close();
+            return;
         }
+        if (line.trim()) {
+            io.emit('message', formatAndSaveMessage(line));
+        }
+        // TODO: Log the answer in a database
+        // console.log(`Thank you for your valuable feedback: ${line}`);
+        prompt();
     });
-    // user disconnected
-    connection.on('close', closeConnection => {
-        console.log(`${new Date()} Peer ${closeConnection.remoteAddress} disconnected.`);
-        // TODO: remove from connection list
-    });
-});
+}
+
+prompt();
