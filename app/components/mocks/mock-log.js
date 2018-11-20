@@ -1,7 +1,7 @@
 import { observable } from 'mobx';
 
 class MockLog {
-    list = '';
+    @observable list = '';
     beacon = null;
     lastTitle = '';
 
@@ -23,6 +23,11 @@ class MockLog {
     log = line => {
         this.list += `${line}\n`;
     };
+
+    inject() {
+        console.debug = this.log;
+        console.error = this.log;
+    }
 }
 
 export default new MockLog();

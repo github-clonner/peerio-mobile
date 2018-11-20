@@ -1,21 +1,32 @@
 /* eslint-disable no-eval */
 
-function test() {
+// eslint-disable-next-line
+function testPromiseResolve() {
     return new Promise(resolve => {
         setTimeout(() => resolve(1000), 3000);
     });
 }
 
+// eslint-disable-next-line
+function testPromiseReject() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => reject(new Error('reject')), 3000);
+    });
+}
+
+const host = process.env.TEST_LISTENER_HOST || 'localhost';
+const port = process.env.TEST_LISTENER_PORT || 1337;
+
 class TestBridgeWebSocket {
     constructor(websocketClientClass) {
-        this.socket = new websocketClientClass('ws://192.168.0.163:1337');
+        this.socket = new websocketClientClass(`ws://${host}:${port}`);
 
         this.socket.on('connect', () => {
-            console.log('🤖 test socket connected.');
+            console.debug('🤖 test socket connected.');
         });
 
         this.socket.on('disconnect', reason => {
-            console.log(`🤖 test socket disconnected. ${reason}`);
+            console.debug(`🤖 test socket disconnected. ${reason}`);
         });
 
         // we don't want to spam in our application log with this
@@ -32,8 +43,8 @@ class TestBridgeWebSocket {
         });
 
         this.socket.on('message', async message => {
-            console.log(`🤖 ${new Date()}: incoming message`);
-            console.log(message);
+            console.debug(`🤖 ${new Date()}: incoming message`);
+            console.debug(message);
             let id = null;
             let error = null;
             let result = null;
@@ -51,10 +62,10 @@ class TestBridgeWebSocket {
                 }
                 result = eval(data);
                 if (result && result.then) {
-                    console.log('Result is a promise, awaiting result');
+                    console.debug('Result is a promise, awaiting result');
                     result = await result;
                 }
-                console.log(result);
+                console.debug(result);
             } catch (e) {
                 console.error(e);
                 error = e.message;
@@ -68,7 +79,7 @@ class TestBridgeWebSocket {
             });
         });
 
-        console.log('🤖 test socket: waiting for connection.');
+        console.debug('🤖 test socket: waiting for connection.');
         this.socket.open();
     }
 }
