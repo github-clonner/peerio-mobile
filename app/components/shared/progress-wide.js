@@ -74,7 +74,8 @@ export default class Progress extends SafeComponent {
         return (width * value) / max;
     }
 
-    @action.bound layout(evt) {
+    @action.bound
+    layout(evt) {
         this.width = evt.nativeEvent.layout.width;
     }
 
@@ -90,7 +91,8 @@ export default class Progress extends SafeComponent {
         }, 0);
     }
 
-    @action.bound cancel() {
+    @action.bound
+    cancel() {
         this.visible = false;
         this.props.onCancel && this.props.onCancel();
     }

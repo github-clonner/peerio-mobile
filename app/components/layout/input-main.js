@@ -34,15 +34,18 @@ export default class InputMain extends SafeComponent {
         }
     }
 
-    @action.bound onChangeText(text) {
+    @action.bound
+    onChangeText(text) {
         this.value = text;
     }
 
-    @action.bound plus() {
+    @action.bound
+    plus() {
         this.props.plus();
     }
 
-    @action.bound send() {
+    @action.bound
+    send() {
         if (!this.canSend) return;
         this.hasText ? this.props.send(this.value) : this.props.sendAck();
         this.value = '';

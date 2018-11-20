@@ -35,14 +35,17 @@ export default class SignupStep1 extends SafeComponent {
     firstnameState = observable({ value: '' });
     lastnameState = observable({ value: '' });
 
-    @action.bound firstNameInputRef(ref) {
+    @action.bound
+    firstNameInputRef(ref) {
         this.firstNameInput = ref;
     }
-    @action.bound lastNameInputRef(ref) {
+    @action.bound
+    lastNameInputRef(ref) {
         this.lastNameInput = ref;
     }
 
-    @action.bound onSubmitFirstName() {
+    @action.bound
+    onSubmitFirstName() {
         this.lastNameInput.onFocus();
     }
 
@@ -71,7 +74,8 @@ export default class SignupStep1 extends SafeComponent {
         tm.signup.duration({ sublocation, startTime: this.startTime });
     }
 
-    @action.bound async handleNextButton() {
+    @action.bound
+    async handleNextButton() {
         if (this.isNextDisabled) return;
         signupState.firstName = this.firstnameState.value;
         signupState.lastName = this.lastnameState.value;

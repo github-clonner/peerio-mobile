@@ -49,13 +49,7 @@ class T extends Component {
         }
         let translated = t(name, this.props.children);
         if (Array.isArray(translated)) {
-            return (
-                <Text>
-                    {translated.map((o, i) => (
-                        <Text key={i}>{o}</Text>
-                    ))}
-                </Text>
-            );
+            return <Text>{translated.map((o, i) => <Text key={i}>{o}</Text>)}</Text>;
         }
         if (this.props.uppercase) {
             translated = translated.toUpperCase();

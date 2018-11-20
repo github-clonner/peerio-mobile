@@ -23,7 +23,8 @@ export default class SignupRoleMedcryptor extends SafeComponent {
         }
     }
 
-    @action.bound handleNextButton() {
+    @action.bound
+    handleNextButton() {
         signupState.specialty = medcryptorUiState.specialtySelected;
         signupState.role = medcryptorUiState.roleSelected;
         signupState.next();

@@ -52,7 +52,8 @@ export default class ContactSelectorUniversal extends SafeComponent {
         return result && <ContactInviteItemPrompt email={this.toInvite} />;
     }
 
-    @action.bound onChangeFindUserText(text) {
+    @action.bound
+    onChangeFindUserText(text) {
         this.clean = !text.length;
         this.foundContact = null;
         this.toInvite = null;
@@ -121,7 +122,8 @@ export default class ContactSelectorUniversal extends SafeComponent {
         return icons.disabledText(tu('share'));
     }
 
-    @action.bound async action() {
+    @action.bound
+    async action() {
         const selectorAction = this.props.action;
         if (!selectorAction) return;
         this.inProgress = true;
@@ -164,7 +166,8 @@ export default class ContactSelectorUniversal extends SafeComponent {
         }
     }
 
-    @computed get dataSource() {
+    @computed
+    get dataSource() {
         const filteredContacts = contactState.getFiltered(this.findUserText).slice();
         const result = [{ data: filteredContacts, key: 'title_contactsNumber' }];
         if (this.foundContact) {
@@ -179,7 +182,8 @@ export default class ContactSelectorUniversal extends SafeComponent {
         return result;
     }
 
-    @action.bound onContactPress(contact) {
+    @action.bound
+    onContactPress(contact) {
         if (this.props.multiselect) {
             this.findUserText = '';
             this.recipients.toggle(contact);
@@ -190,24 +194,25 @@ export default class ContactSelectorUniversal extends SafeComponent {
     }
 
     body() {
-        const notFound = !this.inProgress && !!this.notFound && (
-            <View
-                style={{
-                    flexDirection: 'row',
-                    marginHorizontal: vars.spacing.large.midi2x,
-                    marginVertical: vars.spacing.small.maxi
-                }}>
-                <Icon
-                    name="help-outline"
-                    size={24}
-                    color={vars.txtDate}
-                    style={{ marginRight: vars.spacing.small.midi2x }}
-                />
-                <Text style={{ color: vars.txtDate }}>
-                    {t('error_userNotFoundTryEmail', { user: this.notFound })}
-                </Text>
-            </View>
-        );
+        const notFound = !this.inProgress &&
+            !!this.notFound && (
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        marginHorizontal: vars.spacing.large.midi2x,
+                        marginVertical: vars.spacing.small.maxi
+                    }}>
+                    <Icon
+                        name="help-outline"
+                        size={24}
+                        color={vars.txtDate}
+                        style={{ marginRight: vars.spacing.small.midi2x }}
+                    />
+                    <Text style={{ color: vars.txtDate }}>
+                        {t('error_userNotFoundTryEmail', { user: this.notFound })}
+                    </Text>
+                </View>
+            );
         const containerStyle = {
             marginHorizontal: vars.spacing.small.midi2x,
             flex: 1,

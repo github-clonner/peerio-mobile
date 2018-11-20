@@ -13,7 +13,8 @@ class ContactState extends RoutedState {
     @observable store = contactStore;
     _permissionHandler = null;
 
-    @action async init() {
+    @action
+    async init() {
         // TODO: rewrite
         if (this.importContactsInBackground) {
             clientApp.uiUserPrefs.importContactsInBackground = this.importContactsInBackground;
@@ -37,7 +38,8 @@ class ContactState extends RoutedState {
             });
     }
 
-    @action.bound async syncCachedEmails() {
+    @action.bound
+    async syncCachedEmails() {
         const time = Date.now();
         const emails = await this.getPhoneContactEmails();
         console.log(`got contacts in background: ${emails.length}, ${Date.now() - time}ms`);
@@ -53,7 +55,8 @@ class ContactState extends RoutedState {
         console.log(`synced new email cache ${Object.keys(this.importedEmails).length}`);
     }
 
-    @action exit() {
+    @action
+    exit() {
         this.routerModal.discard();
         this.clear();
     }
@@ -65,7 +68,8 @@ class ContactState extends RoutedState {
     @observable recipients = [];
     @observable recipientsMap = observable.map(null, { deep: false });
 
-    @action contactView(contact) {
+    @action
+    contactView(contact) {
         this.routerMain.resetMenus();
         this.currentContact = contact;
         this.routerModal.contactView();
@@ -88,7 +92,8 @@ class ContactState extends RoutedState {
         return result.length ? result : this.found.filter(c => !c.loading && !c.notFound);
     }
 
-    @action sendTo(contact) {
+    @action
+    sendTo(contact) {
         chatState.startChat([contact]);
         this.routerModal.discard();
     }
@@ -122,7 +127,8 @@ class ContactState extends RoutedState {
         return hasPermissions;
     };
 
-    @action requestPermission() {
+    @action
+    requestPermission() {
         console.log('contact-state.js: requesting permissions');
         return new Promise(resolve => {
             // TODO: this is currently android-only
@@ -147,7 +153,8 @@ class ContactState extends RoutedState {
         });
     }
 
-    @action hasPermissions() {
+    @action
+    hasPermissions() {
         return new Promise(resolve => {
             console.log('contact-state.js: checking permissions');
             RNContacts.checkPermission((err, permission) => {
@@ -180,19 +187,22 @@ class ContactState extends RoutedState {
         });
     }
 
-    @action createPermissionHandler(resolve) {
+    @action
+    createPermissionHandler(resolve) {
         this.resolvePermissionHandler(false);
         this._permissionHandler = data => resolve(data ? 'authorized' : 'denied');
     }
 
-    @action resolvePermissionHandler(data) {
+    @action
+    resolvePermissionHandler(data) {
         if (this._permissionHandler) {
             this._permissionHandler(data);
             this._permissionHandler = null;
         }
     }
 
-    @action getPhoneContacts() {
+    @action
+    getPhoneContacts() {
         // cache contacts so they are not requested each time
         if (this._cachedPhoneContacts) return Promise.resolve(this._cachedPhoneContacts);
         return new Promise(resolve =>
@@ -212,14 +222,16 @@ class ContactState extends RoutedState {
         );
     }
 
-    @action.bound async syncContacts() {
+    @action.bound
+    async syncContacts() {
         if (!(await this.softRequestPermission())) {
             return;
         }
         this.routerMain.contactSyncAdd();
     }
 
-    @action.bound async inviteContacts() {
+    @action.bound
+    async inviteContacts() {
         if (!(await this.softRequestPermission())) {
             return;
         }
@@ -231,7 +243,8 @@ class ContactState extends RoutedState {
      * Automatically add contacts without confirming with user
      * Invites need to be confirmed by user
      */
-    @action.bound async testImport() {
+    @action.bound
+    async testImport() {
         if (!(await this.softRequestPermission())) {
             return;
         }
@@ -289,7 +302,8 @@ class ContactState extends RoutedState {
      * Searches users device for contacts which have one or more email addresses
      * @return Object which contains email and fullname pair of each phone contact
      */
-    @action async getPhoneContactEmails() {
+    @action
+    async getPhoneContactEmails() {
         const phoneContacts = await this.getPhoneContacts();
         const time = Date.now();
         const contactEmails = [];
@@ -317,7 +331,8 @@ class ContactState extends RoutedState {
     }
 
     // TODO replace with bulk
-    @action batchInvite(emails, isAutoImport) {
+    @action
+    batchInvite(emails, isAutoImport) {
         emails.forEach(email => {
             if (!this.importedEmails) this.importedEmails = {};
             this.importedEmails[email] = email;

@@ -101,7 +101,8 @@ export default class ChatListItem extends SafeComponent {
         return this.renderUnreadCountBadge();
     }
 
-    @action.bound onPress() {
+    @action.bound
+    onPress() {
         chatState.routerMain.chats(this.props.chat);
     }
 

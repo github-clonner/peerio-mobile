@@ -76,7 +76,8 @@ class RouterModal extends Router {
         return !this.animating && this.current && !this.current.isWhite;
     }
 
-    @computed get modal() {
+    @computed
+    get modal() {
         return this.current ? React.createElement(this.current.component, this.modalProps) : null;
     }
 }

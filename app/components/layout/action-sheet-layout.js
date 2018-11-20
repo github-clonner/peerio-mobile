@@ -146,7 +146,8 @@ export default class ActionSheetLayout extends SafeComponent {
         });
     }
 
-    @action static show(config) {
+    @action
+    static show(config) {
         animatedActionsheetHeight.setValue(-height);
         state.config = config;
         state.visible = true;
@@ -157,7 +158,8 @@ export default class ActionSheetLayout extends SafeComponent {
         }).start();
     }
 
-    @action static async hide() {
+    @action
+    static async hide() {
         if (!state.visible) return;
         await new Promise(resolve =>
             Animated.timing(animatedActionsheetHeight, {
@@ -176,7 +178,8 @@ export default class ActionSheetLayout extends SafeComponent {
         return state.visible;
     }
 
-    @action.bound handleCancel() {
+    @action.bound
+    handleCancel() {
         ActionSheetLayout.hide();
     }
 

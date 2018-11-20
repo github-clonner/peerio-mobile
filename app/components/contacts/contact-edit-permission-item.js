@@ -75,14 +75,16 @@ export default class ContactEditPermissionItem extends SafeComponent {
         currentContactItem._showWarning = true;
     }
 
-    @action.bound handleShowWarningClick() {
+    @action.bound
+    handleShowWarningClick() {
         this.showWarning = true;
     }
 
     // To prevent animation bug caused by how react native updates lists
     // We hide the item, then do "unshare" logic after hide animation ends
     // Finally reset the UI state of the list item
-    @action.bound removeClick() {
+    @action.bound
+    removeClick() {
         transitionAnimation();
         this.collapsed = true;
         // wait for animation to finish before removing item

@@ -105,7 +105,8 @@ export default class MedcryptorLoadingScreen extends Component {
         this.iconState = this.currentState;
     };
 
-    @computed get currentState() {
+    @computed
+    get currentState() {
         const result = {};
         const numberOfSteps = Object.keys(this.icons).length - 1;
         Object.keys(this.icons).forEach((name, i) => {

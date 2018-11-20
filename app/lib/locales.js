@@ -33,8 +33,8 @@ module.exports = {
 
     loadAssetFile(name) {
         const path = config.FileStream.formatAssetsPath(`${name}`);
-        return config.FileStream.existsAssetsFile(path).then(exists =>
-            exists ? config.FileStream.readAssetsFile(path) : ''
+        return config.FileStream.existsAssetsFile(path).then(
+            exists => (exists ? config.FileStream.readAssetsFile(path) : '')
         );
     }
 };

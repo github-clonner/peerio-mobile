@@ -56,7 +56,8 @@ class SettingsState extends RoutedState {
         );
     }
 
-    @action transition(subroute) {
+    @action
+    transition(subroute) {
         console.log(`settings-state.js: transition ${subroute}`);
         if (subroute) {
             this.subroute = subroute;

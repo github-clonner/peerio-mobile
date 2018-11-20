@@ -13,7 +13,8 @@ class MockChatStore {
     @observable chats = [];
     @observable invites = [];
     @observable loaded = true;
-    @computed get channels() {
+    @computed
+    get channels() {
         return this.chats.filter(chat => chat.isChannel);
     }
 

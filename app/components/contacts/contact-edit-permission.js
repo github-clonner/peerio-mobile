@@ -16,7 +16,8 @@ const PAGE_SIZE = 2;
 
 @observer
 export default class ContactEditPermission extends SafeComponent {
-    @action.bound unshareFrom(contact) {
+    @action.bound
+    unshareFrom(contact) {
         // HINT: removing on layout animated listview causes side effects
         // we just collapse it inline
         this.props.folder.removeParticipants([contact]);

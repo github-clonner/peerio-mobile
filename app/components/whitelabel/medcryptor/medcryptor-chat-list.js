@@ -10,11 +10,13 @@ import { tx } from '../../utils/translator';
 
 @observer
 export default class MedCryptorChatList extends ChatList {
-    @computed get firstSectionItems() {
+    @computed
+    get firstSectionItems() {
         return medcryptorChatState.store.nonSpaceRooms;
     }
 
-    @computed get dataSource() {
+    @computed
+    get dataSource() {
         return [].concat(
             ...this.addSection('title_channels', this.firstSectionItems),
             ...this.addSection(

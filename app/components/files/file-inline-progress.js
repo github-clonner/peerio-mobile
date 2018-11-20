@@ -33,7 +33,8 @@ export default class FileInlineProgress extends SafeComponent {
 
     // If file is cached, open in viewer
     // If file is NOT cached, download and then when download is complete open in viewer
-    @action.bound fileAction() {
+    @action.bound
+    fileAction() {
         when(
             () => this.file.hasFileAvailableForPreview,
             () => {
@@ -45,7 +46,8 @@ export default class FileInlineProgress extends SafeComponent {
         if (!this.file.hasFileAvailableForPreview) fileState.download(this.file);
     }
 
-    @action.bound onCancel() {
+    @action.bound
+    onCancel() {
         fileState.cancelDownload(this.file);
     }
 
@@ -80,26 +82,26 @@ export default class FileInlineProgress extends SafeComponent {
                         style={downloadStatusContainer}
                         onPress={onPress}>
                         <Text semibold style={textStyle}>
-                            {file.downloading && !file.cached && (
-                                <Text>
-                                    {tx('button_cancelDownload')} ({this.downloadProgress}%)
-                                </Text>
-                            )}
-                            {!file.downloading && !file.cached && (
-                                <Text>
-                                    {tx('button_downloadToView')} ({file.sizeFormatted})
-                                </Text>
-                            )}
-                            {!file.downloading && file.cached && (
-                                <Text>{tx('button_openFile')}</Text>
-                            )}
+                            {file.downloading &&
+                                !file.cached && (
+                                    <Text>
+                                        {tx('button_cancelDownload')} ({this.downloadProgress}%)
+                                    </Text>
+                                )}
+                            {!file.downloading &&
+                                !file.cached && (
+                                    <Text>
+                                        {tx('button_downloadToView')} ({file.sizeFormatted})
+                                    </Text>
+                                )}
+                            {!file.downloading &&
+                                file.cached && <Text>{tx('button_openFile')}</Text>}
                         </Text>
                     </TouchableOpacity>
                 )}
                 <View style={{ flex: 0 }}>
-                    {!file.uploading && this.props.transparentOnFinishUpload && (
-                        <ActivityIndicator />
-                    )}
+                    {!file.uploading &&
+                        this.props.transparentOnFinishUpload && <ActivityIndicator />}
                     {file.uploading &&
                         icons.darkNoPadding('close', () => fileState.cancelUpload(file))}
                 </View>

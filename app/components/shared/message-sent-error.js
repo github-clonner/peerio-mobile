@@ -8,7 +8,8 @@ import ErrorCircle from './error-circle';
 
 @observer
 export default class MessageSentError extends SafeComponent {
-    @action.bound onPress() {
+    @action.bound
+    onPress() {
         ChatActionSheet.show(this.props.message, this.props.chat);
     }
 

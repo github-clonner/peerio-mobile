@@ -74,13 +74,15 @@ export default class FilePreview extends SafeComponent {
         Object.assign(this, { width, height });
     }
 
-    @action.bound layoutPreviewContainer(e) {
+    @action.bound
+    layoutPreviewContainer(e) {
         const { width, height } = e.nativeEvent.layout;
         this.previewContainerWidth = width;
         this.previewContainerHeight = height;
     }
 
-    @action.bound launchPreviewViewer() {
+    @action.bound
+    launchPreviewViewer() {
         config.FileStream.launchViewer(this.props.state.path, this.props.state.fileName).catch(
             () => {
                 warnings.add('snackbar_couldntOpenFile');

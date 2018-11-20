@@ -9,7 +9,8 @@ import ListWithDrawer from './list-with-drawer';
 export default class ViewWithDrawer extends ListWithDrawer {
     @observable layoutHeight;
 
-    @action.bound scrollViewRef(sv) {
+    @action.bound
+    scrollViewRef(sv) {
         this.props.setScrollViewRef && this.props.setScrollViewRef(sv);
         this.scrollView = sv;
     }

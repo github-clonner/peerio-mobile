@@ -24,7 +24,8 @@ export default class Thumbnail extends Component {
     // scaled down height of the image we preview
     @observable previewSmallHeight;
 
-    @action.bound async updatePath(path) {
+    @action.bound
+    async updatePath(path) {
         this.width = 0;
         this.height = 0;
         this.previewSmallWidth = 0;
@@ -59,7 +60,8 @@ export default class Thumbnail extends Component {
         reaction(() => this.props.path, this.updatePath, { fireImmediately: true });
     }
 
-    @action.bound layoutPreviewContainer(e) {
+    @action.bound
+    layoutPreviewContainer(e) {
         const { width, height } = e.nativeEvent.layout;
         this.previewContainerWidth = width;
         this.previewContainerHeight = height;

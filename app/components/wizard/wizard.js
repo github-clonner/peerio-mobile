@@ -13,7 +13,8 @@ export default class Wizard extends SafeComponent {
     @observable pageComponents = [];
     direction = 1;
 
-    @computed get currentPage() {
+    @computed
+    get currentPage() {
         const { index, pages } = this;
         return index < pages.length ? this.pageComponents[index]() : null;
     }

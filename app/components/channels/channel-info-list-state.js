@@ -9,7 +9,8 @@ import chatState from '../messaging/chat-state';
 
 @observer
 export default class ChannelInfoListState extends SafeComponent {
-    @action.bound toggleCollapsed() {
+    @action.bound
+    toggleCollapsed() {
         chatState.collapseFirstChannelInfoList = !chatState.collapseFirstChannelInfoList;
     }
 

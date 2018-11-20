@@ -72,7 +72,8 @@ class DrawerState {
         }
     }
 
-    @action.bound dismissAll() {
+    @action.bound
+    dismissAll() {
         this.drawers.clear();
     }
 }

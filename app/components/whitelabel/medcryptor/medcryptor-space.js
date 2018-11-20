@@ -28,19 +28,22 @@ export default class MedcryptorSpaceScreen extends ChatList {
         return <BackIcon testID="buttonBackIcon" action={routes.main.chats} />;
     }
 
-    @computed get firstSectionItems() {
+    @computed
+    get firstSectionItems() {
         return chatState.store.spaces.currentSpace
             ? chatState.store.spaces.currentSpace.internalRooms
             : [];
     }
 
-    @computed get secondSectionItems() {
+    @computed
+    get secondSectionItems() {
         return chatState.store.spaces.currentSpace
             ? chatState.store.spaces.currentSpace.patientRooms
             : [];
     }
 
-    @computed get dataSource() {
+    @computed
+    get dataSource() {
         return [].concat(
             ...this.addSection('mcr_title_internalRooms', this.firstSectionItems),
             ...this.addSection('mcr_title_patientRooms', this.secondSectionItems)

@@ -38,12 +38,14 @@ const nameStyle = {
 export default class FolderInnerItem extends SafeComponent {
     @observable progressWidth = 0;
 
-    @action.bound onPress() {
+    @action.bound
+    onPress() {
         const { folder, onPress } = this.props;
         onPress && onPress(folder);
     }
 
-    @action.bound toggleSelected() {
+    @action.bound
+    toggleSelected() {
         const { folder } = this.props;
         folder.selected = !folder.selected;
     }
@@ -55,7 +57,8 @@ export default class FolderInnerItem extends SafeComponent {
         return (progressWidth * folder.progressPercentage) / 100;
     }
 
-    @action.bound layout(evt) {
+    @action.bound
+    layout(evt) {
         this.progressWidth = evt.nativeEvent.layout.width;
     }
 

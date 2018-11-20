@@ -193,7 +193,8 @@ export default class ChannelInvite extends SafeComponent {
         );
     }
 
-    @action.bound async acceptInvite() {
+    @action.bound
+    async acceptInvite() {
         const chatId = this.invitation.kegDbId;
         chatInviteStore.acceptInvite(chatId);
         let newChat = null;
@@ -208,7 +209,8 @@ export default class ChannelInvite extends SafeComponent {
         routes.main.chats(newChat);
     }
 
-    @action.bound declineInvite() {
+    @action.bound
+    declineInvite() {
         uiState.declinedChannelId = this.invitation.kegDbId;
         routes.main.chats();
     }

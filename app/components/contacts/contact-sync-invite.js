@@ -45,11 +45,13 @@ export default class ContactSyncInvite extends SafeComponent {
         return tx('title_inviteContacts');
     }
 
-    @computed get selectedContacts() {
+    @computed
+    get selectedContacts() {
         return this.contactList.filter(item => item.selected);
     }
 
-    @computed get selectedEmails() {
+    @computed
+    get selectedEmails() {
         const selectedEmails = [];
         this.contactList.forEach(listItem => {
             if (listItem.selected) selectedEmails.push(listItem.contact.username);
@@ -82,7 +84,8 @@ export default class ContactSyncInvite extends SafeComponent {
      * Fills this.contactList with phone contacts who are not on Peerio
      * @param {array} phoneContacts
      */
-    @action getNonPeerioContacts(phoneContacts) {
+    @action
+    getNonPeerioContacts(phoneContacts) {
         const promises = [];
         phoneContacts.forEach(c => {
             promises.push(
@@ -104,7 +107,8 @@ export default class ContactSyncInvite extends SafeComponent {
         return Promise.all(promises);
     }
 
-    @action.bound onChangeSearchBarText(text) {
+    @action.bound
+    onChangeSearchBarText(text) {
         this.searchBarValue = text.trim();
         if (this._searchTimeout) {
             clearTimeout(this._searchTimeout);
@@ -117,7 +121,8 @@ export default class ContactSyncInvite extends SafeComponent {
         this._searchTimeout = setTimeout(() => this.filter(text), 500);
     }
 
-    @action.bound clearSearch() {
+    @action.bound
+    clearSearch() {
         this.searchBarValue = '';
         this.contactList.forEach((listItem, i, contactList) => {
             contactList[i].visible = true;
@@ -125,7 +130,8 @@ export default class ContactSyncInvite extends SafeComponent {
         this.refreshList();
     }
 
-    @action.bound filter(query) {
+    @action.bound
+    filter(query) {
         const regex = new RegExp(_.escapeRegExp(query), 'i');
         this.contactList.forEach(listItem => {
             const { username } = listItem.contact;
@@ -154,30 +160,35 @@ export default class ContactSyncInvite extends SafeComponent {
         );
     }
 
-    @computed get allSelected() {
+    @computed
+    get allSelected() {
         return this.contactList.every(listItem => listItem.selected);
     }
 
-    @action.bound selectAll() {
+    @action.bound
+    selectAll() {
         this.contactList.forEach(listItem => {
             listItem.selected = true;
         });
         this.clearSearch();
     }
 
-    @action.bound deselectAll() {
+    @action.bound
+    deselectAll() {
         this.contactList.forEach(listItem => {
             listItem.selected = false;
         });
         this.clearSearch();
     }
 
-    @action.bound toggleCheckbox(listItem) {
+    @action.bound
+    toggleCheckbox(listItem) {
         listItem.selected = !listItem.selected;
         this.refreshList();
     }
 
-    @action.bound refreshList() {
+    @action.bound
+    refreshList() {
         this.refresh++;
     }
 
@@ -222,7 +233,8 @@ export default class ContactSyncInvite extends SafeComponent {
         );
     }
 
-    @action.bound async inviteSelectedContacts() {
+    @action.bound
+    async inviteSelectedContacts() {
         const confirmed = await imagePopups.confirmInvites(
             tx('title_confirmEmailInvite', { numSelectedContacts: this.selectedContacts.length })
         );

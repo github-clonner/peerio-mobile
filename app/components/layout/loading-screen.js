@@ -44,7 +44,8 @@ export default class LoadingScreen extends Component {
         }
     }
 
-    @action.bound animateLogo() {
+    @action.bound
+    animateLogo() {
         this.logoAnimValue.setValue(0);
         Animated.timing(this.logoAnimValue, {
             toValue: 1,
@@ -55,7 +56,8 @@ export default class LoadingScreen extends Component {
         });
     }
 
-    @action.bound animateReveal() {
+    @action.bound
+    animateReveal() {
         this.revealAnimVisible = true;
         this.logoAnimVisible = false;
         this.revealAnimValue = new Animated.Value(0);
@@ -77,7 +79,8 @@ export default class LoadingScreen extends Component {
         });
     }
 
-    @computed get statusText() {
+    @computed
+    get statusText() {
         if (!socket.connected) return tx('title_waitingToConnect');
         if (!this.authenticated) return tx('title_authenticating');
         return tx('title_decrypting');

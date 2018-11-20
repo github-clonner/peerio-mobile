@@ -26,13 +26,15 @@ const actionTextStyle = {
 
 @observer
 export default class TabItem extends SafeComponent {
-    @action.bound onPressTabItem() {
+    @action.bound
+    onPressTabItem() {
         const { onPressTabItem } = this.props;
         onPressTabItem && onPressTabItem();
         this.onPress();
     }
 
-    @action.bound onPress() {
+    @action.bound
+    onPress() {
         const { route } = this.props;
         if (routerMain.route === route && uiState.currentScrollView) {
             if (routerMain.route === 'files') fileState.goToRoot();

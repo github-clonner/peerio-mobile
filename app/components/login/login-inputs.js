@@ -32,10 +32,12 @@ export default class LoginInputs extends SafeComponent {
     usernameState = observable({ value: '' });
     passwordState = observable({ value: '' });
 
-    @action.bound usernameInputRef(ref) {
+    @action.bound
+    usernameInputRef(ref) {
         this.usernameInput = ref;
     }
-    @action.bound passwordInputRef(ref) {
+    @action.bound
+    passwordInputRef(ref) {
         this.passwordInput = ref;
     }
 
@@ -62,7 +64,8 @@ export default class LoginInputs extends SafeComponent {
         }
     }
 
-    @action.bound submit() {
+    @action.bound
+    submit() {
         loginState.username = this.usernameState.value;
         loginState.passphrase = this.passwordState.value;
         uiState

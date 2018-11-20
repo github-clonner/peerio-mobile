@@ -17,7 +17,8 @@ export default class Progress extends SafeComponent {
         return (width * value) / max;
     }
 
-    @action.bound layout(evt) {
+    @action.bound
+    layout(evt) {
         this.width = evt.nativeEvent.layout.width;
     }
 

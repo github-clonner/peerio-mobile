@@ -28,7 +28,8 @@ const fileInfoContainerStyle = {
 
 @observer
 export default class FileInnerItem extends SafeComponent {
-    @action.bound onPress() {
+    @action.bound
+    onPress() {
         const { file } = this.props;
         this.props.onPress && !fileState.isFileSelectionMode
             ? this.props.onPress(file)

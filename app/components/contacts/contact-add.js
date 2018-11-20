@@ -244,7 +244,8 @@ export default class ContactAdd extends SafeComponent {
         );
     }
 
-    @action.bound onChangeFindUserText(text) {
+    @action.bound
+    onChangeFindUserText(text) {
         const { Version, OS } = Platform;
         if (OS !== 'android' || Version > 22) {
             this.query = text.toLowerCase();

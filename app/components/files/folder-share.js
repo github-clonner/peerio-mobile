@@ -13,18 +13,22 @@ import { transitionAnimation } from '../helpers/animations';
 export default class FolderShare extends Component {
     @observable currentPage = 0;
 
-    @action.bound exit() {
+    @action.bound
+    exit() {
         routes.modal.discard();
     }
 
-    @action.bound shareAction(contacts) {
+    @action.bound
+    shareAction(contacts) {
         routes.modal.discard(contacts);
     }
 
     // TODO: Wiring
-    @action.bound unshareAction() {}
+    @action.bound
+    unshareAction() {}
 
-    @action.bound togglePage() {
+    @action.bound
+    togglePage() {
         Keyboard.dismiss();
         transitionAnimation();
         if (this.currentPage === 0) {

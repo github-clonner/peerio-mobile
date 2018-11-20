@@ -31,7 +31,8 @@ const paragraphStyle = {
 export default class TosAccordionItem extends SafeComponent {
     @observable isOpen = false;
 
-    @action.bound toggle() {
+    @action.bound
+    toggle() {
         this.isOpen = !this.isOpen;
         // Only need to send TM event on Open
         if (this.isOpen) {

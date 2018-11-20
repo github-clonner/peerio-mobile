@@ -44,7 +44,8 @@ class ChatState extends RoutedState {
         );
     }
 
-    @action async init() {
+    @action
+    async init() {
         const { store } = this;
         await promiseWhen(() => store.loaded);
     }
@@ -124,7 +125,8 @@ class ChatState extends RoutedState {
         return this.canSend && this.currentChat.canSendJitsi;
     }
 
-    @action async startChat(recipients, isChannel = false, name, purpose) {
+    @action
+    async startChat(recipients, isChannel = false, name, purpose) {
         try {
             this.loading = true;
             const chat = await this.store.startChat(recipients, isChannel, name, purpose);
@@ -139,18 +141,21 @@ class ChatState extends RoutedState {
         }
     }
 
-    @action async startChatAndShareFiles(recipients, file) {
+    @action
+    async startChatAndShareFiles(recipients, file) {
         if (!file) return;
         await this.store.startChatAndShareFiles(recipients, file);
         this.routerMain.chats(this.store.activeChat, true);
     }
 
-    @action addMessage(msg) {
+    @action
+    addMessage(msg) {
         this.selfNewMessageCounter++;
         this.currentChat && msg && this.currentChat.sendMessage(msg).catch(sounds.destroy);
     }
 
-    @action shareFilesAndFolders(filesAndFolders) {
+    @action
+    shareFilesAndFolders(filesAndFolders) {
         this.selfNewMessageCounter++;
         this.currentChat &&
             filesAndFolders &&
@@ -158,12 +163,14 @@ class ChatState extends RoutedState {
             this.currentChat.shareFilesAndFolders(filesAndFolders).catch(sounds.destroy);
     }
 
-    @action addVideoMessage(link) {
+    @action
+    addVideoMessage(link) {
         this.selfNewMessageCounter++;
         this.currentChat && this.currentChat.createVideoCall(link);
     }
 
-    @action addAck() {
+    @action
+    addAck() {
         this.selfNewMessageCounter++;
         this.currentChat && this.currentChat.sendAck().catch(sounds.destroy);
     }

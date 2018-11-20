@@ -41,12 +41,14 @@ const sublocation = S.WELCOME_SCREEN;
 
 @observer
 export default class LoginWelcome extends SafeComponent {
-    @action.bound onSignupPress() {
+    @action.bound
+    onSignupPress() {
         tm.signup.onStartAccountCreation({ sublocation });
         loginState.routes.app.signupStep1();
     }
 
-    @action.bound onLoginPress() {
+    @action.bound
+    onLoginPress() {
         tm.login.onNavigateLogin();
         loginState.routes.app.loginClean();
     }

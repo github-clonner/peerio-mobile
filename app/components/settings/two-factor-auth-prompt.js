@@ -50,16 +50,19 @@ export default class TwoFactorAuthPrompt extends SafeComponent {
         );
     }
 
-    @action.bound tfaInputRef(ref) {
+    @action.bound
+    tfaInputRef(ref) {
         this.tfaInput = ref;
     }
 
-    @action.bound focus() {
+    @action.bound
+    focus() {
         transitionAnimation();
         this.focused = true;
     }
 
-    @action.bound blur() {
+    @action.bound
+    blur() {
         transitionAnimation();
         this.focused = false;
     }

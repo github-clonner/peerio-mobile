@@ -26,7 +26,8 @@ const containerStyle = {
 
 @observer
 export default class VideoCallMessage extends SafeComponent {
-    @action.bound onPress() {
+    @action.bound
+    onPress() {
         const { videoCallMessage } = this.props;
         return Linking.openURL(videoCallMessage);
     }

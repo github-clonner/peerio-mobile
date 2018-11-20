@@ -40,7 +40,8 @@ class FileActionSheet {
 
 @observer
 export default class MockActionSheet extends Component {
-    @action.bound showActionSheet() {
+    @action.bound
+    showActionSheet() {
         const file = {
             name: 'Karim File',
             sizeFormatted: '22 MB',

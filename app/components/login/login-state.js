@@ -46,39 +46,45 @@ class LoginState extends RoutedState {
         );
     }
 
-    @action async enableAutomaticLogin(user) {
+    @action
+    async enableAutomaticLogin(user) {
         user.autologinEnabled = true;
         const key = `${user.username}::${loginConfiguredKey}`;
         await TinyDb.system.setValue(key, user.autologinEnabled);
     }
 
-    @action changeUserAction() {
+    @action
+    changeUserAction() {
         if (this.isInProgress) return;
         this.changeUser = true;
         this.clean();
         this.routes.app.loginWelcome();
     }
 
-    @action.bound async switchUser() {
+    @action.bound
+    async switchUser() {
         await User.removeLastAuthenticated();
         this.clean();
         this.routes.app.loginClean();
     }
 
-    @action.bound async clearLastUser() {
+    @action.bound
+    async clearLastUser() {
         await User.removeLastAuthenticated();
         this.clean();
         this.routes.app.loginWelcome();
     }
 
-    @action clean() {
+    @action
+    clean() {
         this.current = 0;
         this.username = '';
         this.passphrase = '';
         this.isInProgress = false;
     }
 
-    @action _login(user, manual) {
+    @action
+    _login(user, manual) {
         User.current = user;
         return user
             .login()
@@ -140,7 +146,8 @@ class LoginState extends RoutedState {
     }
 
     // Manual Login
-    @action login = async pin => {
+    @action
+    login = async pin => {
         /* if (this.username === config.appleTestUser
             && config.appleTestServer !== socket.url) {
             await overrideServer(config.appleTestServer);
@@ -157,7 +164,8 @@ class LoginState extends RoutedState {
     };
 
     // Automatic Login
-    @action loginCached = data => {
+    @action
+    loginCached = data => {
         const user = new User();
         user.deserializeAuthData(data);
         this.isInProgress = true;
@@ -251,7 +259,8 @@ class LoginState extends RoutedState {
         }, 0);
     }
 
-    @action async loadFromKeychain() {
+    @action
+    async loadFromKeychain() {
         await keychain.load();
         if (!keychain.hasPlugin) return false;
         const keychainKey = await mainState.getKeychainKey(this.username);

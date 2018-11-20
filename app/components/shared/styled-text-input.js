@@ -74,7 +74,8 @@ export default class StyledTextInput extends SafeComponent {
      * @param {String} error - The error to be displayed
      * @param {Boolean} sendTmEvent - Whether the event needs to be sent through telemetry or not
      */
-    @action.bound setCustomError(error, sendTmEvent) {
+    @action.bound
+    setCustomError(error, sendTmEvent) {
         this.valid = INVALID;
         this.customErrorTextCopy = error;
         if (sendTmEvent) tm.shared.textInputOnError(this.props.telemetry, error);
@@ -107,7 +108,8 @@ export default class StyledTextInput extends SafeComponent {
      * @prop {Func} validation.action - Validates "input". Returns true/false (VALID/INVALID)
      * @prop {String} validation.message - The error to show if validation fails at action
      */
-    @action.bound async validate() {
+    @action.bound
+    async validate() {
         const { validations, alwaysDirty, state, telemetry } = this.props;
         // Do not run validation on a field that hasn't been modified yet unless it is alwaysDirty
         if (!this.isDirty && !alwaysDirty) return;
@@ -154,7 +156,8 @@ export default class StyledTextInput extends SafeComponent {
         await promise;
     }
 
-    @action.bound async onChangeText(text) {
+    @action.bound
+    async onChangeText(text) {
         this.isDirty = true;
         if (this.props.onChange) this.props.onChange(text, this.prevTextLength);
         if (text.length === this.props.maxLength)
@@ -182,7 +185,8 @@ export default class StyledTextInput extends SafeComponent {
         this.end = end;
     };
 
-    @action.bound async onBlur() {
+    @action.bound
+    async onBlur() {
         const { telemetry, onBlur } = this.props;
         uiState.focusedTextBox = null;
         this.focused = false;
@@ -192,7 +196,8 @@ export default class StyledTextInput extends SafeComponent {
             tm.shared.textInputOnBlur(telemetry, this.customErrorTextCopy || this.errorTextCopy);
     }
 
-    @action.bound onFocus() {
+    @action.bound
+    onFocus() {
         const { telemetry, onFocus } = this.props;
         uiState.focusedTextBox = this.textInput;
         this.customErrorTextCopy = '';
@@ -226,7 +231,8 @@ export default class StyledTextInput extends SafeComponent {
         );
     }
 
-    @action.bound toggleSecret() {
+    @action.bound
+    toggleSecret() {
         const { state } = this.props;
         // we don't give user the ability to hide passphrase again, because Apple
         this.showSecret = !this.showSecret;
@@ -235,7 +241,8 @@ export default class StyledTextInput extends SafeComponent {
         if (state.value && Platform.OS === 'android') this._skip = true;
     }
 
-    @action.bound clearInputValue() {
+    @action.bound
+    clearInputValue() {
         this.props.state.value = '';
         this.onChangeText('');
         tm.shared.textInputOnClear(this.props.telemetry);
@@ -316,7 +323,8 @@ export default class StyledTextInput extends SafeComponent {
         return this.bottomTextSpacer;
     }
 
-    @action.bound textInputRef(ref) {
+    @action.bound
+    textInputRef(ref) {
         this.textInput = ref;
     }
 

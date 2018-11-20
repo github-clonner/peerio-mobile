@@ -15,7 +15,8 @@ import whiteLabelComponents from '../../components/whitelabel/white-label-compon
 export default class ContactInviteItemPrompt extends SafeComponent {
     @observable invited = false;
 
-    @action.bound invite() {
+    @action.bound
+    invite() {
         const { email } = this.props;
         this.invited = true;
         contactStore.invite(email);

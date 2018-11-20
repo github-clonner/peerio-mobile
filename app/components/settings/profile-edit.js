@@ -238,7 +238,8 @@ export default class ProfileEdit extends SafeComponent {
         AvatarActionSheet.show(({ buffers }) => User.current.saveAvatar(buffers));
     }
 
-    @action.bound onChangeAddEmailText(text) {
+    @action.bound
+    onChangeAddEmailText(text) {
         const { Version, OS } = Platform;
         if (OS !== 'android' || Version > 22) {
             this.newEmailText = text.toLowerCase();

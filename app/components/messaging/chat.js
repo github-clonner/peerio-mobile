@@ -323,7 +323,8 @@ export default class Chat extends SafeComponent {
     };
 
     // scroll to end
-    @action.bound scrollToBottom() {
+    @action.bound
+    scrollToBottom() {
         if (this.chat.canGoDown) {
             this.resetScrolling();
             this.chat.reset();
@@ -379,7 +380,8 @@ export default class Chat extends SafeComponent {
         );
     }
 
-    @computed get zeroStateItem() {
+    @computed
+    get zeroStateItem() {
         const { chat } = this;
         if (chat.isChatCreatedFromPendingDM) return <DmContactInvite />;
         return this.zeroStateChat;

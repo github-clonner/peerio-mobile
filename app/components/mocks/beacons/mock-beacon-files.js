@@ -34,7 +34,8 @@ export default class MockBeaconFiles extends Component {
         routes.main.route = 'files';
     }
 
-    @action.bound onMeasure(position) {
+    @action.bound
+    onMeasure(position) {
         const beacon = filesBeacons.fileReceivedBeacon;
         beacon.position = position;
         beaconState.requestBeacon(beacon);

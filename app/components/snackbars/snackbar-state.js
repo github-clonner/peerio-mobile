@@ -40,11 +40,13 @@ class SnackBarState extends RoutedState {
         return w ? tx(w.content, w.data) : null;
     }
 
-    @action pop() {
+    @action
+    pop() {
         warnings.current && warnings.current.dismiss();
     }
 
-    @action pushTemporary(text) {
+    @action
+    pushTemporary(text) {
         warnings.add(text);
     }
 }

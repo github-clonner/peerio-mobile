@@ -39,11 +39,13 @@ export default class SignupCountryMedcryptor extends SafeComponent {
     }
 
     medicalIdState = observable({ value: '' });
-    @action.bound medicalIdInputRef(ref) {
+    @action.bound
+    medicalIdInputRef(ref) {
         this.medicalIdInput = ref;
     }
 
-    @action.bound handleNextButton() {
+    @action.bound
+    handleNextButton() {
         signupState.country = medcryptorUiState.countrySelected;
         signupState.medicalId = this.medicalIdState.value;
         signupState.next();

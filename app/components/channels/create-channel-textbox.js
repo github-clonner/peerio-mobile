@@ -44,7 +44,8 @@ const titleStyle = {
 
 @observer
 export default class CreateChannelTextBox extends Component {
-    @action.bound changeText(text) {
+    @action.bound
+    changeText(text) {
         this.props.state[this.props.property] = text;
     }
 

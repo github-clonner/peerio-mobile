@@ -16,7 +16,8 @@ const fileContainer = {
 
 @observer
 export default class FileItem extends SafeComponent {
-    @observable store = {
+    @observable
+    store = {
         get checkBoxHidden() {
             return !fileState.showSelection;
         },
@@ -38,17 +39,20 @@ export default class FileItem extends SafeComponent {
         }
     }
 
-    @action.bound onFileAction() {
+    @action.bound
+    onFileAction() {
         const { file, onFileAction } = this.props;
         onFileAction(file);
     }
 
-    @action.bound onFolderPress(folder) {
+    @action.bound
+    onFolderPress(folder) {
         const { onChangeFolder } = this.props;
         onChangeFolder(folder);
     }
 
-    @action.bound onFolderAction() {
+    @action.bound
+    onFolderAction() {
         const { file, onFolderAction } = this.props;
         onFolderAction(file);
     }

@@ -35,7 +35,8 @@ const tmEmail = {
 @observer
 export default class SignupStep3 extends SafeComponent {
     emailState = observable({ value: '' });
-    @action.bound emailInputRef(ref) {
+    @action.bound
+    emailInputRef(ref) {
         this.emailInput = ref;
     }
 
@@ -57,11 +58,13 @@ export default class SignupStep3 extends SafeComponent {
         tm.signup.duration({ sublocation, startTime: this.startTime });
     }
 
-    @action tmToggleChecked() {
+    @action
+    tmToggleChecked() {
         tm.signup.toggleNewsletterCheckbox(signupState.subscribeToPromoEmails);
     }
 
-    @action.bound handleCreateButton() {
+    @action.bound
+    handleCreateButton() {
         if (this.isCreateDisabled) return;
         signupState.email = this.emailState.value;
         signupState.next();

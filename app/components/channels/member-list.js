@@ -19,11 +19,13 @@ export default class MemberList extends SafeComponent {
         ];
     }
 
-    @computed get channelMembers() {
+    @computed
+    get channelMembers() {
         return this.data.allJoinedParticipants || [];
     }
 
-    @computed get channelInvites() {
+    @computed
+    get channelInvites() {
         return chatState.chatInviteStore.sent.get(this.data.id) || [];
     }
 

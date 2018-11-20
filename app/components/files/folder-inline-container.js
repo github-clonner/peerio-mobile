@@ -44,7 +44,8 @@ export default class FolderInlineContainer extends SafeComponent {
         return fileStore.folderStore.getById(folderId);
     }
 
-    @action.bound press() {
+    @action.bound
+    press() {
         const { folder } = this;
         fileStore.folderStore.currentFolder = folder;
         routes.main.files();
@@ -67,11 +68,13 @@ export default class FolderInlineContainer extends SafeComponent {
         );
     }
 
-    @action.bound onAction() {
+    @action.bound
+    onAction() {
         FoldersActionSheet.show(this.folder, true);
     }
 
-    @action.bound reshare() {
+    @action.bound
+    reshare() {
         const { folder } = this;
         folder.isShared = true;
         folder.isJustUnshared = false;

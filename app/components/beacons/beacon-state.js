@@ -7,7 +7,8 @@ const notSeen = id => !User.current.beacons.get(id);
 class BeaconState {
     @observable beacons = [];
 
-    @computed get activeBeacon() {
+    @computed
+    get activeBeacon() {
         return _.chain(this.beacons)
             .filter(b => notSeen(b.id))
             .filter(b => b.condition())

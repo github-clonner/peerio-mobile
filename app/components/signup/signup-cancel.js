@@ -41,7 +41,8 @@ export default class SignupCancel extends SafeComponent {
         tm.signup.duration({ sublocation, startTime: this.startTime });
     }
 
-    @action.bound openTermsLink(text) {
+    @action.bound
+    openTermsLink(text) {
         const onPress = async () => {
             tm.signup.readMorePopup({ item: S.TERMS_OF_USE });
             await popupTOS();
@@ -53,7 +54,8 @@ export default class SignupCancel extends SafeComponent {
         );
     }
 
-    @action.bound openPrivacyLink(text) {
+    @action.bound
+    openPrivacyLink(text) {
         const onPress = async () => {
             tm.signup.readMorePopup({ item: S.PRIVACY_POLICY });
             await popupPrivacy();
@@ -65,13 +67,15 @@ export default class SignupCancel extends SafeComponent {
         );
     }
 
-    @action.bound cancel() {
+    @action.bound
+    cancel() {
         tm.signup.declineTos();
         drawerState.dismissAll();
         signupState.exit();
     }
 
-    @action.bound goBack() {
+    @action.bound
+    goBack() {
         routes.app.signupStep1();
     }
 

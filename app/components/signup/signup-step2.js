@@ -41,7 +41,8 @@ export default class SignupStep2 extends SafeComponent {
 
     usernameState = observable({ value: '' });
 
-    @action.bound usernameInputRef(ref) {
+    @action.bound
+    usernameInputRef(ref) {
         this.usernameInput = ref;
     }
 
@@ -78,7 +79,8 @@ export default class SignupStep2 extends SafeComponent {
         tm.signup.duration({ sublocation, startTime: this.startTime });
     }
 
-    @action.bound handleNextButton() {
+    @action.bound
+    handleNextButton() {
         if (this.isNextDisabled) return;
         signupState.username = this.usernameState.value;
         signupState.next();
@@ -89,7 +91,8 @@ export default class SignupStep2 extends SafeComponent {
         return !socket.connected || !this.usernameState.value || !this.usernameInput.isValid;
     }
 
-    @action.bound fillField(suggestion) {
+    @action.bound
+    fillField(suggestion) {
         this.usernameState.value = suggestion;
         this.usernameInput.onChangeText(this.usernameState.value);
         tm.signup.pickUsername(this.errorFlag);

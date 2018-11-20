@@ -30,7 +30,8 @@ export default class ContactSyncAdd extends SafeComponent {
         return buttons.whiteTextButton(tx('button_skip'), () => routes.main.contactSyncInvite());
     }
 
-    @computed get selectedContacts() {
+    @computed
+    get selectedContacts() {
         return this.contactList.filter(item => item.selected);
     }
 
@@ -51,7 +52,8 @@ export default class ContactSyncAdd extends SafeComponent {
      * and pushes to this.contactList
      * @param {array} phoneContacts
      */
-    @action getPeerioContacts(phoneContacts) {
+    @action
+    getPeerioContacts(phoneContacts) {
         const promises = [];
         phoneContacts.forEach(c => {
             promises.push(
@@ -71,30 +73,35 @@ export default class ContactSyncAdd extends SafeComponent {
         return Promise.all(promises);
     }
 
-    @computed get allSelected() {
+    @computed
+    get allSelected() {
         return this.contactList.every(listItem => listItem.selected);
     }
 
-    @action.bound selectAll() {
+    @action.bound
+    selectAll() {
         this.contactList.forEach(listItem => {
             listItem.selected = true;
         });
         this.refreshList();
     }
 
-    @action.bound deselectAll() {
+    @action.bound
+    deselectAll() {
         this.contactList.forEach(listItem => {
             listItem.selected = false;
         });
         this.refreshList();
     }
 
-    @action.bound toggleCheckbox(listItem) {
+    @action.bound
+    toggleCheckbox(listItem) {
         listItem.selected = !listItem.selected;
         this.refreshList();
     }
 
-    @action.bound refreshList() {
+    @action.bound
+    refreshList() {
         this.refresh++;
     }
 
@@ -136,7 +143,8 @@ export default class ContactSyncAdd extends SafeComponent {
         );
     }
 
-    @action.bound addSelectedContacts() {
+    @action.bound
+    addSelectedContacts() {
         this.selectedContacts.forEach(i =>
             contactState.store.getContactAndSave(i.contact.username)
         );

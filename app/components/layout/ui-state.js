@@ -35,7 +35,8 @@ class UIState extends RoutedState {
     @observable tfaFailed = false;
     @observable declinedChannelId = null;
     @observable hideTabs = false;
-    @observable languages = {
+    @observable
+    languages = {
         en: `English`
         // fr: `French`,
         // es: `Spanish`,
@@ -50,11 +51,13 @@ class UIState extends RoutedState {
         return this.keyboardHeight || pickerHeight;
     }
 
-    @action focusTextBox(textbox) {
+    @action
+    focusTextBox(textbox) {
         this.focusedTextBox = textbox;
     }
 
-    @action showPicker(picker) {
+    @action
+    showPicker(picker) {
         this.hideKeyboard();
         this.picker = picker;
         setTimeout(() => {
@@ -62,25 +65,29 @@ class UIState extends RoutedState {
         }, 0);
     }
 
-    @action hidePicker() {
+    @action
+    hidePicker() {
         this.hideKeyboard();
     }
 
-    @action hideKeyboard() {
+    @action
+    hideKeyboard() {
         Keyboard.dismiss();
         setTimeout(() => {
             this.pickerVisible = false;
         }, 0);
     }
 
-    @action.bound hideAll() {
+    @action.bound
+    hideAll() {
         this.hideKeyboard();
         this.hidePicker();
         this.customOverlayComponent = null;
         return new Promise(resolve => when(() => this.keyboardHeight === 0, resolve));
     }
 
-    @action setLocale(lc) {
+    @action
+    setLocale(lc) {
         return locales
             .loadLocaleFile(lc)
             .then(locale => {
@@ -98,16 +105,19 @@ class UIState extends RoutedState {
             });
     }
 
-    @action load() {
+    @action
+    load() {
         return TinyDb.system.getValue('state').then(s => this.setLocale((s && s.locale) || 'en'));
     }
 
-    @action save() {
+    @action
+    save() {
         const locale = this.locale || 'en';
         return TinyDb.system.setValue('state', { locale });
     }
 
-    @action scrollToTextBox() {
+    @action
+    scrollToTextBox() {
         const { focusedTextBox, currentScrollView, keyboardHeight } = this;
         if (focusedTextBox && currentScrollView) {
             const y =

@@ -7,7 +7,8 @@ import ListWithDrawer from './list-with-drawer';
 
 @observer
 export default class FlatListWithDrawer extends ListWithDrawer {
-    @action.bound scrollViewRef(sv) {
+    @action.bound
+    scrollViewRef(sv) {
         this.props.setScrollViewRef && this.props.setScrollViewRef(sv);
         this.scrollView = sv;
     }

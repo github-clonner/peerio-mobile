@@ -22,14 +22,16 @@ class CachedImage {
         return `cache:${this.source.uri}`;
     }
 
-    @action.bound async setImageSize(width, height, imageType) {
+    @action.bound
+    async setImageSize(width, height, imageType) {
         this.width = width;
         this.height = height;
         this.imageType = imageType;
         await imageCacheTinyDb.setValue(this.cacheKey, { width, height, imageType });
     }
 
-    @action.bound async loadImageSize() {
+    @action.bound
+    async loadImageSize() {
         const cache = await imageCacheTinyDb.getValue(this.cacheKey);
         if (cache) {
             const { width, height, imageType } = cache;

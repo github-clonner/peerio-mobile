@@ -46,12 +46,14 @@ export default class SignupBackupAk extends SafeComponent {
         }
     }
 
-    @action.bound handleNext() {
+    @action.bound
+    handleNext() {
         signupState.next();
         tm.signup.navigate({ sublocation, option: S.NEXT });
     }
 
-    @action.bound handleSkip() {
+    @action.bound
+    handleSkip() {
         signupState.next();
         tm.signup.navigate({ sublocation, option: S.SKIP });
     }

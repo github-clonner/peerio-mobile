@@ -76,7 +76,8 @@ const textBoxText = {
 
 @observer
 export default class SignupPdfPreview extends SafeComponent {
-    @action.bound saveAccountKey() {
+    @action.bound
+    saveAccountKey() {
         signupState.saveAccountKey(this.props.telemetry);
         tm.signup.saveAk(this.props.telemetry);
     }

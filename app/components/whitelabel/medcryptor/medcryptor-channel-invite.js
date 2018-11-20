@@ -44,7 +44,8 @@ export default class MedcryptorChannelInvite extends ChannelInvite {
         return label;
     }
 
-    @action.bound declineInvite() {
+    @action.bound
+    declineInvite() {
         uiState.declinedChannelId = this.invitation.kegDbId;
         backFromChat(this.invitation);
     }

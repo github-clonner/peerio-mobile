@@ -54,12 +54,14 @@ export default class DmContactInvite extends SafeComponent {
         return chatState.currentChat;
     }
 
-    @action.bound async decline() {
+    @action.bound
+    async decline() {
         this.chat.dismiss();
         routes.main.chats();
     }
 
-    @action.bound async accept() {
+    @action.bound
+    async accept() {
         this.chat.start();
         routes.main.chats(this.chat);
     }

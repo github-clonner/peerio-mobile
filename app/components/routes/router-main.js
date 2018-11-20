@@ -107,7 +107,8 @@ class RouterMain extends Router {
         );
     }
 
-    @action initialRoute() {
+    @action
+    initialRoute() {
         this._initialRoute = uiState.isFirstLogin ? 'welcomeZeroState' : 'chats';
         this[this._initialRoute](null, true);
     }
@@ -116,7 +117,8 @@ class RouterMain extends Router {
         return this.route === this._initialRoute;
     }
 
-    @action async initialize() {
+    @action
+    async initialize() {
         if (this.invoked) return;
         this.invoked = true;
         this.loading = true;
@@ -134,7 +136,8 @@ class RouterMain extends Router {
         if (whiteLabelComponents.extendRoutes) whiteLabelComponents.extendRoutes(this);
     }
 
-    @action transitionToMain() {
+    @action
+    transitionToMain() {
         // TODO: refactor all this
         // wait for User object to be loaded
         if (whiteLabelComponents.extendRoutes) whiteLabelComponents.extendRoutes(this);
@@ -142,7 +145,8 @@ class RouterMain extends Router {
         loginState.transition();
     }
 
-    @action async filesystemUpgrade() {
+    @action
+    async filesystemUpgrade() {
         if (fileStore.migration.pending) {
             if (!(fileStore.migration.started || fileStore.migration.performedByAnotherClient)) {
                 await popupUpgradeNotification();
@@ -215,12 +219,14 @@ class RouterMain extends Router {
         }
     }
 
-    @action fabAction() {
+    @action
+    fabAction() {
         console.log(`router-main.js: fab action`);
         this.current && this.current.routeState && this.current.routeState.fabAction();
     }
 
-    @action async back() {
+    @action
+    async back() {
         await uiState.hideAll();
         if (this.currentIndex > 0) this.currentIndex--;
         this.onTransition(this.current, true);
@@ -228,12 +234,14 @@ class RouterMain extends Router {
         console.log(`router-main: transition to ${this.route}:${this.currentIndex}`);
     }
 
-    @action resetMenus() {
+    @action
+    resetMenus() {
         this.isInputVisible = false;
         this.modalRoute = null;
     }
 
-    @action androidBackHandler() {
+    @action
+    androidBackHandler() {
         if (this.route === 'files') {
             if (fileStore.folderStore.currentFolder.parent) {
                 fileStore.folderStore.currentFolder = fileStore.folderStore.currentFolder.parent;

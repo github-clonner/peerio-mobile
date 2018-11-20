@@ -75,42 +75,43 @@ export default class MemberListItem extends SafeComponent {
                             <GrayLabel contact={contact} label="title_admin" />
                         </View>
                     )}
-                    {channel.canIAdmin && !isCurrentUser && (
-                        <Menu>
-                            <MenuTrigger
-                                renderTouchable={() => (
-                                    <TouchableOpacity
-                                        {...testLabel('moreButton')}
-                                        pressRetentionOffset={vars.retentionOffset}
-                                    />
-                                )}
-                                style={{ padding: vars.iconPadding }}>
-                                {icons.plaindark('more-vert')}
-                            </MenuTrigger>
-                            <MenuOptions>
-                                {contact.signingPublicKey && (
+                    {channel.canIAdmin &&
+                        !isCurrentUser && (
+                            <Menu>
+                                <MenuTrigger
+                                    renderTouchable={() => (
+                                        <TouchableOpacity
+                                            {...testLabel('moreButton')}
+                                            pressRetentionOffset={vars.retentionOffset}
+                                        />
+                                    )}
+                                    style={{ padding: vars.iconPadding }}>
+                                    {icons.plaindark('more-vert')}
+                                </MenuTrigger>
+                                <MenuOptions>
+                                    {contact.signingPublicKey && (
+                                        <MenuOption
+                                            onSelect={() =>
+                                                isAdmin
+                                                    ? channel.demoteAdmin(contact)
+                                                    : channel.promoteToAdmin(contact)
+                                            }>
+                                            <Text>
+                                                {isAdmin
+                                                    ? tx('button_demoteAdmin')
+                                                    : tx('button_makeAdmin')}
+                                            </Text>
+                                        </MenuOption>
+                                    )}
                                     <MenuOption
-                                        onSelect={() =>
-                                            isAdmin
-                                                ? channel.demoteAdmin(contact)
-                                                : channel.promoteToAdmin(contact)
-                                        }>
-                                        <Text>
-                                            {isAdmin
-                                                ? tx('button_demoteAdmin')
-                                                : tx('button_makeAdmin')}
-                                        </Text>
+                                        onSelect={async () => {
+                                            onRemove(contact, section);
+                                        }}>
+                                        <Text {...testLabel('Remove')}>{tx('button_remove')}</Text>
                                     </MenuOption>
-                                )}
-                                <MenuOption
-                                    onSelect={async () => {
-                                        onRemove(contact, section);
-                                    }}>
-                                    <Text {...testLabel('Remove')}>{tx('button_remove')}</Text>
-                                </MenuOption>
-                            </MenuOptions>
-                        </Menu>
-                    )}
+                                </MenuOptions>
+                            </Menu>
+                        )}
                 </View>
             </View>
         );

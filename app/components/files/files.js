@@ -67,7 +67,8 @@ export default class Files extends SafeComponent {
 
     actionsHeight = new Animated.Value(0);
 
-    @computed get data() {
+    @computed
+    get data() {
         let data = fileState.store.searchQuery
             ? fileState.store.filesAndFoldersSearchResult
             : fileState.store.folderStore.currentFolder.filesAndFoldersDefaultSorting;
@@ -192,7 +193,8 @@ export default class Files extends SafeComponent {
         fileState.store.searchQuery = val;
     };
 
-    @action.bound onChangeText(text) {
+    @action.bound
+    onChangeText(text) {
         this.clean = !text.length;
         this.onChangeFindFilesText(text);
     }

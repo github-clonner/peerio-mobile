@@ -9,7 +9,8 @@ import fileState from '../files/file-state';
 
 @observer
 export default class ChatMessageInlineImages extends SafeComponent {
-    @computed get images() {
+    @computed
+    get images() {
         const { message, chat } = this.props;
         const files =
             (message.files || [])

@@ -23,7 +23,8 @@ export default class ContactListModal extends SafeComponent {
         contactState.store.uiViewFilter = 'all';
     }
 
-    @computed get sections() {
+    @computed
+    get sections() {
         const { uiView, contacts } = contactState.store;
         const sections = uiView.map(({ letter, items }) => {
             return { data: items, key: letter };

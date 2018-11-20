@@ -52,15 +52,18 @@ export default class LoginWelcomeBack extends SafeComponent {
         tm.login.duration({ sublocation, startTime: this.startTime });
     }
 
-    @action.bound onSignupPress() {
+    @action.bound
+    onSignupPress() {
         loginState.routes.app.signupStep1();
     }
 
-    @action.bound onLoginPress() {
+    @action.bound
+    onLoginPress() {
         loginState.routes.app.loginClean();
     }
 
-    @action.bound switchUserLink(text) {
+    @action.bound
+    switchUserLink(text) {
         const onPress = () => {
             tm.login.changeUser();
             loginState.switchUser();

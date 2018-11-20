@@ -28,7 +28,8 @@ class FileState extends RoutedState {
     _prefix = 'files';
     selectedFile = null;
 
-    @action async init() {
+    @action
+    async init() {
         fileStore.folderStore.currentFolder = fileStore.folderStore.root;
         return new Promise(resolve => when(() => this.store.cacheLoaded, resolve));
     }
@@ -41,7 +42,8 @@ class FileState extends RoutedState {
         return fileStore.selectedFilesOrFolders;
     }
 
-    @action delete(noTransition) {
+    @action
+    delete(noTransition) {
         const f = this.currentFile ? [this.currentFile] : this.selected;
         const count = f.length;
         const shared = !!f.filter(i => !!i.shared).length;
@@ -57,7 +59,8 @@ class FileState extends RoutedState {
             .catch(e => console.error(e));
     }
 
-    @action async deleteFile(file) {
+    @action
+    async deleteFile(file) {
         const isOwner = file.owner === User.current.username;
         const title = isOwner ? tx('dialog_confirmDeleteFile') : tx('title_confirmRemoveFile');
         let subtitle = '';
@@ -108,7 +111,8 @@ class FileState extends RoutedState {
         return true;
     }
 
-    @action async download(fp) {
+    @action
+    async download(fp) {
         await this.remindAboutEncryption();
         if (!(await this.remindAboutExternal())) {
             console.log('file-state.js: user denied saving to external');
@@ -123,14 +127,16 @@ class FileState extends RoutedState {
         });
     }
 
-    @action resetSelection() {
+    @action
+    resetSelection() {
         this.selectedFile = null;
         this.selected.forEach(f => {
             f.selected = false;
         });
     }
 
-    @action selectFilesAndFolders() {
+    @action
+    selectFilesAndFolders() {
         this.resetSelection();
         fileStore.folderStore.currentFolder = this.store.folderStore.root;
         this.isFileSelectionMode = true;
@@ -142,7 +148,8 @@ class FileState extends RoutedState {
     }
 
     // TODO modify after router push logic is implemented
-    @action exitFileSelect() {
+    @action
+    exitFileSelect() {
         this.resetSelection();
         this.isFileSelectionMode = false;
         this.routerMain.chats(chatStore.activeChat);
@@ -151,7 +158,8 @@ class FileState extends RoutedState {
         this.rejectFileSelection = null;
     }
 
-    @action submitSelectedFiles() {
+    @action
+    submitSelectedFiles() {
         this.resolveFileSelection(this.selected.slice());
         this.resolveFileSelection = null;
         this.isFileSelectionMode = false;

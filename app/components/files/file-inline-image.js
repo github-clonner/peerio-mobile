@@ -322,7 +322,8 @@ export default class FileInlineImage extends SafeComponent {
         );
     }
 
-    @action.bound handleLoadStart() {
+    @action.bound
+    handleLoadStart() {
         this.loadingTimeoutId = setTimeout(() => {
             if (!this.loaded) {
                 this.downloadSlow = true;
@@ -330,28 +331,33 @@ export default class FileInlineImage extends SafeComponent {
         }, vars.loadingTimeout);
     }
 
-    @action.bound handleLoadEnd() {
+    @action.bound
+    handleLoadEnd() {
         if (this.loadingTimeoutId) {
             clearTimeout(this.loadingTimeoutId);
             this.loadingTimeoutId = null;
         }
     }
 
-    @action.bound handleProgress(e) {
+    @action.bound
+    handleProgress(e) {
         const { loaded, total } = e.nativeEvent;
         this.loadedBytesCount = loaded;
         this.totalBytesCount = total;
     }
 
-    @action.bound onLoad() {
+    @action.bound
+    onLoad() {
         this.loaded = true;
     }
 
-    @action.bound onErrorLoadingImage() {
+    @action.bound
+    onErrorLoadingImage() {
         this.errorDisplayingImage = true;
     }
 
-    @action.bound onLoadGif() {
+    @action.bound
+    onLoadGif() {
         this.handleLoadEnd();
         this.onLoad();
     }
@@ -375,7 +381,8 @@ export default class FileInlineImage extends SafeComponent {
     }
 
     // Opens the image using exists, else attempts to download it
-    @action.bound imageAction() {
+    @action.bound
+    imageAction() {
         const { image } = this.props;
         if (image.hasFileAvailableForPreview) {
             image.launchViewer();

@@ -21,7 +21,8 @@ const PAGE_SIZE = 2;
 export default class FolderSelect extends SafeComponent {
     @observable currentFolder = fileState.store.folderStore.root;
 
-    @computed get data() {
+    @computed
+    get data() {
         const { currentFolder } = this;
         const folders = currentFolder.foldersSortedByName.slice();
         currentFolder.isRoot && folders.unshift(fileState.store.folderStore.root);

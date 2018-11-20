@@ -48,18 +48,21 @@ export default class FileDetailView extends SafeComponent {
         return (this.file && this.file.readyForDownload) || fileState.showSelection;
     }
 
-    @action.bound onCancel() {
+    @action.bound
+    onCancel() {
         fileState.cancelDownload(this.file);
     }
 
-    @action.bound onOpen() {
+    @action.bound
+    onOpen() {
         const { file } = this;
         file.launchViewer().catch(() => {
             snackbarState.pushTemporary(tx('snackbar_couldntOpenFile'));
         });
     }
 
-    @action.bound onDownload() {
+    @action.bound
+    onDownload() {
         fileState.download(this.file);
     }
 

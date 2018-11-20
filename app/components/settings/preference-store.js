@@ -5,7 +5,8 @@ const { TinyDb, User, warnings, clientApp } = require('../../lib/icebear');
 
 class PreferenceStore {
     // stored with 'pref_' prefix in tinydb
-    @observable prefs = {
+    @observable
+    prefs = {
         doNotDisturbModeEnabled: false,
         allActivityNotifsEnabled: true,
         directNotifsEnabled: true,

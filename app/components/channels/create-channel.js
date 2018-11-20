@@ -63,7 +63,8 @@ export default class CreateChannel extends Component {
         }
     }
 
-    @action.bound async createChannel(contacts) {
+    @action.bound
+    async createChannel(contacts) {
         this.inProgress = true;
         await chatState.startChat(contacts, true, this.channelName);
         chatState.routerModal.discard();

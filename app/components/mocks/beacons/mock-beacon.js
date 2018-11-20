@@ -37,29 +37,34 @@ export default class MockBeacon extends Component {
         routes.main.route = 'chats';
     }
 
-    @action.bound toggleTopBottom() {
+    @action.bound
+    toggleTopBottom() {
         this.showVertical = true;
         this.showTop = !this.showTop;
         this.showLeft = false;
     }
 
-    @action.bound toggleLeftRight() {
+    @action.bound
+    toggleLeftRight() {
         this.showVertical = false;
         this.showLeft = !this.showLeft;
         this.showTop = false;
     }
 
-    @action.bound toggleArrow() {
+    @action.bound
+    toggleArrow() {
         uiState.mockBeaconArrowDirection = !uiState.mockBeaconArrowDirection;
         beaconState.activeBeacon.sidePointer = !uiState.mockBeaconArrowDirection;
     }
 
-    @action.bound toggleBeaconType() {
+    @action.bound
+    toggleBeaconType() {
         uiState.mockBeaconType = !uiState.mockBeaconType;
         beaconState.activeBeacon.component = uiState.mockBeaconType ? AreaBeacon : SpotBeacon;
     }
 
-    @action.bound toggleHorizontalPadding() {
+    @action.bound
+    toggleHorizontalPadding() {
         this.padding = this.padding ? 0 : 100;
     }
 

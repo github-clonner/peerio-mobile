@@ -57,14 +57,16 @@ export default class ChatList extends SafeComponent {
         return [[{ sectionTitle }], items];
     };
 
-    @computed get dataSource() {
+    @computed
+    get dataSource() {
         return [].concat(
             ...this.addSection('title_channels', this.firstSectionItems),
             ...this.addSection('title_directMessages', this.secondSectionItems)
         );
     }
 
-    @computed get firstSectionItems() {
+    @computed
+    get firstSectionItems() {
         const allChannels =
             chatState.store.allRooms.filter(c => !c.isChannel || c.headLoaded) || [];
         allChannels.sort((a, b) => {
@@ -76,7 +78,8 @@ export default class ChatList extends SafeComponent {
         return allChannels;
     }
 
-    @computed get secondSectionItems() {
+    @computed
+    get secondSectionItems() {
         return chatState.store.chats.filter(d => !d.isChannel).slice();
     }
 
@@ -147,12 +150,14 @@ export default class ChatList extends SafeComponent {
         return { itemOffset: offset, length };
     };
 
-    @action.bound scrollViewRef(sv) {
+    @action.bound
+    scrollViewRef(sv) {
         this.scrollView = sv;
         uiState.currentScrollView = sv;
     }
 
-    @computed get firstUnreadItem() {
+    @computed
+    get firstUnreadItem() {
         for (let index = 0; index < this.dataSource.length; ++index) {
             const item = this.dataSource[index];
             if (isUnread(item)) return { item, index };
@@ -160,7 +165,8 @@ export default class ChatList extends SafeComponent {
         return null;
     }
 
-    @computed get lastUnreadItem() {
+    @computed
+    get lastUnreadItem() {
         for (let index = this.dataSource.length - 1; index >= 0; --index) {
             const item = this.dataSource[index];
             if (isUnread(item)) return { item, index };
@@ -168,7 +174,8 @@ export default class ChatList extends SafeComponent {
         return null;
     }
 
-    @computed get topIndicatorVisible() {
+    @computed
+    get topIndicatorVisible() {
         // if view hasn't been updated with viewable range
         if (this.minItemIndex === null) return false;
         const pos = this.firstUnreadItem;
@@ -176,7 +183,8 @@ export default class ChatList extends SafeComponent {
         return pos.index < this.minItemIndex;
     }
 
-    @computed get bottomIndicatorVisible() {
+    @computed
+    get bottomIndicatorVisible() {
         // if view hasn't been updated with viewable range
         if (this.maxItemIndex === null) return false;
         const pos = this.lastUnreadItem;
@@ -187,7 +195,8 @@ export default class ChatList extends SafeComponent {
     /**
      * Scrolls to the topmost unread item in the list
      */
-    @action.bound scrollUpToUnread() {
+    @action.bound
+    scrollUpToUnread() {
         const pos = this.firstUnreadItem;
         if (!pos) return;
         const { itemOffset } = this.getItemOffset(pos.index);
@@ -199,7 +208,8 @@ export default class ChatList extends SafeComponent {
     /**
      * Scrolls to the bottommost unread item in the list
      */
-    @action.bound scrollDownToUnread() {
+    @action.bound
+    scrollDownToUnread() {
         const pos = this.lastUnreadItem;
         if (!pos) return;
         const { itemOffset, length } = this.getItemOffset(pos.index);
@@ -217,7 +227,8 @@ export default class ChatList extends SafeComponent {
      * This property handler gets called
      * @param {*} data
      */
-    @action.bound onViewableItemsChanged(info) {
+    @action.bound
+    onViewableItemsChanged(info) {
         const { viewableItems } = info;
         let minItemIndex = this.dataSource.length;
         let maxItemIndex = 0;
@@ -230,7 +241,8 @@ export default class ChatList extends SafeComponent {
         Object.assign(this, { minItemIndex, maxItemIndex });
     }
 
-    @action.bound onLayout(e) {
+    @action.bound
+    onLayout(e) {
         this.flatListHeight = e.nativeEvent.layout.height;
         // calculate initial viewable items because react native fails to do it sometimes
         this.minItemIndex = 0;

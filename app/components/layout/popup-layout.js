@@ -40,7 +40,8 @@ export default class PopupLayout extends SafeComponent {
         );
     };
 
-    @action.bound scrollViewRef(sv) {
+    @action.bound
+    scrollViewRef(sv) {
         this.scrollView = sv;
         uiState.currentScrollView = sv;
     }
