@@ -169,7 +169,8 @@
     "typescript": "2.0.10",
     "user-home-cli": "1.0.1",
     "validate-commit-message": "3.0.1",
-    "webdriverio": "4.9.10"
+    "webdriverio": "4.9.10",
+    "websocket": "1.0.28"
   },
   "config": {
     "commitizen": {
