@@ -60,5 +60,5 @@ else
   echo "Generating CircleCI artifact report in $CIRCLE_ARTIFACTS"
   mkdir -p $CIRCLE_ARTIFACTS
   node test/reports/generate-circleci-report.js
-  cp -r test/reports/*.png $CIRCLE_ARTIFACTS/
+  cp -r test/reports/* $CIRCLE_ARTIFACTS/
 fi
