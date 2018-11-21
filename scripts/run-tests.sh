@@ -48,7 +48,7 @@ if [ -z $"$CIRCLE_TEST_REPORTS" ]; then
   echo "Skipping CircleCI report generation"
 else
   echo "Generating CircleCI report in $CIRCLE_TEST_REPORTS"
-  mkdir $CIRCLE_TEST_REPORTS
+  mkdir -p $CIRCLE_TEST_REPORTS/cucumberjs
   cat test/reports/result-$PEERIO_TEST_PLATFORM.json | node_modules/.bin/cucumber-junit > "$CIRCLE_TEST_REPORTS/report.xml"
   node test/reports/generate-circleci-report.js
 fi
@@ -58,6 +58,7 @@ if [ -z $"$CIRCLE_ARTIFACTS" ]; then
   echo "Skipping CircleCI artifact generation"
 else
   echo "Generating CircleCI artifact report in $CIRCLE_ARTIFACTS"
-  mkdir $CIRCLE_ARTIFACTS
+  mkdir -p $CIRCLE_ARTIFACTS
   node test/reports/generate-circleci-report.js
+  cp -r test/reports/screenshots $CIRCLE_ARTIFACTS/
 fi
