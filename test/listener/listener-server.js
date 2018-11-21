@@ -83,4 +83,11 @@ class ListenerServer {
     }
 }
 
+ListenerServer.create = () => {
+    if (!ListenerServer.instance) {
+        ListenerServer.instance = new ListenerServer();
+    }
+    return ListenerServer.instance;
+};
+
 module.exports = ListenerServer;

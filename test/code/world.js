@@ -25,7 +25,7 @@ class World {
     constructor({ attach, parameters }) {
         this.attach = attach;
         this.context = parameters.platform === 'ios' ? iOSFactory : AndroidFactory;
-        this.listener = new ListenerServer();
+        this.listener = ListenerServer.create();
     }
 
     openApp() {

@@ -3,7 +3,7 @@ const readline = require('readline');
 
 const ListenerServer = require('./listener-server');
 
-const server = new ListenerServer();
+const server = ListenerServer.create();
 
 const rl = readline.createInterface({
     input: process.stdin,
