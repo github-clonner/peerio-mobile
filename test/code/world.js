@@ -19,11 +19,13 @@ const otplib = require('otplib');
 const FileViewPage = require('./pages/files/fileViewPage');
 const AlertsPage = require('./pages/popups/alertsPage');
 const ContactsPage = require('./pages/contacts/contactsPage');
+const ListenerServer = require('../listener/listener-server');
 
 class World {
     constructor({ attach, parameters }) {
         this.attach = attach;
         this.context = parameters.platform === 'ios' ? iOSFactory : AndroidFactory;
+        this.listener = new ListenerServer();
     }
 
     openApp() {
@@ -92,7 +94,8 @@ class World {
 
     async enterTokenInSettings() {
         await this.tryEnterTokenInSettings();
-        if (!(await this.twoStepVerificationPage.backupCodesVisible)) { // Retry if token was expired
+        if (!(await this.twoStepVerificationPage.backupCodesVisible)) {
+            // Retry if token was expired
             await this.tryEnterTokenInSettings();
         }
     }
@@ -109,7 +112,8 @@ class World {
         await this.tryEnterTokenInPrompt();
         // wait for the token to be verified
         await this.app.pause(3000);
-        if (await this.twoFactorAuthPrompt.tokenInputPresent) { // Retry if token was expired
+        if (await this.twoFactorAuthPrompt.tokenInputPresent) {
+            // Retry if token was expired
             await this.tryEnterTokenInPrompt();
         }
     }
@@ -227,8 +231,9 @@ class World {
         // Wait for rooms to load, otherwise position will change
         await this.app.pause(5000);
 
-        while (!(await this.chatListPage.chatWithTitleIsVisible(this.roomName))) { // eslint-disable-line
-            await this.chatListPage.scrollDownHelper();  // eslint-disable-line
+        while (!(await this.chatListPage.chatWithTitleIsVisible(this.roomName))) {
+            // eslint-disable-line
+            await this.chatListPage.scrollDownHelper(); // eslint-disable-line
         }
     }
 
@@ -245,8 +250,9 @@ class World {
 
     async scrollToContact() {
         await this.homePage.contactsTab.click();
-        while (!(await this.contactsPage.contactVisible)) { // eslint-disable-line
-            await this.contactsPage.scrollDownHelper();  // eslint-disable-line
+        while (!(await this.contactsPage.contactVisible)) {
+            // eslint-disable-line
+            await this.contactsPage.scrollDownHelper(); // eslint-disable-line
         }
     }
 
