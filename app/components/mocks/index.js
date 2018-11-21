@@ -48,4 +48,4 @@ const mocks = {
 };
 
 // switch this to mocks item to test [TODO: replace with storybooks]
-export default mocks.MockTestBridge;
+export default null;
