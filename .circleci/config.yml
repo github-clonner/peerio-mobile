@@ -8,8 +8,8 @@ jobs:
             PEERIO_IOS_SIM: 'iPhone 7'
             PEERIO_IOS_VERSION: '12.0'
             PEERIO_TEST_PLATFORM: 'ios'
-            CIRCLE_TEST_REPORTS: ~/circle_reports
-            CIRCLE_ARTIFACTS: ~/circle_artifacts
+            CIRCLE_TEST_REPORTS: circle_reports
+            CIRCLE_ARTIFACTS: circle_artifacts
         steps:
             - checkout
             - run:
@@ -53,14 +53,14 @@ jobs:
                   command: ./node_modules/.bin/react-native run-ios
             - run:
                   name: 'Create artifact folder'
-                  command: mkdir ~/circle_reports && mkdir ~/circle_artifacts
+                  command: mkdir circle_reports && mkdir circle_artifacts
             - run:
                   name: 'Run tests'
                   command: npm test
             - store_test_results:
-                  path: ~/circle_reports
+                  path: circle_reports
             - store_artifacts:
-                  path: ~/circle_artifacts
+                  path: circle_artifacts
 
 workflows:
     version: 2
