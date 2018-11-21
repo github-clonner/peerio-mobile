@@ -50,7 +50,7 @@ jobs:
                   command: npm run test:prettier
             - run:
                   name: 'Compile and run'
-                  command: ./node_modules/.bin/react-native run-ios
+                  command: ./scripts/run-ios
             - run:
                   name: 'Create artifact folder'
                   command: mkdir circle_reports && mkdir circle_artifacts
