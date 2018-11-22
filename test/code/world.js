@@ -28,6 +28,10 @@ class World {
         this.listener = ListenerServer.create();
     }
 
+    destroy() {
+        this.listener.close();
+    }
+
     openApp() {
         this.app = webDriver.remote(this.context.platform);
         this.app.options.waitforTimeout = 30000;
