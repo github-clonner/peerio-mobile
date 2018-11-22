@@ -1,11 +1,11 @@
 const { When, Then } = require('cucumber');
 
-When('I go to public profile settings', async function () {
+When('I go to public profile settings', async function() {
     await this.homePage.settingsTab.click();
     await this.settingsPage.publicProfileButton.click();
 });
 
-Then('I change my first name', async function () {
+Then('I change my first name', async function() {
     const newFirstName = new Date().getTime();
     await this.profileSettingsPage.firstName.setValue(newFirstName);
     await this.profileSettingsPage.hideKeyboardHelper();
@@ -19,7 +19,7 @@ Then('I change my first name', async function () {
     }
 });
 
-Then('I change my last name', async function () {
+Then('I change my last name', async function() {
     const newLastName = new Date().getTime();
     await this.profileSettingsPage.lastName.setValue(newLastName);
     await this.profileSettingsPage.hideKeyboardHelper();
@@ -33,24 +33,24 @@ Then('I change my last name', async function () {
     }
 });
 
-Then('I upload a new avatar', async function () {
+Then('I upload a new avatar', async function() {
     await this.profileSettingsPage.uploadAvatarIcon.click();
     await this.fileUploadPage.uploadCropImageFromCamera();
 });
 
-Then('I change my existing avatar', async function () {
+Then('I change my existing avatar', async function() {
     await this.profileSettingsPage.currentAvatar.click();
     await this.fileUploadPage.uploadCropImageFromCamera();
     const avatarLetterDisappeared = await this.profileSettingsPage.avatarLetterDisappeared;
     avatarLetterDisappeared.should.be.true; // eslint-disable-line
 });
 
-When('I go to security settings', async function () {
+When('I go to security settings', async function() {
     await this.homePage.settingsTab.click();
     await this.settingsPage.securityButton.click();
 });
 
-When('I can see my account key', async function () {
+When('I can see my account key', async function() {
     await this.settingsPage.showAccountKeyButton.click();
 
     const passphrase = await this.settingsPage.passphraseLabel.getText();

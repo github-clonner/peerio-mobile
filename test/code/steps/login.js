@@ -1,6 +1,6 @@
 const { existingUsers } = require('../helpers/userHelper');
 
-const { Given, When, Then  } = require('cucumber');
+const { Given, When, Then } = require('cucumber');
 
 When('I choose the create account option', function() {
     return this.selectCreateAccount();
@@ -65,4 +65,3 @@ Then('They sign up', async function() {
 Then('They confirm their email', async function() {
     // await confirmPrimaryEmail(this.email);
 });
-

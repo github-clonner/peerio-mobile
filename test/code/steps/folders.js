@@ -1,12 +1,11 @@
 const { Then } = require('cucumber');
 
-
-Then('the Files tab is empty', async function () {
+Then('the Files tab is empty', async function() {
     await this.homePage.filesTab.click();
     await this.filesListPage.placeholder;
 });
 
-Then('I create a folder named {string}', async function (word) {
+Then('I create a folder named {string}', async function(word) {
     await this.filesListPage.uploadFileButtton.click();
 
     await this.filesListPage.createFolderOption.click();
@@ -15,11 +14,11 @@ Then('I create a folder named {string}', async function (word) {
     await this.filesListPage.acceptFolderName.click();
 });
 
-Then('I open the {string} folder', async function (word) {
+Then('I open the {string} folder', async function(word) {
     await this.filesListPage.folderNamed(word).click();
 });
 
-Then('I upload a file', async function () {
+Then('I upload a file', async function() {
     await this.filesListPage.uploadFileButtton.click();
     await this.fileUploadPage.uploadFileFromGallery();
     await this.filesListPage.fileNameInput.setValue('Iceland');
@@ -27,14 +26,14 @@ Then('I upload a file', async function () {
     await this.filesListPage.fileUploadedPopup.click();
 });
 
-Then('I delete the folder named {string}', async function (word) {
+Then('I delete the folder named {string}', async function(word) {
     await this.homePage.filesTab.click();
     await this.filesListPage.optionsButttonFor(word).click();
     await this.filesListPage.deleteOption.click();
     await this.filesListPage.confirmDelete.click();
 });
 
-Then('I move the file in the folder named {string}', async function (word) {
+Then('I move the file in the folder named {string}', async function(word) {
     await this.homePage.filesTab.click();
 
     await this.filesListPage.optionsButttonFor('Iceland.jpg').click();
@@ -43,17 +42,16 @@ Then('I move the file in the folder named {string}', async function (word) {
     await this.filesListPage.folderNamed(word).click();
 });
 
-Then('the file is present', async function () {
+Then('the file is present', async function() {
     await this.filesListPage.folderNamed('Iceland.jpg');
 });
 
-Then('the {string} folder is present', async function (word) {
+Then('the {string} folder is present', async function(word) {
     await this.filesListPage.folderNamed(word);
 });
 
-Then('I move the {string} folder in the {string} folder', async function (toMove, parent) {
+Then('I move the {string} folder in the {string} folder', async function(toMove, parent) {
     await this.filesListPage.optionsButttonFor(toMove).click();
     await this.filesListPage.moveOption.click();
     await this.filesListPage.folderNamed(parent).click();
 });
-

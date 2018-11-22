@@ -14,4 +14,3 @@ When('I send a number to the app', async function() {
 When('I receive the same number back', async function() {
     this.responseNumber.should.equal(this.number);
 });
-

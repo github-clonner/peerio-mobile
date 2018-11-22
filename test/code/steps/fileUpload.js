@@ -1,6 +1,6 @@
 const { Then } = require('cucumber');
 
-Then('I upload a file from gallery to Files', async function () {
+Then('I upload a file from gallery to Files', async function() {
     await this.homePage.filesTab.click();
     // dismiss all beacons (files.js:testAction2)
     await this.filesListPage.testAction2();
@@ -10,13 +10,13 @@ Then('I upload a file from gallery to Files', async function () {
     await this.app.pause(3000);
 });
 
-Then('I upload a file from gallery to the current Chat', async function () {
+Then('I upload a file from gallery to the current Chat', async function() {
     await this.chatPage.buttonUploadToChat.click();
     await this.fileUploadPage.uploadFileFromGallery();
     await this.filesListPage.fileSharePreviewPopup.click();
 });
 
-Then('I can download the last uploaded file from Files', async function () {
+Then('I can download the last uploaded file from Files', async function() {
     await this.homePage.filesTab.click();
     // uses files.js:testAction1 helper to navigate to the topmost uploaded file
     // hint: this doesn't make sense for the pre-existing user
@@ -30,4 +30,3 @@ Then('I can download the last uploaded file from Files', async function () {
         await this.fileViewPage.filesDecryptedPopup.click();
     } */
 });
-
