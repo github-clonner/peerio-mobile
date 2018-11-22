@@ -25,11 +25,12 @@ class World {
     constructor({ attach, parameters }) {
         this.attach = attach;
         this.context = parameters.platform === 'ios' ? iOSFactory : AndroidFactory;
-        this.listener = ListenerServer.create();
+        this.listener = ListenerServer.create(parameters.platform);
     }
 
     destroy() {
-        this.listener.close();
+        ListenerServer.close();
+        this.listener = null;
     }
 
     openApp() {
@@ -217,6 +218,13 @@ class World {
         await this.savePasscode();
         await this.seeWelcomeScreen();
         await this.dismissEmailConfirmationPopup();
+    }
+
+    async callQuickSignup() {
+        await this.selectCreateAccount();
+        const result = this.listener.request('signupState.testQuickSignup()');
+        const { username, passphrase } = result;
+        Object.assign(this, { username, passphrase });
     }
 
     async logout() {
