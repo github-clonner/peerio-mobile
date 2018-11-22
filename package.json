@@ -39,9 +39,9 @@
     "test-android": "source env.sh && cucumber-js test/spec/contacts/contacts.feature:18 -r test/code -f node_modules/cucumber-pretty --world-parameters '{\"platform\": \"android\"}'",
     "gp-peerio": "npm run build-android && bash scripts/release_android.sh && fastlane android alpha",
     "commit-msg": "validate-commit-msg",
-    "prettier": "prettier -l --write 'app/**/*.js'",
+    "prettier": "prettier -l --write '{app,test}/**/*.js'",
     "test:lint": "eslint --max-warnings=0 app && ./scripts/test-observer-decorator.sh",
-    "test:prettier": "prettier -l 'app/**/*.js'"
+    "test:prettier": "prettier -l '{app,test}/**/*.js'"
   },
   "dependencies": {
     "@babel/cli": "7.0.0",
