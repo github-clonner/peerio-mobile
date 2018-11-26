@@ -14,6 +14,10 @@ Then('I am presented with my passcode', async function() {
     await this.savePasscode();
 });
 
+Then('I confirm signup', async function() {
+    await this.acceptTerms();
+});
+
 Then('I am taken to the Login Start screen', async function() {
     await this.startPage.loginButton;
 });
