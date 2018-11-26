@@ -5,6 +5,9 @@ import sounds from '../../lib/sounds';
 import { tx } from '../utils/translator';
 import routes from '../routes/routes';
 import { promiseWhen } from '../helpers/sugar';
+import MockChannel from '../mocks/mock-channel';
+
+const mockChannelNumber = 20;
 
 class ChatState extends RoutedState {
     @observable store = chatStore;
@@ -189,6 +192,15 @@ class ChatState extends RoutedState {
     fabAction() {
         console.log(`chat-state.js: fab action`);
         routes.modal.compose();
+    }
+
+    @action.bound
+    testFillWithMockChannels() {
+        for (let i = 0; i < mockChannelNumber; ++i) {
+            this.chatStore.chats.push(
+                new MockChannel(`${Math.floor(Math.random() * 1000) + 1000}`)
+            );
+        }
     }
 
     @action

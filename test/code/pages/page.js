@@ -36,6 +36,13 @@ class Page {
             .click('~endScroll');
     }
 
+    homeScrollHelper() {
+        return this.app
+            .waitForExist('~homeScroll')
+            .waitForVisible('~homeScroll')
+            .click('~homeScroll');
+    }
+
     testAction1() {
         return this.app
             .waitForExist('~testAction1')

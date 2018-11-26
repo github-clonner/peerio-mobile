@@ -88,6 +88,10 @@ export default class ChatList extends SafeComponent {
             this.reverseRoomSorting = !this.reverseRoomSorting;
         };
 
+        uiState.testAction2 = () => {
+            chatState.testFillWithMockChannels();
+        };
+
         // android has buggy overlay if you trigger animation immediately
         if (Platform.OS !== 'android') {
             this.indicatorReaction = reaction(
@@ -102,6 +106,8 @@ export default class ChatList extends SafeComponent {
         this.indicatorReaction && this.indicatorReaction();
         this.indicatorReaction = null;
         uiState.currentScrollView = null;
+        uiState.testAction1 = null;
+        uiState.testAction2 = null;
     }
 
     keyExtractor(item) {

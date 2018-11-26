@@ -25,6 +25,14 @@ class ChatListPage extends Page {
         return this.getWhenVisible('~chatlist-unread-indicator-bottom');
     }
 
+    get topUnreadMessageIndicatorVisible() {
+        return this.checkIfVisible('~chatlist-unread-indicator-top');
+    }
+
+    get bottomUnreadMessageIndicatorVisible() {
+        return this.checkIfVisible('~chatlist-unread-indicator-bottom');
+    }
+
     get patientSpace() {
         return this.getWhenVisible('~Patient 1');
     }

@@ -3,14 +3,24 @@ const { existingUsers } = require('../helpers/userHelper');
 const { When, Then } = require('cucumber');
 
 When('I start a DM with {word} user', async function(string) {
-    await this.openContactsPickerForDM();
     const user = string === 'helper' ? this.helperUsername : existingUsers[string].name;
+    await this.openContactsPickerForDM();
     await this.searchForRecipient(user);
     await this.contactSelectorPage.recipientContact(user).click();
 });
 
 When('I create a new room', async function() {
     this.roomName = new Date().getTime();
+    await this.chatListPage.buttonCreateNewChat.click();
+    await this.chatActionSheetPage.newRoomOption.click();
+    await this.roomCreationPage.textInputRoomName.setValue(this.roomName);
+    await this.roomCreationPage.hideKeyboardHelper();
+    await this.roomCreationPage.nextButton.click();
+    await this.roomCreationPage.goButton.click();
+});
+
+When('I create a new room named {word}', async function(string) {
+    this.roomName = string;
     await this.chatListPage.buttonCreateNewChat.click();
     await this.chatActionSheetPage.newRoomOption.click();
     await this.roomCreationPage.textInputRoomName.setValue(this.roomName);
@@ -48,18 +58,20 @@ Then('I scroll down the chat list', async function() {
 
 Then('I press the top unread message indicator', async function() {
     await this.chatListPage.topUnreadMessageIndicator.click();
+    await this.chatListPage.homeScrollHelper();
 });
 
 Then('I can see the top unread chat', async function() {
-    await this.chatListPage.chatWithTitleIsVisible(process.env.TOPUNREADINDICATOR_TEST_USER);
+    await this.chatListPage.chatWithTitle(this.roomName);
 });
 
 Then('I press the bottom unread message indicator', async function() {
     await this.chatListPage.bottomUnreadMessageIndicator.click();
+    await this.chatListPage.scrollToEndHelper();
 });
 
 Then('I can see the bottom unread chat', async function() {
-    await this.chatListPage.chatWithTitleIsVisible(process.env.BOTTOMUNREADINDICATOR_TEST_USER);
+    await this.chatListPage.chatWithTitle(this.roomName);
 });
 
 Then('I can open a chat with {word}', async function(string) {
@@ -122,4 +134,8 @@ Then('User dismisses placeholder DM', async function() {
 
 Then(/(?:I am|they are) in the chat list page/, async function() {
     await this.chatListPage.buttonCreateNewChat;
+});
+
+Then('I fill my chatlist', async function() {
+    await this.chatListPage.testAction2();
 });
