@@ -4,8 +4,9 @@ const { When, Then } = require('cucumber');
 
 When('I start a DM with {word} user', async function(string) {
     await this.openContactsPickerForDM();
-    await this.searchForRecipient(existingUsers[string].name);
-    await this.contactSelectorPage.recipientContact(existingUsers[string].name).click();
+    const user = string === 'helper' ? this.helperUsername : existingUsers[string].name;
+    await this.searchForRecipient(user);
+    await this.contactSelectorPage.recipientContact(user).click();
 });
 
 When('I create a new room', async function() {
@@ -30,9 +31,15 @@ Then('I can send a message to the current chat', async function() {
 });
 
 Then('I send several messages to the current chat', async function() {
-    await this.chatPage.buttonUploadToChat.click();
-    await this.fileUploadPage.uploadFileFromGallery();
-    await this.filesListPage.fileSharePreviewPopup.click();
+    if (await this.chatPage.shareFileInChatBeaconVisible)
+        await this.chatPage.shareFileInChatBeacon.click();
+
+    for (let i = 0; i < 3; i++) {
+        await this.chatPage.buttonUploadToChat.click();
+        await this.fileUploadPage.uploadFileFromGallery();
+        await this.filesListPage.fileSharePreviewPopup.click();
+        await this.app.pause(1000); // time to upload
+    }
 });
 
 Then('I scroll down the chat list', async function() {
@@ -59,8 +66,14 @@ Then('I can open a chat with {word}', async function(string) {
     await this.chatListPage.chatWithTitle(string).click();
 });
 
+Then('I open the chat', async function() {
+    await this.chatListPage.chatWithTitle(this.username).click();
+});
+
 Then('I scroll up the chat', async function() {
     await this.app.pause(5000); // wait till chat loads
+    if (await this.chatPage.shareFileInChatBeaconVisible)
+        await this.chatPage.shareFileInChatBeacon.click();
     await this.chatPage.testAction2();
 });
 
