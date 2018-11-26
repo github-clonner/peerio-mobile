@@ -29,11 +29,18 @@ esac
 
 ./node_modules/.bin/appium > /dev/null &
 APPIUM_PID=$!
+TEST_EXITCODE=0
 
-trap "exit" INT TERM
-trap "kill $APPIUM_PID" EXIT
+cleanup() {
+  echo "...cleanup"
+  trap "" EXIT
+  kill $APPIUM_PID
+  exit $TEST_EXITCODE
+}
+
+trap cleanup INT TERM EXIT
+
 sleep 1
-
 wait "Waiting appium to launch on 4723..."
 
 while ! nc -z localhost 4723; do
@@ -43,6 +50,7 @@ done
 check "appium launched"
 
 npm run test-$PEERIO_TEST_PLATFORM
+TEST_EXITCODE=$?
 
 if [ -z $"$CIRCLE_TEST_REPORTS" ]; then
   echo "Skipping CircleCI report generation"
