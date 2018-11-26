@@ -63,7 +63,7 @@
     "babel-plugin-root-import": "6.1.0",
     "base64-js": "1.2.0",
     "blake2s-js": "1.3.0",
-    "bluebird": "3.5.2",
+    "bluebird": "3.5.3",
     "buffer": "5.0.8",
     "capitalize": "1.0.0",
     "cross-fetch": "2.2.3",
