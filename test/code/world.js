@@ -71,6 +71,7 @@ class World {
 
     closeApp() {
         return this.app
+            .closeApp()
             .removeApp(this.context.bundleId) // remove app so it doesn't influence next test
             .end(); // end server session and close webdriver
     }
@@ -128,12 +129,8 @@ class World {
         await this.startPage.createAccountButton.click();
     }
 
-    async typePersonalInfo(username) {
+    async typePersonalInfo() {
         this.username = new Date().getTime();
-        if (username) {
-            this.username = username;
-        }
-
         const email = `${this.username}@test.lan`;
         console.log('Creating account with username', this.username);
 
@@ -158,7 +155,9 @@ class World {
             this.passphrase = innerText;
         });
         console.log('Creating account with passphrase', this.passphrase);
+    }
 
+    async acceptTerms() {
         await this.createAccountPage.copyButton.click();
         await this.createAccountPage.nextButton.click();
 
@@ -212,12 +211,21 @@ class World {
     }
 
     // username is optional
-    async createNewAccount(username) {
+    async createNewAccount() {
         await this.selectCreateAccount();
-        await this.typePersonalInfo(username);
+        await this.typePersonalInfo();
         await this.savePasscode();
+        await this.acceptTerms();
         await this.seeWelcomeScreen();
         await this.dismissEmailConfirmationPopup();
+    }
+
+    async createHelperAccount() {
+        await this.selectCreateAccount();
+        const { username, passphrase } = await this.listener.request(
+            'signupState.testQuickSignup()'
+        );
+        Object.assign(this, { helperUsername: username, helperPassphrase: passphrase });
     }
 
     async callQuickSignup() {
