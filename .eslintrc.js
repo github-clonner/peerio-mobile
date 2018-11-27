@@ -22,6 +22,7 @@ module.exports = {
         'max-len': 0,
         'space-before-function-paren': 0,
         'babel/semi': 1,
+        'import/prefer-default-export': 0,
         'no-restricted-imports': [2, { paths: [{
             name: 'react-native',
             importNames: ['Text'],

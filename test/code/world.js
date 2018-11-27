@@ -229,9 +229,11 @@ class World {
         Object.assign(this, { helperUsername: username, helperPassphrase: passphrase });
     }
 
-    async callQuickSignup() {
+    async callQuickSignup(params) {
         await this.selectCreateAccount();
-        const result = this.listener.request('signupState.testQuickSignup()');
+        const result = await this.listener.request(
+            `signupState.testQuickSignup(${JSON.stringify(params || {})})`
+        );
         const { username, passphrase } = result;
         Object.assign(this, { username, passphrase });
     }

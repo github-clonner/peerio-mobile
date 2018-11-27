@@ -102,7 +102,7 @@ Then('They can send a message to the current chat', async function() {
     await this.chatPage.buttonSendMessage.click();
 });
 
-Then('I recieve placeholder DM', async function() {
+Then('I receive placeholder DM', async function() {
     await this.chatListPage.chatWithTitle(this.username).click();
 });
 

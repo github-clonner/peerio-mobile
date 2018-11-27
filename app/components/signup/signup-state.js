@@ -211,15 +211,16 @@ class SignupState extends RoutedState {
     }
 
     @action.bound
-    async testQuickSignup() {
+    async testQuickSignup(params) {
         // for parallel tests we add Math.random();
         const randomId = `${Math.ceil(Math.random() * 10000)}${new Date().getTime() % 100000000}`;
         const firstName = capitalize(randomWords());
         const lastName = capitalize(randomWords());
         const passphrase = await this.generatePassphrase();
+        const email = params.email || `${randomId}@123.com`;
         const testUserData = {
             username: `u${randomId}`,
-            email: `${randomId}@123.com`,
+            email,
             firstName,
             lastName,
             passphrase

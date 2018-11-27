@@ -35,6 +35,7 @@ import ViewWithDrawer from '../shared/view-with-drawer';
 import { TopDrawerBackupAccountKey, TopDrawerNewContact } from '../shared/top-drawer-components';
 import routes from '../routes/routes';
 import uiState from '../layout/ui-state';
+import { testConfirmEmail } from '../helpers/test-confirm-email';
 
 const svStyle = {
     flexGrow: 1,
@@ -235,6 +236,9 @@ export default class SettingsLevel1 extends SafeComponent {
                         testID="button_signOut"
                     />
                     {this.spacer}
+                    {__DEV__ && (
+                        <BasicSettingsItem title="confirm email" onPress={testConfirmEmail} />
+                    )}
                     {__DEV__ && (
                         <BasicSettingsItem
                             title="show saved beacons"
