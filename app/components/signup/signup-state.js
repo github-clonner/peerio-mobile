@@ -211,7 +211,7 @@ class SignupState extends RoutedState {
     }
 
     @action.bound
-    async testQuickSignup(params) {
+    async testQuickSignup(params = {}) {
         // for parallel tests we add Math.random();
         const randomId = `${Math.ceil(Math.random() * 10000)}${new Date().getTime() % 100000000}`;
         const firstName = capitalize(randomWords());

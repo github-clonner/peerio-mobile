@@ -19,6 +19,7 @@ import MockMigration from './mock-migration';
 import MockTopDrawer from './mock-top-drawer';
 import MockUpgrade from './mock-upgrade';
 import MockTestBridge from './mock-test-bridge';
+import MockUrlPreview from './mock-url-preview';
 
 // we require all mocks to prevent them from being orphaned
 // when checking for unused JS filex
@@ -44,7 +45,8 @@ const mocks = {
     MockMigration,
     MockTopDrawer,
     MockUpgrade,
-    MockTestBridge
+    MockTestBridge,
+    MockUrlPreview
 };
 
 // switch this to mocks item to test [TODO: replace with storybooks]

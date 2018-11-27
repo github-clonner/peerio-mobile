@@ -9,6 +9,7 @@ import ChatMessageInlineImages from './chat-message-inline-images';
 import SystemMessage from './system-message';
 import ChatMessageText from './chat-message-text';
 import ChatMessageSendError from './chat-message-error';
+import ChatMessageInlineUrls from './chat-message-inline-urls';
 
 @observer
 export default class ChatMessageBody extends SafeComponent {
@@ -37,6 +38,7 @@ export default class ChatMessageBody extends SafeComponent {
                     onLegacyFileAction={onLegacyFileAction}
                 />
                 <ChatMessageText message={messageObject.text} />
+                <ChatMessageInlineUrls message={messageObject} />
                 <SystemMessage message={messageObject} />
                 <ChatMessageSendError visible={messageObject.sendError} />
             </View>
