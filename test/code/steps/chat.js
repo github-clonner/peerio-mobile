@@ -58,7 +58,6 @@ Then('I scroll down the chat list', async function() {
 
 Then('I press the top unread message indicator', async function() {
     await this.chatListPage.topUnreadMessageIndicator.click();
-    await this.chatListPage.homeScrollHelper();
 });
 
 Then('I can see the top unread chat', async function() {
@@ -67,7 +66,6 @@ Then('I can see the top unread chat', async function() {
 
 Then('I press the bottom unread message indicator', async function() {
     await this.chatListPage.bottomUnreadMessageIndicator.click();
-    await this.chatListPage.scrollToEndHelper();
 });
 
 Then('I can see the bottom unread chat', async function() {

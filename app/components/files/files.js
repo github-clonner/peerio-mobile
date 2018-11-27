@@ -23,7 +23,6 @@ import SharedFolderRemovalNotif from './shared-folder-removal-notif';
 import SearchBar from '../controls/search-bar';
 import FlatListWithDrawer from '../shared/flat-list-with-drawer';
 import zeroStateBeacons from '../beacons/zerostate-beacons';
-import { scrollHelper } from '../helpers/test-helper';
 import filesBeacons from '../beacons/files-beacons';
 import MeasureableView from '../shared/measureable-view';
 import beaconState from '../beacons/beacon-state';
@@ -109,10 +108,6 @@ export default class Files extends SafeComponent {
         );
     };
 
-    flatListRef = ref => {
-        uiState.currentScrollView = ref;
-    };
-
     keyExtractor = fsObject => (fsObject ? fsObject.fileId || fsObject.id : null);
 
     get noFilesMatchSearch() {
@@ -136,7 +131,6 @@ export default class Files extends SafeComponent {
         return (
             <MeasureableView onMeasure={this.onMeasure}>
                 <FlatListWithDrawer
-                    scrollHelper={scrollHelper}
                     ListHeaderComponent={!this.isZeroState && this.searchTextbox()}
                     ListFooterComponent={this.noFilesMatchSearch}
                     keyExtractor={this.keyExtractor}

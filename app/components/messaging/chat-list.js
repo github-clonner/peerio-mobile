@@ -15,7 +15,6 @@ import CreateActionSheet from './create-action-sheet';
 import { tx } from '../utils/translator';
 import uiState from '../layout/ui-state';
 import drawerState from '../shared/drawer-state';
-import { scrollHelper } from '../helpers/test-helper';
 import UnreadMessageIndicator from './unread-message-indicator';
 import { vars } from '../../styles/styles';
 import ChatZeroStatePlaceholder from './chat-zero-state-placeholder';
@@ -267,7 +266,6 @@ export default class ChatList extends SafeComponent {
             <FlatListWithDrawer
                 onLayout={this.onLayout}
                 setScrollViewRef={this.scrollViewRef}
-                scrollHelper={scrollHelper}
                 style={{ flexGrow: 1 }}
                 initialNumToRender={INITIAL_LIST_SIZE}
                 data={this.dataSource}

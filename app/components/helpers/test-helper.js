@@ -8,24 +8,18 @@ import testLabel from './test-label';
 let currentScrollView = null;
 let currentScrollPosition = 0;
 
-/**
- * Scroll helper is used to provide scrolling capability
- * to the test script. Note that it overrides ref and onScroll
- * event handlers
- */
-const scrollHelper = __DEV__
-    ? {
-          ref: ref => {
-              currentScrollPosition = 0;
-              currentScrollView = ref;
-          },
-          onScroll: e => {
-              currentScrollPosition = e.nativeEvent.contentOffset.y;
-          }
-      }
-    : null;
+function setScrollHelperRef(ref) {
+    if (!__DEV__) return;
+    currentScrollPosition = 0;
+    currentScrollView = ref;
+}
 
-export { scrollHelper };
+function setScrollHelperOnScroll(e) {
+    if (!__DEV__) return;
+    currentScrollPosition = e.nativeEvent.contentOffset.y;
+}
+
+export { setScrollHelperRef, setScrollHelperOnScroll };
 
 const { height } = Dimensions.get('window');
 

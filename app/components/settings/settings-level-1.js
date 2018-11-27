@@ -28,7 +28,6 @@ import {
 } from '../../lib/icebear';
 import { popupAbout, popupInputCancel } from '../shared/popups';
 import ButtonWithIcon from '../controls/button-with-icon';
-import { scrollHelper } from '../helpers/test-helper';
 import icons from '../helpers/icons';
 import AvatarCircle from '../shared/avatar-circle';
 import PaymentStorageUsageItem from '../payments/payments-storage-usage-item';
@@ -160,7 +159,7 @@ export default class SettingsLevel1 extends SafeComponent {
             </SettingsItem>
         );
         return (
-            <ViewWithDrawer style={svStyle} scrollHelper={scrollHelper}>
+            <ViewWithDrawer style={svStyle}>
                 <View style={bgStyle}>
                     <SettingsItem
                         title={User.current.fullName}

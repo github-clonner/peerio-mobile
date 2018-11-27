@@ -61,7 +61,7 @@ When('I log in as {word} user', async function(string) {
     }
 
     if (string === 'new') {
-        return this.createNewAccount();
+        return this.callQuickSignup();
     }
 
     const credentials = existingUsers[string];
