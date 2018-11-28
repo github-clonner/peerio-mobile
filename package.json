@@ -1,6 +1,6 @@
 {
   "name": "peeriomobile",
-  "version": "3.413.0",
+  "version": "3.414.0",
   "private": true,
   "scripts": {
     "postinstall": "./scripts/setup-env.sh && npm run icebear:compile && ./scripts/setup-rn-debugging.sh && ./scripts/copy-android-resources.sh && ./scripts/android-switch-to-rn-fork.sh && node scripts/test-deps.js",
@@ -176,7 +176,7 @@
     "sinon": "1.17.7",
     "sinon-chai": "2.14.0",
     "socket.io": "2.1.1",
-    "standard-version": "4.0.0",
+    "standard-version": "4.4.0",
     "typescript": "2.0.10",
     "user-home-cli": "1.0.1",
     "validate-commit-message": "3.0.1",
