@@ -1,6 +1,6 @@
 {
   "name": "peeriomobile",
-  "version": "3.412.0",
+  "version": "3.413.0",
   "private": true,
   "scripts": {
     "postinstall": "./scripts/setup-env.sh && npm run icebear:compile && ./scripts/setup-rn-debugging.sh && ./scripts/copy-android-resources.sh && ./scripts/android-switch-to-rn-fork.sh && node scripts/test-deps.js",
@@ -16,7 +16,7 @@
     "android": "react-native run-android",
     "android-signed": "npm run build-android && ./scripts/release_android.sh",
     "localize": "tx pull -af",
-    "release": "standard-version -r minor && git push --follow-tags origin",
+    "release": "standard-version -a -r minor && git push --follow-tags origin",
     "link": "react-native link",
     "build-ios-sim-debug": "cd ios && xcodebuild -project peeriomobile.xcodeproj -configuration Debug -scheme peeriomobile -destination platform='iOS Simulator,name=iPhone 6,OS=10.2' -derivedDataPath build",
     "build-android": "cd android && ./gradlew assembleRelease && git add version.properties && git commit -m 'chore(fastlane): android fastlane' && git push",
@@ -207,6 +207,11 @@
   "husky": {
     "hooks": {
       "pre-push": "npm run test:lint && npm run test:prettier"
+    }
+  },
+  "standard-version": {
+    "scripts": {
+      "postbump": "npm install --package-lock && git add package-lock.json"
     }
   }
 }
