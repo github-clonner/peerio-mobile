@@ -117,6 +117,7 @@ export default class InlineUrlContainer extends SafeComponent {
 
     get title() {
         const { title } = this.props.externalWebsite;
+        if (!title) return null;
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.retentionOffset}
@@ -131,6 +132,7 @@ export default class InlineUrlContainer extends SafeComponent {
 
     get description() {
         const { description } = this.props.externalWebsite;
+        if (!description) return null;
         return (
             <View style={descriptionContainerStyle}>
                 <Text numberOfLines={4} ellipsizeMode="tail" style={descriptionTextStyle}>
@@ -142,6 +144,7 @@ export default class InlineUrlContainer extends SafeComponent {
 
     get imageSize() {
         const { image } = this.props.externalWebsite;
+        if (!image) return null;
         return (
             <Text italic style={imageSizeTextStyle}>
                 {util.formatBytes(image.length)}
@@ -198,10 +201,10 @@ export default class InlineUrlContainer extends SafeComponent {
                 {this.isOpen && (
                     <View>
                         <View onLayout={this.onLayout}>
-                            {title && this.title}
-                            {description && this.description}
-                            {image && this.imageSize}
-                            {image && this.image}
+                            {this.title}
+                            {this.description}
+                            {this.imageSize}
+                            {this.image}
                         </View>
                     </View>
                 )}
