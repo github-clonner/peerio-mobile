@@ -46,7 +46,7 @@ export default class InputMain extends SafeComponent {
     }
 
     setFocus() {
-        this.input.ti.focus();
+        this.textInputRef.focus();
     }
 
     get canSend() {
@@ -55,6 +55,10 @@ export default class InputMain extends SafeComponent {
             (uiState.isAuthenticated && (this.hasText ? chatState.canSend : chatState.canSendAck))
         );
     }
+
+    setRef = ref => {
+        this.textInputRef = ref;
+    };
 
     renderThrow() {
         const {
@@ -95,9 +99,7 @@ export default class InputMain extends SafeComponent {
                         maxHeight={146}
                         style={tiStyle}
                         blurOnSubmit={false}
-                        ref={ref => {
-                            this.input = ref;
-                        }}
+                        ref={this.setRef}
                         {...testLabel('textInputMessage')}
                     />
                 </View>
