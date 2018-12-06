@@ -17,6 +17,10 @@ class ChatListPage extends Page {
         return this.checkIfPresent(`~${selector}`, 25000);
     }
 
+    chatWithTitleDisappeared(selector) {
+        return this.waitToDisappear(`~${selector}`);
+    }
+
     get topUnreadMessageIndicator() {
         return this.getWhenVisible('~chatlist-unread-indicator-top');
     }

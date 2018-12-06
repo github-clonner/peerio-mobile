@@ -120,13 +120,13 @@ Then('They receive placeholder DM', async function() {
 });
 
 Then('I cannot see their DM', async function() {
-    const dmExists = await this.chatListPage.chatWithTitleExists(this.username);
-    dmExists.should.be.false; // eslint-disable-line
+    const dmDisappeared = await this.chatListPage.chatWithTitleDisappeared(this.username);
+    dmDisappeared.should.be.true; // eslint-disable-line
 });
 
 Then('They cannot see my DM', async function() {
-    const dmExists = await this.chatListPage.chatWithTitleExists(this.username);
-    dmExists.should.be.false; // eslint-disable-line
+    const dmDisappeared = await this.chatListPage.chatWithTitleDisappeared(this.username);
+    dmDisappeared.should.be.true; // eslint-disable-line
 });
 
 Then('User accepts placeholder DM', async function() {
