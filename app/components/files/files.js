@@ -51,7 +51,7 @@ export default class Files extends SafeComponent {
         return (
             !fileState.isFileSelectionMode && (
                 <PlusBorderIcon
-                    action={() => FileUploadActionSheet.show(false, true)}
+                    action={() => FileUploadActionSheet.show({ createFolder: true })}
                     beacon={[zeroStateBeacons.uploadFileBeacon, filesBeacons.foldersBeacon]}
                     testID="buttonUploadFileToFiles"
                 />
