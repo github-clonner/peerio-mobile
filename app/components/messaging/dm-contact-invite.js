@@ -70,10 +70,11 @@ export default class DmContactInvite extends SafeComponent {
         const { showButtons } = this.props;
         const { chat } = this;
         const participant = chat.otherParticipants[0];
-        const greetingCopy = chat.isReceived ? 'title_helloDmInvite' : 'title_goodNews';
-        const headingCopy = chat.isReceived
-            ? 'title_newUserDmInviteHeading'
-            : 'title_dmInviteHeading';
+        console.log('participant');
+        console.log(JSON.stringify(participant));
+        const isReceived = chat.isReceived || chat.isNewUserFromInvite;
+        const greetingCopy = isReceived ? 'title_helloDmInvite' : 'title_goodNews';
+        const headingCopy = isReceived ? 'title_newUserDmInviteHeading' : 'title_dmInviteHeading';
         const inviteMethodCopy = chat.isAutoImport
             ? 'title_userInAddressBook'
             : 'title_invitedUserViaEmail';
@@ -84,11 +85,11 @@ export default class DmContactInvite extends SafeComponent {
                 <Text style={[headingStyle, { marginBottom: vars.spacing.medium.maxi }]}>
                     {tx(headingCopy, { contactName: participant.fullName })}
                 </Text>
-                {!chat.isReceived && (
+                {!isReceived && (
                     <Text semibold style={inviteMethodStyle}>
                         {tx(inviteMethodCopy, {
                             firstName: participant.firstName,
-                            email: participant.addresses[0]
+                            email: participant.addresses[0] || ''
                         })}
                     </Text>
                 )}

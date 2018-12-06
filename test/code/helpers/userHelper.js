@@ -11,10 +11,6 @@ const existingUsers = {
         name: process.env.CREATE_ROOM_TEST_USER,
         passphrase: process.env.CREATE_ROOM_TEST_PASS
     },
-    placeholder_test: {
-        name: process.env.PLACEHOLDERDM_TEST_USER,
-        passphrase: process.env.PLACEHOLDERDM_TEST_PASS
-    },
     doctor: {
         name: process.env.MCR_DOCTOR_USER,
         passphrase: process.env.MCR_DOCTOR_PASS

@@ -80,13 +80,14 @@ Then('the helper user logs in', async function() {
     await this.loginExistingAccountWithout2FA(this.helperUsername, this.helperPassphrase);
 });
 
-// this.email needs to be set by a previous step definition
-Then('They sign up', async function() {
-    await this.callQuickSignup({ email: this.email });
+// this.invitationEmail needs to be set by a previous step definition
+Then('Invited user signs up', async function() {
+    if (!this.invitationEmail)
+        throw new Error('this.invitationEmail needs to be set by a previous step definition');
+    await this.createHelperAccount({ email: this.invitationEmail });
 });
 
 // this.email needs to be set by a previous step definition
-Then('They confirm their email', async function() {
+Then('User confirms their email', async function() {
     await this.listener.request('testConfirmEmail()');
-    // await confirmPrimaryEmail(this.email);
 });

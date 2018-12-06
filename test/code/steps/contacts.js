@@ -66,7 +66,6 @@ Then('I invite someone to join Peerio', async function() {
     await this.homePage.contactsTab.click();
     await this.contactsPage.addContactButton.click();
 
-    this.username = new Date().getTime();
-    this.email = `${this.username}@test.lan`;
-    await this.inviteContactWithEmail(this.email);
+    this.invitationEmail = `${new Date().getTime()}@test.lan`;
+    await this.inviteContactWithEmail(this.invitationEmail);
 });

@@ -221,10 +221,10 @@ class World {
         await this.dismissEmailConfirmationPopup();
     }
 
-    async createHelperAccount() {
+    async createHelperAccount(params) {
         await this.selectCreateAccount();
         const { username, passphrase } = await this.listener.request(
-            'signupState.testQuickSignup()'
+            `signupState.testQuickSignup(${JSON.stringify(params || {})})`
         );
         Object.assign(this, { helperUsername: username, helperPassphrase: passphrase });
     }
