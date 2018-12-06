@@ -4,6 +4,8 @@ import * as linkify from 'linkifyjs';
 import Text from '../controls/custom-text';
 import { vars } from '../../styles/styles';
 
+function noop() {}
+
 export default (m, username) => {
     /* const tagify = (t, r, s, n) => {
         return t.split(r).map((token, i) => {
@@ -46,8 +48,9 @@ export default (m, username) => {
                   color: vars.peerioBlue
               }
             : null;
+        // onLongPress noop prevents opening links when there was a long press
         return (
-            <Text onPress={p} key={i} style={s}>
+            <Text onPress={p} onLongPress={noop} key={i} style={s}>
                 {t}
             </Text>
         );
