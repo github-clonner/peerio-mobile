@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import _ from 'lodash';
-import { View } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { reaction, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
@@ -104,14 +104,17 @@ export default class ViewReceipts extends SafeComponent {
     }
 
     renderThrow() {
-        const { receipts } = this.props;
+        const { receipts, onPressReceipt } = this.props;
         if (!receipts || !receipts.length) return <View style={emptyReceiptRow} />;
 
         return (
-            <View style={receiptRow}>
+            <TouchableOpacity
+                onPress={onPressReceipt}
+                pressRetentionOffset={vars.retentionOffset}
+                style={receiptRow}>
                 <View style={half}>{icons.plain('remove-red-eye', 12, vars.darkBlue)}</View>
                 <View style={half}>{this.receiptComponent}</View>
-            </View>
+            </TouchableOpacity>
         );
     }
 }

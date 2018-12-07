@@ -17,6 +17,7 @@ import routes from './routes';
 import { vars } from '../../styles/styles';
 import { uiState } from '../states';
 import SignupContactInvite from '../contacts/contact-sync-invite';
+import MessageInfo from '../messaging/message-info';
 
 class RouterModal extends Router {
     @observable animating = false;
@@ -38,6 +39,7 @@ class RouterModal extends Router {
         this.add('channelInfo', ChannelInfo);
         this.add('accountUpgradeSwiper', AccountUpgradeSwiper, true, true);
         this.add('contactSync', SignupContactInvite);
+        this.add('messageInfo', MessageInfo);
     }
 
     add(route, component, isWhite) {

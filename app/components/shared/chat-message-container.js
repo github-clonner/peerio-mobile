@@ -7,6 +7,7 @@ import { vars } from '../../styles/styles';
 import DateSeparator from './date-separator';
 import ChatMessageCollapsed from './chat-message-collapsed';
 import ChatMessageFull from './chat-message-full';
+import { chatState } from '../states';
 
 @observer
 export default class ChatMessageContainer extends SafeComponent {
@@ -35,7 +36,14 @@ export default class ChatMessageContainer extends SafeComponent {
             onLegacyFileAction: this.props.onLegacyFileAction,
             onInlineImageAction: this.props.onInlineImageAction,
             backgroundColor: this.backgroundColor,
-            errorStyle: this.errorStyle
+            errorStyle: this.errorStyle,
+            onPressReceipt: () => {
+                chatState.currentMessage = this.props.messageObject;
+                chatState.onFileAction = this.props.onLegacyFileAction;
+                chatState.onLegacyFileAction = this.props.onInlineImageAction;
+                chatState.onInlineImageAction = this.props.onInlineImageAction;
+                chatState.routerModal.messageInfo();
+            }
         };
     }
 

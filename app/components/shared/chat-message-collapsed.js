@@ -32,7 +32,8 @@ export default class ChatMessageCollapsed extends SafeComponent {
             chat,
             onFileAction,
             onLegacyFileAction,
-            onInlineImageAction
+            onInlineImageAction,
+            onPressReceipt
         } = this.props;
 
         const { files, folders } = messageObject;
@@ -50,7 +51,10 @@ export default class ChatMessageCollapsed extends SafeComponent {
                         onLegacyFileAction={onLegacyFileAction}
                         onInlineImageAction={onInlineImageAction}
                     />
-                    <ViewReceipts receipts={messageObject.receipts} />
+                    <ViewReceipts
+                        receipts={messageObject.receipts}
+                        onPressReceipt={onPressReceipt}
+                    />
                 </View>
                 <MessageSentError message={messageObject} chat={chat} />
             </View>

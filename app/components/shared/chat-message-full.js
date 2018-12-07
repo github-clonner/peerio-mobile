@@ -60,7 +60,8 @@ export default class ChatMessageFull extends SafeComponent {
             chat,
             onFileAction,
             onLegacyFileAction,
-            onInlineImageAction
+            onInlineImageAction,
+            onPressReceipt
         } = this.props;
 
         return (
@@ -78,7 +79,10 @@ export default class ChatMessageFull extends SafeComponent {
                                     onLegacyFileAction={onLegacyFileAction}
                                     onInlineImageAction={onInlineImageAction}
                                 />
-                                <ViewReceipts receipts={messageObject.receipts} />
+                                <ViewReceipts
+                                    receipts={messageObject.receipts}
+                                    onPressReceipt={onPressReceipt}
+                                />
                             </View>
                         </View>
                     </View>
