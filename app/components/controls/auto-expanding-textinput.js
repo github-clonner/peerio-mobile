@@ -19,7 +19,7 @@ export default class AutoExpandingTextInput extends Component {
 
     _onContentSizeChange = event => {
         const curHeight = event.nativeEvent.contentSize.height;
-        if (curHeight < this.props.minHeight || curHeight > this.state.maxHeight) return;
+        if (curHeight < this.props.minHeight || curHeight > this.props.maxHeight) return;
         this.height = curHeight;
     };
 
