@@ -27,7 +27,7 @@ export default class ChatMessageInlineImages extends SafeComponent {
     }
 
     get renderImages() {
-        const { onInlineImageAction, onLegacyFileAction } = this.props;
+        const { onInlineImageAction, onLegacyFileAction, isClosed } = this.props;
 
         return this.images.map(image => {
             const key = image.fileId || image.url;
@@ -35,6 +35,7 @@ export default class ChatMessageInlineImages extends SafeComponent {
                 <FileInlineImage
                     {...{ key, image, onLegacyFileAction }}
                     onAction={onInlineImageAction}
+                    isClosed={isClosed}
                 />
             );
         });

@@ -12,7 +12,13 @@ export default class ChatMessageInlineUrls extends SafeComponent {
         if (!externalWebsites.length) return null;
 
         return externalWebsites.map(externalWebsite => {
-            return <InlineUrlContainer key={externalWebsite} externalWebsite={externalWebsite} />;
+            return (
+                <InlineUrlContainer
+                    key={externalWebsite}
+                    externalWebsite={externalWebsite}
+                    isClosed={this.props.isClosed}
+                />
+            );
         });
     }
 }

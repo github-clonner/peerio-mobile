@@ -73,7 +73,7 @@ const imageSizeTextStyle = {
 
 @observer
 export default class InlineUrlContainer extends SafeComponent {
-    @observable isOpen = true;
+    @observable isOpen = !this.props.isClosed;
     @observable optimalContentWidth = 0;
     @observable optimalContentHeight = 0;
 

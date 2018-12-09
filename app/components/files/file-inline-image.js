@@ -104,7 +104,7 @@ export default class FileInlineImage extends SafeComponent {
             when(
                 () => clientApp.uiUserPrefs.peerioContentEnabled,
                 () => {
-                    this.opened = true;
+                    this.opened = !this.props.isClosed;
                 }
             );
             if (!this.loadImage) {
@@ -154,12 +154,13 @@ export default class FileInlineImage extends SafeComponent {
             );
             this.opened =
                 clientApp.uiUserPrefs.externalContentConsented &&
-                clientApp.uiUserPrefs.externalContentEnabled;
+                clientApp.uiUserPrefs.externalContentEnabled &&
+                !this.props.isClosed;
             when(
                 () => this.loadImage,
                 () => {
                     this.cachedImage = inlineImageCacheStore.getImage(url);
-                    this.opened = true;
+                    this.opened = !this.props.isClosed;
                     this.handleLoadStart();
                 }
             );

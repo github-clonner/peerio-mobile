@@ -38,6 +38,7 @@ export default class MessageInfo extends SafeComponent {
                     onFileAction={chatState.onFileAction}
                     onLegacyFileAction={chatState.onLegacyFileAction}
                     onInlineImageAction={chatState.onInlineImageAction}
+                    isClosed
                 />
             </View>
         );
