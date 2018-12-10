@@ -78,6 +78,7 @@ export default class InlineUrlContainer extends SafeComponent {
     @observable isOpen = !this.props.isClosed;
     @observable optimalContentWidth = 0;
     @observable optimalContentHeight = 0;
+    @observable errorLoadingFavIcon;
 
     @action.bound
     openUrl() {
@@ -89,15 +90,30 @@ export default class InlineUrlContainer extends SafeComponent {
         this.isOpen = !this.isOpen;
     }
 
+    @action.bound
+    onErrorLoadingFavIcon() {
+        this.errorLoadingFavIcon = true;
+    }
+
     get favicon() {
         const { favicon, fileType } = this.props.externalWebsite;
         if (fileType) {
             return <FileTypeIcon type={fileType} size="icon" />;
         }
-        return favicon && favicon.url ? (
-            <Image style={faviconStyle} source={{ uri: favicon.url }} onPress={this.openUrl} />
+        return favicon && favicon.url && !this.errorLoadingFavIcon ? (
+            <Image
+                style={faviconStyle}
+                onError={this.onErrorLoadingFavIcon}
+                source={{ uri: favicon.url }}
+                onPress={this.openUrl}
+            />
         ) : (
-            icons.darkNoPadding('language', this.openUrl, null, vars.iconSizeSmall)
+            icons.darkNoPadding(
+                'language',
+                this.openUrl,
+                { marginRight: vars.spacing.small.midi2x },
+                vars.iconSizeSmall
+            )
         );
     }
 
