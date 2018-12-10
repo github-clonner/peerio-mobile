@@ -243,7 +243,7 @@ class World {
         await this.homePage.scrollDownHelper();
         await this.settingsPage.logoutButton.click();
         await this.settingsPage.lockButton.click();
-
+        await this.loginPage.passphrase;
         await this.app.closeApp();
         await this.app.launch();
     }
