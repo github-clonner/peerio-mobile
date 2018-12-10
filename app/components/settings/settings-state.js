@@ -69,7 +69,7 @@ class SettingsState extends RoutedState {
     }
 
     upgrade() {
-        this.routerModal.accountUpgradeSwiper();
+        this.routerMain.accountUpgrade();
     }
 
     async showPassphrase() {

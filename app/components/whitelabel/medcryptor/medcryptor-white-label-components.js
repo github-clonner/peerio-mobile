@@ -5,9 +5,11 @@ import MedcryptorChatList from './medcryptor-chat-list';
 import MedcryptorChat from './medcryptor-chat';
 import MedcryptorContactAddWarning from './medcryptor-contact-add-warning';
 import MedcryptorChannelInvite from './medcryptor-channel-invite';
+import MedcryptorManageAccountButton from './medcryptor-manage-account-button';
 
 export default {
     ContactAddWarning: MedcryptorContactAddWarning,
+    ManageAccountButton: MedcryptorManageAccountButton,
     ChatList: MedcryptorChatList,
     Chat: MedcryptorChat,
     ChannelInvite: MedcryptorChannelInvite,
