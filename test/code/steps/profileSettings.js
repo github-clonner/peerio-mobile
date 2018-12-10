@@ -36,6 +36,8 @@ Then('I change my last name', async function() {
 Then('I upload a new avatar', async function() {
     await this.profileSettingsPage.uploadAvatarIcon.click();
     await this.fileUploadPage.uploadCropImageFromCamera();
+    const avatarLetterDisappeared = await this.profileSettingsPage.avatarLetterDisappeared;
+    avatarLetterDisappeared.should.be.true; // eslint-disable-line
 });
 
 Then('I change my existing avatar', async function() {
