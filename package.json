@@ -22,7 +22,7 @@
     "build-android": "cd android && ./gradlew assembleRelease && git add version.properties && git commit -m 'chore(fastlane): android fastlane' && git push",
     "build-android-debug": "cd android && ./gradlew assembleDebug",
     "test": "./scripts/setup-tests.sh && ./scripts/run-tests.sh",
-    "test-ios": "source env.sh && cucumber-js test/spec/account/2fa.feature --strict -r test/code -f node_modules/cucumber-pretty -f json:test/reports/result-ios.json --world-parameters '{\"platform\": \"ios\"}'",
+    "test-ios": "source env.sh && cucumber-js test/spec --strict -r test/code -f node_modules/cucumber-pretty -f json:test/reports/result-ios.json --world-parameters '{\"platform\": \"ios\"}'",
     "test-ios-feature": "source env.sh && cucumber-js test/spec/$TEST_FEATURE.feature --strict -r test/code -f node_modules/cucumber-pretty -f json:test/reports/result-ios.json --world-parameters '{\"platform\": \"ios\"}'",
     "test-ios-roomInvites": "TEST_FEATURE=chat/roomInvites npm run test-ios-feature",
     "test-ios-logout": "TEST_FEATURE=account/logout npm run test-ios-feature",
