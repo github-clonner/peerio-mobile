@@ -24,7 +24,7 @@ class SettingsState extends RoutedState {
         twoFactorAuth: 'title_2FA',
         notifications: 'title_notifications',
         display: 'title_displayPreferences',
-        logs: 'title_help'
+        help: 'title_help'
     };
 
     get title() {

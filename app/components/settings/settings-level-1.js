@@ -212,7 +212,7 @@ export default class SettingsLevel1 extends SafeComponent {
                     />
                     <SettingsItem
                         title="title_help"
-                        onPress={() => settingsState.transition('logs')}
+                        onPress={() => settingsState.transition('help')}
                         leftComponent={this.leftSettingsIcon('help', vars.helpSettingsIconColor)}
                     />
 
