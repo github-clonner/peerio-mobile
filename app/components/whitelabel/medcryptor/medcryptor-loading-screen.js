@@ -61,13 +61,13 @@ export default class MedcryptorLoadingScreen extends Component {
             await promiseWhen(() => routes.main.fileStateLoaded);
             this.goToNextStep();
             await promiseWhen(() => routes.main.contactStateLoaded);
-
-            setTimeout(() => routes.main.transitionToMain(), 0);
         } catch (e) {
             console.log('loading-screen.js: loading screen error');
-            if (!loginState.loaded) routes.app.routes.loginWelcomeBack.transition();
+            if (!loginState.loaded) routes.app.loginWelcomeBack();
             console.error(e);
             return;
+        } finally {
+            this.dismiss();
         }
         this.fadeInOut();
         this.growIcon();
@@ -182,7 +182,13 @@ export default class MedcryptorLoadingScreen extends Component {
         );
     };
 
+    dismiss() {
+        loginState.showLoadingScreen = false;
+    }
+
     render() {
+        if (!loginState.showLoadingScreen) return null;
+
         const container = {
             backgroundColor: vars.darkBlueBackground05,
             flex: 1,

@@ -8,7 +8,6 @@ import {
     socket,
     TinyDb,
     warnings,
-    config,
     overrideServer,
     clientApp
 } from '../../lib/icebear';
@@ -19,6 +18,7 @@ import { tx } from '../utils/translator';
 import RoutedState from '../routes/routed-state';
 import routes from '../routes/routes';
 import tm from '../../telemetry';
+import { promiseWhen } from '../helpers/sugar';
 
 const loginConfiguredKey = 'loginConfigured';
 
@@ -33,8 +33,10 @@ class LoginState extends RoutedState {
     @observable selectedAutomatic = null;
     @observable loaded = false;
     @observable tfaRequested = false;
+    // this is the loading screen flag that gets displayed
+    // for the returning user
+    @observable showLoadingScreen = false;
     _prefix = 'login';
-    _resetTouchId = null;
 
     constructor() {
         super();
@@ -80,99 +82,67 @@ class LoginState extends RoutedState {
         this.current = 0;
         this.username = '';
         this.passphrase = '';
+        this.passphraseValidationMessage = '';
         this.isInProgress = false;
     }
 
-    @action
-    _login(user, manual) {
+    async _login(user) {
         User.current = user;
-        return user
-            .login()
-            .then(() => {
-                console.log('login-state.js: logged in');
-            })
-            .then(async () => {
-                if (manual) mainState.activateAndTransition(user);
-                else mainState.activate(user);
-                if (user.autologinEnabled) {
-                    tm.login.onUserLogin(true, this.tfaRequested);
-                    return;
-                }
-                tm.login.onUserLogin(false, this.tfaRequested);
-                await this.enableAutomaticLogin(user);
-            })
-            .catch(e => {
-                this.isInProgress = false;
-
-                const error = new Error(e);
-                error.deleted = User.current.deleted;
-                error.blacklisted = User.current.blacklisted;
-
-                User.current = null;
-                console.error(error);
-                return Promise.reject(error);
-            });
-    }
-
-    transition() {
-        const user = User.current;
-        return new Promise(() => mainState.activateAndTransition(user))
-            .then(() => this.clean())
-            .then(async () => {
-                if (this._resetTouchId) {
-                    console.log('login-state.js: fixing touch id');
-                    await keychain.delete(`user::${this.username}`);
-                    await mainState.saveUserTouchID();
-                    this._resetTouchId = false;
-                }
-            })
-            .catch(e => {
-                console.error(e);
-                if (user.deleted) {
-                    console.error('deleted');
-                    this.passphraseValidationMessage = tx('title_accountDeleted');
-                    warnings.addSevere('title_accountDeleted', 'error_accountSuspendedTitle');
-                }
-                if (user.blacklisted) {
-                    console.error('suspended');
-                    this.passphraseValidationMessage = tx('error_accountSuspendedTitle');
-                    warnings.addSevere('error_accountSuspendedText', 'error_accountSuspendedTitle');
-                }
-                return Promise.reject(new Error(this.error));
-            })
-            .finally(() => {
-                this.isInProgress = false;
-            });
+        try {
+            await user.login();
+            console.log('login-state.js: logged in');
+            await routes.app.main();
+            await this.enableAutomaticLogin(user);
+            tm.login.onUserLogin(user.autologinEnabled, this.tfaRequested);
+        } catch (e) {
+            const error = new Error(e);
+            const { deleted, blacklisted } = User.current;
+            Object.assign(error, { deleted, blacklisted });
+            User.current = null;
+            if (user.deleted) {
+                console.error('server returned that user has been deleted');
+                this.passphraseValidationMessage = tx('title_accountDeleted');
+                warnings.addSevere('title_accountDeleted', 'title_accountDeleted');
+            }
+            if (user.blacklisted) {
+                console.error('server returned that user has been suspended');
+                this.passphraseValidationMessage = tx('error_accountSuspendedTitle');
+                warnings.addSevere('error_accountSuspendedText', 'error_accountSuspendedTitle');
+            }
+            if (clientApp.clientVersionDeprecated) {
+                console.error('server says client is deprecated');
+                this.passphraseValidationMessage = '';
+                warnings.addSevere('warning_deprecated');
+                error.clientVersionDeprecated = true;
+            }
+            // error is caught by login-inputs to provide feedback on login
+            throw error;
+        } finally {
+            this.isInProgress = false;
+        }
     }
 
     // Manual Login
     @action
-    login = async pin => {
-        /* if (this.username === config.appleTestUser
-            && config.appleTestServer !== socket.url) {
-            await overrideServer(config.appleTestServer);
-            await TinyDb.system.setValue('apple-review-login', true);
-            this.restart();
-        } */
+    login = async () => {
         const user = new User();
         user.username = this.username;
-        user.passphrase = (pin || this.passphrase).trim();
+        user.passphrase = this.passphrase.trim();
         this.isInProgress = true;
-        return new Promise(resolve => {
-            when(() => socket.connected, () => resolve(this._login(user, true)));
-        }).then(() => mainState.saveUser());
+        await promiseWhen(() => socket.connected);
+        await this._login(user);
+        await mainState.saveUser();
     };
 
     // Automatic Login
     @action
-    loginCached = data => {
+    loginCached = async data => {
         const user = new User();
         user.deserializeAuthData(data);
         this.isInProgress = true;
         user.autologinEnabled = true;
-        return new Promise(resolve => {
-            when(() => socket.connected, () => resolve(this._login(user)));
-        });
+        await promiseWhen(() => socket.connected);
+        await this._login(user);
     };
 
     async restart() {
@@ -221,15 +191,6 @@ class LoginState extends RoutedState {
 
     async load() {
         console.log(`login-state.js: loading`);
-        const appleReviewLogin = await TinyDb.system.getValue('apple-review-login');
-        // TODO: remove this after migration
-        if (appleReviewLogin) {
-            this.username = config.appleTestUser;
-            this.passphrase = config.appleTestPass;
-            this.login();
-            return;
-        }
-
         setTimeout(() => {
             this.isInProgress = false;
         }, 0);
@@ -289,7 +250,6 @@ class LoginState extends RoutedState {
             return true;
         } catch (e) {
             console.log('login-state.js: logging in with keychain failed');
-            this._resetTouchId = true;
         }
         return false;
     }

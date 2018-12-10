@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Animated, LayoutAnimation } from 'react-native';
+import { View, Animated } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable, action, computed } from 'mobx';
 import LottieView from 'lottie-react-native';
@@ -22,8 +22,8 @@ export default class LoadingScreen extends Component {
     @observable statusTextVisible = true;
     @observable revealAnimVisible = false;
 
-    logoAnimValue = new Animated.Value(0);
     statusTextOpacity = new Animated.Value(1);
+    containerOpacity = new Animated.Value(1);
 
     async componentDidMount() {
         try {
@@ -38,8 +38,9 @@ export default class LoadingScreen extends Component {
             this.animateReveal();
         } catch (e) {
             console.log('loading-screen.js: loading screen error');
-            if (!loginState.loaded) routes.app.routes.loginWelcomeBack.transition();
+            if (!loginState.loaded) routes.app.loginWelcomeBack();
             console.error(e);
+            this.dismiss();
         }
     }
 
@@ -57,9 +58,11 @@ export default class LoadingScreen extends Component {
         // TODO: this actually causes a 1000 ms delay in rendering the app
         // there should be a better way to handle this transition
         setTimeout(() => {
-            this.revealAnimVisible = false;
-            routes.main.transitionToMain();
-            LayoutAnimation.easeInEaseOut();
+            Animated.timing(this.containerOpacity, {
+                toValue: 0,
+                duration: 250,
+                useNativeDriver: true
+            }).start(this.dismiss);
         }, 1000);
     }
 
@@ -70,11 +73,20 @@ export default class LoadingScreen extends Component {
         return tx('title_decrypting');
     }
 
+    dismiss() {
+        loginState.showLoadingScreen = false;
+    }
+
     render() {
+        if (!loginState.showLoadingScreen) return null;
         const container = {
-            flex: 1,
-            flexGrow: 1,
-            alignItems: 'center'
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            alignItems: 'center',
+            opacity: this.containerOpacity
         };
         const loadingProgressContainer = {
             position: 'absolute',
@@ -97,7 +109,7 @@ export default class LoadingScreen extends Component {
             opacity: this.statusTextOpacity
         };
         return (
-            <View style={container}>
+            <Animated.View style={container}>
                 {this.revealAnimVisible && (
                     <LottieView
                         autoPlay
@@ -122,7 +134,7 @@ export default class LoadingScreen extends Component {
                 <View style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
                     <SnackBarConnection />
                 </View>
-            </View>
+            </Animated.View>
         );
     }
 }

@@ -14,6 +14,7 @@ import { User, telemetry } from '../../lib/icebear';
 import tm from '../../telemetry';
 import ActivityOverlay from '../controls/activity-overlay';
 import DebugMenuTrigger from '../shared/debug-menu-trigger';
+import routes from '../routes/routes';
 
 const { S } = telemetry;
 
@@ -46,6 +47,9 @@ export default class LoginWelcomeBack extends SafeComponent {
     async componentDidMount() {
         this.startTime = Date.now();
         this.lastUser = await User.getLastAuthenticated();
+        if (!this.lastUser) {
+            routes.app.loginWelcome();
+        }
     }
 
     componentWillUnmount() {

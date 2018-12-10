@@ -21,13 +21,13 @@ import ModalLayout from './layout/modal-layout';
 import RouteNavigator from './routes/route-navigator';
 import routerApp from './routes/router-app';
 import uiState from './layout/ui-state';
-import { clientApp, crypto, startSocket, config, User, TinyDb } from '../lib/icebear';
+import { clientApp, crypto, startSocket, config, User } from '../lib/icebear';
 import { scryptNative, signDetachedNative, verifyDetachedNative } from '../lib/scrypt-native';
 import push from '../lib/push';
 import consoleOverride from '../lib/console-override';
 import '../lib/sounds';
 import './utils/bridge';
-import socketResetIfDead from './utils/socket-reset';
+// import socketResetIfDead from './utils/socket-reset';
 import TestHelper from './helpers/test-helper';
 import MockComponent from './mocks';
 import ActionSheetLayout from './layout/action-sheet-layout';
@@ -38,6 +38,7 @@ import { uploadFileAndroid, uploadFileiOS, wakeUpAndUploadFileiOS } from './util
 import { TopDrawerAutoMount } from './shared/top-drawer-components';
 import DebugMenu from './shared/debug-menu';
 import createAutomationSocket from '../lib/create-automation-socket';
+import whiteLabelComponents from './whitelabel/white-label-components';
 
 const { height, width } = Dimensions.get('window');
 @observer
@@ -74,21 +75,22 @@ export default class App extends SafeComponent {
     }
 
     async componentWillMount() {
-        if (!MockComponent) {
-            let route = routerApp.routes.loading;
-
-            // Have existing user that isn't logged in
-            if (await loginState.haveLoggedOutUser()) {
-                route = routerApp.routes.loginWelcomeBack;
-            }
-            // No existing user
-            if (
-                !(await User.getLastAuthenticated()) &&
-                !(await TinyDb.system.getValue('apple-review-login'))
-            ) {
-                route = routerApp.routes.loginWelcome;
-            }
+        if (MockComponent) return;
+        // this is the route we send our user to
+        let route = null;
+        // Have existing user that isn't logged in
+        if (await loginState.haveLoggedOutUser()) {
+            route = routerApp.routes.loginWelcomeBack;
+        }
+        // No existing user
+        if (!(await User.getLastAuthenticated())) {
+            route = routerApp.routes.loginWelcome;
+        }
+        if (route) {
             route.transition();
+        } else {
+            // LoadingScreen will forward our user to the next route
+            loginState.showLoadingScreen = true;
         }
     }
 
@@ -127,9 +129,9 @@ export default class App extends SafeComponent {
 
     _handleAppStateChange(appState) {
         console.log(`App.js: AppState change: ${appState}`);
-        if (uiState.appState === 'background' && appState === 'active') {
+        /* if (uiState.appState === 'background' && appState === 'active') {
             socketResetIfDead();
-        }
+        } */
         uiState.appState = appState;
         if (appState === 'active') {
             push.clearBadge();
@@ -173,6 +175,7 @@ export default class App extends SafeComponent {
                 </Text>
                 <StatusBar barStyle="light-content" hidden={false} key="statusBar" />
                 <TopDrawerAutoMount />
+                {loginState.showLoadingScreen && <whiteLabelComponents.LoadingScreen />}
                 {!process.env.NO_DEV_BAR && <TestHelper key="testHelper" />}
             </View>
         );
