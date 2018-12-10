@@ -368,6 +368,7 @@ const vars = {
     isDeviceScreenBig,
     isDeviceScreenSmall,
     fileType: {
+        icon: 16,
         smaller: 24,
         small: 32,
         medium: 48,

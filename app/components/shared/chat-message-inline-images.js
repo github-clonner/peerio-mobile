@@ -6,6 +6,7 @@ import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import FileInlineImage from '../files/file-inline-image';
 import fileState from '../files/file-state';
+import InlineUrlContainer from '../messaging/inline-url-container';
 
 @observer
 export default class ChatMessageInlineImages extends SafeComponent {
@@ -30,7 +31,15 @@ export default class ChatMessageInlineImages extends SafeComponent {
         const { onInlineImageAction, onLegacyFileAction, isClosed } = this.props;
 
         return this.images.map(image => {
-            const key = image.fileId || image.url;
+            const { fileId, url } = image;
+            const key = fileId || image;
+            if (url) {
+                const externalWebsite = {
+                    image: { url },
+                    fileType: 'img'
+                };
+                return <InlineUrlContainer {...{ key, externalWebsite }} />;
+            }
             return (
                 <FileInlineImage
                     {...{ key, image, onLegacyFileAction }}

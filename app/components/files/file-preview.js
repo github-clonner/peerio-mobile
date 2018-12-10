@@ -112,7 +112,7 @@ export default class FilePreview extends SafeComponent {
         const fileImagePlaceholder = fileHelpers.isImage(state.ext) ? (
             this.previewImage
         ) : (
-            <FileTypeIcon type={fileHelpers.getFileIconType(state.ext)} size="medium" />
+            <FileTypeIcon type={fileHelpers.getFileIconType(state.ext)} size="small" />
         );
 
         return (

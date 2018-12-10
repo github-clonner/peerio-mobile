@@ -48,6 +48,8 @@ const textMessageTextStyle = {
     textAlign: 'center'
 };
 
+// TODO: image urls are now handled by inline-url-container
+// remove the URL support from this component
 @observer
 export default class FileInlineImage extends SafeComponent {
     @observable cachedImage;
