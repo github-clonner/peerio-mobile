@@ -198,15 +198,10 @@ class SignupState extends RoutedState {
             .then(() => keyBackedUp && User.current.setAccountKeyBackedUp())
             .then(() => avatarBuffers && User.current.saveAvatar(avatarBuffers))
             .then(() => {
-                const { settings } = User.current;
-                when(
-                    () => !settings.loading,
-                    () => {
-                        settings.subscribeToPromoEmails = subscribeToPromoEmails;
-                        settings.dataCollection = dataCollection;
-                        User.current.saveSettings();
-                    }
-                );
+                User.current.saveSettings(settings => {
+                    settings.subscribeToPromoEmails = subscribeToPromoEmails;
+                    settings.dataCollection = dataCollection;
+                });
             })
             .finally(() => {
                 this.isInProgress = false;
