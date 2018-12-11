@@ -51,8 +51,7 @@ export default class MessageInfo extends SafeComponent {
 
     get sections() {
         const sections = [];
-        if (this.seenBy && this.seenBy.length)
-            sections.push({ data: this.seenBy, key: this.number() });
+        if (this.seenBy.length) sections.push({ data: this.seenBy, key: this.number() });
         if (this.notSeenBy && this.notSeenBy.length)
             sections.push({ data: this.notSeenBy, key: tx('title_sentTo') });
 
@@ -66,13 +65,13 @@ export default class MessageInfo extends SafeComponent {
 
     @computed
     get notSeenBy() {
-        return chatState.currentChat.otherParticipants.filter(this.notSeen) || [];
+        return chatState.currentChat.otherParticipants.filter(this.notSeen);
     }
 
-    notSeen = item => !chatState.currentMessage.receipts.some(x => x.username === item.username);
+    notSeen = item => !this.seenBy.some(x => x.username === item.username);
 
     number = () => {
-        const receipts = chatState.currentMessage.receipts.length;
+        const receipts = this.seenBy.length;
         const participants = chatState.currentChat.otherParticipants.length;
         if (receipts === participants) return `${tx('title_seenByAll')} (${receipts}/${receipts})`;
         return `${tx('title_seenBy')} (${receipts}/${participants})`;
