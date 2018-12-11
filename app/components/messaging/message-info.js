@@ -6,12 +6,12 @@ import { contactStore } from '../../lib/icebear';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import LayoutModalExit from '../layout/layout-modal-exit';
-import chatState from '../messaging/chat-state';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import ContactCard from '../shared/contact-card';
 import ListSeparator from '../shared/list-separator';
 import ChatMessageBody from '../shared/chat-message-body';
+import routes from '../routes/routes';
 
 const messageStyle = {
     padding: vars.spacing.medium.midi,
@@ -30,14 +30,23 @@ const headerStyle = {
 @observer
 export default class MessageInfo extends SafeComponent {
     get messageText() {
+        const {
+            messageObject,
+            chat,
+            onFileAction,
+            onLegacyFileAction,
+            onInlineImageAction
+        } = this.props;
         return (
             <View style={messageStyle}>
                 <ChatMessageBody
-                    messageObject={chatState.currentMessage}
-                    chat={chatState.currentChat}
-                    onFileAction={chatState.onFileAction}
-                    onLegacyFileAction={chatState.onLegacyFileAction}
-                    onInlineImageAction={chatState.onInlineImageAction}
+                    {...{
+                        messageObject,
+                        chat,
+                        onFileAction,
+                        onLegacyFileAction,
+                        onInlineImageAction
+                    }}
                     isClosed
                 />
             </View>
@@ -60,19 +69,19 @@ export default class MessageInfo extends SafeComponent {
 
     @computed
     get seenBy() {
-        return chatState.currentMessage.receipts || [];
+        return (this.props.messageObject.receipts || []).slice();
     }
 
     @computed
     get notSeenBy() {
-        return chatState.currentChat.otherParticipants.filter(this.notSeen);
+        return this.props.chat.otherParticipants.filter(this.notSeen);
     }
 
     notSeen = item => !this.seenBy.some(x => x.username === item.username);
 
     number = () => {
         const receipts = this.seenBy.length;
-        const participants = chatState.currentChat.otherParticipants.length;
+        const participants = this.props.chat.otherParticipants.length;
         if (receipts === participants) return `${tx('title_seenByAll')} (${receipts}/${receipts})`;
         return `${tx('title_seenBy')} (${receipts}/${participants})`;
     };
@@ -82,12 +91,12 @@ export default class MessageInfo extends SafeComponent {
     };
 
     renderThrow() {
-        if (!chatState.currentChat) return null;
+        if (!this.props.chat || !this.props.messageObject) return null;
         const body = (
             <View style={{ backgroundColor: vars.channelInfoBg }}>
                 <View>
                     <ContactCard
-                        contact={chatState.currentMessage.sender}
+                        contact={this.props.messageObject.sender}
                         backgroundColor={vars.channelInfoBg}
                         disableTapping
                     />
@@ -106,8 +115,8 @@ export default class MessageInfo extends SafeComponent {
         return (
             <LayoutModalExit
                 body={body}
-                title="Message Info"
-                onClose={() => chatState.routerModal.discard()}
+                title="error_messageErrorMessageInfo"
+                onClose={() => routes.modal.discard()}
             />
         );
     }
