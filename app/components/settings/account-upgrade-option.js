@@ -11,6 +11,7 @@ import BackIcon from '../layout/back-icon';
 import routes from '../routes/routes';
 import { uiState } from '../states';
 import payments from '../payments/payments';
+import whiteLabel from '../whitelabel/white-label-components';
 
 const { width } = Dimensions.get('window');
 
@@ -66,15 +67,10 @@ class AccountUpgradeOption extends SafeComponent {
                         flexGrow: 1,
                         padding: vars.spacing.large.midi
                     }}>
-                    <Text
-                        semibold
-                        style={{
-                            color: vars.black54,
-                            fontSize: vars.font.size12,
-                            paddingBottom: 60
-                        }}>
-                        {tx(this.paymentInfo)}
-                    </Text>
+                    <whiteLabel.TermsOfUseUpgrade
+                        paymentInfo={this.paymentInfo}
+                        title={this.title}
+                    />
                     {buttons.roundBlueBgButton(tx('button_upgrade'), this.action, null, null, {
                         width: vars.wideRoundedButtonWidth
                     })}
