@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.426.0"></a>
+# [3.426.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.425.0...v3.426.0) (2018-12-24)
+
+
+### Bug Fixes
+
+* popup layout should overlay loading screen [ch18157] ([7239820](https://github.com/PeerioTechnologies/peerio-mobile/commit/7239820))
+
+
+
 <a name="3.425.0"></a>
 # [3.425.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.424.0...v3.425.0) (2018-12-19)
 
