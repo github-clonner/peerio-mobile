@@ -63,7 +63,7 @@ class World {
 
         this.contactsPage = new ContactsPage(this.app);
 
-        this.settingsPage = new SettingsPage(this.app);
+        this.settingsPage = this.context.settingsPage(this.app);
         this.twoStepVerificationPage = new TwoStepVerificationPage(this.app);
         this.twoFactorAuthPrompt = new TwoFactorAuthPrompt(this.app);
         this.profileSettingsPage = new ProfileSettingsPage(this.app);
