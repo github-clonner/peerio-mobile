@@ -13,7 +13,7 @@ import common from './common';
 import debug from './debug';
 
 const helpers = {
-    circle(size) {
+    circle(size: number) {
         return {
             width: size,
             height: size,
@@ -21,21 +21,6 @@ const helpers = {
         };
     }
 };
-
-vars.circleTopSmall = [
-    helpers.circle(vars.topCircleSizeSmall * 2),
-    {
-        top: 0,
-        backgroundColor: vars.lightGrayBg,
-        position: 'absolute',
-        alignSelf: 'center',
-        alignItems: 'center',
-        justifyContent: 'center',
-        overflow: 'hidden',
-        borderWidth: 1,
-        borderColor: vars.gray54
-    }
-];
 
 const styles = {
     vars,

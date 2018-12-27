@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react/native';
-import { View, TouchableOpacity, Dimensions } from 'react-native';
+import { View, TouchableOpacity, Dimensions, ViewStyle } from 'react-native';
 import Text from '../controls/custom-text';
 import uiState from '../layout/ui-state';
 import testLabel from './test-label';
@@ -107,7 +107,7 @@ export default class TestHelper extends Component {
 
     render() {
         if (!__DEV__) return null;
-        const s = {
+        const s: ViewStyle = {
             position: 'absolute',
             left: 0,
             top: 100,

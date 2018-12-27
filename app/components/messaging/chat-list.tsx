@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Platform } from 'react-native';
-import { observable, reaction, action, computed } from 'mobx';
+import { View, Platform, FlatList } from 'react-native';
+import { observable, reaction, action, computed, IReactionDisposer } from 'mobx';
 import { chatInviteStore } from '../../lib/icebear';
 import SafeComponent from '../shared/safe-component';
 import ChatListItem from './chat-list-item';
@@ -12,7 +12,6 @@ import ChatSectionHeader from './chat-section-header';
 import ChannelInviteListItem from './channel-invite-list-item';
 import PlusBorderIcon from '../layout/plus-border-icon';
 import CreateActionSheet from './create-action-sheet';
-import { tx } from '../utils/translator';
 import uiState from '../layout/ui-state';
 import drawerState from '../shared/drawer-state';
 import UnreadMessageIndicator from './unread-message-indicator';
@@ -21,6 +20,7 @@ import ChatZeroStatePlaceholder from './chat-zero-state-placeholder';
 import FlatListWithDrawer from '../shared/flat-list-with-drawer';
 import zeroStateBeacons from '../beacons/zerostate-beacons';
 import { transitionAnimation } from '../helpers/animations';
+import { Chat } from '../../lib/peerio-icebear/models';
 
 const INITIAL_LIST_SIZE = 10;
 
@@ -34,12 +34,28 @@ function isUnread(item) {
     return item.unreadCount || item.isInvite || item.kegDbId;
 }
 
+class SectionHeaderItem {
+    sectionTitle: string;
+    items = [];
+    kegDbId: undefined;
+}
+
+// TODO: move to icebear
+interface ReceivedInvite {
+    kegDbId: string;
+    sectionTitle: undefined;
+}
+
+type ChatListItemVariant = Chat | ReceivedInvite | SectionHeaderItem;
+
 @observer
 export default class ChatList extends SafeComponent {
     @observable reverseRoomSorting = false;
     @observable minItemIndex = null;
     @observable maxItemIndex = null;
     flatListHeight = 0;
+    indicatorReaction: IReactionDisposer;
+    scrollView: FlatList<Chat>;
 
     get rightIcon() {
         return (
@@ -51,7 +67,7 @@ export default class ChatList extends SafeComponent {
         );
     }
 
-    addSection = (sectionTitle, items) => {
+    addSection = (sectionTitle: string, items): Array<ChatListItemVariant> => {
         if (!items || !items.length) return [];
         return [[{ sectionTitle }], items];
     };
@@ -116,14 +132,17 @@ export default class ChatList extends SafeComponent {
     inviteItem = chat => (
         <ChannelInviteListItem id={chat.kegDbId} chat={chat} channelName={chat.channelName} />
     );
-    channelItem = chat => <ChannelListItem chat={chat} channelName={chat.name} />;
+    channelItem = (chat: Chat) => <ChannelListItem chat={chat} channelName={chat.name} />;
     dmItem = chat => <ChatListItem height={vars.listItemHeight} key={chat.id} chat={chat} />;
-    renderListItem = item => {
-        if (item.kegDbId) return this.inviteItem(item);
-        if (item.isChannel) return this.channelItem(item);
-        if (item.sectionTitle) return <ChatSectionHeader title={tx(item.sectionTitle)} />;
-
-        return this.dmItem(item);
+    renderListItem = (item: ChatListItemVariant) => {
+        if (item instanceof Chat) {
+            if (item.isChannel) return this.channelItem(item);
+            return this.dmItem(item);
+        } else if (item.kegDbId) {
+            return this.inviteItem(item);
+        } else if (item.sectionTitle) {
+            return <ChatSectionHeader title={item.sectionTitle} />;
+        }
     };
 
     item = item => {

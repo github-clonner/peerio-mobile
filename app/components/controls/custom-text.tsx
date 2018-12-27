@@ -1,21 +1,35 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 /* eslint-disable */
-import { Text as RNText, Platform } from 'react-native';
+import { Text as RNText, Platform, TextProps } from 'react-native';
 /* eslint-enable */
 import SafeComponent from '../shared/safe-component';
-import { vars } from '../../styles/styles';
+import fonts from '../../styles/fonts';
+
+interface TextStyle {
+    fontWeight: string;
+    fontStyle: string;
+    fontFamily: string;
+}
+
+export interface CustomTextProps extends TextProps {
+    style?: object;
+    semibold?: boolean;
+    bold?: boolean;
+    italic?: boolean;
+    monospace?: boolean;
+    serif?: boolean;
+}
 
 /**
  * Replaces all RN text components in order to use Open Sans font family
  */
 @observer
-export default class Text extends SafeComponent {
+export default class Text extends SafeComponent<CustomTextProps> {
     renderThrow() {
         const { semibold, bold, italic, monospace, serif } = this.props;
-        const style = {};
-        const font = [serif ? vars.peerioSerifFontFamily : vars.peerioFontFamily];
+        const style = {} as TextStyle;
+        const font = [serif ? fonts.peerioSerifFontFamily : fonts.peerioFontFamily];
 
         // Font Weight and Style
         if (Platform.OS === 'android') {
@@ -59,11 +73,3 @@ export default class Text extends SafeComponent {
         }
     }
 }
-
-Text.propTypes = {
-    style: PropTypes.any,
-    semibold: PropTypes.any,
-    bold: PropTypes.any,
-    italic: PropTypes.any,
-    children: PropTypes.any
-};

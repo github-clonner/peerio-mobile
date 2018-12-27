@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, View, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { vars } from '../../styles/styles';
-import testLabel from '../helpers/test-label';
+import testLabel from './test-label';
 import Text from '../controls/custom-text';
 
 const goStyle = {
@@ -16,7 +16,7 @@ const disabledStyle = {
 };
 
 const icons = {
-    basic(name, color, onPress, style, size, noPadding, testID, disabled) {
+    basic(name, color?, onPress?, style?, size?, noPadding?, testID?, disabled?) {
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.retentionOffset}
@@ -31,7 +31,7 @@ const icons = {
         );
     },
 
-    plain(name, size, color, testID, style) {
+    plain(name, size?, color?, testID?, style?) {
         return (
             <Icon
                 name={name}
@@ -64,7 +64,7 @@ const icons = {
         return icons.basic(name, iconStyle, onPress, style, size, true, undefined, disabled);
     },
 
-    dark(name, onPress, style, size, testID, disabled) {
+    dark(name, onPress?, style?, size?, testID?, disabled?) {
         const iconColor = disabled ? vars.disabledIcon : vars.darkIcon;
         return icons.basic(name, iconColor, onPress, style, size, undefined, testID, disabled);
     },
@@ -73,7 +73,7 @@ const icons = {
         return icons.basic(name, vars.gold, onPress, style, size);
     },
 
-    darkNoPadding(name, onPress, style, size, disabled) {
+    darkNoPadding(name, onPress?, style?, size?, disabled?) {
         const iconStyle = disabled ? vars.disabledIcon : vars.darkIcon;
         return icons.basic(name, iconStyle, onPress, style, size, true, undefined, disabled);
     },
@@ -124,7 +124,7 @@ const icons = {
 
     text(text, onPress, style, testID, extraWidth) {
         const size = vars.iconPadding * 2 + vars.iconSize;
-        const containerStyle = {
+        const containerStyle: object = {
             marginHorizontal: vars.iconPadding,
             height: size,
             width: size + extraWidth,
@@ -147,7 +147,7 @@ const icons = {
 
     disabledText(text, style, extraWidth) {
         const size = vars.iconPadding * 2 + vars.iconSize;
-        const containerStyle = {
+        const containerStyle: object = {
             marginHorizontal: vars.iconPadding,
             height: size,
             width: size + extraWidth,
@@ -169,7 +169,7 @@ const icons = {
     unreadBubble: text => icons.circle(text, 24, 12, vars.peerioBlue, vars.white),
 
     circle(text, radius, margin, bgColor, fgColor) {
-        const notificationStyle = {
+        const notificationStyle: object = {
             backgroundColor: bgColor,
             borderRadius: radius,
             overflow: 'hidden',
@@ -228,7 +228,7 @@ const icons = {
         );
     },
 
-    imageButtonNoPadding(source, onPress, size, opacity, testID) {
+    imageButtonNoPadding(source, onPress?, size?, opacity?, testID?) {
         const width = size || vars.iconSize;
         const height = width;
         return (
@@ -242,7 +242,7 @@ const icons = {
         );
     },
 
-    iconPinnedChat(source, onPress) {
+    iconPinnedChat(source, onPress?) {
         const width = vars.pinnedChatIconSize;
         const height = width;
         return (

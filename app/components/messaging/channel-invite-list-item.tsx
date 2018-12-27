@@ -1,8 +1,7 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import { observable, when } from 'mobx';
+import { observable, when, IReactionDisposer } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, ViewStyle } from 'react-native';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
@@ -13,11 +12,19 @@ import testLabel from '../helpers/test-label';
 import uiState from '../layout/ui-state';
 import { chatInviteStore } from '../../lib/icebear';
 import { transitionAnimationTimed } from '../helpers/animations';
+import { Chat } from '../../lib/peerio-icebear/models';
+
+export interface ChannelInviteListItemProps {
+    id: string;
+    channelName: string;
+    chat: Chat;
+}
 
 @observer
-export default class ChannelInviteListItem extends SafeComponent {
+export default class ChannelInviteListItem extends SafeComponent<ChannelInviteListItemProps> {
     @observable animating;
     @observable declinedStyle;
+    fadeOutReaction: IReactionDisposer;
 
     componentDidMount() {
         this.fadeOutReaction = when(
@@ -90,12 +97,12 @@ export default class ChannelInviteListItem extends SafeComponent {
                 {...testLabel(channelName)}>
                 <TouchableOpacity
                     onPress={this.onPress}
-                    style={containerStyle}
+                    style={containerStyle as ViewStyle}
                     pressRetentionOffset={vars.retentionOffset}>
                     <Text semibold style={textStyle}>
                         {`# ${channelName}`}
                     </Text>
-                    <View style={circleStyle}>
+                    <View style={circleStyle as ViewStyle}>
                         <Text style={textNewStyle}>{t('title_new')}</Text>
                     </View>
                 </TouchableOpacity>
@@ -103,7 +110,3 @@ export default class ChannelInviteListItem extends SafeComponent {
         );
     }
 }
-
-ChannelInviteListItem.propTypes = {
-    chat: PropTypes.any.isRequired
-};

@@ -80,7 +80,9 @@ const tabCellHeight = 56;
 // const defaultHeight = 667;
 // scaleDim takes a size value and returns one that is adjusted to the height of the device as it compares to an iPhone 6
 // const scaleDim = size => height / defaultHeight * size;
-const scaleDim = size => size; // temporary making scaleDim do nothing
+function scaleDim(size: number) {
+    return size; // temporary making scaleDim do nothing
+}
 
 const vars = {
     // TODO categorize vars
@@ -138,8 +140,6 @@ const vars = {
     toggleLineActive: '#B6D3FF',
     toggleLineInactive: '#CFCFCF',
     imageInnerContainerHeight: 140,
-    peerioFontFamily: 'Open Sans',
-    peerioSerifFontFamily: 'Source Serif Pro',
     chatUnreadIndicatorBg: 'rgba(255, 255, 255, 0.95)',
     chatUnreadIndicatorWidth: 70,
     chatUnreadIndicatorHeight: 32,
@@ -382,12 +382,20 @@ const vars = {
         paddingHorizontal: scaleDim(12),
         marginVertical: scaleDim(8),
         fontSize: scaleDim(14)
-    }
+    },
+    // TODO
+    iconLayoutSize: 0,
+    optimizeImageSize
 };
 
 vars.iconLayoutSize = vars.iconSize + vars.iconPadding * 2;
 
-vars.optimizeImageSize = (sourceWidth, sourceHeight, containerWidth, containerHeight) => {
+function optimizeImageSize(
+    sourceWidth: number,
+    sourceHeight: number,
+    containerWidth: number,
+    containerHeight: number
+) {
     let w = sourceWidth + 0.0,
         h = sourceHeight + 0.0;
     if (w > containerWidth) {
@@ -402,6 +410,6 @@ vars.optimizeImageSize = (sourceWidth, sourceHeight, containerWidth, containerHe
         width: Math.floor(w),
         height: Math.floor(h)
     };
-};
+}
 
 export default vars;

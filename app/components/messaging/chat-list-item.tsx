@@ -1,8 +1,7 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, ViewStyle } from 'react-native';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import chatState from './chat-state';
@@ -70,11 +69,18 @@ const titleStyle = {
     marginRight: vars.spacing.small.midi
 };
 
+import { Chat } from '../../lib/peerio-icebear/models';
+
+export interface ChatlListItemProps {
+    height: number;
+    chat: Chat;
+}
+
 @observer
-export default class ChatListItem extends SafeComponent {
+export default class ChatListItem extends SafeComponent<ChatlListItemProps> {
     renderNewBadge() {
         return (
-            <View style={newCircleStyle}>
+            <View style={newCircleStyle as ViewStyle}>
                 <Text semibold style={textNewStyle}>
                     {tx('title_new')}
                 </Text>
@@ -86,7 +92,7 @@ export default class ChatListItem extends SafeComponent {
         const { chat } = this.props;
 
         return (
-            <View style={unreadCircleStyle}>
+            <View style={unreadCircleStyle as ViewStyle}>
                 <Text semibold style={circleTextStyle}>
                     {`${chat.unreadCount}`}
                 </Text>
@@ -116,7 +122,7 @@ export default class ChatListItem extends SafeComponent {
             console.error('Head is not loaded in the provided chat list item. Still rendering');
         }
         // no participants means chat with yourself
-        let contact = contactState.store.getContact(User.current.username);
+        let contact = contactState.store.getContact(User.current.username) as ContactInvitable;
         // two participants
         if (otherParticipants && otherParticipants.length === 1) {
             contact = otherParticipants[0];
@@ -136,9 +142,9 @@ export default class ChatListItem extends SafeComponent {
                 onPress={this.onPress}
                 {...testLabel(contact.username)}
                 pressRetentionOffset={vars.retentionOffset}>
-                <View style={[containerStyle, { height }]}>
+                <View style={[containerStyle, { height }] as ViewStyle}>
                     <View>
-                        <View style={pinStyle}>
+                        <View style={pinStyle as ViewStyle}>
                             {chat.isFavorite && icons.iconPinnedChat(pinOn)}
                         </View>
                         <AvatarCircle
@@ -158,7 +164,3 @@ export default class ChatListItem extends SafeComponent {
         );
     }
 }
-
-ChatListItem.propTypes = {
-    chat: PropTypes.any.isRequired
-};

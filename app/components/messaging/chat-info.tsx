@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, TouchableOpacity } from 'react-native';
@@ -63,8 +62,7 @@ export default class ChatInfo extends SafeComponent {
                     this.lineBlock(
                         <View
                             style={{
-                                paddingVertical: vars.spacing.small.midi2x,
-                                backgroundColor: vars.subtleBlueBackground
+                                paddingVertical: vars.spacing.small.midi2x
                             }}>
                             {chat.otherParticipants.map(this.participant)}
                         </View>
@@ -91,7 +89,3 @@ export default class ChatInfo extends SafeComponent {
         );
     }
 }
-
-ChatInfo.propTypes = {
-    chat: PropTypes.any
-};

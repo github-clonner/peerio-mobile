@@ -12,6 +12,8 @@ function testConfirmEmail() {
     });
 }
 
+declare const global: GlobalExtended;
+
 global.testConfirmEmail = testConfirmEmail;
 
 export { testConfirmEmail };

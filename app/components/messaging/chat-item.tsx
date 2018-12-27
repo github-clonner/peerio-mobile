@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 import { observer } from 'mobx-react/native';
@@ -6,8 +5,21 @@ import SafeComponent from '../shared/safe-component';
 import IdentityVerificationNotice from './identity-verification-notice';
 import { vars } from '../../styles/styles';
 import ChatMessageContainer from '../shared/chat-message-container';
+import { Chat, Message } from '../../lib/peerio-icebear/models';
+
+export interface ChatItemItemProps {
+    chat: Chat;
+    message: Message;
+    backgroundColor: string;
+    onInlineImageAction: Function;
+    onLegacyFileAction: Function;
+    onFileAction: Function;
+}
+
 @observer
-export default class ChatItem extends SafeComponent {
+export default class ChatItem extends SafeComponent<ChatItemItemProps> {
+    _ref: ChatMessageContainer;
+
     setRef = ref => {
         this._ref = ref;
     };
@@ -51,8 +63,3 @@ export default class ChatItem extends SafeComponent {
         );
     }
 }
-
-ChatItem.propTypes = {
-    onLayout: PropTypes.func,
-    message: PropTypes.any.isRequired
-};

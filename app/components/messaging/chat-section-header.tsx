@@ -1,16 +1,22 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, ViewStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import chatState from './chat-state';
 import testLabel from '../helpers/test-label';
+import { tx } from '../utils/translator';
+
+export interface ChatSectionHeaderProps {
+    title: string;
+    collapsible?: boolean;
+    state?: string;
+}
 
 @observer
-export default class ChatSectionHeader extends SafeComponent {
+export default class ChatSectionHeader extends SafeComponent<ChatSectionHeaderProps> {
     renderThrow() {
         const { title, collapsible } = this.props;
         const style = {
@@ -38,11 +44,11 @@ export default class ChatSectionHeader extends SafeComponent {
                 {...testLabel(title)}
                 {...this.props}
                 pressRetentionOffset={vars.retentionOffset}
-                style={style}
+                style={style as ViewStyle}
                 onPress={action}
                 disabled={!collapsible}>
                 <Text semibold style={textStyle}>
-                    {title}
+                    {tx(title)}
                 </Text>
                 {collapsible && (
                     <Icon
@@ -55,7 +61,3 @@ export default class ChatSectionHeader extends SafeComponent {
         );
     }
 }
-
-ChatSectionHeader.propTypes = {
-    title: PropTypes.any
-};

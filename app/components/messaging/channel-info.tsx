@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, ViewStyle } from 'react-native';
 import { observable } from 'mobx';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
@@ -14,6 +14,7 @@ import ChannelInfoListState from '../channels/channel-info-list-state';
 import testLabel from '../helpers/test-label';
 import imagePopups from '../shared/image-popups';
 import TextInputUncontrolled from '../controls/text-input-uncontrolled';
+import fonts from '../../styles/fonts';
 
 const leaveRoomImage = require('../../assets/chat/icon-M-leave.png');
 
@@ -63,7 +64,7 @@ export default class ChannelInfo extends SafeComponent {
         }
     };
 
-    lineBlock(content, noBorder) {
+    lineBlock(content, noBorder = false) {
         const s = {
             borderBottomWidth: noBorder ? 0 : 1,
             borderBottomColor: 'rgba(0, 0, 0, .12)'
@@ -75,7 +76,7 @@ export default class ChannelInfo extends SafeComponent {
         return <View style={{ height: 8 }} />;
     }
 
-    action(title, icon, action, image) {
+    action(title, icon, action, image = undefined) {
         const containerStyle = {
             flexDirection: 'row',
             alignItems: 'center',
@@ -89,7 +90,7 @@ export default class ChannelInfo extends SafeComponent {
                     pressRetentionOffset={vars.retentionOffset}
                     onPress={action}
                     {...testLabel(title)}>
-                    <View style={containerStyle}>
+                    <View style={containerStyle as ViewStyle}>
                         {icon
                             ? icons.darkNoPadding(icon, action)
                             : icons.imageButtonNoPadding(image, action)}
@@ -119,7 +120,7 @@ export default class ChannelInfo extends SafeComponent {
             paddingLeft: vars.spacing.medium.midi,
             height: vars.inputHeight,
             color: vars.txtDark,
-            fontFamily: vars.peerioFontFamily
+            fontFamily: fonts.peerioFontFamily
         };
         return (
             <View>

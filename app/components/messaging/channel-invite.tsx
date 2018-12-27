@@ -1,13 +1,12 @@
 import React from 'react';
 import { action, observable } from 'mobx';
-import { Dimensions, Image, View } from 'react-native';
+import { Dimensions, Image, View, ViewStyle } from 'react-native';
 import { observer } from 'mobx-react/native';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import { invitationState } from '../states';
-import buttons from '../helpers/buttons';
 import ButtonText from '../controls/button-text';
 import BackIcon from '../layout/back-icon';
 import { User, chatInviteStore, contactStore } from '../../lib/icebear';
@@ -18,6 +17,7 @@ import ProgressOverlay from '../shared/progress-overlay';
 import uiState from '../layout/ui-state';
 import { adjustImageDimensions } from '../helpers/image';
 import GrayLabel from '../controls/gray-label';
+import BlueRoundButton from '../buttons/blue-round-button';
 
 const { width } = Dimensions.get('window');
 
@@ -154,9 +154,9 @@ export default class ChannelInvite extends SafeComponent {
         const notShown = withoutCurrentAndHost.length - maxToShow;
 
         return (
-            <View style={infoSection}>
+            <View style={infoSection as ViewStyle}>
                 <View style={{ alignItems: 'center' }}>
-                    <View style={infoText}>
+                    <View style={infoText as ViewStyle}>
                         <Text style={hostedByStyle}>{tx('title_whoIsAlreadyIn')}</Text>
                         <Text style={hostNameStyle}>&nbsp;#{this.invitation.channelName}</Text>
                     </View>
@@ -181,7 +181,7 @@ export default class ChannelInvite extends SafeComponent {
                             </View>
                         ))}
                         {notShown > 0 && (
-                            <View style={moreContainer}>
+                            <View style={moreContainer as ViewStyle}>
                                 <Text bold style={moreText}>
                                     {`+${notShown}`}
                                 </Text>
@@ -217,7 +217,7 @@ export default class ChannelInvite extends SafeComponent {
 
     get buttons() {
         return (
-            <View style={buttonContainer}>
+            <View style={buttonContainer as ViewStyle}>
                 <ButtonText
                     text={tx('button_declineInvite')}
                     onPress={this.declineInvite}
@@ -225,13 +225,12 @@ export default class ChannelInvite extends SafeComponent {
                     textColor={vars.peerioBlue}
                     style={{ marginHorizontal: vars.spacing.medium.mini2x, alignItems: 'center' }}
                 />
-                {buttons.roundBlueBgButton(
-                    tx('button_joinRoom'),
-                    this.acceptInvite,
-                    null,
-                    'accept',
-                    { marginHorizontal: vars.spacing.small.midi2x }
-                )}
+                <BlueRoundButton
+                    text="button_joinRoom"
+                    accessibilityId="accept"
+                    onPress={this.acceptInvite}
+                    style={{ marginHorizontal: vars.spacing.small.midi2x }}
+                />
             </View>
         );
     }

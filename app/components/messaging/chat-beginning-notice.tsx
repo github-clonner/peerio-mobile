@@ -1,9 +1,13 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { observer } from 'mobx-react/native';
 import Text from '../controls/custom-text';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
+import { Chat } from '../../lib/peerio-icebear/models';
+
+export interface ChatBeginningNoticeProps {
+    chat: Chat;
+}
 
 const textStyle = {
     textAlign: 'left',
@@ -13,7 +17,7 @@ const textStyle = {
 };
 
 @observer
-export default class ChatBeginningNotice extends Component {
+export default class ChatBeginningNotice extends Component<ChatBeginningNoticeProps> {
     render() {
         const { chat } = this.props;
         return (
@@ -24,7 +28,3 @@ export default class ChatBeginningNotice extends Component {
         );
     }
 }
-
-ChatBeginningNotice.propTypes = {
-    chat: PropTypes.object
-};

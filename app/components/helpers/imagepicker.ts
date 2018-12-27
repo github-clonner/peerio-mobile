@@ -41,7 +41,7 @@ function normalizeUri(response) {
  * @param {Function} functor picks up the actual source
  * @param {Object} params for functor
  */
-async function processResponse(functor, params) {
+async function processResponse(functor, params?) {
     let response = await functor(params);
     if (response.error) {
         console.log('imagepicker.js: ', response.error);

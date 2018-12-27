@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
 import _ from 'lodash';
-import { vars } from '../../styles/styles';
 import TextInputUncontrolled from './text-input-uncontrolled';
 import { transitionAnimation } from '../helpers/animations';
+import fonts from '../../styles/fonts';
 
 @observer
 export default class AutoExpandingTextInput extends Component {
@@ -43,7 +43,7 @@ export default class AutoExpandingTextInput extends Component {
         const style = {
             textAlign: 'left',
             padding: 0,
-            fontFamily: vars.peerioFontFamily
+            fontFamily: fonts.peerioFontFamily
         };
 
         return (

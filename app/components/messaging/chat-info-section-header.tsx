@@ -1,14 +1,20 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, ViewStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 
+export interface ChatInfoSectionHeaderProps {
+    title: string;
+    collapsed: boolean;
+    toggleCollapsed: OnPressResponder;
+    hidden: boolean;
+}
+
 @observer
-export default class ChatInfoSectionHeader extends SafeComponent {
+export default class ChatInfoSectionHeader extends SafeComponent<ChatInfoSectionHeaderProps> {
     renderThrow() {
         const { title, collapsed, toggleCollapsed, hidden } = this.props;
         if (!title) return null;
@@ -29,7 +35,7 @@ export default class ChatInfoSectionHeader extends SafeComponent {
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.retentionOffset}
-                style={style}
+                style={style as ViewStyle}
                 onPress={toggleCollapsed}
                 disabled={!collapsible}>
                 <Text bold style={textStyle}>
@@ -46,10 +52,3 @@ export default class ChatInfoSectionHeader extends SafeComponent {
         );
     }
 }
-
-ChatInfoSectionHeader.propTypes = {
-    title: PropTypes.any,
-    collapsed: PropTypes.bool,
-    toggleCollapsed: PropTypes.func,
-    hidden: PropTypes.bool
-};

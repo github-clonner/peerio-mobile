@@ -13,6 +13,9 @@ class UIState extends RoutedState {
         HOME: 'home'
     };
 
+    testAction1: Function;
+    testAction2: Function;
+    testAction3: Function;
     @observable actionSheetShown = false;
     @observable modalShown = false;
     @observable fileUpdateProgress = 0; // TODO remove when fileState progress is wired
@@ -193,7 +196,5 @@ Keyboard.addListener('keyboardWillHide', () => {
 Keyboard.addListener('keyboardDidHide', () => {
     uiState.keyboardHeight = 0;
 });
-
-uiState.height = height;
 
 export default uiState;

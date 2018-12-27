@@ -1,6 +1,10 @@
-import { Image } from 'react-native';
+import { Image, ImageSourcePropType } from 'react-native';
 
-function adjustImageDimensions(imageAsset, requestedWidth, requestedHeight) {
+function adjustImageDimensions(
+    imageAsset: ImageSourcePropType,
+    requestedWidth: number,
+    requestedHeight: number
+) {
     const asset = Image.resolveAssetSource(imageAsset);
     let adjustedWidth = asset.width,
         adjustedHeight = asset.height;
