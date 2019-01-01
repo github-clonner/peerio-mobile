@@ -189,7 +189,7 @@ class LoginState extends RoutedState {
         return true;
     }
 
-    async load() {
+    load = async () => {
         console.log(`login-state.js: loading`);
         setTimeout(() => {
             this.isInProgress = false;
@@ -218,7 +218,7 @@ class LoginState extends RoutedState {
         setTimeout(() => {
             this.isInProgress = false;
         }, 0);
-    }
+    };
 
     @action
     async loadFromKeychain() {

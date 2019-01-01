@@ -15,6 +15,23 @@ const logoHeight = 72; // Logo in the animation
 const logoAnimation = require('../../assets/loading_screens/loading-screen-logo-animation.json');
 const revealAnimation = require('../../assets/loading_screens/loading-screen-reveal-animation.json');
 
+async function retryLoginOperation(login, count) {
+    let i = 0;
+    for (;;) {
+        ++i;
+        try {
+            return await login();
+        } catch (e) {
+            console.error(e);
+            console.log(`retry login: failed ${i} time out of ${count}`);
+            if (i >= count) {
+                console.log(`failing automatic login after ${i} tries`);
+                throw e;
+            }
+        }
+    }
+}
+
 @observer
 export default class LoadingScreen extends Component {
     @observable authenticated = false;
@@ -27,8 +44,10 @@ export default class LoadingScreen extends Component {
 
     async componentDidMount() {
         try {
-            await loginState.load();
-            if (!loginState.loaded) throw new Error('error logging in after return');
+            await retryLoginOperation(async () => {
+                await loginState.load();
+                if (!loginState.loaded) throw new Error('error logging in after return');
+            }, 3);
             await promiseWhen(() => socket.authenticated);
             this.authenticated = true;
             await promiseWhen(() => routes.main.chatStateLoaded);
