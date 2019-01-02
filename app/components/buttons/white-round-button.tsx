@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, View, ViewStyle } from 'react-native';
+import { TouchableOpacity, View, ViewStyle, TextStyle } from 'react-native';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
@@ -15,13 +15,13 @@ const touchableStyle = {
     justifyContent: 'center'
 };
 
-const textStyle = {
+const textStyle: TextStyle = {
     textAlign: 'center',
     color: vars.peerioBlue,
     fontSize: vars.font.size14
 };
 
-const subtitleStyle = {
+const subtitleStyle: TextStyle = {
     textAlign: 'center',
     color: vars.black54,
     fontSize: vars.font.size10

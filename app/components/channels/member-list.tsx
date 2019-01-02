@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { SectionList } from 'react-native';
@@ -10,9 +9,16 @@ import { tx } from '../utils/translator';
 import MemberListItem from './member-list-item';
 import uiState from '../layout/ui-state';
 
+export interface MemberListProps {
+    collapsed: boolean,
+    toggleCollapsed: Function
+}
+
 @observer
-export default class MemberList extends SafeComponent {
-    get sections() {
+export default class MemberList extends SafeComponent<MemberListProps> {
+    reaction: Function;
+    
+    get sections(): any[] {
         return [
             { data: this.channelMembers, key: tx('title_Members') },
             { data: this.channelInvites, key: tx('title_invited') }
@@ -60,7 +66,7 @@ export default class MemberList extends SafeComponent {
         };
     }
 
-    headers = ({ section: { key } }) => {
+    headers: any = ({ section: { key } }) => {
         let hidden = false;
         let toggleCollapsed = null;
         if (key === tx('title_Members')) {
@@ -89,7 +95,7 @@ export default class MemberList extends SafeComponent {
         }
     };
 
-    participant = ({ item, section }) => {
+    participant: any = ({ item, section }) => {
         return (
             <MemberListItem
                 contact={item}
@@ -114,7 +120,3 @@ export default class MemberList extends SafeComponent {
     }
 }
 
-MemberList.propTypes = {
-    collapsed: PropTypes.bool,
-    toggleCollapsed: PropTypes.func
-};

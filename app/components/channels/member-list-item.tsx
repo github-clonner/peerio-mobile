@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, TouchableOpacity } from 'react-native';
@@ -8,15 +7,23 @@ import chatState from '../messaging/chat-state';
 import icons from '../helpers/icons';
 import { tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
-import { User } from '../../lib/icebear';
+import { User, Contact } from '../../lib/icebear';
 import testLabel from '../helpers/test-label';
 import Text from '../controls/custom-text';
 import ContactCard from '../shared/contact-card';
 import GrayLabel from '../controls/gray-label';
+import { Chat } from '../../lib/peerio-icebear/models';
+
+export interface MemberListItemProps {
+    contact: Contact;
+    channel: Chat;
+    onRemove: Function;
+    section: any;
+}
 
 @observer
-export default class MemberListItem extends SafeComponent {
-    rowStyle = {
+export default class MemberListItem extends SafeComponent<MemberListItemProps> {
+    rowStyle: Object = {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -33,7 +40,7 @@ export default class MemberListItem extends SafeComponent {
         flexGrow: 1
     };
 
-    moreBtnStyle = {
+    moreBtnStyle: object = {
         flex: 0,
         flexDirection: 'row',
         alignItems: 'center'
@@ -118,6 +125,3 @@ export default class MemberListItem extends SafeComponent {
     }
 }
 
-MemberListItem.propTypes = {
-    contact: PropTypes.any.isRequired
-};

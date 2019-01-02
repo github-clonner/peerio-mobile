@@ -1,7 +1,7 @@
 import React from 'react';
 import { observable, when, IReactionDisposer } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { View, TouchableOpacity, ViewStyle } from 'react-native';
+import { View, TouchableOpacity, ViewStyle, TextStyle } from 'react-native';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
@@ -68,7 +68,7 @@ export default class ChannelInviteListItem extends SafeComponent<ChannelInviteLi
             overflow: 'hidden'
         };
 
-        const textStyle = {
+        const textStyle: TextStyle = {
             fontSize: vars.font.size16,
             color: vars.unreadTextColor,
             fontWeight: 'bold',

@@ -4,12 +4,13 @@ import Text from '../controls/custom-text';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import { Chat } from '../../lib/peerio-icebear/models';
+import { TextStyle } from 'react-native';
 
 export interface ChatBeginningNoticeProps {
     chat: Chat;
 }
 
-const textStyle = {
+const textStyle: TextStyle = {
     textAlign: 'left',
     marginTop: vars.spacing.small.maxi2x,
     marginBottom: vars.spacing.small.maxi2x,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, TouchableOpacity, ViewStyle } from 'react-native';
+import { View, TouchableOpacity, ViewStyle, TextStyle } from 'react-native';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
@@ -38,12 +38,12 @@ export default class ChannelListItem extends SafeComponent<ChannelListItemProps>
             flexDirection: 'row'
         };
 
-        const textStyle = {
-            fontSize: vars.font.size16,
-            color: vars.subtleText
-        };
+        const hasUnread = unreadCount > 0;
 
-        const textUnreadStyle = { color: vars.unreadTextColor };
+        const textStyle: TextStyle = {
+            fontSize: vars.font.size16,
+            color: hasUnread ? vars.unreadTextColor : vars.subtleText
+        };
 
         const circleStyle = {
             width: vars.unreadCircleWidth,
@@ -59,7 +59,6 @@ export default class ChannelListItem extends SafeComponent<ChannelListItemProps>
             fontSize: vars.font.size14,
             color: vars.badgeText
         };
-        const hasUnread = unreadCount > 0;
         return (
             <View style={{ backgroundColor: vars.chatItemPressedBackground }}>
                 <TouchableOpacity
@@ -67,7 +66,7 @@ export default class ChannelListItem extends SafeComponent<ChannelListItemProps>
                     onPress={this.onPress}
                     style={containerStyle as ViewStyle}
                     pressRetentionOffset={vars.retentionOffset}>
-                    <Text semibold={hasUnread} style={[textStyle, hasUnread && textUnreadStyle]}>
+                    <Text semibold={hasUnread} style={textStyle}>
                         {`# ${channelName}`}
                     </Text>
                     {unreadCount > 0 && (

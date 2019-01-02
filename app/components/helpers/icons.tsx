@@ -1,11 +1,11 @@
 import React from 'react';
-import { TouchableOpacity, View, Image } from 'react-native';
+import { TouchableOpacity, View, Image, TextStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { vars } from '../../styles/styles';
 import testLabel from './test-label';
 import Text from '../controls/custom-text';
 
-const goStyle = {
+const goStyle: TextStyle = {
     fontSize: vars.font.size14,
     color: vars.peerioBlue
 };
@@ -43,7 +43,7 @@ const icons = {
         );
     },
 
-    plaindark(name, size, style) {
+    plaindark(name, size?, style?) {
         return icons.plain(name, size, vars.darkIcon, undefined, style);
     },
 
@@ -122,7 +122,7 @@ const icons = {
         return <View style={s} />;
     },
 
-    text(text, onPress, style, testID, extraWidth) {
+    text(text, onPress?, style?: TextStyle, testID?, extraWidth?) {
         const size = vars.iconPadding * 2 + vars.iconSize;
         const containerStyle: object = {
             marginHorizontal: vars.iconPadding,
@@ -145,7 +145,7 @@ const icons = {
         );
     },
 
-    disabledText(text, style, extraWidth) {
+    disabledText(text, style?, extraWidth?) {
         const size = vars.iconPadding * 2 + vars.iconSize;
         const containerStyle: object = {
             marginHorizontal: vars.iconPadding,
@@ -179,7 +179,7 @@ const icons = {
             alignItems: 'center',
             justifyContent: 'center'
         };
-        const textStyle = {
+        const textStyle: TextStyle = {
             color: fgColor,
             fontSize: vars.font.size14,
             textAlign: 'center'

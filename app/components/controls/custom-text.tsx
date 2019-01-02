@@ -1,19 +1,13 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
 /* eslint-disable */
-import { Text as RNText, Platform, TextProps } from 'react-native';
+import { Text as RNText, TextStyle, StyleProp, Platform, TextProps } from 'react-native';
 /* eslint-enable */
 import SafeComponent from '../shared/safe-component';
 import fonts from '../../styles/fonts';
 
-interface TextStyle {
-    fontWeight: string;
-    fontStyle: string;
-    fontFamily: string;
-}
-
 export interface CustomTextProps extends TextProps {
-    style?: object;
+    style?: StyleProp<TextStyle>;
     semibold?: boolean;
     bold?: boolean;
     italic?: boolean;

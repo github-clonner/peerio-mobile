@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import { action } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import RecentFilesList from '../files/recent-files-list';
-import MemberList from '../channels/member-list';
+import MemberList from './member-list';
 import chatState from '../messaging/chat-state';
 
 @observer

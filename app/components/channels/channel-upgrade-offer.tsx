@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Platform } from 'react-native';
+import { View, Platform, ViewStyle, TextStyle } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { User } from '../../lib/icebear';
 import { T } from '../utils/translator';
@@ -14,7 +14,7 @@ export default class ChannelUpgradeOffer extends Component {
     render() {
         if (User.current.channelsLeft > 0) return null;
 
-        const container = {
+        const container: ViewStyle = {
             flexGrow: 1,
             flex: 1,
             flexDirection: 'row',
@@ -27,7 +27,7 @@ export default class ChannelUpgradeOffer extends Component {
             marginRight: vars.spacing.medium.midi2x
         };
 
-        const offerTextStyle = {
+        const offerTextStyle: TextStyle = {
             color: 'white',
             backgroundColor: 'transparent',
             fontSize: vars.font.size12,
@@ -37,7 +37,7 @@ export default class ChannelUpgradeOffer extends Component {
             paddingBottom: Platform.OS === 'android' ? vars.spacing.small.midi : 0
         };
 
-        const buttonStyle = {
+        const buttonStyle: ViewStyle = {
             maxWidth: '25%',
             justifyContent: 'center',
             marginTop: vars.spacing.medium.midi

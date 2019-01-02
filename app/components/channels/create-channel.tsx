@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { View, ScrollView, Dimensions, Keyboard } from 'react-native';
 import { observer } from 'mobx-react/native';
@@ -16,7 +15,7 @@ import Text from '../controls/custom-text';
 import ModalHeader from '../shared/modal-header';
 import { transitionAnimation } from '../helpers/animations';
 
-const fillView = { flex: 1, flexGrow: 1, backgroundColor: vars.darkBlueBackground05 };
+const fillView: object = { flex: 1, flexGrow: 1, backgroundColor: vars.darkBlueBackground05 };
 
 const { width } = Dimensions.get('window');
 
@@ -37,7 +36,10 @@ export default class CreateChannel extends Component {
     @observable channelName = '';
     @observable step = 0;
     @observable inProgress = false;
-
+    _disableScrollUpdate: boolean;
+    _scrollView: ScrollView;
+    _contactSelector: ContactSelectorUniversal;
+    
     componentDidMount() {
         reaction(
             () => this.step,
@@ -101,7 +103,7 @@ export default class CreateChannel extends Component {
         return icons.disabledText(tu('button_next'));
     }
 
-    exitRow(testID) {
+    exitRow(testID?: string) {
         const leftIcon = icons.dark('close', () => chatState.routerModal.discard());
         const rightIcon = this.isValid ? this.nextIcon() : this.nextIconDisabled();
         const title = 'button_createChannel';
@@ -117,9 +119,7 @@ export default class CreateChannel extends Component {
                     placeholderText="title_channelNamePlaceholder"
                     property="channelName"
                     state={this}
-                    bottomText={tx('title_channelNameLimit', {
-                        maxChatNameLength: config.chat.maxChatNameLength
-                    })}
+                    bottomText="title_channelNameLimit"
                     maxLength={config.chat.maxChatNameLength}
                 />
             </View>
@@ -174,14 +174,10 @@ export default class CreateChannel extends Component {
 
     render() {
         return (
-            <View style={fillView} contentContainerStyle={fillView}>
+            <View style={fillView}>
                 {User.current.channelsLeft <= 0 ? this.paywall : this.scrollView}
                 <SnackBarConnection />
             </View>
         );
     }
 }
-
-CreateChannel.propTypes = {
-    createChat: PropTypes.any
-};

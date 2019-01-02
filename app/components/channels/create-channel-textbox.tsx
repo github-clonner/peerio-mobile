@@ -8,11 +8,22 @@ import testLabel from '../helpers/test-label';
 import Text from '../controls/custom-text';
 import TextInputUncontrolled from '../controls/text-input-uncontrolled';
 import fonts from '../../styles/fonts';
+import { config } from '../../lib/icebear';
 
 const height = vars.inputHeight;
 const fontSize = vars.font.size14;
 
-const container = {
+export interface CreateChannelTextBoxProps {
+    state?: object;
+    labelText?: string;
+    placeholderText?: string;
+    property?: string;
+    bottomText?: string;
+    maxLength?: number;
+    multiline?: boolean;
+}
+
+const container: object = {
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: vars.spacing.medium.maxi,
@@ -45,7 +56,7 @@ const titleStyle = {
 };
 
 @observer
-export default class CreateChannelTextBox extends Component {
+export default class CreateChannelTextBox extends Component<CreateChannelTextBoxProps> {
     @action.bound
     changeText(text) {
         this.props.state[this.props.property] = text;
@@ -84,7 +95,9 @@ export default class CreateChannelTextBox extends Component {
                         {...testLabel(testID)}
                     />
                 </View>
-                <Text style={bottomTextStyle}>{tx(bottomText)}</Text>
+                <Text style={bottomTextStyle}>{tx(bottomText, {
+                        maxChatNameLength: config.chat.maxChatNameLength
+                    })}</Text>
             </View>
         );
     }

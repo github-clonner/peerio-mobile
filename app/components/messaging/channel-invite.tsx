@@ -1,6 +1,6 @@
 import React from 'react';
 import { action, observable } from 'mobx';
-import { Dimensions, Image, View, ViewStyle } from 'react-native';
+import { Dimensions, Image, View, ViewStyle, TextStyle } from 'react-native';
 import { observer } from 'mobx-react/native';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
@@ -32,7 +32,7 @@ const headingContainer = {
     marginBottom: vars.spacing.medium.mini2x
 };
 
-const headingStyle = {
+const headingStyle: TextStyle = {
     color: vars.lighterBlackText,
     textAlign: 'center',
     fontSize: vars.font.size16,
@@ -85,7 +85,7 @@ const moreContainer = {
     alignItems: 'center'
 };
 
-const moreText = {
+const moreText: TextStyle = {
     backgroundColor: 'transparent',
     textAlign: 'right',
     alignSelf: 'flex-end',
