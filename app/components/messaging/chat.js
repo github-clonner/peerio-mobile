@@ -430,7 +430,6 @@ export default class Chat extends SafeComponent {
         if (this.chat && this.chat.isInvite) return <DmContactInvite showButtons />;
         return (
             <View style={{ flexGrow: 1, paddingBottom: vars.spacing.small.mini2x }}>
-                {/* this.chat && !this.chat.canGoUp && upgradeForArchive() */}
                 <View style={{ flex: 1, flexGrow: 1, backgroundColor: this.background }}>
                     {this.data ? this.listView() : null}
                 </View>
