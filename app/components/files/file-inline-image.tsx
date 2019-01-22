@@ -341,7 +341,7 @@ export default class FileInlineImage extends SafeComponent<FileInlineImageProps>
     get downloadErrorMessage() {
         return (
             <View style={this.textMessageOuter}>
-                <Text style={textMessageTextStyle}>{tx('Image preview is not available')}</Text>
+                <Text style={textMessageTextStyle}>{tx('error_messageErrorNotAvailable')}</Text>
             </View>
         );
     }

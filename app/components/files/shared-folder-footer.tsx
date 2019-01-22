@@ -3,7 +3,7 @@ import { observer } from 'mobx-react/native';
 import { View, TouchableOpacity, ViewStyle } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
-import { tu } from '../utils/translator';
+import { tu, LocalizationStrings } from '../utils/translator';
 import icons from '../helpers/icons';
 import SharedWithRow from '../shared/shared-with-row';
 import uiState from '../layout/ui-state';
@@ -11,7 +11,7 @@ import Text from '../controls/custom-text';
 import { Volume } from '../../lib/peerio-icebear/models';
 
 export interface SharedFolderFooterProps {
-    title?: string;
+    title?: keyof LocalizationStrings;
     action?: OnPressResponder;
     icon?: string;
     showAvatars?: boolean;
