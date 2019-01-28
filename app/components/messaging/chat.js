@@ -108,9 +108,13 @@ export default class Chat extends SafeComponent {
                 message={item}
                 chat={this.chat}
                 backgroundColor={this.background}
-                onInlineImageAction={image => FileActionSheet.show({ file: image })}
+                onInlineImageAction={image =>
+                    FileActionSheet.show({ file: image, canUnshare: true })
+                }
                 onLegacyFileAction={file => FileActionSheet.show({ file })}
-                onFileAction={file => FileActionSheet.show({ file, fileAutoOpen: true })}
+                onFileAction={file =>
+                    FileActionSheet.show({ file, canUnshare: true, fileAutoOpen: true })
+                }
             />
         );
     };
