@@ -25,6 +25,7 @@ export default class ButtonText extends SafeComponent {
         return (
             <TouchableOpacity
                 {...testLabel(`popupButton-${testID}`)}
+                hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
                 pressRetentionOffset={vars.retentionOffset}
                 style={touchable}
                 disabled={disabled}

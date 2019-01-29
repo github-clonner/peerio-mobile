@@ -15,13 +15,14 @@ import { uiState } from '../states';
 import signupState from '../signup/signup-state';
 import BlueRoundButton from '../buttons/blue-round-button';
 import WhiteRoundButton from '../buttons/white-round-button';
+import PeerioClosingBottomBanner from '../shared/peerio-closing-bottom-banner';
 
 const { S } = telemetry;
 
 const logoWelcome = require('../../assets/peerio-logo-dark.png');
 const imageWelcome = require('../../assets/welcome-illustration.png');
 
-const { height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const logoBar = {
     alignItems: 'center',
@@ -73,11 +74,7 @@ export default class LoginWelcome extends SafeComponent {
                     <Image
                         resizeMode="contain"
                         source={imageWelcome}
-                        style={{
-                            height,
-                            alignSelf: 'center',
-                            marginBottom: -vars.spacing.small.midi2x
-                        }}
+                        style={adjustImageDimensions(imageWelcome, width, undefined)}
                     />
                 </View>
                 <View style={logoBar}>
@@ -118,6 +115,7 @@ export default class LoginWelcome extends SafeComponent {
                         />
                     </View>
                 </View>
+                <PeerioClosingBottomBanner />
                 <ActivityOverlay large visible={loginState.isInProgress} />
                 <StatusBar hidden />
             </View>

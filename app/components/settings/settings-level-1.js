@@ -24,7 +24,7 @@ import {
     saveAccountKeyBackup,
     config
 } from '../../lib/icebear';
-import { popupAbout, popupInputCancel } from '../shared/popups';
+import { popupAbout, popupInputCancel, popupPeerioClosureSettings } from '../shared/popups';
 import ButtonWithIcon from '../controls/button-with-icon';
 import icons from '../helpers/icons';
 import AvatarCircle from '../shared/avatar-circle';
@@ -177,6 +177,12 @@ export default class SettingsLevel1 extends SafeComponent {
                             'account-circle',
                             vars.accountSettingsIconColor
                         )}
+                    />
+                    <SettingsItem
+                        title="Peerio Closure"
+                        textColor={vars.red}
+                        onPress={() => popupPeerioClosureSettings()}
+                        leftComponent={this.leftSettingsIcon('close', vars.red)}
                     />
                     {this.spacer}
 
