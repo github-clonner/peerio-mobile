@@ -1,24 +1,38 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { observer } from 'mobx-react/native';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, TextStyle, ViewStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Text from '../controls/custom-text';
+import Text from './custom-text';
 import { vars } from '../../styles/styles';
 import testLabel from '../helpers/test-label';
 
-const defaultTextStyle = {
+export interface ButtonWithIconProps {
+    style?: ViewStyle,
+    textStyle?: TextStyle,
+    color?: string,
+    onPress?: Function,
+    text?: string,
+    caps?: boolean,
+    disabled?: boolean,
+    testID?: string,
+    bold?: boolean,
+    iconName?: string,
+    accessible?: boolean,
+    accessibilityLabel?: string
+}
+
+const defaultTextStyle: TextStyle = {
     backgroundColor: 'transparent'
 };
 
-const containerStyle = {
+const containerStyle: ViewStyle = {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
 };
 
 @observer
-export default class ButtonWithIcon extends Component {
+export default class ButtonWithIcon extends Component<ButtonWithIconProps> {
     render() {
         const { textStyle, color } = this.props;
         const opacity = { opacity: this.props.disabled ? 0.5 : 1 };
@@ -51,16 +65,3 @@ export default class ButtonWithIcon extends Component {
     }
 }
 
-ButtonWithIcon.propTypes = {
-    style: PropTypes.any,
-    textStyle: PropTypes.any,
-    onPress: PropTypes.any,
-    text: PropTypes.any.isRequired,
-    caps: PropTypes.bool,
-    disabled: PropTypes.bool,
-    testID: PropTypes.string,
-    bold: PropTypes.bool,
-    iconName: PropTypes.string,
-    accessible: PropTypes.bool,
-    accessibilityLabel: PropTypes.string
-};

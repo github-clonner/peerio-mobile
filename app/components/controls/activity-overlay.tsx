@@ -1,17 +1,16 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { observer } from 'mobx-react/native';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, ViewStyle } from 'react-native';
 import { vars } from '../../styles/styles';
 
 @observer
-export default class ActivityOverlay extends Component {
+export default class ActivityOverlay extends Component<{ visible?: boolean, large?: boolean }> {
     render() {
-        const center = {
+        const center: ViewStyle = {
             justifyContent: 'center',
             alignItems: 'center'
         };
-        const activityOverlay = {
+        const activityOverlay: ViewStyle = {
             position: 'absolute',
             left: 0,
             right: 0,
@@ -29,8 +28,3 @@ export default class ActivityOverlay extends Component {
         ) : null;
     }
 }
-
-ActivityOverlay.propTypes = {
-    visible: PropTypes.any,
-    large: PropTypes.any
-};

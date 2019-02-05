@@ -1,12 +1,11 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { observer } from 'mobx-react/native';
-import { View } from 'react-native';
+import { View, ViewStyle } from 'react-native';
 
 @observer
-export default class Bottom extends Component {
+export default class Bottom extends Component<{ children: JSX.Element }> {
     render() {
-        const style = {
+        const style: ViewStyle = {
             position: 'absolute',
             bottom: 0,
             left: 0,
@@ -19,7 +18,3 @@ export default class Bottom extends Component {
         );
     }
 }
-
-Bottom.propTypes = {
-    children: PropTypes.any
-};

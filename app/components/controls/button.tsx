@@ -1,12 +1,24 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { observer } from 'mobx-react/native';
-import { View, TouchableOpacity } from 'react-native';
-import Text from '../controls/custom-text';
+import { View, TouchableOpacity, TextStyle, ViewStyle } from 'react-native';
+import Text from './custom-text';
 import { vars } from '../../styles/styles';
 
+export interface ButtonProps {
+    style?: ViewStyle,
+    textStyle?: TextStyle,
+    onPress?: Function,
+    text: string,
+    caps?: boolean,
+    disabled?: boolean,
+    accessible?: boolean,
+    accessibilityLabel?: string,
+    testID?: string,
+    bold?: boolean
+}
+
 @observer
-export default class Button extends Component {
+export default class Button extends Component<ButtonProps> {
     render() {
         const { textStyle } = this.props;
         const opacity = { opacity: this.props.disabled ? 0.5 : 1 };
@@ -38,16 +50,3 @@ export default class Button extends Component {
         );
     }
 }
-
-Button.propTypes = {
-    style: PropTypes.any,
-    textStyle: PropTypes.any,
-    onPress: PropTypes.any,
-    text: PropTypes.any.isRequired,
-    caps: PropTypes.bool,
-    disabled: PropTypes.bool,
-    accessible: PropTypes.bool,
-    accessibilityLabel: PropTypes.string,
-    testID: PropTypes.string,
-    bold: PropTypes.bool
-};

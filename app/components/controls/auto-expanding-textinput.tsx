@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
@@ -6,9 +5,22 @@ import _ from 'lodash';
 import TextInputUncontrolled from './text-input-uncontrolled';
 import { transitionAnimation } from '../helpers/animations';
 import fonts from '../../styles/fonts';
+import { TextStyle } from 'react-native';
+
+export interface AutoExpandingTextInputProps {
+    onChangeText: Function;
+    value?: string;
+    placeholder?: string;
+    maxHeight?: number;
+    minHeight?: number;
+    style?: TextStyle;
+    blurOnSubmit?: boolean;
+    ref?: AutoExpandingTextInput
+}
 
 @observer
-export default class AutoExpandingTextInput extends Component {
+export default class AutoExpandingTextInput extends Component<AutoExpandingTextInputProps> {
+    textInputRef: TextInputUncontrolled;
     @observable height;
 
     get maxHeight() {
@@ -57,8 +69,3 @@ export default class AutoExpandingTextInput extends Component {
         );
     }
 }
-
-AutoExpandingTextInput.propTypes = {
-    style: PropTypes.any,
-    value: PropTypes.any
-};

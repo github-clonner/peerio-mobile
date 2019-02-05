@@ -1,14 +1,23 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, StyleProp, ViewStyle, TextStyle } from 'react-native';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import testLabel from '../helpers/test-label';
-import Text from '../controls/custom-text';
+import Text from './custom-text';
+
+export interface ButtonTextProps {
+    text?: string,
+    textColor?: string,
+    testID?: string,
+    onPress?: VoidFunction,
+    secondary?: boolean,
+    style?: StyleProp<TextStyle>,
+    disabled?: boolean
+}
 
 @observer
-export default class ButtonText extends SafeComponent {
+export default class ButtonText extends SafeComponent<ButtonTextProps> {
     renderThrow() {
         const { text, style, textColor, secondary, disabled, onPress, testID } = this.props;
         let fontColor;
@@ -17,7 +26,7 @@ export default class ButtonText extends SafeComponent {
         else if (textColor) fontColor = textColor;
         else fontColor = vars.peerioBlue;
         const padding = vars.spacing.small.maxi2x;
-        const touchable = {
+        const touchable: ViewStyle = {
             padding,
             justifyContent: 'center'
         };
@@ -37,12 +46,3 @@ export default class ButtonText extends SafeComponent {
         );
     }
 }
-
-ButtonText.propTypes = {
-    text: PropTypes.any,
-    textColor: PropTypes.any,
-    testID: PropTypes.any,
-    onPress: PropTypes.any,
-    secondary: PropTypes.bool,
-    style: PropTypes.any
-};

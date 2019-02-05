@@ -1,12 +1,11 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { observer } from 'mobx-react/native';
-import { View } from 'react-native';
+import { View, ViewStyle, } from 'react-native';
 
 @observer
-export default class Center extends Component {
+export default class Center extends Component<{ children: JSX.Element, style?: ViewStyle }> {
     render() {
-        const style = {
+        const style: ViewStyle = {
             flexGrow: 1,
             flexDirection: 'row',
             justifyContent: 'center',
@@ -16,7 +15,3 @@ export default class Center extends Component {
     }
 }
 
-Center.propTypes = {
-    children: PropTypes.any.isRequired,
-    style: PropTypes.any
-};
