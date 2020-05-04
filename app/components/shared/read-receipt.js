@@ -9,14 +9,10 @@ import { vars } from '../../styles/styles';
 
 @observer
 export default class ReadReceipt extends SafeComponent {
-    constructor(props) {
-        super(props);
-        this.contact = contactStore.getContact(props.username);
-    }
-
     renderThrow() {
         const { avatarSize } = this.props;
-        const { color, letter, mediumAvatarUrl } = this.contact;
+        const contact = contactStore.getContact(this.props.username);
+        const { color, letter, mediumAvatarUrl } = contact;
         const tryColor = color || {};
         const circleDiameter = avatarSize || 18;
         const circleStyle = {
@@ -33,11 +29,13 @@ export default class ReadReceipt extends SafeComponent {
         };
         const letterView = (
             <View style={[circleStyle, circleOnline]}>
-                <Text style={{ fontSize: vars.readReceiptFontSize, color: 'white' }}>{letter}</Text>
+                <Text style={{ fontSize: vars.avatarLetterSize, color: vars.white }}>{letter}</Text>
             </View>
         );
         const uri = mediumAvatarUrl;
-        const avatarView = <Image style={circleStyle} source={{ uri, cache: 'force-cache' }} key={uri} />;
+        const avatarView = (
+            <Image style={circleStyle} source={{ uri, cache: 'force-cache' }} key={uri} />
+        );
         return mediumAvatarUrl ? avatarView : letterView;
     }
 }

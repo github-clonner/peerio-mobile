@@ -13,16 +13,9 @@ export default class RadioButton extends SafeComponent {
             <TouchableOpacity onPress={onPress}>
                 <View style={{ flexDirection: 'row' }}>
                     <Circle isSelected={isSelected} />
-                    <View style={{ flex: 1 }}>
-                        {children}
-                    </View>
+                    <View style={{ flex: 1 }}>{children}</View>
                 </View>
             </TouchableOpacity>
         );
     }
 }
-
-RadioButton.propTypes = {
-    onPress: React.PropTypes.func,
-    isSelected: React.PropTypes.bool
-};

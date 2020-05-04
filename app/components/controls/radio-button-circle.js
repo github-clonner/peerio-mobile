@@ -35,11 +35,3 @@ export default class Circle extends SafeComponent {
         );
     }
 }
-
-Circle.propTypes = {
-    isSelected: React.PropTypes.bool
-};
-
-Circle.defaultProps = {
-    isSelected: true
-};

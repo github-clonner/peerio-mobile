@@ -1,8 +1,12 @@
-import { config } from '../lib/peerio-icebear';
+import { config } from '../lib/icebear';
 
-module.exports = {
+/**
+ * This file loads localization files from local resources
+ */
+
+export default {
     async loadLocaleFile(lc) {
-        const defaultLocale = require('./peerio-icebear/copy/en.json');
+        const defaultLocale = require('peerio-icebear/src/copy/en.json');
         if (lc === 'en') return defaultLocale;
         const path = config.FileStream.formatAssetsPath(`locales/${lc}.json`);
         try {
@@ -20,9 +24,7 @@ module.exports = {
         const path = config.FileStream.formatAssetsPath(`dict/${lc}.txt`);
         const def = config.FileStream.formatAssetsPath(`dict/en.txt`);
         return config.FileStream.existsAssetsFile(path)
-            .then(exists =>
-                config.FileStream.readAssetsFile(exists ? path : def)
-            )
+            .then(exists => config.FileStream.readAssetsFile(exists ? path : def))
             .catch(e => {
                 console.error(e);
                 return def;

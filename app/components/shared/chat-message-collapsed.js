@@ -9,6 +9,7 @@ import ChatMessageBody from './chat-message-body';
 import MessageSentError from './message-sent-error';
 
 const itemStyle = {
+    marginTop: 8,
     flex: 1,
     flexGrow: 1,
     flexDirection: 'row',
@@ -16,38 +17,46 @@ const itemStyle = {
 };
 
 const itemContainerStyle = {
-    paddingLeft: 68,
-    marginRight: 22
+    flexDirection: 'row',
+    marginLeft: 68,
+    marginRight: 6
 };
 
 @observer
 export default class ChatMessageCollapsed extends SafeComponent {
     renderThrow() {
-        const { errorStyle, backgroundColor, messageObject, chat, onFileAction, onLegacyFileAction, onInlineImageAction } = this.props;
+        const {
+            errorStyle,
+            backgroundColor,
+            messageObject,
+            chat,
+            onFileAction,
+            onLegacyFileAction,
+            onInlineImageAction,
+            onPressReceipt
+        } = this.props;
 
         const { files, folders } = messageObject;
         const shrinkStrategy = { flexShrink: 1 };
         if (files || folders) shrinkStrategy.flexGrow = 1;
 
         return (
-            <View style={{ flexGrow: 1 }}>
-                <View style={[itemStyle, errorStyle, backgroundColor]}>
-                    <View
-                        style={[itemContainerStyle, shrinkStrategy]}>
-                        <View style={{ flex: 1, flexGrow: 1 }}>
-                            <CorruptedMessage visible={messageObject.signatureError} />
-                            <ChatMessageBody
-                                messageObject={messageObject}
-                                chat={chat}
-                                onFileAction={onFileAction}
-                                onLegacyFileAction={onLegacyFileAction}
-                                onInlineImageAction={onInlineImageAction}
-                            />
-                        </View>
-                    </View>
-                    <MessageSentError message={messageObject} chat={chat} />
+            <View style={[itemStyle, errorStyle]}>
+                <CorruptedMessage visible={messageObject.signatureError} />
+                <View style={[itemContainerStyle, shrinkStrategy, backgroundColor]}>
+                    <ChatMessageBody
+                        messageObject={messageObject}
+                        chat={chat}
+                        onFileAction={onFileAction}
+                        onLegacyFileAction={onLegacyFileAction}
+                        onInlineImageAction={onInlineImageAction}
+                    />
+                    <ViewReceipts
+                        receipts={messageObject.receipts}
+                        onPressReceipt={onPressReceipt}
+                    />
                 </View>
-                <ViewReceipts receipts={messageObject.receipts} />
+                <MessageSentError message={messageObject} chat={chat} />
             </View>
         );
     }

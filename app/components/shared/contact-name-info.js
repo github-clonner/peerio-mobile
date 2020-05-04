@@ -9,16 +9,15 @@ import { tx } from '../utils/translator';
 
 const containerStyle = {
     justifyContent: 'center'
-
 };
 
 const titleStyle = {
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     color: vars.textBlack87
 };
 
 const subtitleStyle = {
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size12,
     color: vars.textBlack38
 };
 

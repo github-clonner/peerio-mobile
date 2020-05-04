@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { observer } from 'mobx-react/native';
-import { View, TextInput, Platform } from 'react-native';
+import { View, Platform } from 'react-native';
 import { vars } from '../../styles/styles';
 import testLabel from '../helpers/test-label';
+import TextInputUncontrolled from '../controls/text-input-uncontrolled';
 
 const height = vars.searchInputHeight;
-const fontSize = vars.font.size.bigger;
+const fontSize = vars.font.size16;
 const marginTop = Platform.OS === 'android' ? (height - fontSize + 2) / 2 : 0;
 
 const container = {
@@ -26,7 +27,6 @@ const container = {
 const placeholderStyle = {
     flexGrow: 1,
     height,
-    lineHeight: height * 1.5,
     paddingTop: 0,
     marginTop,
     marginLeft: vars.spacing.small.midi,
@@ -36,12 +36,20 @@ const placeholderStyle = {
 @observer
 export default class SearchBar extends Component {
     render() {
-        const { textValue, placeholderText, onChangeText, onSubmit, leftIcon, rightIcon, testId } = this.props;
+        const {
+            textValue,
+            placeholderText,
+            onChangeText,
+            onSubmit,
+            leftIcon,
+            rightIcon,
+            testId
+        } = this.props;
         return (
             <View>
                 <View style={container}>
                     {leftIcon}
-                    <TextInput
+                    <TextInputUncontrolled
                         underlineColorAndroid="transparent"
                         value={textValue}
                         returnKeyType="done"

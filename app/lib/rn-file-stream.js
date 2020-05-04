@@ -10,10 +10,16 @@ const { fileHelpers } = icebear;
 const { bytesToB64, b64ToBytes } = icebear.crypto.cryptoUtil;
 
 const isIOS = Platform.OS === 'ios';
-const ROOT = isIOS ? RNFS.CachesDirectoryPath : RNFS.ExternalDirectoryPath;
+const ROOT = isIOS
+    ? RNFS.CachesDirectoryPath
+    : RNFS.ExternalDirectoryPath || RNFS.ExternalStorageDirectoryPath || RNFS.CachesDirectoryPath;
 
 function getTemporaryDirectory() {
     return pathUtils.join(ROOT, 'cache');
+}
+
+function getSafeNameForSaving(name) {
+    return name.replace(/[,:]/g, '');
 }
 
 const ASSET_PROTOCOL = 'asset://';
@@ -45,9 +51,7 @@ export default fileStream => {
         close() {
             if (this.fileDescriptor == null) return Promise.resolve();
             this.fileDescriptor = null;
-            console.debug(
-                `rn-file-stream.js successfully ${this.mode}: ${this.filePath}`
-            );
+            console.debug(`rn-file-stream.js successfully ${this.mode}: ${this.filePath}`);
             return Promise.resolve();
         }
 
@@ -83,15 +87,11 @@ export default fileStream => {
          * @return {Promise}
          */
         writeInternal(buffer) {
-            return RNFS.appendFile(
-                this.fileDescriptor,
-                bytesToB64(buffer),
-                'base64'
-            );
+            return RNFS.appendFile(this.fileDescriptor, bytesToB64(buffer), 'base64');
         }
 
         static getFullPath(uid, name) {
-            return `${ROOT}/${uid}/${name}`;
+            return `${ROOT}/${uid}/${getSafeNameForSaving(name)}`;
         }
 
         static exists(path) {
@@ -131,9 +131,7 @@ export default fileStream => {
 
         static async rename(oldPath, newPath) {
             if (oldPath === newPath) {
-                console.log(
-                    `rn-file-stream: ${oldPath} equals to new destination`
-                );
+                console.log(`rn-file-stream: ${oldPath} equals to new destination`);
                 return;
             }
             if (await RNFS.exists(newPath)) {
@@ -143,28 +141,20 @@ export default fileStream => {
         }
 
         static getTempCachePath(name) {
-            return pathUtils.join(getTemporaryDirectory(), name);
+            return pathUtils.join(getTemporaryDirectory(), getSafeNameForSaving(name));
         }
 
         static formatAssetsPath(path) {
-            return Platform.OS === 'ios'
-                ? `${RNFS.MainBundlePath}/${path}`
-                : path;
+            return Platform.OS === 'ios' ? `${RNFS.MainBundlePath}/${path}` : path;
         }
 
         static makeAssetPath(path) {
             return `${ASSET_PROTOCOL}${path}`;
         }
 
-        static readAssetsFile = (isIOS
-            ? RNFS.readFile
-            : RNFS.readFileAssets
-        ).bind(RNFS);
+        static readAssetsFile = (isIOS ? RNFS.readFile : RNFS.readFileAssets).bind(RNFS);
 
-        static existsAssetsFile = (isIOS
-            ? RNFS.exists
-            : RNFS.existsAssets
-        ).bind(RNFS);
+        static existsAssetsFile = (isIOS ? RNFS.exists : RNFS.existsAssets).bind(RNFS);
     }
 
     return RNFileStream;

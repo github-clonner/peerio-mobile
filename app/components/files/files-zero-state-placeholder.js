@@ -10,6 +10,28 @@ import testLabel from '../helpers/test-label';
 
 const fileUploadZeroState = require('../../assets/file-upload-zero-state.png');
 
+const outerContainer = {
+    flexShrink: 1,
+    width: this.width,
+    justifyContent: 'center',
+    padding: vars.spacing.huge.mini,
+    paddingTop: vars.spacing.large.mini
+};
+const imageStyle = {
+    width: this.width,
+    height: 275
+};
+const headerStyle = {
+    color: vars.textBlack87,
+    textAlign: 'center',
+    fontSize: vars.font.size20
+};
+const labelStyle = {
+    marginVertical: vars.spacing.medium.midi,
+    color: vars.textBlack87,
+    textAlign: 'center',
+    fontSize: vars.font.size14
+};
 @observer
 export default class FilesPlaceholder extends SafeComponent {
     constructor(props) {
@@ -17,37 +39,31 @@ export default class FilesPlaceholder extends SafeComponent {
         this.width = Dimensions.get('window').width;
     }
 
-    renderThrow() {
-        const outerContainer = {
-            flexShrink: 1,
-            width: this.width,
-            justifyContent: 'center',
-            marginTop: vars.spacing.medium.maxi
-        };
-        const imageStyle = {
-            width: this.width,
-            height: 275,
-            marginVertical: vars.spacing.huge.midi
-        };
-        const headerStyle = {
-            color: vars.textBlack54,
-            textAlign: 'center',
-            fontSize: vars.font.size.huge
-        };
+    get title() {
+        if (this.props.emptyFolder) {
+            return (
+                <Text style={[headerStyle, { marginVertical: vars.spacing.large.midi }]} bold>
+                    {tx('title_emptyFolder')}
+                </Text>
+            );
+        }
         return (
-            <ViewWithDrawer>
+            <View>
+                <Text style={headerStyle} bold>
+                    {tx('title_zeroFiles')}
+                </Text>
+                <Text style={labelStyle}>{tx('title_zeroFilesSubtitle')}</Text>
+            </View>
+        );
+    }
+
+    renderThrow() {
+        return (
+            <ViewWithDrawer {...testLabel('filesZeroState')}>
                 <View style={outerContainer}>
-                    <Image
-                        source={fileUploadZeroState}
-                        resizeMode="contain"
-                        style={imageStyle} />
-                </View>
-                <View style={{ flex: 0.5 }}>
-                    <Text
-                        style={headerStyle}
-                        {...testLabel('title_uploadSomething')}>
-                        {tx('title_uploadSomething')}
-                    </Text>
+                    {this.title}
+                    <Image source={fileUploadZeroState} resizeMode="contain" style={imageStyle} />
+                    <Text style={labelStyle}>{tx('description_empty_folder')}</Text>
                 </View>
             </ViewWithDrawer>
         );

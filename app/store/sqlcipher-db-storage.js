@@ -5,32 +5,38 @@ import CacheEngineBase from '../lib/peerio-icebear/db/cache-engine-base';
 sqlcipher.enablePromise(false);
 
 function serialize(item) {
-    if (item.payload) {
-        item.payload = bytesToB64(item.payload);
+    let { payload, chatHead, props } = item;
+    if (payload) {
+        payload = bytesToB64(payload);
     }
-    if (item.chatHead && item.chatHead.payload) {
-        item.chatHead.payload = bytesToB64(item.chatHead.payload);
+    if (chatHead && chatHead.payload) {
+        chatHead = { ...chatHead, payload: bytesToB64(chatHead.payload) };
     }
-    if (item.props && item.props.descriptor && item.props.descriptor.payload) {
-        item.props.descriptor.payload = bytesToB64(item.props.descriptor.payload);
+    if (props && props.descriptor && props.descriptor.payload) {
+        props = {
+            ...props,
+            descriptor: { ...props.descriptor, payload: bytesToB64(props.descriptor.payload) }
+        };
     }
-    return JSON.stringify(item);
+    const copiedItem = { ...item, payload, chatHead, props };
+    return JSON.stringify(copiedItem);
 }
 
 function deserialize(data) {
     try {
         const item = JSON.parse(data);
         if (item.payload) {
-            item.payload = b64ToBytes(item.payload);
+            item.payload = b64ToBytes(item.payload).buffer;
         }
         if (item.chatHead && item.chatHead.payload) {
             item.chatHead.payload = b64ToBytes(item.chatHead.payload).buffer;
         }
         if (item.props && item.props.descriptor && item.props.descriptor.payload) {
-            item.props.descriptor.payload = b64ToBytes(item.props.descriptor.payload);
+            item.props.descriptor.payload = b64ToBytes(item.props.descriptor.payload).buffer;
         }
         return item;
     } catch (e) {
+        console.error(`error deserializing cached payload`);
         return null;
     }
 }
@@ -41,9 +47,10 @@ class SqlCipherDbStorage extends CacheEngineBase {
     async openInternal() {
         console.log(`open db: ${this.name}`);
         this.sql = await sqlcipher.openDatabase({ name: this.name, location: LOCATION_CONFIG });
-        this.sql.executeSqlPromise = (sql, params) => new Promise(resolve => {
-            this.sql.executeSql(sql, params, resolve);
-        });
+        this.sql.executeSqlPromise = (sql, params) =>
+            new Promise(resolve => {
+                this.sql.executeSql(sql, params, resolve);
+            });
         await this.sql.executeSqlPromise(
             'CREATE TABLE IF NOT EXISTS key_value(key TEXT PRIMARY KEY, value TEXT) WITHOUT ROWID'
         );
@@ -58,11 +65,13 @@ class SqlCipherDbStorage extends CacheEngineBase {
     }
 
     transactionInsert(transaction, key, value) {
-        return new Promise(resolve => transaction.executeSql(
-            'INSERT OR REPLACE INTO key_value(key, value) VALUES(?, ?)',
-            [key, serialize(value)],
-            resolve
-        ));
+        return new Promise(resolve =>
+            transaction.executeSql(
+                'INSERT OR REPLACE INTO key_value(key, value) VALUES(?, ?)',
+                [key, serialize(value)],
+                resolve
+            )
+        );
     }
 
     setValue(key, value, confirmUpdate) {
@@ -76,7 +85,10 @@ class SqlCipherDbStorage extends CacheEngineBase {
                     'SELECT value FROM key_value WHERE key=?',
                     [key],
                     (tx, result) => {
-                        const oldValue = result && result.rows.length ? deserialize(result.rows.item(0).value) : undefined;
+                        const oldValue =
+                            result && result.rows.length
+                                ? deserialize(result.rows.item(0).value)
+                                : undefined;
                         const confirmed = confirmUpdate(oldValue, value);
                         if (!confirmed) {
                             reject(new Error('Cache storage caller denied update.'));
@@ -90,16 +102,12 @@ class SqlCipherDbStorage extends CacheEngineBase {
     }
 
     removeValue(key) {
-        return this.sql.executeSqlPromise(
-            'DELETE FROM key_value WHERE key=?', [key]
-        );
+        return this.sql.executeSqlPromise('DELETE FROM key_value WHERE key=?', [key]);
     }
 
     async getAllKeys() {
         const result = [];
-        const r = await this.sql.executeSqlPromise(
-            'SELECT key FROM key_value'
-        );
+        const r = await this.sql.executeSqlPromise('SELECT key FROM key_value');
         if (!r || !r.rows) return result;
         for (let i = 0; i < r.rows.length; ++i) {
             result.push(r.rows.item(i).key);
@@ -109,9 +117,7 @@ class SqlCipherDbStorage extends CacheEngineBase {
 
     async getAllValues() {
         const result = [];
-        const r = await this.sql.executeSqlPromise(
-            'SELECT value FROM key_value'
-        );
+        const r = await this.sql.executeSqlPromise('SELECT value FROM key_value');
         if (!r || !r.rows) return result;
         for (let i = 0; i < r.rows.length; ++i) {
             result.push(deserialize(r.rows.item(i).value));
@@ -120,19 +126,15 @@ class SqlCipherDbStorage extends CacheEngineBase {
     }
 
     clear() {
-        return this.sql.executeSqlPromise(
-            'DELETE FROM key_value'
-        );
+        return this.sql.executeSqlPromise('DELETE FROM key_value');
     }
 
     async deleteDatabase(name) {
         console.log(`deleting db ${name}`);
-        return new Promise(
-            (resolve, reject) => sqlcipher.deleteDatabase(
-                { name, location: LOCATION_CONFIG },
-                resolve, reject));
+        return new Promise((resolve, reject) =>
+            sqlcipher.deleteDatabase({ name, location: LOCATION_CONFIG }, resolve, reject)
+        );
     }
 }
-
 
 module.exports = SqlCipherDbStorage;

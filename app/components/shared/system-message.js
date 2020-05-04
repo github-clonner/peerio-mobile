@@ -12,7 +12,7 @@ const lastMessageTextStyle = {
     flexGrow: 1,
     flexShrink: 1,
     color: vars.txtMedium,
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     lineHeight: 22,
     borderWidth: 0,
     borderColor: 'green'
@@ -27,12 +27,12 @@ export default class SystemMessage extends SafeComponent {
         const systemMessage = systemMessages.getSystemMessageText(message);
         const videoCallMessage = message.systemData.link;
 
-
         if (videoCallMessage) {
             return (
                 <VideoCallMessage
                     videoCallMessage={videoCallMessage}
-                    systemMessage={systemMessage} />
+                    systemMessage={systemMessage}
+                />
             );
         }
 

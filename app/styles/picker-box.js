@@ -44,7 +44,7 @@ const inputContainer = {
 };
 
 const errorStyle = {
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size12,
     color: vars.red,
     margin: vars.spacing.medium.mini2x,
     marginTop: -4,
@@ -54,13 +54,19 @@ const errorStyle = {
 
 export default {
     normal: {
-        textview: [inputActive, {
-            color: vars.textBlack38,
-            top: 16
-        }],
-        shadow: [shadowNormal, {
-            backgroundColor: 'transparent'
-        }],
+        textview: [
+            inputActive,
+            {
+                color: vars.textBlack38,
+                top: 16
+            }
+        ],
+        shadow: [
+            shadowNormal,
+            {
+                backgroundColor: 'transparent'
+            }
+        ],
         background: {
             backgroundColor: 'transparent'
         },
@@ -69,18 +75,27 @@ export default {
         icon
     },
     active: {
-        textview: [inputActive, {
-            top: 16
-        }],
-        shadow: [shadowActive, {
-            backgroundColor: 'transparent'
-        }],
+        textview: [
+            inputActive,
+            {
+                top: 16
+            }
+        ],
+        shadow: [
+            shadowActive,
+            {
+                backgroundColor: 'transparent'
+            }
+        ],
         background: {
             backgroundColor: 'transparent'
         },
-        container: [inputContainer, {
-            backgroundColor: 'transparent'
-        }],
+        container: [
+            inputContainer,
+            {
+                backgroundColor: 'transparent'
+            }
+        ],
         iconContainer,
         icon
     },

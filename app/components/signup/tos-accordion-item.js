@@ -8,10 +8,14 @@ import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
+import tm from '../../telemetry';
+import { telemetry } from '../../lib/icebear';
+
+const { S } = telemetry;
 
 const textTitleStyle = {
     flex: 1,
-    fontSize: vars.font.size.bigger
+    fontSize: vars.isDeviceScreenBig ? vars.font.size16 : vars.font.size14
 };
 const textStyle = {
     color: vars.textBlack54
@@ -27,15 +31,28 @@ const paragraphStyle = {
 export default class TosAccordionItem extends SafeComponent {
     @observable isOpen = false;
 
-    @action.bound toggle() { this.isOpen = !this.isOpen; }
+    @action.bound
+    toggle() {
+        this.isOpen = !this.isOpen;
+        // Only need to send TM event on Open
+        if (this.isOpen) {
+            if (this.props.data.title === 'title_termsOfUse') {
+                tm.signup.readMoreAccordion({ item: S.TERMS_OF_USE_SUMMARY });
+            } else tm.signup.readMoreAccordion({ item: tx(this.props.data.title) });
+        }
+    }
 
     keyExtractor = item => item.subtitle;
 
     paragraphItem({ item }) {
-        return (<View style={paragraphStyle}>
-            <Text bold style={textStyle}>{tx(item.subtitle)}</Text>
-            <Text style={textStyle}>{tx(item.description)}</Text>
-        </View>);
+        return (
+            <View style={paragraphStyle}>
+                <Text bold style={textStyle}>
+                    {tx(item.subtitle)}
+                </Text>
+                <Text style={textStyle}>{tx(item.description)}</Text>
+            </View>
+        );
     }
 
     renderThrow() {
@@ -48,10 +65,10 @@ export default class TosAccordionItem extends SafeComponent {
         const titleStyle = {
             flex: 1,
             flexShrink: 1,
-            height: 58,
+            height: 64,
             flexDirection: 'row',
-            alignItems: 'center',
             borderColor: vars.darkBlueDivider12,
+            alignItems: 'center',
             borderTopWidth: index ? 1 : 0,
             marginBottom: this.isOpen ? vars.spacing.small.midi2x : 0
         };
@@ -62,14 +79,18 @@ export default class TosAccordionItem extends SafeComponent {
             <View style={container}>
                 <TouchableOpacity onPress={this.toggle} style={titleStyle}>
                     {this.isOpen ? leftIcon.on : leftIcon.off}
-                    <Text semibold style={[textTitleStyle, { color: titleTextColor }]}>{tx(title)}</Text>
-                    {icons.dark(rightIconName, this.toggle)}
+                    <Text semibold style={[textTitleStyle, { color: titleTextColor }]}>
+                        {tx(title)}
+                    </Text>
+                    {icons.darkNoPadding(rightIconName, this.toggle)}
                 </TouchableOpacity>
-                {this.isOpen ? <FlatList
-                    data={content}
-                    keyExtractor={this.keyExtractor}
-                    renderItem={this.paragraphItem}
-                /> : null}
+                {this.isOpen ? (
+                    <FlatList
+                        data={content}
+                        keyExtractor={this.keyExtractor}
+                        renderItem={this.paragraphItem}
+                    />
+                ) : null}
             </View>
         );
     }

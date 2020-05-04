@@ -17,7 +17,9 @@ export default class RecentFilesList extends SafeComponent {
         return [{ data: chatState.currentChat.recentFiles, key: tx('title_recentFiles') }];
     }
 
-    get hasData() { return chatState.currentChat.recentFiles.length; }
+    get hasData() {
+        return chatState.currentChat.recentFiles.length;
+    }
 
     item = ({ item }) => {
         const collapsible = chatState.currentChat.isChannel;
@@ -28,23 +30,29 @@ export default class RecentFilesList extends SafeComponent {
         // for event handler
         return (
             <RecentFileItem
-                onMenu={() => FileActionSheet.show(item, false)}
+                onMenu={() => FileActionSheet.show({ file: item })}
                 key={item.fileId}
-                file={item} />
+                file={item}
+            />
         );
     };
 
     header = ({ section: { key } }) => {
         const { collapsed, toggleCollapsed } = this.props;
-        return (<ChatInfoSectionHeader
-            key={key}
-            title={key}
-            collapsed={collapsed}
-            toggleCollapsed={toggleCollapsed}
-            hidden={!this.hasData} />);
+        return (
+            <ChatInfoSectionHeader
+                key={key}
+                title={key}
+                collapsed={collapsed}
+                toggleCollapsed={toggleCollapsed}
+                hidden={!this.hasData}
+            />
+        );
     };
 
-    filesListActionSheet = (ref) => { this.filesListActionSheet = ref; };
+    filesListActionSheet = ref => {
+        this.filesListActionSheet = ref;
+    };
 
     renderThrow() {
         return (

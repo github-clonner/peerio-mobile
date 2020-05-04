@@ -5,22 +5,23 @@ import { promiseWhen } from '../helpers/sugar';
 import routes from '../routes/routes';
 import { socket } from '../../lib/icebear';
 
-const upload = async (path, fileName, extenstion) => {
+const upload = async (path, fileName, extension) => {
     await promiseWhen(() => routes.main.contactStateLoaded);
     routes.main.files();
     fileState.goToRoot();
 
     const fileProps = {
         fileName,
-        ext: extenstion,
+        ext: extension,
         url: path
     };
 
     fileState.uploadInFiles(fileProps);
 };
 
-const uploadFileiOS = async (event) => {
-    if (event && event.url && socket.authenticated) {
+const uploadFileiOS = async event => {
+    await promiseWhen(() => socket.authenticated);
+    if (event && event.url) {
         const url = decodeURIComponent(event.url);
         const json = url.split('://')[1]; // url format: {urlScheme}://{data}
         const { files, path } = JSON.parse(json);
@@ -30,13 +31,15 @@ const uploadFileiOS = async (event) => {
     }
 };
 
-const wakeUpAndUploadFileiOS = (event) => {
+const wakeUpAndUploadFileiOS = event => {
     uploadFileiOS({ url: event });
 };
 
 const getStoragePermission = async () => {
     try {
-        const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
+        const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
+        );
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
             return true;
         }
@@ -46,16 +49,25 @@ const getStoragePermission = async () => {
     return false;
 };
 
-const uploadFileAndroid = async (sharedFile) => {
+const uploadFileAndroid = async sharedFile => {
     if (sharedFile) {
+        await promiseWhen(() => socket.authenticated);
         const readPermission = await getStoragePermission();
         if (readPermission) {
+            // RNFS stat now provides extra things:
+            // mimeType, displayName and extension
+            // for contentUri's
             const fileInfo = await RNFS.stat(sharedFile);
-            const file = fileInfo.originalFilepath.split('/').slice(-1).toString();
-
+            // we prefer display name if it is set
+            const file =
+                fileInfo.displayName ||
+                fileInfo.originalFilepath
+                    .split('/')
+                    .slice(-1)
+                    .toString();
             const fileName = file.split('.')[0];
-            const ext = file.split('.')[1];
-
+            // we fallback to mimeType determined extension if filename doesn't have one
+            const ext = file.split('.')[1] || fileInfo.extension || '';
             await upload(sharedFile, fileName, ext);
         }
     }

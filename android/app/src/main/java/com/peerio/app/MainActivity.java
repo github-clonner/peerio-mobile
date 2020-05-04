@@ -1,14 +1,20 @@
 package com.peerio.app;
 
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.content.Intent;
 
+import net.kangyufei.KeyEventModule;
 import com.facebook.react.*;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+
+import java.lang.reflect.Method;
 
 public class MainActivity extends ReactActivity {
     /**
@@ -18,6 +24,14 @@ public class MainActivity extends ReactActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= 24) {
+            try {
+                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+                m.invoke(null);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         // only enable FLAG_SECURE for release builds
         if (BuildConfig.DEBUG) return;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
@@ -41,6 +55,7 @@ public class MainActivity extends ReactActivity {
                                            String permissions[], int[] grantResults) {
         final int REACT_NATIVE_IMAGE_PICKER_PERMISSION = 1;
         final int REACT_NATIVE_CONTACTS_PERMISSION = 2;
+        final int REACT_NATIVE_CONTACTS_MANAGER_MODULE_PERMISSION = 888;
         if (grantResults.length > 0) {
             ReactContext context = this.getReactInstanceManager().getCurrentReactContext();
             if (context == null) {
@@ -49,7 +64,9 @@ public class MainActivity extends ReactActivity {
             String jsCallback = "";
             switch (requestCode) {
                 case REACT_NATIVE_IMAGE_PICKER_PERMISSION: jsCallback = "CameraPermissionsGranted"; break;
-                case REACT_NATIVE_CONTACTS_PERMISSION: jsCallback = "ContactPermissionsGranted"; break;
+                case REACT_NATIVE_CONTACTS_PERMISSION:
+                    // ContactsManager permission result
+                case REACT_NATIVE_CONTACTS_MANAGER_MODULE_PERMISSION: jsCallback = "ContactPermissionsGranted"; break;
             }
 
             context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
@@ -75,5 +92,12 @@ public class MainActivity extends ReactActivity {
     @Override
     protected ReactActivityDelegate createReactActivityDelegate() {
         return new LaunchActivityDelegate(this, getMainComponentName());
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        KeyEventModule.getInstance().onKeyUpEvent(keyCode, event);
+        super.onKeyUp(keyCode, event);
+        return true;
     }
 }

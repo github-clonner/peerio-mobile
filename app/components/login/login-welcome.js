@@ -2,21 +2,27 @@ import React from 'react';
 import { View, Image, Dimensions, StatusBar } from 'react-native';
 import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { tx } from '../utils/translator';
 import loginState from './login-state';
 import ActivityOverlay from '../controls/activity-overlay';
 import { vars, signupStyles } from '../../styles/styles';
-import buttons from '../helpers/buttons';
-import DebugMenu from '../shared/debug-menu';
-import DebugMenuTrigger from '../shared/debug-menu-trigger';
 import SafeComponent from '../shared/safe-component';
 import LoginHeading from './login-heading';
 import { adjustImageDimensions } from '../helpers/image';
+import { telemetry } from '../../lib/icebear';
+import tm from '../../telemetry';
+import DebugMenuTrigger from '../shared/debug-menu-trigger';
+import { uiState } from '../states';
+import signupState from '../signup/signup-state';
+import BlueRoundButton from '../buttons/blue-round-button';
+import WhiteRoundButton from '../buttons/white-round-button';
+import PeerioClosingBottomBanner from '../shared/peerio-closing-bottom-banner';
+
+const { S } = telemetry;
 
 const logoWelcome = require('../../assets/peerio-logo-dark.png');
 const imageWelcome = require('../../assets/welcome-illustration.png');
 
-const { height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const logoBar = {
     alignItems: 'center',
@@ -24,19 +30,41 @@ const logoBar = {
     backgroundColor: vars.darkBlue
 };
 
+const headerContainer = {
+    flex: 0,
+    paddingHorizontal: signupStyles.pagePadding,
+    paddingTop: vars.isDeviceScreenBig ? vars.spacing.large.mini2x : vars.spacing.medium.maxi2x
+};
+
 const buttonContainer = {
     marginBottom: vars.spacing.small.maxi,
     alignItems: 'flex-start'
 };
 
+const sublocation = S.WELCOME_SCREEN;
+
 @observer
 export default class LoginWelcome extends SafeComponent {
-    @action.bound onSignupPress() {
+    @action.bound
+    onSignupPress() {
+        tm.signup.onStartAccountCreation({ sublocation });
         loginState.routes.app.signupStep1();
     }
 
-    @action.bound onLoginPress() {
+    @action.bound
+    onLoginPress() {
+        tm.login.onNavigateLogin();
         loginState.routes.app.loginClean();
+    }
+
+    componentDidMount() {
+        this.startTime = Date.now();
+        uiState.testAction3 = signupState.testQuickSignup;
+    }
+
+    componentWillUnmount() {
+        tm.signup.duration({ sublocation, startTime: this.startTime });
+        uiState.testAction3 = null;
     }
 
     render() {
@@ -46,35 +74,48 @@ export default class LoginWelcome extends SafeComponent {
                     <Image
                         resizeMode="contain"
                         source={imageWelcome}
-                        style={{ height, alignSelf: 'center' }} />
+                        style={adjustImageDimensions(imageWelcome, width, undefined)}
+                    />
                 </View>
-                <DebugMenu />
-                <DebugMenuTrigger>
-                    <View style={logoBar}>
+                <View style={logoBar}>
+                    <DebugMenuTrigger>
                         <Image
                             source={logoWelcome}
-                            style={adjustImageDimensions(logoWelcome, undefined, vars.welcomeHeaderHeight)} />
-                    </View>
-                </DebugMenuTrigger>
-                <View style={[signupStyles.container, { paddingHorizontal: signupStyles.pagePaddingLarge }]}>
-                    <LoginHeading title="title_newUserWelcome" subTitle="title_newUserWelcomeDescription" />
+                            style={adjustImageDimensions(
+                                logoWelcome,
+                                undefined,
+                                vars.welcomeHeaderHeight
+                            )}
+                        />
+                    </DebugMenuTrigger>
+                </View>
+                <View
+                    style={[headerContainer, { paddingHorizontal: signupStyles.pagePaddingLarge }]}>
+                    <LoginHeading
+                        title="title_newUserWelcome"
+                        subTitle="title_newUserWelcomeDescription"
+                    />
                     <View style={buttonContainer}>
-                        {buttons.roundBlueBgButton(
-                            tx('button_CreateAccount'),
-                            this.onSignupPress,
-                            null,
-                            'button_CreateAccount',
-                            { width: vars.roundedButtonWidth, marginBottom: vars.spacing.small.midi2x }
-                        )}
-                        {buttons.roundWhiteBgButton(
-                            tx('button_login'),
-                            this.onLoginPress,
-                            null,
-                            'button_login',
-                            { width: vars.roundedButtonWidth }
-                        )}
+                        <BlueRoundButton
+                            text="button_CreateAccount"
+                            accessibilityId="button_CreateAccount"
+                            onPress={this.onSignupPress}
+                            style={{
+                                width: vars.roundedButtonWidth,
+                                marginBottom: vars.spacing.small.midi2x
+                            }}
+                        />
+                        <WhiteRoundButton
+                            text="button_login"
+                            accessibilityId="button_login"
+                            onPress={this.onLoginPress}
+                            style={{
+                                width: vars.roundedButtonWidth
+                            }}
+                        />
                     </View>
                 </View>
+                <PeerioClosingBottomBanner />
                 <ActivityOverlay large visible={loginState.isInProgress} />
                 <StatusBar hidden />
             </View>

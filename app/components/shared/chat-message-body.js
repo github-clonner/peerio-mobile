@@ -9,28 +9,38 @@ import ChatMessageInlineImages from './chat-message-inline-images';
 import SystemMessage from './system-message';
 import ChatMessageText from './chat-message-text';
 import ChatMessageSendError from './chat-message-error';
+import ChatMessageInlineUrls from './chat-message-inline-urls';
 
 @observer
 export default class ChatMessageBody extends SafeComponent {
     renderThrow() {
-        const { messageObject, chat, onFileAction, onLegacyFileAction, onInlineImageAction } = this.props;
+        const {
+            messageObject,
+            chat,
+            onFileAction,
+            onLegacyFileAction,
+            onInlineImageAction,
+            isClosed
+        } = this.props;
 
         return (
-            <View>
-                <ChatMessageFolders
-                    folders={messageObject.folders}
-                    chat={chat} />
+            <View style={{ flex: 1, flexGrow: 1, flexShrink: 1 }}>
+                <ChatMessageFolders folders={messageObject.folders} chat={chat} />
                 <ChatMessageFiles
                     message={messageObject}
                     chat={chat}
                     onFileAction={onFileAction}
-                    onLegacyFileAction={onLegacyFileAction} />
+                    onLegacyFileAction={onLegacyFileAction}
+                />
+                <ChatMessageText plainText={messageObject.text} richText={messageObject.richText} />
                 <ChatMessageInlineImages
                     message={messageObject}
                     chat={chat}
                     onInlineImageAction={onInlineImageAction}
-                    onLegacyFileAction={onLegacyFileAction} />
-                <ChatMessageText message={messageObject.text} />
+                    onLegacyFileAction={onLegacyFileAction}
+                    isClosed={isClosed}
+                />
+                <ChatMessageInlineUrls message={messageObject} isClosed={isClosed} />
                 <SystemMessage message={messageObject} />
                 <ChatMessageSendError visible={messageObject.sendError} />
             </View>

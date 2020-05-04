@@ -1,62 +1,120 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, LayoutAnimation, Dimensions } from 'react-native';
-import { reaction } from 'mobx';
+import _ from 'lodash';
+import { View, TouchableOpacity } from 'react-native';
+import { reaction, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import ReadReceipt from './read-receipt';
 import { vars } from '../../styles/styles';
-
-const { width } = Dimensions.get('window');
+import icons from '../helpers/icons';
+import Text from '../controls/custom-text';
+import { transitionAnimation } from '../helpers/animations';
+import { action } from '../../../node_modules/mobx/lib/mobx';
 
 const receiptRow = {
+    backgroundColor: vars.black25,
     alignSelf: 'flex-end',
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-    borderWidth: 0,
-    marginRight: vars.spacing.small.mini2x,
-    width: width / 1.5
+    alignItems: 'center',
+    height: 20,
+    width: 40,
+    marginHorizontal: 8,
+    borderRadius: 16,
+    paddingHorizontal: 2
 };
 
-const receiptItem = {
-    flex: 0,
-    alignItems: 'flex-end',
-    borderWidth: 0
+const emptyReceiptRow = {
+    alignSelf: 'flex-end',
+    height: 20,
+    width: 40,
+    marginHorizontal: 8
+};
+
+const half = {
+    flex: 1,
+    alignItems: 'center',
+    alignSelf: 'center'
+};
+
+const textStyle = {
+    fontSize: vars.readReceiptFontSize,
+    color: vars.darkBlue
 };
 
 @observer
 export default class ViewReceipts extends SafeComponent {
+    @observable forceLastAvatar;
+    prev = 1;
+
     componentDidMount() {
-        const { receipts } = this.props;
-        this._observer = reaction(() => receipts && receipts.length,
-            () => LayoutAnimation.easeInEaseOut());
+        this._observer = reaction(
+            () => this.props.receipts && this.props.receipts.length,
+            this.updateAnimation,
+            { fireImmediately: true }
+        );
     }
 
     componentWillUnmount() {
-        this._observer();
+        if (this._observer) this._observer();
+        if (this.updateTimeout) {
+            clearTimeout(this.updateTimeout);
+        }
     }
 
-    get marginStyle() {
+    componentWillUpdate() {
+        transitionAnimation();
+    }
+
+    get receiptComponent() {
+        if (this.props.receipts.length > 1 && !this.forceLastAvatar) return this.receiptNumber;
+        return this.receiptAvatar;
+    }
+
+    get receiptAvatar() {
         const { receipts } = this.props;
+        const { username } = _.last(receipts);
+        return <ReadReceipt username={username} avatarSize={vars.iconSizeSmall} />;
+    }
 
-        let margin = (width / 1.5 - 26 * receipts.length) / receipts.length;
-        margin = margin < 0 ? margin : 0;
+    get receiptNumber() {
+        const { receipts } = this.props;
+        if (receipts.length < 10) {
+            return <Text style={textStyle}>{receipts.length}</Text>;
+        }
+        return <Text style={textStyle}>9+</Text>;
+    }
 
-        return { marginLeft: margin };
+    @action.bound
+    updateAnimation() {
+        const { receipts } = this.props;
+        if (!receipts || !receipts.length) return;
+        const viewsIncreased = receipts.length > this.prev;
+        if (viewsIncreased) {
+            this.forceLastAvatar = true;
+            if (this.updateTimeout) {
+                clearTimeout(this.updateTimeout);
+            }
+            this.updateTimeout = setTimeout(() => {
+                this.forceLastAvatar = false;
+                this.updateTimeout = null;
+            }, 3000);
+        }
+        this.prev = receipts.length;
     }
 
     renderThrow() {
-        const { receipts } = this.props;
-        if (!receipts || !receipts.length) return null;
+        const { receipts, onPressReceipt } = this.props;
+        if (!receipts || !receipts.length) return <View style={emptyReceiptRow} />;
 
         return (
-            <View style={receiptRow}>
-                {receipts.map(r => (
-                    <View key={r.username} style={[receiptItem, this.marginStyle]}>
-                        <ReadReceipt username={r.username} />
-                    </View>
-                ))}
-            </View>
+            <TouchableOpacity
+                onPress={onPressReceipt}
+                pressRetentionOffset={vars.retentionOffset}
+                style={receiptRow}>
+                <View style={half}>{icons.plain('remove-red-eye', 12, vars.darkBlue)}</View>
+                <View style={half}>{this.receiptComponent}</View>
+            </TouchableOpacity>
         );
     }
 }

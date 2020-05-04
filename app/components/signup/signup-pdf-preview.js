@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
 import { vars } from '../../styles/styles';
@@ -6,12 +8,14 @@ import { tx } from '../utils/translator';
 import SafeComponent from '../shared/safe-component';
 import signupState from './signup-state';
 import Text from '../controls/custom-text';
-import buttons from '../helpers/buttons';
+import tm from '../../telemetry';
+import BlueRoundButton from '../buttons/blue-round-button';
 
 const roundedBoxStyle = {
     borderColor: vars.txtMedium,
     borderWidth: 1,
-    borderRadius: 12
+    borderRadius: 12,
+    height: vars.isDeviceScreenBig ? 140 : 110
 };
 
 const footer = {
@@ -23,7 +27,7 @@ const footer = {
 };
 
 const filenameStyle = {
-    fontSize: vars.font.size.smallerx,
+    fontSize: vars.font.size11,
     color: vars.txtDark,
     backgroundColor: 'transparent'
 };
@@ -31,7 +35,7 @@ const filenameStyle = {
 const FILE_SIZE = '843KB';
 
 const filesizeStyle = {
-    fontSize: vars.font.size.smallerx,
+    fontSize: vars.font.size11,
     color: vars.textBlack54,
     backgroundColor: 'transparent'
 };
@@ -44,15 +48,15 @@ const previewBox = {
 };
 
 const innerPreviewBox = {
-    height: 100,
+    height: vars.isDeviceScreenBig ? 92 : 62,
     backgroundColor: '#2e2f4b',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'center'
 };
 
 const previewHeaderText = {
     color: vars.white,
-    fontSize: vars.font.size.smaller
+    fontSize: vars.isDeviceScreenBig ? vars.font.size12 : vars.font.size8
 };
 
 const textBox = {
@@ -61,17 +65,23 @@ const textBox = {
     alignSelf: 'stretch',
     marginHorizontal: 16,
     alignItems: 'center',
-    marginBottom: 8
+    marginBottom: vars.isDeviceScreenBig ? 8 : 4
 };
 
 const textBoxText = {
     color: vars.textBlack87,
-    fontSize: vars.font.size.xsmall,
-    marginVertical: 4
+    fontSize: vars.font.size8,
+    marginVertical: vars.isDeviceScreenBig ? 4 : 0
 };
 
 @observer
 export default class SignupPdfPreview extends SafeComponent {
+    @action.bound
+    saveAccountKey() {
+        signupState.saveAccountKey(this.props.telemetry);
+        tm.signup.saveAk(this.props.telemetry);
+    }
+
     renderThrow() {
         return (
             <View style={roundedBoxStyle}>
@@ -97,21 +107,22 @@ export default class SignupPdfPreview extends SafeComponent {
                 </View>
                 <View style={footer}>
                     <View>
-                        <Text style={filenameStyle}>
-                            {signupState.backupFileName}
-                        </Text>
-                        <Text style={filesizeStyle}>
-                            {FILE_SIZE}
-                        </Text>
+                        <Text style={filenameStyle}>{signupState.backupFileName('pdf')}</Text>
+                        <Text style={filesizeStyle}>{FILE_SIZE}</Text>
                     </View>
-                    {buttons.roundBlueBgButton(
-                        tx('button_downloadPdf'),
-                        signupState.saveAccountKey,
-                        null,
-                        'button_downloadPdf',
-                        { marginHorizontal: vars.spacing.small.mini2x })}
+
+                    <BlueRoundButton
+                        text="button_downloadPdf"
+                        accessibilityId="button_login"
+                        onPress={this.saveAccountKey}
+                        style={{ marginHorizontal: vars.spacing.small.mini2x }}
+                    />
                 </View>
             </View>
         );
     }
 }
+
+SignupPdfPreview.propTypes = {
+    telemetry: PropTypes.any
+};

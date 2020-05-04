@@ -18,15 +18,14 @@ const itemStyle = {
     flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingTop: 8
+    marginTop: 8
 };
 
 const itemContainerStyle = {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: vars.spacing.medium.mini2x,
-    paddingRight: vars.spacing.medium.mini2x
+    paddingLeft: vars.spacing.medium.mini2x
 };
 
 const nameMessageContainerStyle = {
@@ -44,30 +43,51 @@ const msgStyle = {
     borderWidth: 0
 };
 
+const flexRow = {
+    flexDirection: 'row',
+    flex: 1,
+    flexGrow: 1,
+    flexShrink: 1
+};
+
 @observer
 export default class ChatMessageFull extends SafeComponent {
     renderThrow() {
-        const { errorStyle, backgroundColor, messageObject, chat, onFileAction, onLegacyFileAction, onInlineImageAction } = this.props;
+        const {
+            errorStyle,
+            backgroundColor,
+            messageObject,
+            chat,
+            onFileAction,
+            onLegacyFileAction,
+            onInlineImageAction,
+            onPressReceipt
+        } = this.props;
 
         return (
             <View style={[itemStyle, errorStyle, backgroundColor]}>
                 <View style={msgStyle}>
-                    <View
-                        style={itemContainerStyle}>
+                    <View style={itemContainerStyle}>
                         <TouchableContactAvatar contact={messageObject.sender} />
                         <View style={[nameMessageContainerStyle]}>
                             <ChatMessageData message={messageObject} />
-                            <ChatMessageBody
-                                messageObject={messageObject}
-                                chat={chat}
-                                onFileAction={onFileAction}
-                                onLegacyFileAction={onLegacyFileAction}
-                                onInlineImageAction={onInlineImageAction} />
+                            <View style={flexRow}>
+                                <ChatMessageBody
+                                    messageObject={messageObject}
+                                    chat={chat}
+                                    onFileAction={onFileAction}
+                                    onLegacyFileAction={onLegacyFileAction}
+                                    onInlineImageAction={onInlineImageAction}
+                                />
+                                <ViewReceipts
+                                    receipts={messageObject.receipts}
+                                    onPressReceipt={onPressReceipt}
+                                />
+                            </View>
                         </View>
                     </View>
                     <MessageSentError message={messageObject} chat={chat} />
                     <CorruptedMessage visible={messageObject.signatureError} />
-                    <ViewReceipts receipts={messageObject.receipts} />
                 </View>
             </View>
         );

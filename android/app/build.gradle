@@ -115,7 +115,7 @@ android {
     defaultConfig {
         applicationId "com.peerio.app"
         minSdkVersion 21
-        targetSdkVersion 23
+        targetSdkVersion 27
         versionCode code
         versionName packageJson.version
         // ndk {
@@ -153,13 +153,15 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-file-picker')
+    compile project(':react-native-mail')
+    compile project(':react-native-key-event')
+    compile project(':react-native-shake-event')
     compile project(':lottie-react-native')
     compile project(':react-native-keep-awake')
-    compile project(':react-native-file-picker')
     compile project(':react-native-image-crop-picker')
     compile project(':react-native-contacts')
     compile project(':react-native-linear-gradient')
-    compile project(':react-native-mail')
     compile project(':react-native-billing')
     compile project(':ReactAndroid')
     compile project(':react-native-vector-icons')
@@ -194,7 +196,7 @@ task copyDownloadableDepsToLibs(type: Copy) {
 configurations.all {
     resolutionStrategy {
         force 'com.android.support:design:23.4.0'
-        force 'com.android.support:support-v4:27+'
+        force 'com.android.support:support-v4:27.0.1'
         force 'com.android.support:appcompat-v7:27.1.1'
     }
 }

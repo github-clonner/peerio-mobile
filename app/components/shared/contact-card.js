@@ -65,12 +65,13 @@ export default class ContactCard extends SafeComponent {
     }
 
     get avatar() {
-        const { disableTapping, contact, loading, invited } = this.props;
+        const { disableTapping, contact, loading, invited, onPress } = this.props;
         return (
             <TouchableOpacity
+                onPress={onPress}
                 style={avatarStyle}
                 pressRetentionOffset={vars.retentionOffset}
-                disabled={disableTapping} >
+                disabled={disableTapping}>
                 <AvatarCircle contact={contact} loading={loading} invited={invited} />
                 <DeletedCircle visible={contact.isDeleted} />
             </TouchableOpacity>
@@ -79,11 +80,7 @@ export default class ContactCard extends SafeComponent {
 
     get title() {
         const { contact } = this.props;
-        return (
-            <ContactNameInfo
-                contact={contact}
-            />
-        );
+        return <ContactNameInfo contact={contact} />;
     }
 
     renderThrow() {
@@ -96,15 +93,12 @@ export default class ContactCard extends SafeComponent {
                 style={this.backgroundColor}
                 {...testLabel(contact.username)}>
                 <View style={[itemStyle, this.backgroundColor, this.opacity]}>
-                    <View
-                        style={itemContainerStyle}>
+                    <View style={itemContainerStyle}>
                         {this.avatar}
-                        <View style={[titleStyle]}>
-                            {this.title}
-                        </View>
+                        <View style={[titleStyle]}>{this.title}</View>
                     </View>
                 </View>
-            </TouchableOpacity >
+            </TouchableOpacity>
         );
     }
 }

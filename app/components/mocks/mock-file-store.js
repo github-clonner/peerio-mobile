@@ -13,8 +13,7 @@ class MockFileStore {
         }
     }
 
-    bulk = {
-    };
+    bulk = {};
 
     get folderStore() {
         return {
@@ -24,10 +23,6 @@ class MockFileStore {
                 }
             }
         };
-    }
-
-    install() {
-        fileState.store = this;
     }
 
     createMock() {
@@ -49,4 +44,4 @@ class MockFileStore {
     }
 }
 
-export default new MockFileStore();
+export default MockFileStore;

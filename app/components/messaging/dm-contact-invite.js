@@ -6,12 +6,12 @@ import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
-import buttons from '../helpers/buttons';
 import routes from '../routes/routes';
 import chatState from '../messaging/chat-state';
 import AvatarCircle from '../shared/avatar-circle';
 import IdentityVerificationNotice from './identity-verification-notice';
 import Text from '../controls/custom-text';
+import BlueButtonText from '../buttons/blue-text-button';
 
 const emojiTada = require('../../assets/emoji/tada.png');
 
@@ -32,13 +32,13 @@ const emojiStyle = {
 const headingStyle = {
     color: vars.lighterBlackText,
     textAlign: 'center',
-    fontSize: vars.font.size.bigger,
+    fontSize: vars.font.size16,
     lineHeight: 22
 };
 
 const inviteMethodStyle = {
     color: vars.txtMedium,
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size12,
     marginBottom: vars.spacing.medium.maxi2x
 };
 
@@ -50,14 +50,18 @@ const buttonContainer = {
 
 @observer
 export default class DmContactInvite extends SafeComponent {
-    get chat() { return chatState.currentChat; }
+    get chat() {
+        return chatState.currentChat;
+    }
 
-    @action.bound async decline() {
+    @action.bound
+    async decline() {
         this.chat.dismiss();
         routes.main.chats();
     }
 
-    @action.bound async accept() {
+    @action.bound
+    async accept() {
         this.chat.start();
         routes.main.chats(this.chat);
     }
@@ -66,9 +70,14 @@ export default class DmContactInvite extends SafeComponent {
         const { showButtons } = this.props;
         const { chat } = this;
         const participant = chat.otherParticipants[0];
-        const greetingCopy = chat.isReceived ? 'title_helloDmInvite' : 'title_goodNews';
-        const headingCopy = chat.isReceived ? 'title_newUserDmInviteHeading' : 'title_dmInviteHeading';
-        const inviteMethodCopy = chat.isAutoImport ? 'title_userInAddressBook' : 'title_invitedUserViaEmail';
+        console.log('participant');
+        console.log(JSON.stringify(participant));
+        const isReceived = chat.isReceived || chat.isNewUserFromInvite;
+        const greetingCopy = isReceived ? 'title_helloDmInvite' : 'title_goodNews';
+        const headingCopy = isReceived ? 'title_newUserDmInviteHeading' : 'title_dmInviteHeading';
+        const inviteMethodCopy = chat.isAutoImport
+            ? 'title_userInAddressBook'
+            : 'title_invitedUserViaEmail';
         return (
             <View style={container}>
                 <Image source={emojiTada} style={emojiStyle} resizeMode="contain" />
@@ -76,9 +85,14 @@ export default class DmContactInvite extends SafeComponent {
                 <Text style={[headingStyle, { marginBottom: vars.spacing.medium.maxi }]}>
                     {tx(headingCopy, { contactName: participant.fullName })}
                 </Text>
-                {!chat.isReceived && <Text semibold style={inviteMethodStyle}>
-                    {tx(inviteMethodCopy, { firstName: participant.firstName, email: participant.addresses[0] })}
-                </Text>}
+                {!isReceived && (
+                    <Text semibold style={inviteMethodStyle}>
+                        {tx(inviteMethodCopy, {
+                            firstName: participant.firstName,
+                            email: participant.addresses[0] || ''
+                        })}
+                    </Text>
+                )}
                 <View style={{ alignItems: 'center' }}>
                     <AvatarCircle contact={participant} medium />
                 </View>
@@ -86,15 +100,33 @@ export default class DmContactInvite extends SafeComponent {
                     {participant.usernameTag}
                 </Text>
                 <IdentityVerificationNotice />
-                {showButtons && (<View style={buttonContainer}>
-                    <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center', paddingRight: vars.spacing.medium.maxi2x }}>
-                        {buttons.blueTextButton(tx('button_dismiss'), this.decline, null, null, 'button_dismiss')}
+                {showButtons && (
+                    <View style={buttonContainer}>
+                        <View
+                            style={{
+                                flex: 1,
+                                alignItems: 'flex-end',
+                                justifyContent: 'center',
+                                paddingRight: vars.spacing.medium.maxi2x
+                            }}>
+                            <BlueButtonText
+                                text="button_dismiss"
+                                onPress={this.decline}
+                                accessibilityId="button_dismiss"
+                            />
+                        </View>
+                        <View
+                            style={{ flex: 1, alignItems: 'flex-start', justifyContent: 'center' }}>
+                            <BlueButtonText
+                                text="button_message"
+                                onPress={this.accept}
+                                accessibilityId="button_message"
+                            />
+                        </View>
                     </View>
-                    <View style={{ flex: 1, alignItems: 'flex-start', justifyContent: 'center' }}>
-                        {buttons.roundBlueBgButton(tx('button_message'), this.accept, null, 'button_message')}
-                    </View>
-                </View>)}
-            </View>);
+                )}
+            </View>
+        );
     }
 }
 

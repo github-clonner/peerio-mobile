@@ -7,24 +7,39 @@ import { vars, signupStyles } from '../../styles/styles';
 import signupState from './signup-state';
 import { T, tx } from '../utils/translator';
 import SafeComponent from '../shared/safe-component';
-import buttons from '../helpers/buttons';
 import ViewWithDrawer from '../shared/view-with-drawer';
 import { TopDrawerBackupAccountKey } from '../shared/top-drawer-components';
-import { drawerState, uiState } from '../states';
-import { socket } from '../../lib/icebear';
+import { drawerState } from '../states';
+import { socket, telemetry } from '../../lib/icebear';
 import routes from '../routes/routes';
 import TosAccordion from './tos-accordion';
 import { popupTOS, popupPrivacy } from '../shared/popups';
+import tm from '../../telemetry';
+import BlueButtonText from '../buttons/blue-text-button';
+import BlueRoundButton from '../buttons/blue-round-button';
+
+const { S } = telemetry;
 
 const { height } = Dimensions.get('window');
 
+const buttonContainerHeight = 52;
+
 const buttonContainer = {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    borderTopWidth: 1,
+    borderTopColor: vars.separatorColor,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    marginTop: vars.spacing.small.mini,
-    marginBottom: vars.spacing.small.maxi2x
+    paddingHorizontal: signupStyles.pagePadding,
+    height: buttonContainerHeight,
+    backgroundColor: vars.white
 };
+
+const sublocation = S.TERMS_OF_USE;
 
 @observer
 export default class SignupTos extends SafeComponent {
@@ -34,45 +49,67 @@ export default class SignupTos extends SafeComponent {
     }
 
     componentDidMount() {
+        this.startTime = Date.now();
         if (!signupState.keyBackedUp) {
             drawerState.addDrawer(TopDrawerBackupAccountKey);
         }
     }
 
+    componentWillUnmount() {
+        tm.signup.duration({ sublocation, startTime: this.startTime });
+    }
+
     @action.bound
-    async finishSignup() {
-        await signupState.finishAccountCreation();
-        uiState.isFirstLogin = true;
+    cancelSignup() {
+        tm.signup.navigate({ sublocation, option: S.CANCEL });
+        routes.app.signupCancel();
+    }
+
+    @action.bound
+    finishSignup() {
+        tm.signup.acceptTos();
         signupState.next();
     }
 
     get content() {
         return (
             <View>
-                <Text style={signupStyles.description}>
-                    {<T k="title_termsDescription">
-                        {{
-                            openTerms: this.openTermsLink,
-                            openPrivacy: this.openPrivacyLink
-                        }}
-                    </T>}
+                <Text style={signupStyles.description2}>
+                    {
+                        <T k="title_termsDescription">
+                            {{
+                                openTerms: this.openTermsLink,
+                                openPrivacy: this.openPrivacyLink
+                            }}
+                        </T>
+                    }
                 </Text>
-                <TosAccordion />
+                <TosAccordion style={{ paddingBottom: buttonContainerHeight }} />
             </View>
         );
     }
 
-    @action.bound openTermsLink(text) {
+    @action.bound
+    openTermsLink(text) {
+        const onPress = async () => {
+            tm.signup.readMorePopup({ item: S.TERMS_OF_USE });
+            await popupTOS();
+        };
         return (
-            <Text style={{ color: vars.peerioBlue }} onPress={async () => { await popupTOS(); }}>
+            <Text style={{ color: vars.peerioBlue }} onPress={onPress}>
                 {text}
             </Text>
         );
     }
 
-    @action.bound openPrivacyLink(text) {
+    @action.bound
+    openPrivacyLink(text) {
+        const onPress = async () => {
+            tm.signup.readMorePopup({ item: S.PRIVACY_POLICY });
+            await popupPrivacy();
+        };
         return (
-            <Text style={{ color: vars.peerioBlue }} onPress={async () => { await popupPrivacy(); }}>
+            <Text style={{ color: vars.peerioBlue }} onPress={onPress}>
                 {text}
             </Text>
         );
@@ -80,30 +117,31 @@ export default class SignupTos extends SafeComponent {
 
     renderThrow() {
         return (
-            <ViewWithDrawer style={[signupStyles.page, { height }]}>
-                <View style={signupStyles.container2}>
-                    <Text semibold serif style={signupStyles.headerStyle2}>
-                        {tx('title_termsOfUseSentenceCase')}
-                    </Text>
-                    {this.content}
-                    <View style={buttonContainer}>
-                        {buttons.blueTextButton(
-                            tx('button_decline'),
-                            routes.app.signupCancel,
-                            !socket.connected,
-                            null,
-                            'button_decline'
-                        )}
-                        <View style={{ width: 24 }} />
-                        {buttons.roundBlueBgButton(
-                            tx('button_accept'),
-                            this.finishSignup,
-                            !socket.connected,
-                            'button_accept'
-                        )}
+            <View>
+                <ViewWithDrawer style={[signupStyles.page, { height }]}>
+                    <View style={signupStyles.container2}>
+                        <Text semibold serif style={signupStyles.headerStyle2}>
+                            {tx('title_termsOfUseSentenceCase')}
+                        </Text>
+                        {this.content}
                     </View>
+                </ViewWithDrawer>
+                <View style={buttonContainer}>
+                    <BlueButtonText
+                        text="button_decline"
+                        onPress={this.cancelSignup}
+                        disabled={!socket.connected}
+                        accessibilityId="button_decline"
+                    />
+                    <View style={{ width: 24 }} />
+                    <BlueRoundButton
+                        text="button_accept"
+                        accessibilityId="button_accept"
+                        onPress={this.finishSignup}
+                        disabled={!socket.connected}
+                    />
                 </View>
-            </ViewWithDrawer>
+            </View>
         );
     }
 }

@@ -7,18 +7,21 @@ import { User } from '../../lib/icebear';
 
 @observer
 export default class SettingsToggleItem extends SafeComponent {
-    get state() { return User.current.settings; }
-
     toggle = () => {
+        const state = User.current.settings;
+        const { property } = this.props;
+        const value = !state[property];
+        // so that UI reflects immediately
+        state[property] = value;
         User.current.saveSettings(settings => {
-            settings[this.props.property] = !settings[this.state.property];
+            settings[property] = value;
         });
     };
 
     renderThrow() {
         return (
             <ToggleItem
-                state={this.state}
+                state={User.current.settings}
                 prop={this.props.property}
                 reverse={this.props.reverse}
                 title={this.props.title}
@@ -34,4 +37,3 @@ SettingsToggleItem.propTypes = {
     title: PropTypes.any.isRequired,
     description: PropTypes.any
 };
-

@@ -10,7 +10,7 @@ import { vars } from '../../styles/styles';
 
 const videoCallMsgStyle = {
     color: vars.black38,
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     lineHeight: 22,
     borderWidth: 0
 };
@@ -26,7 +26,8 @@ const containerStyle = {
 
 @observer
 export default class VideoCallMessage extends SafeComponent {
-    @action.bound onPress() {
+    @action.bound
+    onPress() {
         const { videoCallMessage } = this.props;
         return Linking.openURL(videoCallMessage);
     }
@@ -37,18 +38,14 @@ export default class VideoCallMessage extends SafeComponent {
         return (
             <View>
                 <View style={containerStyle}>
-                    <Text style={videoCallMsgStyle}>
-                        {systemMessage}
-                    </Text>
+                    <Text style={videoCallMsgStyle}>{systemMessage}</Text>
                 </View>
                 <TouchableOpacity
                     onPress={this.onPress}
-                    pressRetentionOffset={vars.pressRetentionOffset}>
+                    pressRetentionOffset={vars.retentionOffset}>
                     <View style={containerStyle}>
                         {icons.plaindark('videocam', vars.iconSizeSmall)}
-                        <Text style={linkStyle}>
-                            {videoCallShort}
-                        </Text>
+                        <Text style={linkStyle}>{videoCallShort}</Text>
                     </View>
                 </TouchableOpacity>
             </View>

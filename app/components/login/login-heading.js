@@ -9,13 +9,13 @@ import { tx } from '../utils/translator';
 const marginBottom = vars.spacing.medium.mini2x;
 
 const headerStyle = {
-    fontSize: 30, // TODO: accomodate for iPhone SE
+    fontSize: vars.isDeviceScreenBig ? vars.font.size36 : vars.font.size30,
     color: vars.darkBlue,
     marginBottom
 };
 
 const headerDescription = {
-    fontSize: 14, // TODO: accomodate for iPhone SE
+    fontSize: vars.isDeviceScreenBig ? vars.font.size18 : vars.font.size14,
     color: vars.textBlack54
 };
 
@@ -28,9 +28,7 @@ export default class LoginHeading extends SafeComponent {
                 <Text semibold serif style={headerStyle}>
                     {tx(title)}
                 </Text>
-                <Text style={headerDescription}>
-                    {tx(subTitle)}
-                </Text>
+                <Text style={headerDescription}>{tx(subTitle)}</Text>
             </View>
         );
     }

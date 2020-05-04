@@ -11,11 +11,13 @@ import FileChooseRecipient from '../files/file-choose-recipient';
 import ContactView from '../contacts/contact-view';
 import ChatInfo from '../messaging/chat-info';
 import ChannelInfo from '../messaging/channel-info';
-import AccountUpgradeSwiper from '../settings/account-upgrade-swiper';
 import popupState from '../layout/popup-state';
 import routes from './routes';
 import { vars } from '../../styles/styles';
 import { uiState } from '../states';
+import SignupContactInvite from '../contacts/contact-sync-invite';
+import MessageInfo from '../messaging/message-info';
+import NoticeOfClosure from '../layout/notice-of-closure';
 
 class RouterModal extends Router {
     @observable animating = false;
@@ -35,13 +37,15 @@ class RouterModal extends Router {
         this.add('contactView', ContactView);
         this.add('chatInfo', ChatInfo);
         this.add('channelInfo', ChannelInfo);
-        this.add('accountUpgradeSwiper', AccountUpgradeSwiper, true, true);
+        this.add('contactSync', SignupContactInvite);
+        this.add('messageInfo', MessageInfo);
+        this.add('noticeOfClosure', NoticeOfClosure);
     }
 
     add(route, component, isWhite) {
         const r = super.add(route, component);
         r.isWhite = isWhite;
-        this[route] = async (props) => {
+        this[route] = async props => {
             await uiState.hideAll();
             popupState.discardAllPopups();
             this.flushResolver();
@@ -74,7 +78,8 @@ class RouterModal extends Router {
         return !this.animating && this.current && !this.current.isWhite;
     }
 
-    @computed get modal() {
+    @computed
+    get modal() {
         return this.current ? React.createElement(this.current.component, this.modalProps) : null;
     }
 }

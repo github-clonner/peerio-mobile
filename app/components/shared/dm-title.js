@@ -7,12 +7,12 @@ import Text from '../controls/custom-text';
 
 const fullnameTextStyle = {
     color: vars.txtDark,
-    fontSize: vars.font.size.normal
+    fontSize: vars.font.size14
 };
 
 const usernameTextStyle = {
     color: vars.txtMedium,
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size14,
     fontWeight: 'normal'
 };
 
@@ -21,19 +21,12 @@ export default class DmTitle extends SafeComponent {
     renderThrow() {
         const { contact, unread } = this.props;
         return (
-            <Text
-                ellipsizeMode="tail"
-                numberOfLines={1}>
-                <Text
-                    style={fullnameTextStyle}
-                    semibold={unread}>
+            <Text ellipsizeMode="tail" numberOfLines={1}>
+                <Text style={fullnameTextStyle} semibold={unread}>
                     {contact.fullName}
                 </Text>
                 {` `}
-                <Text
-                    style={usernameTextStyle}
-                    semibold={unread}
-                    italic>
+                <Text style={usernameTextStyle} semibold={unread} italic>
                     {contact.username}
                 </Text>
             </Text>

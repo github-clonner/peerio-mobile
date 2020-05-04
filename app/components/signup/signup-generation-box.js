@@ -1,20 +1,21 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
-import { View, Platform, Animated, LayoutAnimation } from 'react-native';
+import { View, Platform, Animated } from 'react-native';
 import LottieView from 'lottie-react-native';
 import { vars } from '../../styles/styles';
 import SafeComponent from '../shared/safe-component';
 import signupState from './signup-state';
 import Text from '../controls/custom-text';
+import testLabel from '../helpers/test-label';
+import { transitionAnimation } from '../helpers/animations';
 
 const accountKeyStyle = {
-    height: Platform.OS === 'ios' ? vars.font.size.smaller : null,
+    height: Platform.OS === 'ios' ? vars.font.size12 : null,
     alignSelf: 'stretch',
     textAlign: 'center',
-    fontSize: vars.font.size.smaller,
-    color: '#E90162',
-    letterSpacing: Platform.OS === 'android' ? 3 : 0
+    fontSize: vars.isDeviceScreenBig ? vars.font.size12 : vars.font.size11,
+    color: '#E90162'
 };
 
 const dottedBoxStyle = {
@@ -46,7 +47,7 @@ export default class SignupGenerationBox extends SafeComponent {
                 useNativeDriver: true
             }).start(() => {
                 this.animationFinished = true;
-                LayoutAnimation.easeInEaseOut();
+                transitionAnimation();
                 setTimeout(this.props.onAnimationFinished, 1000);
             });
     }
@@ -71,6 +72,7 @@ export default class SignupGenerationBox extends SafeComponent {
     get text() {
         return (
             <Text
+                {...testLabel('passphrase')}
                 numberofLines={1}
                 minimumFontScale={0.1}
                 adjustsFontSizeToFit

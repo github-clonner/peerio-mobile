@@ -6,14 +6,13 @@ import MedcryptorSpecialtyPickerBox from './medcryptor-specialty-picker-box';
 import MedcryptorRolePickerBox from './medcryptor-role-picker-box';
 import { vars, signupStyles } from '../../../styles/styles';
 import signupState from '../../signup/signup-state';
-import { tx } from '../../utils/translator';
 import { socket } from '../../../lib/icebear';
 import medcryptorUiState from './medcryptor-ui-state';
 import SafeComponent from '../../shared/safe-component';
 import SignupButtonBack from '../../signup/signup-button-back';
 import SignupHeading from '../../signup/signup-heading';
 import SignupStepIndicator from '../../signup/signup-step-indicator';
-import buttons from '../../helpers/buttons';
+import BlueRoundButton from '../../buttons/blue-round-button';
 
 @observer
 export default class SignupRoleMedcryptor extends SafeComponent {
@@ -23,7 +22,8 @@ export default class SignupRoleMedcryptor extends SafeComponent {
         }
     }
 
-    @action.bound handleNextButton() {
+    @action.bound
+    handleNextButton() {
         signupState.specialty = medcryptorUiState.specialtySelected;
         signupState.role = medcryptorUiState.roleSelected;
         signupState.next();
@@ -34,8 +34,7 @@ export default class SignupRoleMedcryptor extends SafeComponent {
     }
 
     get isValidForAU() {
-        return medcryptorUiState.specialtySelected &&
-            medcryptorUiState.roleSelected;
+        return medcryptorUiState.specialtySelected && medcryptorUiState.roleSelected;
     }
 
     get isValidForNonAU() {
@@ -51,7 +50,7 @@ export default class SignupRoleMedcryptor extends SafeComponent {
 
     get body() {
         return (
-            <View>
+            <View style={{ marginHorizontal: vars.inputMarginHorizontal }}>
                 {this.selectedAU && <MedcryptorSpecialtyPickerBox />}
                 <MedcryptorRolePickerBox />
             </View>
@@ -65,16 +64,20 @@ export default class SignupRoleMedcryptor extends SafeComponent {
                 <View style={signupStyles.container}>
                     <View>
                         <SignupButtonBack />
-                        <SignupHeading title="title_createYourAccount" subTitle="mcr_title_practitionerDetails" />
+                        <SignupHeading
+                            title="title_createYourAccount"
+                            subTitle="mcr_title_practitionerDetails"
+                        />
                         {this.body}
                     </View>
                     <View style={{ alignItems: 'flex-end' }}>
-                        {buttons.roundBlueBgButton(
-                            tx('button_next'),
-                            this.handleNextButton,
-                            this.isNextDisabled,
-                            'button_next',
-                            { width: vars.signupButtonWidth, marginVertical: 30 })}
+                        <BlueRoundButton
+                            text="button_next"
+                            accessibilityId="button_next"
+                            onPress={this.handleNextButton}
+                            disabled={this.isNextDisabled}
+                            style={{ width: vars.signupButtonWidth, marginVertical: 30 }}
+                        />
                     </View>
                 </View>
             </View>

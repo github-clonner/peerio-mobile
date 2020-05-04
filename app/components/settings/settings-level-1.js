@@ -1,14 +1,20 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, Share } from 'react-native';
-import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import SettingsItem from './settings-item';
 import BasicSettingsItem from './basic-settings-item';
-import { settingsState, snackbarState, mainState, loginState, contactState, chatState, drawerState } from '../states';
+import {
+    settingsState,
+    snackbarState,
+    mainState,
+    loginState,
+    contactState,
+    chatState,
+    drawerState
+} from '../states';
 import { toggleConnection } from '../main/dev-menu-items';
-import plans from '../payments/payments-config';
 import { tx, tu } from '../utils/translator';
 import {
     warnings,
@@ -18,14 +24,16 @@ import {
     saveAccountKeyBackup,
     config
 } from '../../lib/icebear';
-import { popupAbout, popupInputCancel } from '../shared/popups';
+import { popupAbout, popupInputCancel, popupPeerioClosureSettings } from '../shared/popups';
 import ButtonWithIcon from '../controls/button-with-icon';
-import { scrollHelper } from '../helpers/test-helper';
 import icons from '../helpers/icons';
 import AvatarCircle from '../shared/avatar-circle';
 import PaymentStorageUsageItem from '../payments/payments-storage-usage-item';
 import ViewWithDrawer from '../shared/view-with-drawer';
-import { TopDrawerMaintenance, TopDrawerNewContact } from '../shared/top-drawer-components';
+import { TopDrawerBackupAccountKey, TopDrawerNewContact } from '../shared/top-drawer-components';
+import routes from '../routes/routes';
+import uiState from '../layout/ui-state';
+import { testConfirmEmail } from '../helpers/test-confirm-email';
 
 const svStyle = {
     flexGrow: 1,
@@ -35,11 +43,6 @@ const svStyle = {
 
 const bgStyle = {
     padding: vars.settingsListPadding
-};
-
-const descriptionTextStyle = {
-    color: vars.peerioBlue,
-    fontSize: vars.font.size.smaller
 };
 
 @observer
@@ -61,9 +64,7 @@ export default class SettingsLevel1 extends SafeComponent {
     get avatarCircle() {
         return (
             <View style={{ marginLeft: vars.iconPadding }}>
-                <AvatarCircle
-                    contact={contactStore.getContact(User.current.username)}
-                />
+                <AvatarCircle contact={contactStore.getContact(User.current.username)} />
             </View>
         );
     }
@@ -73,21 +74,12 @@ export default class SettingsLevel1 extends SafeComponent {
         const fileSavePath = config.FileStream.getTempCachePath(
             `${username}-${tx('title_appName')}.pdf`
         );
-        await saveAccountKeyBackup(
-            fileSavePath,
-            `${firstName} ${lastName}`,
-            username,
-            passphrase
-        );
+        await saveAccountKeyBackup(fileSavePath, `${firstName} ${lastName}`, username, passphrase);
         await config.FileStream.launchViewer(fileSavePath);
     };
 
     testSilentInvite = async () => {
-        const result = await popupInputCancel(
-            'Enter email to invite',
-            'test@test.com',
-            true
-        );
+        const result = await popupInputCancel('Enter email to invite', 'test@test.com', true);
         if (!result) return;
         const email = result.value;
         console.log(email);
@@ -95,8 +87,7 @@ export default class SettingsLevel1 extends SafeComponent {
     };
 
     testShare() {
-        const message =
-            'chat and share files securely using Peerio. https://www.testurl.com';
+        const message = 'chat and share files securely using Peerio. https://www.testurl.com';
         const title = 'peerio';
         const url = 'https://www.testurl.com';
         Share.share({ message, title, url });
@@ -110,11 +101,11 @@ export default class SettingsLevel1 extends SafeComponent {
     }
 
     testGlobalDrawer = () => {
-        setTimeout(() => drawerState.addDrawer(TopDrawerMaintenance), 3000);
+        setTimeout(() => drawerState.addDrawer(TopDrawerBackupAccountKey), 3000);
     };
 
     testLocalDrawer = () => {
-        drawerState.addDrawer(TopDrawerNewContact, drawerState.DRAWER_CONTEXT.CONTACTS, {
+        drawerState.addDrawer(TopDrawerNewContact, 'contacts', {
             contact: User.current
         });
     };
@@ -127,48 +118,32 @@ export default class SettingsLevel1 extends SafeComponent {
         console.log('User props are:', User.current.props);
     };
 
+    showBeaconsState = () => {
+        console.log('Beacons are:', User.current.beacons.toJSON());
+    };
+
+    clearBeaconsState = () => {
+        User.current.beacons.clear();
+        User.current.saveBeacons();
+        uiState.isFirstLogin = true;
+        routes.main.chats();
+    };
+
     /**
      * Scroll helper is used to provide scrolling capability
      * to the test script. Note that it overrides ref and onScroll
      * event handlers
      */
     renderThrow() {
-        const plan = plans.topPlan();
-        const upgradeItem = plan ? (
-            <SettingsItem
-                title={tx('title_viewYourPlan', { title: tx(plan.title) })}
-                onPress={() => settingsState.upgrade()}
-                leftComponent={this.leftSettingsIcon(
-                    'open-in-browser',
-                    vars.darkBlue
-                )}
-            />
-        ) : (
-            <SettingsItem
-                title="button_upgrade"
-                onPress={() => settingsState.upgrade()}
-                leftComponent={this.leftSettingsIcon(
-                    'open-in-browser',
-                    vars.darkBlue
-                )}
-            >
-                <Text
-                    style={[
-                        descriptionTextStyle,
-                        { position: 'absolute', right: 0 }
-                    ]}
-                >
-                    {tx('title_getMoreGoPro')}
-                </Text>
-            </SettingsItem>
-        );
         return (
-            <ViewWithDrawer style={svStyle} {...scrollHelper}>
+            <ViewWithDrawer style={svStyle}>
                 <View style={bgStyle}>
                     <SettingsItem
                         title={User.current.fullName}
-                        description={User.current.username} rightIcon={null}
-                        semibold large
+                        description={User.current.username}
+                        rightIcon={null}
+                        semibold
+                        large
                         onPress={() => settingsState.transition('profile')}
                         leftComponent={this.avatarCircle}
                     />
@@ -184,10 +159,7 @@ export default class SettingsLevel1 extends SafeComponent {
                     <SettingsItem
                         title="title_settingsSecurity"
                         onPress={() => settingsState.transition('security')}
-                        leftComponent={this.leftSettingsIcon(
-                            'security',
-                            vars.yellow
-                        )}
+                        leftComponent={this.leftSettingsIcon('security', vars.yellow)}
                     />
                     <SettingsItem
                         title="title_settingsPreferences"
@@ -206,25 +178,24 @@ export default class SettingsLevel1 extends SafeComponent {
                             vars.accountSettingsIconColor
                         )}
                     />
-                    {!process.env.PEERIO_DISABLE_PAYMENTS && upgradeItem}
+                    <SettingsItem
+                        title="Peerio Closure"
+                        textColor={vars.red}
+                        onPress={() => popupPeerioClosureSettings()}
+                        leftComponent={this.leftSettingsIcon('close', vars.red)}
+                    />
                     {this.spacer}
 
                     <SettingsItem
                         title="title_About"
                         icon={null}
                         onPress={() => popupAbout()}
-                        leftComponent={this.leftSettingsIcon(
-                            'info',
-                            vars.peerioTeal
-                        )}
+                        leftComponent={this.leftSettingsIcon('info', vars.peerioTeal)}
                     />
                     <SettingsItem
                         title="title_help"
-                        onPress={() => settingsState.transition('logs')}
-                        leftComponent={this.leftSettingsIcon(
-                            'help',
-                            vars.helpSettingsIconColor
-                        )}
+                        onPress={() => settingsState.transition('help')}
+                        leftComponent={this.leftSettingsIcon('help', vars.helpSettingsIconColor)}
                     />
 
                     <PaymentStorageUsageItem />
@@ -246,25 +217,95 @@ export default class SettingsLevel1 extends SafeComponent {
                         testID="button_signOut"
                     />
                     {this.spacer}
-                    {__DEV__ && <BasicSettingsItem title="save account key" onPress={this.testSaveAccountKey} />}
-                    {__DEV__ && <BasicSettingsItem title="global drawer" onPress={this.testGlobalDrawer} />}
-                    {__DEV__ && <BasicSettingsItem title="contact drawer" onPress={this.testLocalDrawer} />}
-                    {__DEV__ && <BasicSettingsItem title="silent invite" onPress={this.testSilentInvite} />}
-                    {__DEV__ && <BasicSettingsItem title="toggle connection" onPress={toggleConnection} />}
-                    {__DEV__ && <BasicSettingsItem title="damage TouchID" onPress={() => mainState.damageUserTouchId()} />}
-                    {__DEV__ && <BasicSettingsItem title="destroy TouchID" onPress={() => mainState.destroyUserTouchId()} />}
-                    {__DEV__ && <BasicSettingsItem title="snackbar" onPress={() =>
-                        snackbarState.pushTemporary('test')} />}
-                    {__DEV__ && <BasicSettingsItem title="snackbar long" onPress={() =>
-                        snackbarState.pushTemporary('test whatever you have been testing for a longer snackbar for the win whatever you have been testing for a longer snackbar for the win')} />}
-                    {__DEV__ && <BasicSettingsItem title="test Contacts" onPress={() => contactState.testImport()} />}
-                    {__DEV__ && <BasicSettingsItem title="test Share" onPress={() => this.testShare()} />}
-                    {__DEV__ && <BasicSettingsItem title="test null activeChat" onPress={() => this.testNullActiveChat()} />}
-                    {__DEV__ && <BasicSettingsItem title="test warning" onPress={() => warnings.addSevere('warning')} />}
-                    {__DEV__ && <BasicSettingsItem title="reset external setting" onPress={this.resetExternalSetting} />}
+                    {__DEV__ && (
+                        <BasicSettingsItem title="confirm email" onPress={testConfirmEmail} />
+                    )}
+                    {__DEV__ && (
+                        <BasicSettingsItem
+                            title="show saved beacons"
+                            onPress={this.showBeaconsState}
+                        />
+                    )}
+                    {__DEV__ && (
+                        <BasicSettingsItem
+                            title="clear saved beacons"
+                            onPress={this.clearBeaconsState}
+                        />
+                    )}
+                    {__DEV__ && (
+                        <BasicSettingsItem
+                            title="save account key"
+                            onPress={this.testSaveAccountKey}
+                        />
+                    )}
+                    {__DEV__ && (
+                        <BasicSettingsItem title="global drawer" onPress={this.testGlobalDrawer} />
+                    )}
+                    {__DEV__ && (
+                        <BasicSettingsItem title="contact drawer" onPress={this.testLocalDrawer} />
+                    )}
+                    {__DEV__ && (
+                        <BasicSettingsItem title="silent invite" onPress={this.testSilentInvite} />
+                    )}
+                    {__DEV__ && (
+                        <BasicSettingsItem title="toggle connection" onPress={toggleConnection} />
+                    )}
+                    {__DEV__ && (
+                        <BasicSettingsItem
+                            title="damage TouchID"
+                            onPress={() => mainState.damageUserTouchId()}
+                        />
+                    )}
+                    {__DEV__ && (
+                        <BasicSettingsItem
+                            title="destroy TouchID"
+                            onPress={() => mainState.destroyUserTouchId()}
+                        />
+                    )}
+                    {__DEV__ && (
+                        <BasicSettingsItem
+                            title="snackbar"
+                            onPress={() => snackbarState.pushTemporary('test')}
+                        />
+                    )}
+                    {__DEV__ && (
+                        <BasicSettingsItem
+                            title="snackbar long"
+                            onPress={() =>
+                                snackbarState.pushTemporary(
+                                    'test whatever you have been testing for a longer snackbar for the win whatever you have been testing for a longer snackbar for the win'
+                                )
+                            }
+                        />
+                    )}
+                    {__DEV__ && (
+                        <BasicSettingsItem
+                            title="test Contacts"
+                            onPress={() => contactState.testImport()}
+                        />
+                    )}
+                    {__DEV__ && (
+                        <BasicSettingsItem title="test Share" onPress={() => this.testShare()} />
+                    )}
+                    {__DEV__ && (
+                        <BasicSettingsItem
+                            title="test null activeChat"
+                            onPress={() => this.testNullActiveChat()}
+                        />
+                    )}
+                    {__DEV__ && (
+                        <BasicSettingsItem
+                            title="test warning"
+                            onPress={() => warnings.addSevere('warning')}
+                        />
+                    )}
+                    {__DEV__ && (
+                        <BasicSettingsItem
+                            title="reset external setting"
+                            onPress={this.resetExternalSetting}
+                        />
+                    )}
                     {__DEV__ && <BasicSettingsItem title="log MC props" onPress={this.showProps} />}
-                    {/* <BasicSettingsItem title={t('payments')} onPress={() => settingsState.transition('payments')} /> */}
-                    {/* <BasicSettingsItem title={t('quotas')} onPress={() => settingsState.transition('quotas')} /> */}
                 </View>
             </ViewWithDrawer>
         );

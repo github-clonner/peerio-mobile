@@ -12,13 +12,17 @@ export default class Link extends Component {
     }
 
     open() {
-        Linking.openURL(this.props.url);
+        if (this.props.url.tracker) this.props.url.tracker();
+        Linking.openURL(this.props.url.link);
     }
 
     render() {
-        const style = [{
-            textDecorationLine: 'underline'
-        }, this.props.style];
+        const style = [
+            {
+                textDecorationLine: 'underline'
+            },
+            this.props.style
+        ];
         return (
             <Text style={style} onPress={this.props.onPress || this.open}>
                 {this.props.children}
@@ -31,5 +35,5 @@ Link.propTypes = {
     children: PropTypes.any.isRequired,
     onPress: PropTypes.any,
     style: PropTypes.any,
-    url: PropTypes.string
+    url: PropTypes.any
 };

@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
-import { action, computed } from 'mobx';
+import { computed } from 'mobx';
 import SafeComponent from '../shared/safe-component';
-import ContactsPlaceholder from './contacts-placeholder';
+import ContactZeroState from './contact-zero-state';
 import ProgressOverlay from '../shared/progress-overlay';
 import ContactItem from './contact-item';
 import ContactSectionHeader from './contact-section-header';
@@ -12,10 +12,9 @@ import contactState from './contact-state';
 import PlusBorderIcon from '../layout/plus-border-icon';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
-import uiState from '../layout/ui-state';
 import SectionListWithDrawer from '../shared/section-list-with-drawer';
-import drawerState from '../shared/drawer-state';
 import ListSeparator from '../shared/list-separator';
+import zeroStateBeacons from '../beacons/zerostate-beacons';
 
 const INITIAL_LIST_SIZE = 20;
 
@@ -31,12 +30,6 @@ export default class ContactList extends SafeComponent {
 
     header({ section: /* data, */ { key } }) {
         return <ContactSectionHeader key={key} title={key} />;
-    }
-
-    @action.bound
-    scrollViewRef(sv) {
-        this.scrollView = sv;
-        uiState.currentScrollView = sv;
     }
 
     @computed
@@ -60,8 +53,6 @@ export default class ContactList extends SafeComponent {
     listView() {
         return (
             <SectionListWithDrawer
-                context={drawerState.DRAWER_CONTEXT.CONTACTS}
-                setScrollViewRef={this.scrollViewRef}
                 ItemSeparatorComponent={ListSeparator}
                 initialNumToRender={INITIAL_LIST_SIZE}
                 sections={this.sections}
@@ -73,13 +64,19 @@ export default class ContactList extends SafeComponent {
     }
 
     get rightIcon() {
-        return <PlusBorderIcon action={contactState.fabAction} testID="addContactButton" />;
+        return (
+            <PlusBorderIcon
+                action={contactState.fabAction}
+                testID="addContactButton"
+                beacon={zeroStateBeacons.addContactBeacon}
+            />
+        );
     }
 
     get contactListComponent() {
         return !contactState.empty
             ? this.listView()
-            : !contactState.store.loading && <ContactsPlaceholder />;
+            : !contactState.store.loading && <ContactZeroState />;
     }
 
     renderThrow() {

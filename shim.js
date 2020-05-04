@@ -1,4 +1,8 @@
 /* eslint-disable */
+// THIS file contains shims and polyfills which are
+// applied before icebear is imported
+
+// LEGACY: next paragraph is legacy and a candidate for removal
 if (typeof __dirname === 'undefined') global.__dirname = '/'
 if (typeof __filename === 'undefined') global.__filename = ''
 if (typeof process === 'undefined') {
@@ -12,9 +16,12 @@ if (typeof process === 'undefined') {
 	}
 }
 
+// telling our websocketio that we are not browser for sure
 process.browser = false;
+// JSCore buffer support
 if (typeof Buffer === 'undefined') global.Buffer = require('buffer').Buffer;
 
+// polyfill for join (jscore/safari)
 // https://tc39.github.io/ecma262/#sec-%typedarray%.prototype.join
 if (!Uint8Array.prototype.join) {
 	Object.defineProperty(Uint8Array.prototype, 'join', {
@@ -22,19 +29,30 @@ if (!Uint8Array.prototype.join) {
 	});
 }
 
+// polyfill for fill (jscore/safari)
 // https://tc39.github.io/ecma262/#sec-%typedarray%.prototype.fill
 if (!Uint8Array.prototype.fill) {
 	Uint8Array.prototype.fill = Array.prototype.fill;
 }
 
-// global.location = global.location || { port: 80 }
+// determining dev environment
 var isDev = typeof __DEV__ === 'boolean' && __DEV__;
 const env = process.env;
+// providing correct NODE_ENV for libraries which depend on it
 env.NODE_ENV = isDev ? 'development' : 'production';
+
+// if we are being executed in browser for some reason
+// provide local storage with information about debug
 if (typeof localStorage !== 'undefined') {
 	localStorage.debug = isDev ? '*' : '';
 }
 
+// initializing crypto and tweetnacl
+require('./app/lib/crypto');
+
+// patching react native websocket JS bridge
+// for SSL pinning
+// TODO: subject for review
 const rnWebSocket = global.WebSocket;
 global.WebSocket = function (url) {
 	// enforce TLS pinning for our main server
@@ -50,21 +68,7 @@ global.WebSocket = function (url) {
 	return r;
 };
 
-const { randomBytes } = require('react-native-randombytes');
-global.cryptoShim = { randomBytes };
-
-console.log(`shim.js: checking randomBytes`);
-console.log(randomBytes(8));
-
-const nacl = require('tweetnacl');
-nacl.setPRNG((x, n) => {
-	const a = randomBytes(n);
-	a.copy(x);
-});
-
-// global.WebSocket = global.originalWebSocket;
-// console.log('shim.js binaryType: ', ws.binaryType);
-// console.log('shim.js: ', global.originalWebSocket);
+// codepointat polyfill for string (used for utf-8 substring extraction)
 /*! https://mths.be/codepointat v0.2.0 by @mathias */
 if (!String.prototype.codePointAt) {
 	(function () {
@@ -120,6 +124,7 @@ if (!String.prototype.codePointAt) {
 	}());
 }
 
+// fromcodepointat polyfill for string (used for utf-8 substring extraction)
 /*! https://mths.be/fromcodepoint v0.2.1 by @mathias */
 if (!String.fromCodePoint) {
 	(function () {
@@ -183,13 +188,24 @@ if (!String.fromCodePoint) {
 	}());
 }
 
+// random polyfill
 if (!Array.prototype.random) {
 	Array.prototype.random = function () {
 		return this[Math.floor((Math.random() * this.length))];
 	}
 }
 
-// Implement console.time and console.timeEnd if one of them is missing
+// String.normalize is required by isemail
+// Now used as a stub
+// TODO: implement a proper polyfill
+if (!String.prototype.normalize) {
+	String.prototype.normalize = function () {
+		return this;
+	}
+}
+
+// used by icebear benchmarks
+// console.time and console.timeEnd polyfill
 if (!console["time"] || !console["timeEnd"]) {
 	var timers = {};
 	console["time"] = function (id) {

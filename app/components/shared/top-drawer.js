@@ -5,9 +5,9 @@ import { View } from 'react-native';
 import Text from '../controls/custom-text';
 import SafeComponent from './safe-component';
 import { vars } from '../../styles/styles';
-import buttons from '../helpers/buttons';
 import icons from '../helpers/icons';
 import drawerState from './drawer-state';
+import BlueButtonText from '../buttons/blue-text-button';
 
 const container = {
     backgroundColor: 'white',
@@ -37,7 +37,7 @@ const descriptionContainer = {
 };
 
 const descriptionStyle = {
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size12,
     color: vars.textBlack54,
     paddingHorizontal: vars.spacing.huge.mini2x,
     textAlign: 'center'
@@ -59,13 +59,7 @@ export default class TopDrawer extends SafeComponent {
     };
 
     renderThrow() {
-        const {
-            heading,
-            image,
-            descriptionLine1,
-            descriptionLine2,
-            buttonText
-        } = this.props;
+        const { heading, image, descriptionLine1, descriptionLine2, buttonText } = this.props;
         return (
             <View style={container}>
                 <View style={headingStyle}>
@@ -84,14 +78,18 @@ export default class TopDrawer extends SafeComponent {
                         </Text>
                     )}
                 </View>
-                {buttons.blueTextButton(buttonText, this.onButtonAction, null, null, buttonText)}
+                <BlueButtonText
+                    text={buttonText}
+                    onPress={this.onButtonAction}
+                    accessibilityId={buttonText}
+                />
                 <View style={iconStyle}>{icons.darkNoPadding('close', this.onDismiss)}</View>
             </View>
         );
     }
 }
 
-TopDrawer.PropTypes = {
+TopDrawer.propTypes = {
     context: PropTypes.string,
     heading: PropTypes.string.isRequired,
     image: PropTypes.any.isRequired,

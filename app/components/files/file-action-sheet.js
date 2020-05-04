@@ -10,7 +10,8 @@ import { popupFileRename } from '../shared/popups';
 import snackbarState from '../snackbars/snackbar-state';
 
 export default class FileActionSheet {
-    static async show(file, fileAutoOpen, routeAfterDelete) {
+    static async show(params) {
+        const { file, fileAutoOpen, routeAfterDelete, canUnshare } = params;
         // TODO: remove when SDK is ready and/or move to SDK
         try {
             if (await config.FileStream.exists(file.tmpCachePath)) {
@@ -26,14 +27,16 @@ export default class FileActionSheet {
             return;
         }
         const { isLegacy, readyForDownload } = file;
-        const header = (<FileActionSheetHeader
-            file={file}
-            onPress={() => {
-                routes.modal.discard();
-                routes.main.files(file);
-                ActionSheetLayout.hide();
-            }}
-        />);
+        const header = (
+            <FileActionSheetHeader
+                file={file}
+                onPress={() => {
+                    routes.modal.discard();
+                    routes.main.files(file);
+                    ActionSheetLayout.hide();
+                }}
+            />
+        );
 
         // Files that exist can be opened right away
         // Files that dont exist need to be downloaded firs
@@ -77,13 +80,15 @@ export default class FileActionSheet {
         }
 
         // Move
-        actionButtons.push({
-            title: tx('button_move'),
-            disabled: isLegacy,
-            action: async () => {
-                await routes.modal.moveFileTo({ fsObject: file });
-            }
-        });
+        // TODO: a better way to not show move option in DMs and rooms
+        routes.main.route !== 'chats' &&
+            actionButtons.push({
+                title: tx('button_move'),
+                disabled: isLegacy,
+                action: async () => {
+                    await routes.modal.moveFileTo({ fsObject: file });
+                }
+            });
 
         // Rename
         actionButtons.push({
@@ -99,6 +104,17 @@ export default class FileActionSheet {
                 if (newFileName) await file.rename(`${newFileName}.${file.ext}`);
             }
         });
+
+        // Unshare
+        canUnshare &&
+            file.owner === User.current.username &&
+            actionButtons.push({
+                title: 'button_unshare',
+                action: async () => {
+                    await fileState.unshareFile(file);
+                    ActionSheetLayout.hide();
+                }
+            });
 
         // Delete
         actionButtons.push({
